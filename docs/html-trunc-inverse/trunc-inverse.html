@@ -1,0 +1,4912 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+><head
+  ><title
+    >trunc-inverse</title
+    ><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"
+     /><meta http-equiv="Content-Style-Type" content="text/css"
+     /><link href="Agda.css" rel="stylesheet" type="text/css"
+     /></head
+  ><body
+  ><pre
+    ><a name="1"
+      >
+</a
+      ><a name="2" class="Comment"
+      >   The Nearly-Inverse of the Truncation Map &#8739;_&#8739; : &#8469; &#8594; &#8741; &#8469; &#8741;</a
+      ><a name="61"
+      >
+</a
+      ><a name="62" class="Comment"
+      >   =======================================================</a
+      ><a name="120"
+      >
+
+</a
+      ><a name="122" class="Comment"
+      >For a nontrivial class of types (&quot;homogeneous&quot; types) which </a
+      ><a name="182"
+      >
+</a
+      ><a name="183" class="Comment"
+      >includes the natural numbers &#8469;, I show how the map &#8739;_&#8739; from </a
+      ><a name="243"
+      >
+</a
+      ><a name="244" class="Comment"
+      >the type into its propositional truncation can &quot;nearly&quot; be </a
+      ><a name="303"
+      >
+</a
+      ><a name="304" class="Comment"
+      >inverted, in the following sense:</a
+      ><a name="337"
+      >
+
+</a
+      ><a name="339" class="Comment"
+      >I define a term &quot;myst&quot; such that</a
+      ><a name="371"
+      >
+
+</a
+      ><a name="373" class="Comment"
+      >  id-factored : &#8469; &#8594; &#8469;</a
+      ><a name="394"
+      >
+</a
+      ><a name="395" class="Comment"
+      >  id-factored = myst &#8728; &#8739;_&#8739;</a
+      ><a name="421"
+      >
+
+</a
+      ><a name="423" class="Comment"
+      >is a factorization of the identity map on &#8469; through &#8469;, and the </a
+      ><a name="486"
+      >
+</a
+      ><a name="487" class="Comment"
+      >proof is very simple:</a
+      ><a name="508"
+      >
+</a
+      ><a name="509" class="Comment"
+      >  </a
+      ><a name="511"
+      >
+</a
+      ><a name="512" class="Comment"
+      >  proof : (n : &#8469;) &#8594; id-factored n == n</a
+      ><a name="550"
+      >
+</a
+      ><a name="551" class="Comment"
+      >  proof n = idp</a
+      ><a name="566"
+      >
+
+</a
+      ><a name="568" class="Comment"
+      >Note that &quot;idp&quot; is the identity-path (aka refl). </a
+      ><a name="617"
+      >
+</a
+      ><a name="618" class="Comment"
+      >This also implies that, if n is privately defined to be 17 and</a
+      ><a name="680"
+      >
+</a
+      ><a name="681" class="Comment"
+      >only x &#8801; &#8739; n &#8739; is accessible, the number 17 can be recovered by</a
+      ><a name="744"
+      >
+</a
+      ><a name="745" class="Comment"
+      >applying 'myst' to 'x'.</a
+      ><a name="768"
+      >
+
+</a
+      ><a name="770" class="Comment"
+      >I find this extremly counterintuitive as &#8741; &#8469; &#8741; is equivalent to </a
+      ><a name="834"
+      >
+</a
+      ><a name="835" class="Comment"
+      >the unit type, and &#8739;_&#8739; is (as I used to understand it) assumed </a
+      ><a name="898"
+      >
+</a
+      ><a name="899" class="Comment"
+      >to hide information. My construction shows that &#8739;_&#8739; does not </a
+      ><a name="960"
+      >
+</a
+      ><a name="961" class="Comment"
+      >do a good job at hiding.</a
+      ><a name="985"
+      >
+
+</a
+      ><a name="987" class="Comment"
+      >My construction is correct with respect to the definitions in</a
+      ><a name="1048"
+      >
+</a
+      ><a name="1049" class="Comment"
+      >the book. In this Agda file, I use propositional truncation as</a
+      ><a name="1111"
+      >
+</a
+      ><a name="1112" class="Comment"
+      >defined in the HoTT-library. Martin Escardo has checked that the</a
+      ><a name="1176"
+      >
+</a
+      ><a name="1177" class="Comment"
+      >construction also works if the truncation is defined in the </a
+      ><a name="1237"
+      >
+</a
+      ><a name="1238" class="Comment"
+      >style of Voevodsky, i.e. by quantifying over all propositions. </a
+      ><a name="1301"
+      >
+</a
+      ><a name="1302" class="Comment"
+      >The construction is inspired by Martin's insight on &quot;judgmental </a
+      ><a name="1366"
+      >
+</a
+      ><a name="1367" class="Comment"
+      >factorization of constant functions&quot; and my earlier attempts to</a
+      ><a name="1430"
+      >
+</a
+      ><a name="1431" class="Comment"
+      >related problems that used pointed types.</a
+      ><a name="1472"
+      >
+</a
+      ><a name="1473" class="Comment"
+      >&#8204;</a
+      ><a name="1474"
+      >
+</a
+      ><a name="1475" class="Comment"
+      >[Nicolai Kraus, October 2013]</a
+      ><a name="1504"
+      >
+
+\begin{code}
+</a
+      ><a name="1519" class="Symbol"
+      >{-#</a
+      ><a name="1522"
+      > </a
+      ><a name="1523" class="Keyword"
+      >OPTIONS</a
+      ><a name="1530"
+      > --without-K </a
+      ><a name="1543" class="Symbol"
+      >#-}</a
+      ><a name="1546"
+      > 
+
+</a
+      ><a name="1549" class="Keyword"
+      >module</a
+      ><a name="1555"
+      > </a
+      ><a name="1556" href="trunc-inverse.html#1" class="Module"
+      >trunc-inverse</a
+      ><a name="1569"
+      > </a
+      ><a name="1570" class="Keyword"
+      >where</a
+      ><a name="1575"
+      >
+
+</a
+      ><a name="1577" class="Keyword"
+      >open</a
+      ><a name="1581"
+      > </a
+      ><a name="1582" class="Keyword"
+      >import</a
+      ><a name="1588"
+      > </a
+      ><a name="1589" href="lib.types.Nat.html#1" class="Module"
+      >lib.types.Nat</a
+      ><a name="1602"
+      >
+</a
+      ><a name="1603" class="Keyword"
+      >open</a
+      ><a name="1607"
+      > </a
+      ><a name="1608" class="Keyword"
+      >import</a
+      ><a name="1614"
+      > </a
+      ><a name="1615" href="lib.Basics.html#1" class="Module"
+      >lib.Basics</a
+      ><a name="1625"
+      > 
+</a
+      ><a name="1627" class="Keyword"
+      >open</a
+      ><a name="1631"
+      > </a
+      ><a name="1632" class="Keyword"
+      >import</a
+      ><a name="1638"
+      > </a
+      ><a name="1639" href="lib.Univalence.html#1" class="Module"
+      >lib.Univalence</a
+      ><a name="1653"
+      >
+</a
+      ><a name="1654" class="Keyword"
+      >open</a
+      ><a name="1658"
+      > </a
+      ><a name="1659" class="Keyword"
+      >import</a
+      ><a name="1665"
+      > </a
+      ><a name="1666" href="lib.Funext.html#1" class="Module"
+      >lib.Funext</a
+      ><a name="1676"
+      >
+</a
+      ><a name="1677" class="Keyword"
+      >open</a
+      ><a name="1681"
+      > </a
+      ><a name="1682" class="Keyword"
+      >import</a
+      ><a name="1688"
+      > </a
+      ><a name="1689" href="lib.types.Truncation.html#1" class="Module"
+      >lib.types.Truncation</a
+      ><a name="1709"
+      >
+
+
+</a
+      ><a name="1712" class="Comment"
+      >{- == Pointed types ==
+   A pointed type is a type (base) together with a chosen 
+   element (pt). -}</a
+      ><a name="1813"
+      >
+</a
+      ><a name="1814" href="trunc-inverse.html#1814" class="Function"
+      >Type&#8226;</a
+      ><a name="1819"
+      > </a
+      ><a name="1820" class="Symbol"
+      >:</a
+      ><a name="1821"
+      > </a
+      ><a name="1822" class="Symbol"
+      >(</a
+      ><a name="1823" href="trunc-inverse.html#1823" class="Bound"
+      >i</a
+      ><a name="1824"
+      > </a
+      ><a name="1825" class="Symbol"
+      >:</a
+      ><a name="1826"
+      > </a
+      ><a name="1827" href="lib.Base.html#1049" class="Postulate"
+      >ULevel</a
+      ><a name="1833" class="Symbol"
+      >)</a
+      ><a name="1834"
+      > </a
+      ><a name="1835" class="Symbol"
+      >&#8594;</a
+      ><a name="1836"
+      > </a
+      ><a name="1837" href="lib.Base.html#1263" class="Function"
+      >Type</a
+      ><a name="1841"
+      > </a
+      ><a name="1842" class="Symbol"
+      >(</a
+      ><a name="1843" href="lib.Base.html#1081" class="Primitive"
+      >lsucc</a
+      ><a name="1848"
+      > </a
+      ><a name="1849" href="trunc-inverse.html#1823" class="Bound"
+      >i</a
+      ><a name="1850" class="Symbol"
+      >)</a
+      ><a name="1851"
+      >
+</a
+      ><a name="1852" href="trunc-inverse.html#1814" class="Function"
+      >Type&#8226;</a
+      ><a name="1857"
+      > </a
+      ><a name="1858" href="trunc-inverse.html#1858" class="Bound"
+      >i</a
+      ><a name="1859"
+      > </a
+      ><a name="1860" class="Symbol"
+      >=</a
+      ><a name="1861"
+      > </a
+      ><a name="1862" href="lib.Base.html#4983" class="Record"
+      >&#931;</a
+      ><a name="1863"
+      > </a
+      ><a name="1864" class="Symbol"
+      >(</a
+      ><a name="1865" href="lib.Base.html#1263" class="Function"
+      >Type</a
+      ><a name="1869"
+      > </a
+      ><a name="1870" href="trunc-inverse.html#1858" class="Bound"
+      >i</a
+      ><a name="1871" class="Symbol"
+      >)</a
+      ><a name="1872"
+      > </a
+      ><a name="1873" class="Symbol"
+      >(</a
+      ><a name="1874" href="lib.Base.html#7589" class="Function"
+      >idf</a
+      ><a name="1877"
+      > </a
+      ><a name="1878" class="Symbol"
+      >_)</a
+      ><a name="1880"
+      >
+
+</a
+      ><a name="1882" class="Keyword"
+      >module</a
+      ><a name="1888"
+      > </a
+      ><a name="1889" href="trunc-inverse.html#1889" class="Module"
+      >_</a
+      ><a name="1890"
+      > </a
+      ><a name="1891" class="Symbol"
+      >{</a
+      ><a name="1892" href="trunc-inverse.html#1892" class="Bound"
+      >i</a
+      ><a name="1893" class="Symbol"
+      >}</a
+      ><a name="1894"
+      > </a
+      ><a name="1895" class="Symbol"
+      >(</a
+      ><a name="1896" href="trunc-inverse.html#1896" class="Bound"
+      >X</a
+      ><a name="1897"
+      > </a
+      ><a name="1898" class="Symbol"
+      >:</a
+      ><a name="1899"
+      > </a
+      ><a name="1900" href="trunc-inverse.html#1814" class="Function"
+      >Type&#8226;</a
+      ><a name="1905"
+      > </a
+      ><a name="1906" href="trunc-inverse.html#1892" class="Bound"
+      >i</a
+      ><a name="1907" class="Symbol"
+      >)</a
+      ><a name="1908"
+      > </a
+      ><a name="1909" class="Keyword"
+      >where</a
+      ><a name="1914"
+      >
+  </a
+      ><a name="1917" href="trunc-inverse.html#1917" class="Function"
+      >base</a
+      ><a name="1921"
+      > </a
+      ><a name="1922" class="Symbol"
+      >=</a
+      ><a name="1923"
+      > </a
+      ><a name="1924" href="lib.Base.html#5075" class="Function"
+      >fst</a
+      ><a name="1927"
+      > </a
+      ><a name="1928" href="trunc-inverse.html#1896" class="Bound"
+      >X</a
+      ><a name="1929"
+      >
+  </a
+      ><a name="1932" href="trunc-inverse.html#1932" class="Function"
+      >pt</a
+      ><a name="1934"
+      >   </a
+      ><a name="1937" class="Symbol"
+      >=</a
+      ><a name="1938"
+      > </a
+      ><a name="1939" href="lib.Base.html#5087" class="Function"
+      >snd</a
+      ><a name="1942"
+      > </a
+      ><a name="1943" href="trunc-inverse.html#1896" class="Bound"
+      >X</a
+      ><a name="1944"
+      >
+
+  </a
+      ><a name="1948" class="Comment"
+      >-- I later consider the type of pointed types that are</a
+      ><a name="2002"
+      >
+  </a
+      ><a name="2005" class="Comment"
+      >-- equal to X:</a
+      ><a name="2019"
+      >
+  </a
+      ><a name="2022" href="trunc-inverse.html#2022" class="Function"
+      >pathto</a
+      ><a name="2028"
+      > </a
+      ><a name="2029" class="Symbol"
+      >:</a
+      ><a name="2030"
+      > </a
+      ><a name="2031" href="lib.Base.html#1263" class="Function"
+      >Type</a
+      ><a name="2035"
+      > </a
+      ><a name="2036" class="Symbol"
+      >(</a
+      ><a name="2037" href="lib.Base.html#1081" class="Primitive"
+      >lsucc</a
+      ><a name="2042"
+      > </a
+      ><a name="2043" href="trunc-inverse.html#1892" class="Bound"
+      >i</a
+      ><a name="2044" class="Symbol"
+      >)</a
+      ><a name="2045"
+      >
+  </a
+      ><a name="2048" href="trunc-inverse.html#2022" class="Function"
+      >pathto</a
+      ><a name="2054"
+      > </a
+      ><a name="2055" class="Symbol"
+      >=</a
+      ><a name="2056"
+      > </a
+      ><a name="2057" href="lib.Base.html#4983" class="Record"
+      >&#931;</a
+      ><a name="2058"
+      > </a
+      ><a name="2059" class="Symbol"
+      >(</a
+      ><a name="2060" href="trunc-inverse.html#1814" class="Function"
+      >Type&#8226;</a
+      ><a name="2065"
+      > </a
+      ><a name="2066" href="trunc-inverse.html#1892" class="Bound"
+      >i</a
+      ><a name="2067" class="Symbol"
+      >)</a
+      ><a name="2068"
+      > </a
+      ><a name="2069" class="Symbol"
+      >(&#955;</a
+      ><a name="2071"
+      > </a
+      ><a name="2072" href="trunc-inverse.html#2072" class="Bound"
+      >Y</a
+      ><a name="2073"
+      > </a
+      ><a name="2074" class="Symbol"
+      >&#8594;</a
+      ><a name="2075"
+      > </a
+      ><a name="2076" href="trunc-inverse.html#2072" class="Bound"
+      >Y</a
+      ><a name="2077"
+      > </a
+      ><a name="2078" href="lib.Base.html#1998" class="Datatype Operator"
+      >==</a
+      ><a name="2080"
+      > </a
+      ><a name="2081" href="trunc-inverse.html#1896" class="Bound"
+      >X</a
+      ><a name="2082" class="Symbol"
+      >)</a
+      ><a name="2083"
+      > 
+
+  </a
+      ><a name="2088" class="Comment"
+      >-- As it is well-known, this type is contractible and </a
+      ><a name="2142"
+      >
+  </a
+      ><a name="2145" class="Comment"
+      >-- thereby propositional:</a
+      ><a name="2170"
+      >
+  </a
+      ><a name="2173" href="trunc-inverse.html#2173" class="Function"
+      >pathto-prop</a
+      ><a name="2184"
+      > </a
+      ><a name="2185" class="Symbol"
+      >:</a
+      ><a name="2186"
+      > </a
+      ><a name="2187" href="lib.NType.html#363" class="Function"
+      >is-prop</a
+      ><a name="2194"
+      > </a
+      ><a name="2195" href="trunc-inverse.html#2022" class="Function"
+      >pathto</a
+      ><a name="2201"
+      >
+  </a
+      ><a name="2204" href="trunc-inverse.html#2173" class="Function"
+      >pathto-prop</a
+      ><a name="2215"
+      > </a
+      ><a name="2216" class="Symbol"
+      >=</a
+      ><a name="2217"
+      > </a
+      ><a name="2218" href="lib.NType.html#1025" class="Function"
+      >raise-level</a
+      ><a name="2229"
+      > </a
+      ><a name="2230" href="lib.Base.html#8812" class="InductiveConstructor"
+      >&#10216;-2&#10217;</a
+      ><a name="2234"
+      > </a
+      ><a name="2235" class="Symbol"
+      >(</a
+      ><a name="2236" href="lib.NType.html#4438" class="Function"
+      >pathto-is-contr</a
+      ><a name="2251"
+      > </a
+      ><a name="2252" href="trunc-inverse.html#1896" class="Bound"
+      >X</a
+      ><a name="2253" class="Symbol"
+      >)</a
+      ><a name="2254"
+      >
+
+  </a
+      ><a name="2258" class="Comment"
+      >-- Let me call a pointed type (base,pt) 'homogeneous' iff, </a
+      ><a name="2317"
+      >
+  </a
+      ><a name="2320" class="Comment"
+      >-- for any x:base, the expressions (base,x) and (base,pt) </a
+      ><a name="2378"
+      >
+  </a
+      ><a name="2381" class="Comment"
+      >-- are equal as pointed types:</a
+      ><a name="2411"
+      >
+  </a
+      ><a name="2414" href="trunc-inverse.html#2414" class="Function"
+      >is-homogeneous</a
+      ><a name="2428"
+      > </a
+      ><a name="2429" class="Symbol"
+      >:</a
+      ><a name="2430"
+      > </a
+      ><a name="2431" href="lib.Base.html#1263" class="Function"
+      >Type</a
+      ><a name="2435"
+      > </a
+      ><a name="2436" class="Symbol"
+      >(</a
+      ><a name="2437" href="lib.Base.html#1081" class="Primitive"
+      >lsucc</a
+      ><a name="2442"
+      > </a
+      ><a name="2443" href="trunc-inverse.html#1892" class="Bound"
+      >i</a
+      ><a name="2444" class="Symbol"
+      >)</a
+      ><a name="2445"
+      >
+  </a
+      ><a name="2448" href="trunc-inverse.html#2414" class="Function"
+      >is-homogeneous</a
+      ><a name="2462"
+      > </a
+      ><a name="2463" class="Symbol"
+      >=</a
+      ><a name="2464"
+      > </a
+      ><a name="2465" class="Symbol"
+      >(</a
+      ><a name="2466" href="trunc-inverse.html#2466" class="Bound"
+      >x</a
+      ><a name="2467"
+      > </a
+      ><a name="2468" class="Symbol"
+      >:</a
+      ><a name="2469"
+      > </a
+      ><a name="2470" href="trunc-inverse.html#1917" class="Function"
+      >base</a
+      ><a name="2474" class="Symbol"
+      >)</a
+      ><a name="2475"
+      > </a
+      ><a name="2476" class="Symbol"
+      >&#8594;</a
+      ><a name="2477"
+      > </a
+      ><a name="2478" class="Symbol"
+      >(</a
+      ><a name="2479" href="trunc-inverse.html#1917" class="Function"
+      >base</a
+      ><a name="2483"
+      > </a
+      ><a name="2484" href="lib.Base.html#5059" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="2485"
+      > </a
+      ><a name="2486" href="trunc-inverse.html#2466" class="Bound"
+      >x</a
+      ><a name="2487" class="Symbol"
+      >)</a
+      ><a name="2488"
+      > </a
+      ><a name="2489" href="lib.Base.html#1998" class="Datatype Operator"
+      >==</a
+      ><a name="2491"
+      > </a
+      ><a name="2492" href="trunc-inverse.html#1896" class="Bound"
+      >X</a
+      ><a name="2493"
+      >
+
+</a
+      ><a name="2495" class="Comment"
+      >{- == Truncation ==
+   I only use propositional truncation. For a type X,  
+   write &#8741; X &#8741; for its truncation, and &#8739;_&#8739; : X &#8594; &#8741; X &#8741; for the
+   constructor.  -}</a
+      ><a name="2653"
+      >
+</a
+      ><a name="2654" class="Keyword"
+      >module</a
+      ><a name="2660"
+      > </a
+      ><a name="2661" href="trunc-inverse.html#2661" class="Module"
+      >_</a
+      ><a name="2662"
+      > </a
+      ><a name="2663" class="Symbol"
+      >{</a
+      ><a name="2664" href="trunc-inverse.html#2664" class="Bound"
+      >i</a
+      ><a name="2665" class="Symbol"
+      >}</a
+      ><a name="2666"
+      > </a
+      ><a name="2667" class="Keyword"
+      >where</a
+      ><a name="2672"
+      >
+  </a
+      ><a name="2675" href="trunc-inverse.html#2675" class="Function Operator"
+      >&#8741;_&#8741;</a
+      ><a name="2678"
+      > </a
+      ><a name="2679" class="Symbol"
+      >:</a
+      ><a name="2680"
+      > </a
+      ><a name="2681" href="lib.Base.html#1263" class="Function"
+      >Type</a
+      ><a name="2685"
+      > </a
+      ><a name="2686" href="trunc-inverse.html#2664" class="Bound"
+      >i</a
+      ><a name="2687"
+      > </a
+      ><a name="2688" class="Symbol"
+      >&#8594;</a
+      ><a name="2689"
+      > </a
+      ><a name="2690" href="lib.Base.html#1263" class="Function"
+      >Type</a
+      ><a name="2694"
+      > </a
+      ><a name="2695" href="trunc-inverse.html#2664" class="Bound"
+      >i</a
+      ><a name="2696"
+      >
+  </a
+      ><a name="2699" href="trunc-inverse.html#2675" class="Function Operator"
+      >&#8741;_&#8741;</a
+      ><a name="2702"
+      > </a
+      ><a name="2703" class="Symbol"
+      >=</a
+      ><a name="2704"
+      > </a
+      ><a name="2705" href="lib.types.Truncation.html#431" class="Function"
+      >Trunc</a
+      ><a name="2710"
+      > </a
+      ><a name="2711" href="lib.Base.html#8869" class="Function"
+      >&#10216;-1&#10217;</a
+      ><a name="2715"
+      > 
+
+  </a
+      ><a name="2720" href="trunc-inverse.html#2720" class="Function Operator"
+      >&#8739;_&#8739;</a
+      ><a name="2723"
+      > </a
+      ><a name="2724" class="Symbol"
+      >:</a
+      ><a name="2725"
+      > </a
+      ><a name="2726" class="Symbol"
+      >{</a
+      ><a name="2727" href="trunc-inverse.html#2727" class="Bound"
+      >A</a
+      ><a name="2728"
+      > </a
+      ><a name="2729" class="Symbol"
+      >:</a
+      ><a name="2730"
+      > </a
+      ><a name="2731" href="lib.Base.html#1263" class="Function"
+      >Type</a
+      ><a name="2735"
+      > </a
+      ><a name="2736" href="trunc-inverse.html#2664" class="Bound"
+      >i</a
+      ><a name="2737" class="Symbol"
+      >}</a
+      ><a name="2738"
+      > </a
+      ><a name="2739" class="Symbol"
+      >&#8594;</a
+      ><a name="2740"
+      > </a
+      ><a name="2741" href="trunc-inverse.html#2727" class="Bound"
+      >A</a
+      ><a name="2742"
+      > </a
+      ><a name="2743" class="Symbol"
+      >&#8594;</a
+      ><a name="2744"
+      > </a
+      ><a name="2745" href="trunc-inverse.html#2675" class="Function Operator"
+      >&#8741;</a
+      ><a name="2746"
+      > </a
+      ><a name="2747" href="trunc-inverse.html#2727" class="Bound"
+      >A</a
+      ><a name="2748"
+      > </a
+      ><a name="2749" href="trunc-inverse.html#2675" class="Function Operator"
+      >&#8741;</a
+      ><a name="2750"
+      >
+  </a
+      ><a name="2753" href="trunc-inverse.html#2720" class="Function Operator"
+      >&#8739;_&#8739;</a
+      ><a name="2756"
+      > </a
+      ><a name="2757" class="Symbol"
+      >=</a
+      ><a name="2758"
+      > </a
+      ><a name="2759" href="lib.types.Truncation.html#491" class="Function Operator"
+      >[_]</a
+      ><a name="2762"
+      >
+
+</a
+      ><a name="2764" class="Comment"
+      >{- == The &quot;mysterious&quot; construction for any homogeneous type == -}</a
+      ><a name="2830"
+      >
+</a
+      ><a name="2831" class="Keyword"
+      >module</a
+      ><a name="2837"
+      > </a
+      ><a name="2838" href="trunc-inverse.html#2838" class="Module"
+      >hom-myst</a
+      ><a name="2846"
+      > </a
+      ><a name="2847" class="Symbol"
+      >{</a
+      ><a name="2848" href="trunc-inverse.html#2848" class="Bound"
+      >i</a
+      ><a name="2849" class="Symbol"
+      >}</a
+      ><a name="2850"
+      > </a
+      ><a name="2851" class="Symbol"
+      >(</a
+      ><a name="2852" href="trunc-inverse.html#2852" class="Bound"
+      >ptX</a
+      ><a name="2855"
+      > </a
+      ><a name="2856" class="Symbol"
+      >:</a
+      ><a name="2857"
+      > </a
+      ><a name="2858" href="trunc-inverse.html#1814" class="Function"
+      >Type&#8226;</a
+      ><a name="2863"
+      > </a
+      ><a name="2864" href="trunc-inverse.html#2848" class="Bound"
+      >i</a
+      ><a name="2865" class="Symbol"
+      >)</a
+      ><a name="2866"
+      > </a
+      ><a name="2867" class="Symbol"
+      >(</a
+      ><a name="2868" href="trunc-inverse.html#2868" class="Bound"
+      >t</a
+      ><a name="2869"
+      > </a
+      ><a name="2870" class="Symbol"
+      >:</a
+      ><a name="2871"
+      > </a
+      ><a name="2872" href="trunc-inverse.html#2414" class="Function"
+      >is-homogeneous</a
+      ><a name="2886"
+      > </a
+      ><a name="2887" href="trunc-inverse.html#2852" class="Bound"
+      >ptX</a
+      ><a name="2890" class="Symbol"
+      >)</a
+      ><a name="2891"
+      > </a
+      ><a name="2892" class="Keyword"
+      >where</a
+      ><a name="2897"
+      >
+
+  </a
+      ><a name="2901" href="trunc-inverse.html#2901" class="Function"
+      >X</a
+      ><a name="2902"
+      >  </a
+      ><a name="2904" class="Symbol"
+      >=</a
+      ><a name="2905"
+      > </a
+      ><a name="2906" href="trunc-inverse.html#1917" class="Function"
+      >base</a
+      ><a name="2910"
+      > </a
+      ><a name="2911" href="trunc-inverse.html#2852" class="Bound"
+      >ptX</a
+      ><a name="2914"
+      >
+  </a
+      ><a name="2917" href="trunc-inverse.html#2917" class="Function"
+      >x&#8320;</a
+      ><a name="2919"
+      > </a
+      ><a name="2920" class="Symbol"
+      >=</a
+      ><a name="2921"
+      > </a
+      ><a name="2922" href="trunc-inverse.html#1932" class="Function"
+      >pt</a
+      ><a name="2924"
+      > </a
+      ><a name="2925" href="trunc-inverse.html#2852" class="Bound"
+      >ptX</a
+      ><a name="2928"
+      >
+
+  </a
+      ><a name="2932" href="trunc-inverse.html#2932" class="Function"
+      >f</a
+      ><a name="2933"
+      > </a
+      ><a name="2934" class="Symbol"
+      >:</a
+      ><a name="2935"
+      > </a
+      ><a name="2936" href="trunc-inverse.html#2901" class="Function"
+      >X</a
+      ><a name="2937"
+      > </a
+      ><a name="2938" class="Symbol"
+      >&#8594;</a
+      ><a name="2939"
+      > </a
+      ><a name="2940" href="trunc-inverse.html#2022" class="Function"
+      >pathto</a
+      ><a name="2946"
+      > </a
+      ><a name="2947" class="Symbol"
+      >(</a
+      ><a name="2948" href="trunc-inverse.html#2901" class="Function"
+      >X</a
+      ><a name="2949"
+      > </a
+      ><a name="2950" href="lib.Base.html#5059" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="2951"
+      > </a
+      ><a name="2952" href="trunc-inverse.html#2917" class="Function"
+      >x&#8320;</a
+      ><a name="2954" class="Symbol"
+      >)</a
+      ><a name="2955"
+      >
+  </a
+      ><a name="2958" href="trunc-inverse.html#2932" class="Function"
+      >f</a
+      ><a name="2959"
+      > </a
+      ><a name="2960" href="trunc-inverse.html#2960" class="Bound"
+      >x</a
+      ><a name="2961"
+      > </a
+      ><a name="2962" class="Symbol"
+      >=</a
+      ><a name="2963"
+      > </a
+      ><a name="2964" class="Symbol"
+      >(</a
+      ><a name="2965" href="trunc-inverse.html#2901" class="Function"
+      >X</a
+      ><a name="2966"
+      > </a
+      ><a name="2967" href="lib.Base.html#5059" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="2968"
+      > </a
+      ><a name="2969" href="trunc-inverse.html#2960" class="Bound"
+      >x</a
+      ><a name="2970" class="Symbol"
+      >)</a
+      ><a name="2971"
+      > </a
+      ><a name="2972" href="lib.Base.html#5059" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="2973"
+      > </a
+      ><a name="2974" href="trunc-inverse.html#2868" class="Bound"
+      >t</a
+      ><a name="2975"
+      > </a
+      ><a name="2976" href="trunc-inverse.html#2960" class="Bound"
+      >x</a
+      ><a name="2977"
+      >
+
+  </a
+      ><a name="2981" href="trunc-inverse.html#2981" class="Function"
+      >f-lifted</a
+      ><a name="2989"
+      > </a
+      ><a name="2990" class="Symbol"
+      >:</a
+      ><a name="2991"
+      > </a
+      ><a name="2992" href="trunc-inverse.html#2675" class="Function Operator"
+      >&#8741;</a
+      ><a name="2993"
+      > </a
+      ><a name="2994" href="trunc-inverse.html#2901" class="Function"
+      >X</a
+      ><a name="2995"
+      > </a
+      ><a name="2996" href="trunc-inverse.html#2675" class="Function Operator"
+      >&#8741;</a
+      ><a name="2997"
+      > </a
+      ><a name="2998" class="Symbol"
+      >&#8594;</a
+      ><a name="2999"
+      > </a
+      ><a name="3000" href="trunc-inverse.html#2022" class="Function"
+      >pathto</a
+      ><a name="3006"
+      > </a
+      ><a name="3007" class="Symbol"
+      >(</a
+      ><a name="3008" href="trunc-inverse.html#2901" class="Function"
+      >X</a
+      ><a name="3009"
+      > </a
+      ><a name="3010" href="lib.Base.html#5059" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="3011"
+      > </a
+      ><a name="3012" href="trunc-inverse.html#2917" class="Function"
+      >x&#8320;</a
+      ><a name="3014" class="Symbol"
+      >)</a
+      ><a name="3015"
+      >
+  </a
+      ><a name="3018" href="trunc-inverse.html#2981" class="Function"
+      >f-lifted</a
+      ><a name="3026"
+      > </a
+      ><a name="3027" class="Symbol"
+      >=</a
+      ><a name="3028"
+      > </a
+      ><a name="3029" href="lib.types.Truncation.html#1131" class="Function"
+      >Trunc-rec</a
+      ><a name="3038"
+      > </a
+      ><a name="3039" class="Symbol"
+      >(</a
+      ><a name="3040" href="trunc-inverse.html#2173" class="Function"
+      >pathto-prop</a
+      ><a name="3051"
+      > </a
+      ><a name="3052" class="Symbol"
+      >_)</a
+      ><a name="3054"
+      > </a
+      ><a name="3055" href="trunc-inverse.html#2932" class="Function"
+      >f</a
+      ><a name="3056"
+      >
+
+  </a
+      ><a name="3060" href="trunc-inverse.html#3060" class="Function"
+      >myst</a
+      ><a name="3064"
+      > </a
+      ><a name="3065" class="Symbol"
+      >:</a
+      ><a name="3066"
+      > </a
+      ><a name="3067" class="Symbol"
+      >(</a
+      ><a name="3068" href="trunc-inverse.html#3068" class="Bound"
+      >x</a
+      ><a name="3069"
+      > </a
+      ><a name="3070" class="Symbol"
+      >:</a
+      ><a name="3071"
+      > </a
+      ><a name="3072" href="trunc-inverse.html#2675" class="Function Operator"
+      >&#8741;</a
+      ><a name="3073"
+      > </a
+      ><a name="3074" href="trunc-inverse.html#2901" class="Function"
+      >X</a
+      ><a name="3075"
+      > </a
+      ><a name="3076" href="trunc-inverse.html#2675" class="Function Operator"
+      >&#8741;</a
+      ><a name="3077" class="Symbol"
+      >)</a
+      ><a name="3078"
+      > </a
+      ><a name="3079" class="Symbol"
+      >&#8594;</a
+      ><a name="3080"
+      > </a
+      ><a name="3081" class="Symbol"
+      >(</a
+      ><a name="3082" href="lib.Base.html#5075" class="Function"
+      >fst</a
+      ><a name="3085"
+      > </a
+      ><a name="3086" href="lib.Base.html#7730" class="Function Operator"
+      >&#8728;</a
+      ><a name="3087"
+      > </a
+      ><a name="3088" href="lib.Base.html#5075" class="Function"
+      >fst</a
+      ><a name="3091"
+      > </a
+      ><a name="3092" href="lib.Base.html#7730" class="Function Operator"
+      >&#8728;</a
+      ><a name="3093"
+      > </a
+      ><a name="3094" href="trunc-inverse.html#2981" class="Function"
+      >f-lifted</a
+      ><a name="3102" class="Symbol"
+      >)</a
+      ><a name="3103"
+      > </a
+      ><a name="3104" href="trunc-inverse.html#3068" class="Bound"
+      >x</a
+      ><a name="3105"
+      >
+  </a
+      ><a name="3108" href="trunc-inverse.html#3060" class="Function"
+      >myst</a
+      ><a name="3112"
+      > </a
+      ><a name="3113" class="Symbol"
+      >=</a
+      ><a name="3114"
+      > </a
+      ><a name="3115" href="lib.Base.html#5087" class="Function"
+      >snd</a
+      ><a name="3118"
+      > </a
+      ><a name="3119" href="lib.Base.html#7730" class="Function Operator"
+      >&#8728;</a
+      ><a name="3120"
+      > </a
+      ><a name="3121" href="lib.Base.html#5075" class="Function"
+      >fst</a
+      ><a name="3124"
+      > </a
+      ><a name="3125" href="lib.Base.html#7730" class="Function Operator"
+      >&#8728;</a
+      ><a name="3126"
+      > </a
+      ><a name="3127" href="trunc-inverse.html#2981" class="Function"
+      >f-lifted</a
+      ><a name="3135"
+      >
+
+  </a
+      ><a name="3139" class="Comment"
+      >-- (the following two proofs will not be used later)</a
+      ><a name="3191"
+      >
+  </a
+      ><a name="3194" href="trunc-inverse.html#3194" class="Function"
+      >id-factor</a
+      ><a name="3203"
+      > </a
+      ><a name="3204" class="Symbol"
+      >:</a
+      ><a name="3205"
+      > </a
+      ><a name="3206" class="Symbol"
+      >(</a
+      ><a name="3207" href="trunc-inverse.html#3207" class="Bound"
+      >x</a
+      ><a name="3208"
+      > </a
+      ><a name="3209" class="Symbol"
+      >:</a
+      ><a name="3210"
+      > </a
+      ><a name="3211" href="trunc-inverse.html#2901" class="Function"
+      >X</a
+      ><a name="3212" class="Symbol"
+      >)</a
+      ><a name="3213"
+      > </a
+      ><a name="3214" class="Symbol"
+      >&#8594;</a
+      ><a name="3215"
+      > </a
+      ><a name="3216" href="trunc-inverse.html#3060" class="Function"
+      >myst</a
+      ><a name="3220"
+      > </a
+      ><a name="3221" href="trunc-inverse.html#2720" class="Function Operator"
+      >&#8739;</a
+      ><a name="3222"
+      > </a
+      ><a name="3223" href="trunc-inverse.html#3207" class="Bound"
+      >x</a
+      ><a name="3224"
+      > </a
+      ><a name="3225" href="trunc-inverse.html#2720" class="Function Operator"
+      >&#8739;</a
+      ><a name="3226"
+      > </a
+      ><a name="3227" href="lib.Base.html#1998" class="Datatype Operator"
+      >==</a
+      ><a name="3229"
+      > </a
+      ><a name="3230" href="trunc-inverse.html#3207" class="Bound"
+      >x</a
+      ><a name="3231"
+      >
+  </a
+      ><a name="3234" href="trunc-inverse.html#3194" class="Function"
+      >id-factor</a
+      ><a name="3243"
+      > </a
+      ><a name="3244" href="trunc-inverse.html#3244" class="Bound"
+      >x</a
+      ><a name="3245"
+      > </a
+      ><a name="3246" class="Symbol"
+      >=</a
+      ><a name="3247"
+      > </a
+      ><a name="3248" href="lib.Base.html#2049" class="InductiveConstructor"
+      >idp</a
+      ><a name="3251"
+      > 
+
+  </a
+      ><a name="3256" href="trunc-inverse.html#3256" class="Function"
+      >id-factor'</a
+      ><a name="3266"
+      > </a
+      ><a name="3267" class="Symbol"
+      >:</a
+      ><a name="3268"
+      > </a
+      ><a name="3269" href="trunc-inverse.html#3060" class="Function"
+      >myst</a
+      ><a name="3273"
+      > </a
+      ><a name="3274" href="lib.Base.html#7730" class="Function Operator"
+      >&#8728;</a
+      ><a name="3275"
+      > </a
+      ><a name="3276" href="trunc-inverse.html#2720" class="Function Operator"
+      >&#8739;_&#8739;</a
+      ><a name="3279"
+      > </a
+      ><a name="3280" href="lib.Base.html#1998" class="Datatype Operator"
+      >==</a
+      ><a name="3282"
+      > </a
+      ><a name="3283" href="lib.Base.html#7589" class="Function"
+      >idf</a
+      ><a name="3286"
+      > </a
+      ><a name="3287" class="Symbol"
+      >_</a
+      ><a name="3288"
+      >
+  </a
+      ><a name="3291" href="trunc-inverse.html#3256" class="Function"
+      >id-factor'</a
+      ><a name="3301"
+      > </a
+      ><a name="3302" class="Symbol"
+      >=</a
+      ><a name="3303"
+      > </a
+      ><a name="3304" href="lib.Funext.html#3978" class="Function"
+      >&#955;=</a
+      ><a name="3306"
+      > </a
+      ><a name="3307" href="trunc-inverse.html#3194" class="Function"
+      >id-factor</a
+      ><a name="3316"
+      >
+
+</a
+      ><a name="3318" class="Comment"
+      >{- My first example of homogeneous types is the class of all tyoes 
+   with decidable equality. -}</a
+      ><a name="3416"
+      >
+</a
+      ><a name="3417" class="Keyword"
+      >module</a
+      ><a name="3423"
+      > </a
+      ><a name="3424" href="trunc-inverse.html#3424" class="Module"
+      >dec-hom</a
+      ><a name="3431"
+      > </a
+      ><a name="3432" class="Symbol"
+      >{</a
+      ><a name="3433" href="trunc-inverse.html#3433" class="Bound"
+      >i</a
+      ><a name="3434" class="Symbol"
+      >}</a
+      ><a name="3435"
+      > </a
+      ><a name="3436" class="Symbol"
+      >(</a
+      ><a name="3437" href="trunc-inverse.html#3437" class="Bound"
+      >ptX</a
+      ><a name="3440"
+      > </a
+      ><a name="3441" class="Symbol"
+      >:</a
+      ><a name="3442"
+      > </a
+      ><a name="3443" href="trunc-inverse.html#1814" class="Function"
+      >Type&#8226;</a
+      ><a name="3448"
+      > </a
+      ><a name="3449" href="trunc-inverse.html#3433" class="Bound"
+      >i</a
+      ><a name="3450" class="Symbol"
+      >)</a
+      ><a name="3451"
+      > </a
+      ><a name="3452" class="Symbol"
+      >(</a
+      ><a name="3453" href="trunc-inverse.html#3453" class="Bound"
+      >dec</a
+      ><a name="3456"
+      > </a
+      ><a name="3457" class="Symbol"
+      >:</a
+      ><a name="3458"
+      > </a
+      ><a name="3459" href="lib.NType.html#1302" class="Function"
+      >has-dec-eq</a
+      ><a name="3469"
+      > </a
+      ><a name="3470" class="Symbol"
+      >(</a
+      ><a name="3471" href="trunc-inverse.html#1917" class="Function"
+      >base</a
+      ><a name="3475"
+      > </a
+      ><a name="3476" href="trunc-inverse.html#3437" class="Bound"
+      >ptX</a
+      ><a name="3479" class="Symbol"
+      >))</a
+      ><a name="3481"
+      > </a
+      ><a name="3482" class="Keyword"
+      >where</a
+      ><a name="3487"
+      >
+
+  </a
+      ><a name="3491" href="trunc-inverse.html#3491" class="Function"
+      >X</a
+      ><a name="3492"
+      >  </a
+      ><a name="3494" class="Symbol"
+      >=</a
+      ><a name="3495"
+      > </a
+      ><a name="3496" href="trunc-inverse.html#1917" class="Function"
+      >base</a
+      ><a name="3500"
+      > </a
+      ><a name="3501" href="trunc-inverse.html#3437" class="Bound"
+      >ptX</a
+      ><a name="3504"
+      >
+  </a
+      ><a name="3507" href="trunc-inverse.html#3507" class="Function"
+      >x&#8320;</a
+      ><a name="3509"
+      > </a
+      ><a name="3510" class="Symbol"
+      >=</a
+      ><a name="3511"
+      > </a
+      ><a name="3512" href="trunc-inverse.html#1932" class="Function"
+      >pt</a
+      ><a name="3514"
+      > </a
+      ><a name="3515" href="trunc-inverse.html#3437" class="Bound"
+      >ptX</a
+      ><a name="3518"
+      >
+
+  </a
+      ><a name="3522" class="Keyword"
+      >module</a
+      ><a name="3528"
+      > </a
+      ><a name="3529" href="trunc-inverse.html#3529" class="Module"
+      >_</a
+      ><a name="3530"
+      > </a
+      ><a name="3531" class="Symbol"
+      >(</a
+      ><a name="3532" href="trunc-inverse.html#3532" class="Bound"
+      >x</a
+      ><a name="3533"
+      > </a
+      ><a name="3534" class="Symbol"
+      >:</a
+      ><a name="3535"
+      > </a
+      ><a name="3536" href="trunc-inverse.html#3491" class="Function"
+      >X</a
+      ><a name="3537" class="Symbol"
+      >)</a
+      ><a name="3538"
+      > </a
+      ><a name="3539" class="Keyword"
+      >where</a
+      ><a name="3544"
+      >
+
+    </a
+      ><a name="3550" class="Comment"
+      >-- I define a function X &#8594; X that switches x and x&#8320;.</a
+      ><a name="3602"
+      >
+    </a
+      ><a name="3607" href="trunc-inverse.html#3607" class="Function"
+      >switch</a
+      ><a name="3613"
+      > </a
+      ><a name="3614" class="Symbol"
+      >:</a
+      ><a name="3615"
+      > </a
+      ><a name="3616" href="trunc-inverse.html#3491" class="Function"
+      >X</a
+      ><a name="3617"
+      > </a
+      ><a name="3618" class="Symbol"
+      >&#8594;</a
+      ><a name="3619"
+      > </a
+      ><a name="3620" href="trunc-inverse.html#3491" class="Function"
+      >X</a
+      ><a name="3621"
+      >
+    </a
+      ><a name="3626" href="trunc-inverse.html#3607" class="Function"
+      >switch</a
+      ><a name="3632"
+      > </a
+      ><a name="3633" class="Symbol"
+      >=</a
+      ><a name="3634"
+      > </a
+      ><a name="3635" class="Symbol"
+      >&#955;</a
+      ><a name="3636"
+      > </a
+      ><a name="3637" href="trunc-inverse.html#3637" class="Bound"
+      >y</a
+      ><a name="3638"
+      > </a
+      ><a name="3639" class="Symbol"
+      >&#8594;</a
+      ><a name="3640"
+      > </a
+      ><a name="3641" href="lib.Base.html#9076" class="Function Operator"
+      >match</a
+      ><a name="3646"
+      > </a
+      ><a name="3647" href="trunc-inverse.html#3453" class="Bound"
+      >dec</a
+      ><a name="3650"
+      > </a
+      ><a name="3651" href="trunc-inverse.html#3637" class="Bound"
+      >y</a
+      ><a name="3652"
+      > </a
+      ><a name="3653" href="trunc-inverse.html#3507" class="Function"
+      >x&#8320;</a
+      ><a name="3655"
+      > 
+                     </a
+      ><a name="3678" href="lib.Base.html#9076" class="Function Operator"
+      >withl</a
+      ><a name="3683"
+      > </a
+      ><a name="3684" class="Symbol"
+      >(&#955;</a
+      ><a name="3686"
+      > </a
+      ><a name="3687" href="trunc-inverse.html#3687" class="Bound"
+      >_</a
+      ><a name="3688"
+      > </a
+      ><a name="3689" class="Symbol"
+      >&#8594;</a
+      ><a name="3690"
+      > </a
+      ><a name="3691" href="trunc-inverse.html#3532" class="Bound"
+      >x</a
+      ><a name="3692" class="Symbol"
+      >)</a
+      ><a name="3693"
+      > 
+                     </a
+      ><a name="3716" href="lib.Base.html#9076" class="Function Operator"
+      >withr</a
+      ><a name="3721"
+      > </a
+      ><a name="3722" class="Symbol"
+      >(&#955;</a
+      ><a name="3724"
+      > </a
+      ><a name="3725" href="trunc-inverse.html#3725" class="Bound"
+      >_</a
+      ><a name="3726"
+      > </a
+      ><a name="3727" class="Symbol"
+      >&#8594;</a
+      ><a name="3728"
+      > </a
+      ><a name="3729" href="lib.Base.html#9076" class="Function Operator"
+      >match</a
+      ><a name="3734"
+      > </a
+      ><a name="3735" href="trunc-inverse.html#3453" class="Bound"
+      >dec</a
+      ><a name="3738"
+      > </a
+      ><a name="3739" href="trunc-inverse.html#3637" class="Bound"
+      >y</a
+      ><a name="3740"
+      > </a
+      ><a name="3741" href="trunc-inverse.html#3532" class="Bound"
+      >x</a
+      ><a name="3742"
+      >
+                                    </a
+      ><a name="3779" href="lib.Base.html#9076" class="Function Operator"
+      >withl</a
+      ><a name="3784"
+      > </a
+      ><a name="3785" class="Symbol"
+      >(&#955;</a
+      ><a name="3787"
+      > </a
+      ><a name="3788" href="trunc-inverse.html#3788" class="Bound"
+      >_</a
+      ><a name="3789"
+      > </a
+      ><a name="3790" class="Symbol"
+      >&#8594;</a
+      ><a name="3791"
+      > </a
+      ><a name="3792" href="trunc-inverse.html#3507" class="Function"
+      >x&#8320;</a
+      ><a name="3794" class="Symbol"
+      >)</a
+      ><a name="3795"
+      >
+                                    </a
+      ><a name="3832" href="lib.Base.html#9076" class="Function Operator"
+      >withr</a
+      ><a name="3837"
+      > </a
+      ><a name="3838" class="Symbol"
+      >(&#955;</a
+      ><a name="3840"
+      > </a
+      ><a name="3841" href="trunc-inverse.html#3841" class="Bound"
+      >_</a
+      ><a name="3842"
+      > </a
+      ><a name="3843" class="Symbol"
+      >&#8594;</a
+      ><a name="3844"
+      > </a
+      ><a name="3845" href="trunc-inverse.html#3637" class="Bound"
+      >y</a
+      ><a name="3846" class="Symbol"
+      >))</a
+      ><a name="3848"
+      >
+
+    </a
+      ><a name="3854" class="Comment"
+      >-- Rather tedious to prove, but completely straightforward:</a
+      ><a name="3913"
+      >
+    </a
+      ><a name="3918" class="Comment"
+      >-- this map is its own inverse.</a
+      ><a name="3949"
+      >
+    </a
+      ><a name="3954" href="trunc-inverse.html#3954" class="Function"
+      >switch-selfinverse</a
+      ><a name="3972"
+      > </a
+      ><a name="3973" class="Symbol"
+      >:</a
+      ><a name="3974"
+      > </a
+      ><a name="3975" class="Symbol"
+      >(</a
+      ><a name="3976" href="trunc-inverse.html#3976" class="Bound"
+      >y</a
+      ><a name="3977"
+      > </a
+      ><a name="3978" class="Symbol"
+      >:</a
+      ><a name="3979"
+      > </a
+      ><a name="3980" href="trunc-inverse.html#3491" class="Function"
+      >X</a
+      ><a name="3981" class="Symbol"
+      >)</a
+      ><a name="3982"
+      > </a
+      ><a name="3983" class="Symbol"
+      >&#8594;</a
+      ><a name="3984"
+      > </a
+      ><a name="3985" href="trunc-inverse.html#3607" class="Function"
+      >switch</a
+      ><a name="3991"
+      > </a
+      ><a name="3992" class="Symbol"
+      >(</a
+      ><a name="3993" href="trunc-inverse.html#3607" class="Function"
+      >switch</a
+      ><a name="3999"
+      > </a
+      ><a name="4000" href="trunc-inverse.html#3976" class="Bound"
+      >y</a
+      ><a name="4001" class="Symbol"
+      >)</a
+      ><a name="4002"
+      > </a
+      ><a name="4003" href="lib.Base.html#1998" class="Datatype Operator"
+      >==</a
+      ><a name="4005"
+      > </a
+      ><a name="4006" href="trunc-inverse.html#3976" class="Bound"
+      >y</a
+      ><a name="4007"
+      >
+    </a
+      ><a name="4012" href="trunc-inverse.html#3954" class="Function"
+      >switch-selfinverse</a
+      ><a name="4030"
+      > </a
+      ><a name="4031" href="trunc-inverse.html#4031" class="Bound"
+      >y</a
+      ><a name="4032"
+      > </a
+      ><a name="4033" class="Keyword"
+      >with</a
+      ><a name="4037"
+      > </a
+      ><a name="4038" href="trunc-inverse.html#3453" class="Bound"
+      >dec</a
+      ><a name="4041"
+      > </a
+      ><a name="4042" href="trunc-inverse.html#4031" class="Bound"
+      >y</a
+      ><a name="4043"
+      > </a
+      ><a name="4044" href="trunc-inverse.html#3507" class="Function"
+      >x&#8320;</a
+      ><a name="4046"
+      >
+    </a
+      ><a name="4051" href="trunc-inverse.html#3954" class="Function"
+      >switch-selfinverse</a
+      ><a name="4069"
+      > </a
+      ><a name="4070" href="trunc-inverse.html#4070" class="Bound"
+      >y</a
+      ><a name="4071"
+      > </a
+      ><a name="4072" class="Symbol"
+      >|</a
+      ><a name="4073"
+      > </a
+      ><a name="4074" href="lib.Base.html#9031" class="InductiveConstructor"
+      >inl</a
+      ><a name="4077"
+      > </a
+      ><a name="4078" class="Symbol"
+      >_</a
+      ><a name="4079"
+      > </a
+      ><a name="4080" class="Keyword"
+      >with</a
+      ><a name="4084"
+      > </a
+      ><a name="4085" href="trunc-inverse.html#3453" class="Bound"
+      >dec</a
+      ><a name="4088"
+      > </a
+      ><a name="4089" href="trunc-inverse.html#3532" class="Bound"
+      >x</a
+      ><a name="4090"
+      > </a
+      ><a name="4091" href="trunc-inverse.html#3507" class="Function"
+      >x&#8320;</a
+      ><a name="4093"
+      >
+    </a
+      ><a name="4098" href="trunc-inverse.html#3954" class="Function"
+      >switch-selfinverse</a
+      ><a name="4116"
+      > </a
+      ><a name="4117" href="trunc-inverse.html#4117" class="Bound"
+      >y</a
+      ><a name="4118"
+      > </a
+      ><a name="4119" class="Symbol"
+      >|</a
+      ><a name="4120"
+      > </a
+      ><a name="4121" href="lib.Base.html#9031" class="InductiveConstructor"
+      >inl</a
+      ><a name="4124"
+      > </a
+      ><a name="4125" href="trunc-inverse.html#4125" class="Bound"
+      >y-x&#8320;</a
+      ><a name="4129"
+      >  </a
+      ><a name="4131" class="Symbol"
+      >|</a
+      ><a name="4132"
+      > </a
+      ><a name="4133" href="lib.Base.html#9031" class="InductiveConstructor"
+      >inl</a
+      ><a name="4136"
+      > </a
+      ><a name="4137" href="trunc-inverse.html#4137" class="Bound"
+      >x-x&#8320;</a
+      ><a name="4141"
+      > </a
+      ><a name="4142" class="Symbol"
+      >=</a
+      ><a name="4143"
+      > </a
+      ><a name="4144" href="trunc-inverse.html#4137" class="Bound"
+      >x-x&#8320;</a
+      ><a name="4148"
+      > </a
+      ><a name="4149" href="lib.PathGroupoid.html#406" class="Function Operator"
+      >&#8729;</a
+      ><a name="4150"
+      > </a
+      ><a name="4151" href="lib.PathGroupoid.html#1079" class="Function"
+      >!</a
+      ><a name="4152"
+      > </a
+      ><a name="4153" href="trunc-inverse.html#4125" class="Bound"
+      >y-x&#8320;</a
+      ><a name="4157"
+      >
+    </a
+      ><a name="4162" href="trunc-inverse.html#3954" class="Function"
+      >switch-selfinverse</a
+      ><a name="4180"
+      > </a
+      ><a name="4181" href="trunc-inverse.html#4181" class="Bound"
+      >y</a
+      ><a name="4182"
+      > </a
+      ><a name="4183" class="Symbol"
+      >|</a
+      ><a name="4184"
+      > </a
+      ><a name="4185" href="lib.Base.html#9031" class="InductiveConstructor"
+      >inl</a
+      ><a name="4188"
+      > </a
+      ><a name="4189" class="Symbol"
+      >_</a
+      ><a name="4190"
+      >     </a
+      ><a name="4195" class="Symbol"
+      >|</a
+      ><a name="4196"
+      > </a
+      ><a name="4197" href="lib.Base.html#9054" class="InductiveConstructor"
+      >inr</a
+      ><a name="4200"
+      > </a
+      ><a name="4201" class="Symbol"
+      >_</a
+      ><a name="4202"
+      > </a
+      ><a name="4203" class="Keyword"
+      >with</a
+      ><a name="4207"
+      > </a
+      ><a name="4208" href="trunc-inverse.html#3453" class="Bound"
+      >dec</a
+      ><a name="4211"
+      > </a
+      ><a name="4212" href="trunc-inverse.html#3532" class="Bound"
+      >x</a
+      ><a name="4213"
+      > </a
+      ><a name="4214" href="trunc-inverse.html#3532" class="Bound"
+      >x</a
+      ><a name="4215"
+      >
+    </a
+      ><a name="4220" href="trunc-inverse.html#3954" class="Function"
+      >switch-selfinverse</a
+      ><a name="4238"
+      > </a
+      ><a name="4239" href="trunc-inverse.html#4239" class="Bound"
+      >y</a
+      ><a name="4240"
+      > </a
+      ><a name="4241" class="Symbol"
+      >|</a
+      ><a name="4242"
+      > </a
+      ><a name="4243" href="lib.Base.html#9031" class="InductiveConstructor"
+      >inl</a
+      ><a name="4246"
+      > </a
+      ><a name="4247" href="trunc-inverse.html#4247" class="Bound"
+      >y-x&#8320;</a
+      ><a name="4251"
+      >  </a
+      ><a name="4253" class="Symbol"
+      >|</a
+      ><a name="4254"
+      > </a
+      ><a name="4255" href="lib.Base.html#9054" class="InductiveConstructor"
+      >inr</a
+      ><a name="4258"
+      > </a
+      ><a name="4259" class="Symbol"
+      >_</a
+      ><a name="4260"
+      >    </a
+      ><a name="4264" class="Symbol"
+      >|</a
+      ><a name="4265"
+      > </a
+      ><a name="4266" href="lib.Base.html#9031" class="InductiveConstructor"
+      >inl</a
+      ><a name="4269"
+      > </a
+      ><a name="4270" class="Symbol"
+      >_</a
+      ><a name="4271"
+      > </a
+      ><a name="4272" class="Symbol"
+      >=</a
+      ><a name="4273"
+      > </a
+      ><a name="4274" href="lib.PathGroupoid.html#1079" class="Function"
+      >!</a
+      ><a name="4275"
+      > </a
+      ><a name="4276" href="trunc-inverse.html#4247" class="Bound"
+      >y-x&#8320;</a
+      ><a name="4280"
+      >
+    </a
+      ><a name="4285" href="trunc-inverse.html#3954" class="Function"
+      >switch-selfinverse</a
+      ><a name="4303"
+      > </a
+      ><a name="4304" href="trunc-inverse.html#4304" class="Bound"
+      >y</a
+      ><a name="4305"
+      > </a
+      ><a name="4306" class="Symbol"
+      >|</a
+      ><a name="4307"
+      > </a
+      ><a name="4308" href="lib.Base.html#9031" class="InductiveConstructor"
+      >inl</a
+      ><a name="4311"
+      > </a
+      ><a name="4312" class="Symbol"
+      >_</a
+      ><a name="4313"
+      >     </a
+      ><a name="4318" class="Symbol"
+      >|</a
+      ><a name="4319"
+      > </a
+      ><a name="4320" href="lib.Base.html#9054" class="InductiveConstructor"
+      >inr</a
+      ><a name="4323"
+      > </a
+      ><a name="4324" class="Symbol"
+      >_</a
+      ><a name="4325"
+      >    </a
+      ><a name="4329" class="Symbol"
+      >|</a
+      ><a name="4330"
+      > </a
+      ><a name="4331" href="lib.Base.html#9054" class="InductiveConstructor"
+      >inr</a
+      ><a name="4334"
+      > </a
+      ><a name="4335" href="trunc-inverse.html#4335" class="Bound"
+      >&#172;x-x</a
+      ><a name="4339"
+      > </a
+      ><a name="4340" class="Symbol"
+      >=</a
+      ><a name="4341"
+      > </a
+      ><a name="4342" href="lib.Base.html#5657" class="Function"
+      >Empty-elim</a
+      ><a name="4352"
+      > </a
+      ><a name="4353" class="Symbol"
+      >{</a
+      ><a name="4354"
+      >A </a
+      ><a name="4356" class="Symbol"
+      >=</a
+      ><a name="4357"
+      > </a
+      ><a name="4358" class="Symbol"
+      >&#955;</a
+      ><a name="4359"
+      > </a
+      ><a name="4360" href="trunc-inverse.html#4360" class="Bound"
+      >_</a
+      ><a name="4361"
+      > </a
+      ><a name="4362" class="Symbol"
+      >&#8594;</a
+      ><a name="4363"
+      > </a
+      ><a name="4364" href="trunc-inverse.html#3532" class="Bound"
+      >x</a
+      ><a name="4365"
+      > </a
+      ><a name="4366" href="lib.Base.html#1998" class="Datatype Operator"
+      >==</a
+      ><a name="4368"
+      > </a
+      ><a name="4369" href="trunc-inverse.html#4304" class="Bound"
+      >y</a
+      ><a name="4370" class="Symbol"
+      >}</a
+      ><a name="4371"
+      > </a
+      ><a name="4372" class="Symbol"
+      >(</a
+      ><a name="4373" href="trunc-inverse.html#4335" class="Bound"
+      >&#172;x-x</a
+      ><a name="4377"
+      > </a
+      ><a name="4378" href="lib.Base.html#2049" class="InductiveConstructor"
+      >idp</a
+      ><a name="4381" class="Symbol"
+      >)</a
+      ><a name="4382"
+      >
+    </a
+      ><a name="4387" href="trunc-inverse.html#3954" class="Function"
+      >switch-selfinverse</a
+      ><a name="4405"
+      > </a
+      ><a name="4406" href="trunc-inverse.html#4406" class="Bound"
+      >y</a
+      ><a name="4407"
+      > </a
+      ><a name="4408" class="Symbol"
+      >|</a
+      ><a name="4409"
+      > </a
+      ><a name="4410" href="lib.Base.html#9054" class="InductiveConstructor"
+      >inr</a
+      ><a name="4413"
+      > </a
+      ><a name="4414" class="Symbol"
+      >_</a
+      ><a name="4415"
+      > </a
+      ><a name="4416" class="Keyword"
+      >with</a
+      ><a name="4420"
+      > </a
+      ><a name="4421" href="trunc-inverse.html#3453" class="Bound"
+      >dec</a
+      ><a name="4424"
+      > </a
+      ><a name="4425" href="trunc-inverse.html#4406" class="Bound"
+      >y</a
+      ><a name="4426"
+      > </a
+      ><a name="4427" href="trunc-inverse.html#3532" class="Bound"
+      >x</a
+      ><a name="4428"
+      > 
+    </a
+      ><a name="4434" href="trunc-inverse.html#3954" class="Function"
+      >switch-selfinverse</a
+      ><a name="4452"
+      > </a
+      ><a name="4453" href="trunc-inverse.html#4453" class="Bound"
+      >y</a
+      ><a name="4454"
+      > </a
+      ><a name="4455" class="Symbol"
+      >|</a
+      ><a name="4456"
+      > </a
+      ><a name="4457" href="lib.Base.html#9054" class="InductiveConstructor"
+      >inr</a
+      ><a name="4460"
+      > </a
+      ><a name="4461" class="Symbol"
+      >_</a
+      ><a name="4462"
+      >     </a
+      ><a name="4467" class="Symbol"
+      >|</a
+      ><a name="4468"
+      > </a
+      ><a name="4469" href="lib.Base.html#9031" class="InductiveConstructor"
+      >inl</a
+      ><a name="4472"
+      > </a
+      ><a name="4473" class="Symbol"
+      >_</a
+      ><a name="4474"
+      > </a
+      ><a name="4475" class="Keyword"
+      >with</a
+      ><a name="4479"
+      > </a
+      ><a name="4480" href="trunc-inverse.html#3453" class="Bound"
+      >dec</a
+      ><a name="4483"
+      > </a
+      ><a name="4484" href="trunc-inverse.html#3532" class="Bound"
+      >x</a
+      ><a name="4485"
+      > </a
+      ><a name="4486" href="trunc-inverse.html#3507" class="Function"
+      >x&#8320;</a
+      ><a name="4488"
+      > 
+    </a
+      ><a name="4494" href="trunc-inverse.html#3954" class="Function"
+      >switch-selfinverse</a
+      ><a name="4512"
+      > </a
+      ><a name="4513" href="trunc-inverse.html#4513" class="Bound"
+      >y</a
+      ><a name="4514"
+      > </a
+      ><a name="4515" class="Symbol"
+      >|</a
+      ><a name="4516"
+      > </a
+      ><a name="4517" href="lib.Base.html#9054" class="InductiveConstructor"
+      >inr</a
+      ><a name="4520"
+      > </a
+      ><a name="4521" href="trunc-inverse.html#4521" class="Bound"
+      >&#172;x-x&#8320;</a
+      ><a name="4526"
+      > </a
+      ><a name="4527" class="Symbol"
+      >|</a
+      ><a name="4528"
+      > </a
+      ><a name="4529" href="lib.Base.html#9031" class="InductiveConstructor"
+      >inl</a
+      ><a name="4532"
+      > </a
+      ><a name="4533" href="trunc-inverse.html#4533" class="Bound"
+      >y-x</a
+      ><a name="4536"
+      >  </a
+      ><a name="4538" class="Symbol"
+      >|</a
+      ><a name="4539"
+      > </a
+      ><a name="4540" href="lib.Base.html#9031" class="InductiveConstructor"
+      >inl</a
+      ><a name="4543"
+      > </a
+      ><a name="4544" href="trunc-inverse.html#4544" class="Bound"
+      >x-x&#8320;</a
+      ><a name="4548"
+      > </a
+      ><a name="4549" class="Symbol"
+      >=</a
+      ><a name="4550"
+      > </a
+      ><a name="4551" href="lib.Base.html#5657" class="Function"
+      >Empty-elim</a
+      ><a name="4561"
+      > </a
+      ><a name="4562" class="Symbol"
+      >(</a
+      ><a name="4563" href="trunc-inverse.html#4521" class="Bound"
+      >&#172;x-x&#8320;</a
+      ><a name="4568"
+      > </a
+      ><a name="4569" class="Symbol"
+      >(</a
+      ><a name="4570" href="trunc-inverse.html#4533" class="Bound"
+      >y-x</a
+      ><a name="4573"
+      > </a
+      ><a name="4574" href="lib.PathGroupoid.html#406" class="Function Operator"
+      >&#8729;</a
+      ><a name="4575"
+      > </a
+      ><a name="4576" href="trunc-inverse.html#4544" class="Bound"
+      >x-x&#8320;</a
+      ><a name="4580" class="Symbol"
+      >))</a
+      ><a name="4582"
+      >
+    </a
+      ><a name="4587" href="trunc-inverse.html#3954" class="Function"
+      >switch-selfinverse</a
+      ><a name="4605"
+      > </a
+      ><a name="4606" href="trunc-inverse.html#4606" class="Bound"
+      >y</a
+      ><a name="4607"
+      > </a
+      ><a name="4608" class="Symbol"
+      >|</a
+      ><a name="4609"
+      > </a
+      ><a name="4610" href="lib.Base.html#9054" class="InductiveConstructor"
+      >inr</a
+      ><a name="4613"
+      > </a
+      ><a name="4614" class="Symbol"
+      >_</a
+      ><a name="4615"
+      >     </a
+      ><a name="4620" class="Symbol"
+      >|</a
+      ><a name="4621"
+      > </a
+      ><a name="4622" href="lib.Base.html#9031" class="InductiveConstructor"
+      >inl</a
+      ><a name="4625"
+      > </a
+      ><a name="4626" class="Symbol"
+      >_</a
+      ><a name="4627"
+      >    </a
+      ><a name="4631" class="Symbol"
+      >|</a
+      ><a name="4632"
+      > </a
+      ><a name="4633" href="lib.Base.html#9054" class="InductiveConstructor"
+      >inr</a
+      ><a name="4636"
+      > </a
+      ><a name="4637" class="Symbol"
+      >_</a
+      ><a name="4638"
+      > </a
+      ><a name="4639" class="Keyword"
+      >with</a
+      ><a name="4643"
+      > </a
+      ><a name="4644" href="trunc-inverse.html#3453" class="Bound"
+      >dec</a
+      ><a name="4647"
+      > </a
+      ><a name="4648" href="trunc-inverse.html#3507" class="Function"
+      >x&#8320;</a
+      ><a name="4650"
+      > </a
+      ><a name="4651" href="trunc-inverse.html#3507" class="Function"
+      >x&#8320;</a
+      ><a name="4653"
+      > 
+    </a
+      ><a name="4659" href="trunc-inverse.html#3954" class="Function"
+      >switch-selfinverse</a
+      ><a name="4677"
+      > </a
+      ><a name="4678" href="trunc-inverse.html#4678" class="Bound"
+      >y</a
+      ><a name="4679"
+      > </a
+      ><a name="4680" class="Symbol"
+      >|</a
+      ><a name="4681"
+      > </a
+      ><a name="4682" href="lib.Base.html#9054" class="InductiveConstructor"
+      >inr</a
+      ><a name="4685"
+      > </a
+      ><a name="4686" class="Symbol"
+      >_</a
+      ><a name="4687"
+      >     </a
+      ><a name="4692" class="Symbol"
+      >|</a
+      ><a name="4693"
+      > </a
+      ><a name="4694" href="lib.Base.html#9031" class="InductiveConstructor"
+      >inl</a
+      ><a name="4697"
+      > </a
+      ><a name="4698" href="trunc-inverse.html#4698" class="Bound"
+      >y-x</a
+      ><a name="4701"
+      >  </a
+      ><a name="4703" class="Symbol"
+      >|</a
+      ><a name="4704"
+      > </a
+      ><a name="4705" href="lib.Base.html#9054" class="InductiveConstructor"
+      >inr</a
+      ><a name="4708"
+      > </a
+      ><a name="4709" class="Symbol"
+      >_</a
+      ><a name="4710"
+      > </a
+      ><a name="4711" class="Symbol"
+      >|</a
+      ><a name="4712"
+      > </a
+      ><a name="4713" href="lib.Base.html#9031" class="InductiveConstructor"
+      >inl</a
+      ><a name="4716"
+      > </a
+      ><a name="4717" class="Symbol"
+      >_</a
+      ><a name="4718"
+      > </a
+      ><a name="4719" class="Symbol"
+      >=</a
+      ><a name="4720"
+      > </a
+      ><a name="4721" href="lib.PathGroupoid.html#1079" class="Function"
+      >!</a
+      ><a name="4722"
+      > </a
+      ><a name="4723" href="trunc-inverse.html#4698" class="Bound"
+      >y-x</a
+      ><a name="4726"
+      >
+    </a
+      ><a name="4731" href="trunc-inverse.html#3954" class="Function"
+      >switch-selfinverse</a
+      ><a name="4749"
+      > </a
+      ><a name="4750" href="trunc-inverse.html#4750" class="Bound"
+      >y</a
+      ><a name="4751"
+      > </a
+      ><a name="4752" class="Symbol"
+      >|</a
+      ><a name="4753"
+      > </a
+      ><a name="4754" href="lib.Base.html#9054" class="InductiveConstructor"
+      >inr</a
+      ><a name="4757"
+      > </a
+      ><a name="4758" class="Symbol"
+      >_</a
+      ><a name="4759"
+      >     </a
+      ><a name="4764" class="Symbol"
+      >|</a
+      ><a name="4765"
+      > </a
+      ><a name="4766" href="lib.Base.html#9031" class="InductiveConstructor"
+      >inl</a
+      ><a name="4769"
+      > </a
+      ><a name="4770" class="Symbol"
+      >_</a
+      ><a name="4771"
+      >    </a
+      ><a name="4775" class="Symbol"
+      >|</a
+      ><a name="4776"
+      > </a
+      ><a name="4777" href="lib.Base.html#9054" class="InductiveConstructor"
+      >inr</a
+      ><a name="4780"
+      > </a
+      ><a name="4781" class="Symbol"
+      >_</a
+      ><a name="4782"
+      > </a
+      ><a name="4783" class="Symbol"
+      >|</a
+      ><a name="4784"
+      > </a
+      ><a name="4785" href="lib.Base.html#9054" class="InductiveConstructor"
+      >inr</a
+      ><a name="4788"
+      > </a
+      ><a name="4789" href="trunc-inverse.html#4789" class="Bound"
+      >&#172;x&#8320;-x&#8320;</a
+      ><a name="4795"
+      > </a
+      ><a name="4796" class="Symbol"
+      >=</a
+      ><a name="4797"
+      > </a
+      ><a name="4798" href="lib.Base.html#5657" class="Function"
+      >Empty-elim</a
+      ><a name="4808"
+      > </a
+      ><a name="4809" class="Symbol"
+      >{</a
+      ><a name="4810"
+      >A </a
+      ><a name="4812" class="Symbol"
+      >=</a
+      ><a name="4813"
+      > </a
+      ><a name="4814" class="Symbol"
+      >&#955;</a
+      ><a name="4815"
+      > </a
+      ><a name="4816" href="trunc-inverse.html#4816" class="Bound"
+      >_</a
+      ><a name="4817"
+      > </a
+      ><a name="4818" class="Symbol"
+      >&#8594;</a
+      ><a name="4819"
+      > </a
+      ><a name="4820" class="Symbol"
+      >_</a
+      ><a name="4821"
+      > </a
+      ><a name="4822" href="lib.Base.html#1998" class="Datatype Operator"
+      >==</a
+      ><a name="4824"
+      > </a
+      ><a name="4825" href="trunc-inverse.html#4750" class="Bound"
+      >y</a
+      ><a name="4826" class="Symbol"
+      >}</a
+      ><a name="4827"
+      > </a
+      ><a name="4828" class="Symbol"
+      >(</a
+      ><a name="4829" href="trunc-inverse.html#4789" class="Bound"
+      >&#172;x&#8320;-x&#8320;</a
+      ><a name="4835"
+      > </a
+      ><a name="4836" href="lib.Base.html#2049" class="InductiveConstructor"
+      >idp</a
+      ><a name="4839" class="Symbol"
+      >)</a
+      ><a name="4840"
+      > 
+    </a
+      ><a name="4846" href="trunc-inverse.html#3954" class="Function"
+      >switch-selfinverse</a
+      ><a name="4864"
+      > </a
+      ><a name="4865" href="trunc-inverse.html#4865" class="Bound"
+      >y</a
+      ><a name="4866"
+      > </a
+      ><a name="4867" class="Symbol"
+      >|</a
+      ><a name="4868"
+      > </a
+      ><a name="4869" href="lib.Base.html#9054" class="InductiveConstructor"
+      >inr</a
+      ><a name="4872"
+      > </a
+      ><a name="4873" class="Symbol"
+      >_</a
+      ><a name="4874"
+      >     </a
+      ><a name="4879" class="Symbol"
+      >|</a
+      ><a name="4880"
+      > </a
+      ><a name="4881" href="lib.Base.html#9054" class="InductiveConstructor"
+      >inr</a
+      ><a name="4884"
+      > </a
+      ><a name="4885" class="Symbol"
+      >_</a
+      ><a name="4886"
+      > </a
+      ><a name="4887" class="Keyword"
+      >with</a
+      ><a name="4891"
+      > </a
+      ><a name="4892" href="trunc-inverse.html#3453" class="Bound"
+      >dec</a
+      ><a name="4895"
+      > </a
+      ><a name="4896" href="trunc-inverse.html#4865" class="Bound"
+      >y</a
+      ><a name="4897"
+      > </a
+      ><a name="4898" href="trunc-inverse.html#3507" class="Function"
+      >x&#8320;</a
+      ><a name="4900"
+      >
+    </a
+      ><a name="4905" href="trunc-inverse.html#3954" class="Function"
+      >switch-selfinverse</a
+      ><a name="4923"
+      > </a
+      ><a name="4924" href="trunc-inverse.html#4924" class="Bound"
+      >y</a
+      ><a name="4925"
+      > </a
+      ><a name="4926" class="Symbol"
+      >|</a
+      ><a name="4927"
+      > </a
+      ><a name="4928" href="lib.Base.html#9054" class="InductiveConstructor"
+      >inr</a
+      ><a name="4931"
+      > </a
+      ><a name="4932" href="trunc-inverse.html#4932" class="Bound"
+      >&#172;y-x&#8320;</a
+      ><a name="4937"
+      > </a
+      ><a name="4938" class="Symbol"
+      >|</a
+      ><a name="4939"
+      > </a
+      ><a name="4940" href="lib.Base.html#9054" class="InductiveConstructor"
+      >inr</a
+      ><a name="4943"
+      > </a
+      ><a name="4944" class="Symbol"
+      >_</a
+      ><a name="4945"
+      >    </a
+      ><a name="4949" class="Symbol"
+      >|</a
+      ><a name="4950"
+      > </a
+      ><a name="4951" href="lib.Base.html#9031" class="InductiveConstructor"
+      >inl</a
+      ><a name="4954"
+      > </a
+      ><a name="4955" href="trunc-inverse.html#4955" class="Bound"
+      >y-x&#8320;</a
+      ><a name="4959"
+      > </a
+      ><a name="4960" class="Symbol"
+      >=</a
+      ><a name="4961"
+      > </a
+      ><a name="4962" href="lib.Base.html#5657" class="Function"
+      >Empty-elim</a
+      ><a name="4972"
+      > </a
+      ><a name="4973" class="Symbol"
+      >{</a
+      ><a name="4974"
+      >A </a
+      ><a name="4976" class="Symbol"
+      >=</a
+      ><a name="4977"
+      > </a
+      ><a name="4978" class="Symbol"
+      >&#955;</a
+      ><a name="4979"
+      > </a
+      ><a name="4980" href="trunc-inverse.html#4980" class="Bound"
+      >_</a
+      ><a name="4981"
+      > </a
+      ><a name="4982" class="Symbol"
+      >&#8594;</a
+      ><a name="4983"
+      > </a
+      ><a name="4984" href="trunc-inverse.html#3532" class="Bound"
+      >x</a
+      ><a name="4985"
+      > </a
+      ><a name="4986" href="lib.Base.html#1998" class="Datatype Operator"
+      >==</a
+      ><a name="4988"
+      > </a
+      ><a name="4989" href="trunc-inverse.html#4924" class="Bound"
+      >y</a
+      ><a name="4990" class="Symbol"
+      >}</a
+      ><a name="4991"
+      > </a
+      ><a name="4992" class="Symbol"
+      >(</a
+      ><a name="4993" href="trunc-inverse.html#4932" class="Bound"
+      >&#172;y-x&#8320;</a
+      ><a name="4998"
+      > </a
+      ><a name="4999" href="trunc-inverse.html#4955" class="Bound"
+      >y-x&#8320;</a
+      ><a name="5003" class="Symbol"
+      >)</a
+      ><a name="5004"
+      >
+    </a
+      ><a name="5009" href="trunc-inverse.html#3954" class="Function"
+      >switch-selfinverse</a
+      ><a name="5027"
+      > </a
+      ><a name="5028" href="trunc-inverse.html#5028" class="Bound"
+      >y</a
+      ><a name="5029"
+      > </a
+      ><a name="5030" class="Symbol"
+      >|</a
+      ><a name="5031"
+      > </a
+      ><a name="5032" href="lib.Base.html#9054" class="InductiveConstructor"
+      >inr</a
+      ><a name="5035"
+      > </a
+      ><a name="5036" class="Symbol"
+      >_</a
+      ><a name="5037"
+      >     </a
+      ><a name="5042" class="Symbol"
+      >|</a
+      ><a name="5043"
+      > </a
+      ><a name="5044" href="lib.Base.html#9054" class="InductiveConstructor"
+      >inr</a
+      ><a name="5047"
+      > </a
+      ><a name="5048" class="Symbol"
+      >_</a
+      ><a name="5049"
+      >    </a
+      ><a name="5053" class="Symbol"
+      >|</a
+      ><a name="5054"
+      > </a
+      ><a name="5055" href="lib.Base.html#9054" class="InductiveConstructor"
+      >inr</a
+      ><a name="5058"
+      > </a
+      ><a name="5059" class="Symbol"
+      >_</a
+      ><a name="5060"
+      >  </a
+      ><a name="5062" class="Keyword"
+      >with</a
+      ><a name="5066"
+      > </a
+      ><a name="5067" href="trunc-inverse.html#3453" class="Bound"
+      >dec</a
+      ><a name="5070"
+      > </a
+      ><a name="5071" href="trunc-inverse.html#5028" class="Bound"
+      >y</a
+      ><a name="5072"
+      > </a
+      ><a name="5073" href="trunc-inverse.html#3532" class="Bound"
+      >x</a
+      ><a name="5074"
+      >
+    </a
+      ><a name="5079" href="trunc-inverse.html#3954" class="Function"
+      >switch-selfinverse</a
+      ><a name="5097"
+      > </a
+      ><a name="5098" href="trunc-inverse.html#5098" class="Bound"
+      >y</a
+      ><a name="5099"
+      > </a
+      ><a name="5100" class="Symbol"
+      >|</a
+      ><a name="5101"
+      > </a
+      ><a name="5102" href="lib.Base.html#9054" class="InductiveConstructor"
+      >inr</a
+      ><a name="5105"
+      > </a
+      ><a name="5106" class="Symbol"
+      >_</a
+      ><a name="5107"
+      >     </a
+      ><a name="5112" class="Symbol"
+      >|</a
+      ><a name="5113"
+      > </a
+      ><a name="5114" href="lib.Base.html#9054" class="InductiveConstructor"
+      >inr</a
+      ><a name="5117"
+      > </a
+      ><a name="5118" href="trunc-inverse.html#5118" class="Bound"
+      >&#172;y-x</a
+      ><a name="5122"
+      > </a
+      ><a name="5123" class="Symbol"
+      >|</a
+      ><a name="5124"
+      > </a
+      ><a name="5125" href="lib.Base.html#9054" class="InductiveConstructor"
+      >inr</a
+      ><a name="5128"
+      > </a
+      ><a name="5129" class="Symbol"
+      >_</a
+      ><a name="5130"
+      > </a
+      ><a name="5131" class="Symbol"
+      >|</a
+      ><a name="5132"
+      > </a
+      ><a name="5133" href="lib.Base.html#9031" class="InductiveConstructor"
+      >inl</a
+      ><a name="5136"
+      > </a
+      ><a name="5137" href="trunc-inverse.html#5137" class="Bound"
+      >y-x</a
+      ><a name="5140"
+      > </a
+      ><a name="5141" class="Symbol"
+      >=</a
+      ><a name="5142"
+      > </a
+      ><a name="5143" href="lib.Base.html#5657" class="Function"
+      >Empty-elim</a
+      ><a name="5153"
+      > </a
+      ><a name="5154" class="Symbol"
+      >{</a
+      ><a name="5155"
+      >A </a
+      ><a name="5157" class="Symbol"
+      >=</a
+      ><a name="5158"
+      > </a
+      ><a name="5159" class="Symbol"
+      >&#955;</a
+      ><a name="5160"
+      > </a
+      ><a name="5161" href="trunc-inverse.html#5161" class="Bound"
+      >_</a
+      ><a name="5162"
+      > </a
+      ><a name="5163" class="Symbol"
+      >&#8594;</a
+      ><a name="5164"
+      > </a
+      ><a name="5165" href="trunc-inverse.html#3507" class="Function"
+      >x&#8320;</a
+      ><a name="5167"
+      > </a
+      ><a name="5168" href="lib.Base.html#1998" class="Datatype Operator"
+      >==</a
+      ><a name="5170"
+      > </a
+      ><a name="5171" href="trunc-inverse.html#5098" class="Bound"
+      >y</a
+      ><a name="5172" class="Symbol"
+      >}</a
+      ><a name="5173"
+      > </a
+      ><a name="5174" class="Symbol"
+      >(</a
+      ><a name="5175" href="trunc-inverse.html#5118" class="Bound"
+      >&#172;y-x</a
+      ><a name="5179"
+      > </a
+      ><a name="5180" href="trunc-inverse.html#5137" class="Bound"
+      >y-x</a
+      ><a name="5183" class="Symbol"
+      >)</a
+      ><a name="5184"
+      >
+    </a
+      ><a name="5189" href="trunc-inverse.html#3954" class="Function"
+      >switch-selfinverse</a
+      ><a name="5207"
+      > </a
+      ><a name="5208" href="trunc-inverse.html#5208" class="Bound"
+      >y</a
+      ><a name="5209"
+      > </a
+      ><a name="5210" class="Symbol"
+      >|</a
+      ><a name="5211"
+      > </a
+      ><a name="5212" href="lib.Base.html#9054" class="InductiveConstructor"
+      >inr</a
+      ><a name="5215"
+      > </a
+      ><a name="5216" class="Symbol"
+      >_</a
+      ><a name="5217"
+      >     </a
+      ><a name="5222" class="Symbol"
+      >|</a
+      ><a name="5223"
+      > </a
+      ><a name="5224" href="lib.Base.html#9054" class="InductiveConstructor"
+      >inr</a
+      ><a name="5227"
+      > </a
+      ><a name="5228" class="Symbol"
+      >_</a
+      ><a name="5229"
+      >    </a
+      ><a name="5233" class="Symbol"
+      >|</a
+      ><a name="5234"
+      > </a
+      ><a name="5235" href="lib.Base.html#9054" class="InductiveConstructor"
+      >inr</a
+      ><a name="5238"
+      > </a
+      ><a name="5239" class="Symbol"
+      >_</a
+      ><a name="5240"
+      > </a
+      ><a name="5241" class="Symbol"
+      >|</a
+      ><a name="5242"
+      > </a
+      ><a name="5243" href="lib.Base.html#9054" class="InductiveConstructor"
+      >inr</a
+      ><a name="5246"
+      > </a
+      ><a name="5247" class="Symbol"
+      >_</a
+      ><a name="5248"
+      > </a
+      ><a name="5249" class="Symbol"
+      >=</a
+      ><a name="5250"
+      > </a
+      ><a name="5251" href="lib.Base.html#2049" class="InductiveConstructor"
+      >idp</a
+      ><a name="5254"
+      >
+
+    </a
+      ><a name="5260" href="trunc-inverse.html#5260" class="Function"
+      >switch-maps</a
+      ><a name="5271"
+      > </a
+      ><a name="5272" class="Symbol"
+      >:</a
+      ><a name="5273"
+      > </a
+      ><a name="5274" href="trunc-inverse.html#3607" class="Function"
+      >switch</a
+      ><a name="5280"
+      > </a
+      ><a name="5281" href="trunc-inverse.html#3532" class="Bound"
+      >x</a
+      ><a name="5282"
+      > </a
+      ><a name="5283" href="lib.Base.html#1998" class="Datatype Operator"
+      >==</a
+      ><a name="5285"
+      > </a
+      ><a name="5286" href="trunc-inverse.html#3507" class="Function"
+      >x&#8320;</a
+      ><a name="5288"
+      >
+    </a
+      ><a name="5293" href="trunc-inverse.html#5260" class="Function"
+      >switch-maps</a
+      ><a name="5304"
+      > </a
+      ><a name="5305" class="Keyword"
+      >with</a
+      ><a name="5309"
+      > </a
+      ><a name="5310" href="trunc-inverse.html#3453" class="Bound"
+      >dec</a
+      ><a name="5313"
+      > </a
+      ><a name="5314" href="trunc-inverse.html#3532" class="Bound"
+      >x</a
+      ><a name="5315"
+      > </a
+      ><a name="5316" href="trunc-inverse.html#3507" class="Function"
+      >x&#8320;</a
+      ><a name="5318"
+      > 
+    </a
+      ><a name="5324" href="trunc-inverse.html#5260" class="Function"
+      >switch-maps</a
+      ><a name="5335"
+      > </a
+      ><a name="5336" class="Symbol"
+      >|</a
+      ><a name="5337"
+      > </a
+      ><a name="5338" href="lib.Base.html#9031" class="InductiveConstructor"
+      >inl</a
+      ><a name="5341"
+      > </a
+      ><a name="5342" href="trunc-inverse.html#5342" class="Bound"
+      >x-x&#8320;</a
+      ><a name="5346"
+      > </a
+      ><a name="5347" class="Symbol"
+      >=</a
+      ><a name="5348"
+      > </a
+      ><a name="5349" href="trunc-inverse.html#5342" class="Bound"
+      >x-x&#8320;</a
+      ><a name="5353"
+      >
+    </a
+      ><a name="5358" href="trunc-inverse.html#5260" class="Function"
+      >switch-maps</a
+      ><a name="5369"
+      > </a
+      ><a name="5370" class="Symbol"
+      >|</a
+      ><a name="5371"
+      > </a
+      ><a name="5372" href="lib.Base.html#9054" class="InductiveConstructor"
+      >inr</a
+      ><a name="5375"
+      > </a
+      ><a name="5376" class="Symbol"
+      >_</a
+      ><a name="5377"
+      > </a
+      ><a name="5378" class="Keyword"
+      >with</a
+      ><a name="5382"
+      > </a
+      ><a name="5383" href="trunc-inverse.html#3453" class="Bound"
+      >dec</a
+      ><a name="5386"
+      > </a
+      ><a name="5387" href="trunc-inverse.html#3532" class="Bound"
+      >x</a
+      ><a name="5388"
+      > </a
+      ><a name="5389" href="trunc-inverse.html#3532" class="Bound"
+      >x</a
+      ><a name="5390"
+      >
+    </a
+      ><a name="5395" href="trunc-inverse.html#5260" class="Function"
+      >switch-maps</a
+      ><a name="5406"
+      > </a
+      ><a name="5407" class="Symbol"
+      >|</a
+      ><a name="5408"
+      > </a
+      ><a name="5409" href="lib.Base.html#9054" class="InductiveConstructor"
+      >inr</a
+      ><a name="5412"
+      > </a
+      ><a name="5413" class="Symbol"
+      >_</a
+      ><a name="5414"
+      > </a
+      ><a name="5415" class="Symbol"
+      >|</a
+      ><a name="5416"
+      > </a
+      ><a name="5417" href="lib.Base.html#9031" class="InductiveConstructor"
+      >inl</a
+      ><a name="5420"
+      > </a
+      ><a name="5421" class="Symbol"
+      >_</a
+      ><a name="5422"
+      > </a
+      ><a name="5423" class="Symbol"
+      >=</a
+      ><a name="5424"
+      > </a
+      ><a name="5425" href="lib.Base.html#2049" class="InductiveConstructor"
+      >idp</a
+      ><a name="5428"
+      >
+    </a
+      ><a name="5433" href="trunc-inverse.html#5260" class="Function"
+      >switch-maps</a
+      ><a name="5444"
+      > </a
+      ><a name="5445" class="Symbol"
+      >|</a
+      ><a name="5446"
+      > </a
+      ><a name="5447" href="lib.Base.html#9054" class="InductiveConstructor"
+      >inr</a
+      ><a name="5450"
+      > </a
+      ><a name="5451" class="Symbol"
+      >_</a
+      ><a name="5452"
+      > </a
+      ><a name="5453" class="Symbol"
+      >|</a
+      ><a name="5454"
+      > </a
+      ><a name="5455" href="lib.Base.html#9054" class="InductiveConstructor"
+      >inr</a
+      ><a name="5458"
+      > </a
+      ><a name="5459" href="trunc-inverse.html#5459" class="Bound"
+      >&#172;x-x</a
+      ><a name="5463"
+      > </a
+      ><a name="5464" class="Symbol"
+      >=</a
+      ><a name="5465"
+      > </a
+      ><a name="5466" href="lib.Base.html#5657" class="Function"
+      >Empty-elim</a
+      ><a name="5476"
+      > </a
+      ><a name="5477" class="Symbol"
+      >{</a
+      ><a name="5478"
+      >A </a
+      ><a name="5480" class="Symbol"
+      >=</a
+      ><a name="5481"
+      > </a
+      ><a name="5482" class="Symbol"
+      >&#955;</a
+      ><a name="5483"
+      > </a
+      ><a name="5484" href="trunc-inverse.html#5484" class="Bound"
+      >_</a
+      ><a name="5485"
+      > </a
+      ><a name="5486" class="Symbol"
+      >&#8594;</a
+      ><a name="5487"
+      > </a
+      ><a name="5488" href="trunc-inverse.html#3532" class="Bound"
+      >x</a
+      ><a name="5489"
+      > </a
+      ><a name="5490" href="lib.Base.html#1998" class="Datatype Operator"
+      >==</a
+      ><a name="5492"
+      > </a
+      ><a name="5493" href="trunc-inverse.html#3507" class="Function"
+      >x&#8320;</a
+      ><a name="5495" class="Symbol"
+      >}</a
+      ><a name="5496"
+      > </a
+      ><a name="5497" class="Symbol"
+      >(</a
+      ><a name="5498" href="trunc-inverse.html#5459" class="Bound"
+      >&#172;x-x</a
+      ><a name="5502"
+      > </a
+      ><a name="5503" href="lib.Base.html#2049" class="InductiveConstructor"
+      >idp</a
+      ><a name="5506" class="Symbol"
+      >)</a
+      ><a name="5507"
+      >
+
+    </a
+      ><a name="5513" class="Comment"
+      >-- switch is an equivalence</a
+      ><a name="5540"
+      >
+    </a
+      ><a name="5545" href="trunc-inverse.html#5545" class="Function"
+      >switch-eq</a
+      ><a name="5554"
+      > </a
+      ><a name="5555" class="Symbol"
+      >:</a
+      ><a name="5556"
+      > </a
+      ><a name="5557" href="trunc-inverse.html#3491" class="Function"
+      >X</a
+      ><a name="5558"
+      > </a
+      ><a name="5559" href="lib.Equivalences.html#2994" class="Function Operator"
+      >&#8771;</a
+      ><a name="5560"
+      > </a
+      ><a name="5561" href="trunc-inverse.html#3491" class="Function"
+      >X</a
+      ><a name="5562"
+      >
+    </a
+      ><a name="5567" href="trunc-inverse.html#5545" class="Function"
+      >switch-eq</a
+      ><a name="5576"
+      > </a
+      ><a name="5577" class="Symbol"
+      >=</a
+      ><a name="5578"
+      > </a
+      ><a name="5579" href="lib.Equivalences.html#3145" class="Function"
+      >equiv</a
+      ><a name="5584"
+      > </a
+      ><a name="5585" href="trunc-inverse.html#3607" class="Function"
+      >switch</a
+      ><a name="5591"
+      > </a
+      ><a name="5592" href="trunc-inverse.html#3607" class="Function"
+      >switch</a
+      ><a name="5598"
+      > 
+                      </a
+      ><a name="5622" href="trunc-inverse.html#3954" class="Function"
+      >switch-selfinverse</a
+      ><a name="5640"
+      > </a
+      ><a name="5641" href="trunc-inverse.html#3954" class="Function"
+      >switch-selfinverse</a
+      ><a name="5659"
+      >
+
+  </a
+      ><a name="5663" class="Comment"
+      >-- It is easy to see how to use the above construction for </a
+      ><a name="5722"
+      >
+  </a
+      ><a name="5725" class="Comment"
+      >-- showing that X is homogeneous. </a
+      ><a name="5759"
+      >
+  </a
+      ><a name="5762" href="trunc-inverse.html#5762" class="Function"
+      >is-hom</a
+      ><a name="5768"
+      > </a
+      ><a name="5769" class="Symbol"
+      >:</a
+      ><a name="5770"
+      > </a
+      ><a name="5771" href="trunc-inverse.html#2414" class="Function"
+      >is-homogeneous</a
+      ><a name="5785"
+      > </a
+      ><a name="5786" href="trunc-inverse.html#3437" class="Bound"
+      >ptX</a
+      ><a name="5789"
+      >
+  </a
+      ><a name="5792" href="trunc-inverse.html#5762" class="Function"
+      >is-hom</a
+      ><a name="5798"
+      > </a
+      ><a name="5799" href="trunc-inverse.html#5799" class="Bound"
+      >x</a
+      ><a name="5800"
+      > </a
+      ><a name="5801" class="Symbol"
+      >=</a
+      ><a name="5802"
+      > </a
+      ><a name="5803" href="lib.Base.html#5114" class="Function"
+      >pair=</a
+      ><a name="5808"
+      > </a
+      ><a name="5809" class="Symbol"
+      >(</a
+      ><a name="5810" href="lib.Univalence.html#696" class="Postulate"
+      >ua</a
+      ><a name="5812"
+      > </a
+      ><a name="5813" href="trunc-inverse.html#5833" class="Function"
+      >X-X</a
+      ><a name="5816" class="Symbol"
+      >)</a
+      ><a name="5817"
+      > </a
+      ><a name="5818" href="trunc-inverse.html#5871" class="Function"
+      >x-x&#8320;</a
+      ><a name="5822"
+      > </a
+      ><a name="5823" class="Keyword"
+      >where</a
+      ><a name="5828"
+      >
+    </a
+      ><a name="5833" href="trunc-inverse.html#5833" class="Function"
+      >X-X</a
+      ><a name="5836"
+      > </a
+      ><a name="5837" class="Symbol"
+      >:</a
+      ><a name="5838"
+      > </a
+      ><a name="5839" href="trunc-inverse.html#3491" class="Function"
+      >X</a
+      ><a name="5840"
+      > </a
+      ><a name="5841" href="lib.Equivalences.html#2994" class="Function Operator"
+      >&#8771;</a
+      ><a name="5842"
+      > </a
+      ><a name="5843" href="trunc-inverse.html#3491" class="Function"
+      >X</a
+      ><a name="5844"
+      >
+    </a
+      ><a name="5849" href="trunc-inverse.html#5833" class="Function"
+      >X-X</a
+      ><a name="5852"
+      > </a
+      ><a name="5853" class="Symbol"
+      >=</a
+      ><a name="5854"
+      > </a
+      ><a name="5855" href="trunc-inverse.html#5545" class="Function"
+      >switch-eq</a
+      ><a name="5864"
+      > </a
+      ><a name="5865" href="trunc-inverse.html#5799" class="Bound"
+      >x</a
+      ><a name="5866"
+      >
+    </a
+      ><a name="5871" href="trunc-inverse.html#5871" class="Function"
+      >x-x&#8320;</a
+      ><a name="5875"
+      > </a
+      ><a name="5876" class="Symbol"
+      >:</a
+      ><a name="5877"
+      > </a
+      ><a name="5878" href="lib.Base.html#3067" class="Function"
+      >PathOver</a
+      ><a name="5886"
+      > </a
+      ><a name="5887" class="Symbol"
+      >(</a
+      ><a name="5888" href="lib.Base.html#7589" class="Function"
+      >idf</a
+      ><a name="5891"
+      > </a
+      ><a name="5892" class="Symbol"
+      >(</a
+      ><a name="5893" href="lib.Base.html#1263" class="Function"
+      >Type</a
+      ><a name="5897"
+      > </a
+      ><a name="5898" href="trunc-inverse.html#3433" class="Bound"
+      >i</a
+      ><a name="5899" class="Symbol"
+      >))</a
+      ><a name="5901"
+      > </a
+      ><a name="5902" class="Symbol"
+      >(</a
+      ><a name="5903" href="lib.Univalence.html#696" class="Postulate"
+      >ua</a
+      ><a name="5905"
+      > </a
+      ><a name="5906" href="trunc-inverse.html#5833" class="Function"
+      >X-X</a
+      ><a name="5909" class="Symbol"
+      >)</a
+      ><a name="5910"
+      > </a
+      ><a name="5911" href="trunc-inverse.html#5799" class="Bound"
+      >x</a
+      ><a name="5912"
+      > </a
+      ><a name="5913" class="Symbol"
+      >(</a
+      ><a name="5914" href="lib.Base.html#5087" class="Function"
+      >snd</a
+      ><a name="5917"
+      > </a
+      ><a name="5918" href="trunc-inverse.html#3437" class="Bound"
+      >ptX</a
+      ><a name="5921" class="Symbol"
+      >)</a
+      ><a name="5922"
+      >
+    </a
+      ><a name="5927" href="trunc-inverse.html#5871" class="Function"
+      >x-x&#8320;</a
+      ><a name="5931"
+      > </a
+      ><a name="5932" class="Symbol"
+      >=</a
+      ><a name="5933"
+      > </a
+      ><a name="5934" href="lib.Univalence.html#1685" class="Function"
+      >&#8595;-idf-ua-in</a
+      ><a name="5945"
+      > </a
+      ><a name="5946" href="trunc-inverse.html#5833" class="Function"
+      >X-X</a
+      ><a name="5949"
+      > </a
+      ><a name="5950" class="Symbol"
+      >(</a
+      ><a name="5951" href="trunc-inverse.html#5260" class="Function"
+      >switch-maps</a
+      ><a name="5962"
+      > </a
+      ><a name="5963" href="trunc-inverse.html#5799" class="Bound"
+      >x</a
+      ><a name="5964" class="Symbol"
+      >)</a
+      ><a name="5965"
+      >
+
+</a
+      ><a name="5967" class="Comment"
+      >-- As an example, we do the case of &#8469; explicitely.</a
+      ><a name="6017"
+      >
+</a
+      ><a name="6018" class="Keyword"
+      >module</a
+      ><a name="6024"
+      > </a
+      ><a name="6025" href="trunc-inverse.html#6025" class="Module"
+      >example-&#8469;</a
+      ><a name="6034"
+      > </a
+      ><a name="6035" class="Keyword"
+      >where</a
+      ><a name="6040"
+      >
+  </a
+      ><a name="6043" class="Keyword"
+      >open</a
+      ><a name="6047"
+      > </a
+      ><a name="6048" href="trunc-inverse.html#2838" class="Module"
+      >hom-myst</a
+      ><a name="6056"
+      > </a
+      ><a name="6057" class="Symbol"
+      >(</a
+      ><a name="6058" href="lib.types.Nat.html#136" class="Datatype"
+      >&#8469;</a
+      ><a name="6059"
+      > </a
+      ><a name="6060" href="lib.Base.html#5059" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="6061"
+      > </a
+      ><a name="6062" class="Number"
+      >0</a
+      ><a name="6063" class="Symbol"
+      >)</a
+      ><a name="6064"
+      >
+  </a
+      ><a name="6067" class="Keyword"
+      >open</a
+      ><a name="6071"
+      > </a
+      ><a name="6072" href="trunc-inverse.html#3424" class="Module"
+      >dec-hom</a
+      ><a name="6079"
+      > </a
+      ><a name="6080" class="Symbol"
+      >(</a
+      ><a name="6081" href="lib.types.Nat.html#136" class="Datatype"
+      >&#8469;</a
+      ><a name="6082"
+      > </a
+      ><a name="6083" href="lib.Base.html#5059" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="6084"
+      > </a
+      ><a name="6085" class="Number"
+      >0</a
+      ><a name="6086" class="Symbol"
+      >)</a
+      ><a name="6087"
+      >
+
+  </a
+      ><a name="6091" href="trunc-inverse.html#6091" class="Function"
+      >myst-&#8469;</a
+      ><a name="6097"
+      > </a
+      ><a name="6098" class="Symbol"
+      >=</a
+      ><a name="6099"
+      > </a
+      ><a name="6100" href="trunc-inverse.html#3060" class="Function"
+      >myst</a
+      ><a name="6104"
+      > </a
+      ><a name="6105" class="Symbol"
+      >(</a
+      ><a name="6106" href="trunc-inverse.html#5762" class="Function"
+      >dec-hom.is-hom</a
+      ><a name="6120"
+      > </a
+      ><a name="6121" class="Symbol"
+      >_</a
+      ><a name="6122"
+      > </a
+      ><a name="6123" href="lib.types.Nat.html#1204" class="Function"
+      >&#8469;-has-dec-eq</a
+      ><a name="6135" class="Symbol"
+      >)</a
+      ><a name="6136"
+      >
+
+  </a
+      ><a name="6140" class="Comment"
+      >-- I can now &quot;factor&quot; the identity map on &#8469;:</a
+      ><a name="6184"
+      >
+  </a
+      ><a name="6187" href="trunc-inverse.html#6187" class="Function"
+      >id-factored</a
+      ><a name="6198"
+      > </a
+      ><a name="6199" class="Symbol"
+      >:</a
+      ><a name="6200"
+      > </a
+      ><a name="6201" href="lib.types.Nat.html#136" class="Datatype"
+      >&#8469;</a
+      ><a name="6202"
+      > </a
+      ><a name="6203" class="Symbol"
+      >&#8594;</a
+      ><a name="6204"
+      > </a
+      ><a name="6205" href="lib.types.Nat.html#136" class="Datatype"
+      >&#8469;</a
+      ><a name="6206"
+      >
+  </a
+      ><a name="6209" href="trunc-inverse.html#6187" class="Function"
+      >id-factored</a
+      ><a name="6220"
+      > </a
+      ><a name="6221" class="Symbol"
+      >=</a
+      ><a name="6222"
+      > </a
+      ><a name="6223" href="trunc-inverse.html#6091" class="Function"
+      >myst-&#8469;</a
+      ><a name="6229"
+      > </a
+      ><a name="6230" href="lib.Base.html#7730" class="Function Operator"
+      >&#8728;</a
+      ><a name="6231"
+      > </a
+      ><a name="6232" href="trunc-inverse.html#2720" class="Function Operator"
+      >&#8739;_&#8739;</a
+      ><a name="6235"
+      >
+
+  </a
+      ><a name="6239" href="trunc-inverse.html#6239" class="Function"
+      >proof</a
+      ><a name="6244"
+      > </a
+      ><a name="6245" class="Symbol"
+      >:</a
+      ><a name="6246"
+      > </a
+      ><a name="6247" class="Symbol"
+      >(</a
+      ><a name="6248" href="trunc-inverse.html#6248" class="Bound"
+      >n</a
+      ><a name="6249"
+      > </a
+      ><a name="6250" class="Symbol"
+      >:</a
+      ><a name="6251"
+      > </a
+      ><a name="6252" href="lib.types.Nat.html#136" class="Datatype"
+      >&#8469;</a
+      ><a name="6253" class="Symbol"
+      >)</a
+      ><a name="6254"
+      > </a
+      ><a name="6255" class="Symbol"
+      >&#8594;</a
+      ><a name="6256"
+      > </a
+      ><a name="6257" href="trunc-inverse.html#6187" class="Function"
+      >id-factored</a
+      ><a name="6268"
+      > </a
+      ><a name="6269" href="trunc-inverse.html#6248" class="Bound"
+      >n</a
+      ><a name="6270"
+      > </a
+      ><a name="6271" href="lib.Base.html#1998" class="Datatype Operator"
+      >==</a
+      ><a name="6273"
+      > </a
+      ><a name="6274" href="trunc-inverse.html#6248" class="Bound"
+      >n</a
+      ><a name="6275"
+      >
+  </a
+      ><a name="6278" href="trunc-inverse.html#6239" class="Function"
+      >proof</a
+      ><a name="6283"
+      > </a
+      ><a name="6284" href="trunc-inverse.html#6284" class="Bound"
+      >n</a
+      ><a name="6285"
+      > </a
+      ><a name="6286" class="Symbol"
+      >=</a
+      ><a name="6287"
+      > </a
+      ><a name="6288" href="lib.Base.html#2049" class="InductiveConstructor"
+      >idp</a
+      ><a name="6291"
+      >
+
+  </a
+      ><a name="6295" href="trunc-inverse.html#6295" class="Function"
+      >proof'</a
+      ><a name="6301"
+      > </a
+      ><a name="6302" class="Symbol"
+      >:</a
+      ><a name="6303"
+      > </a
+      ><a name="6304" href="trunc-inverse.html#6187" class="Function"
+      >id-factored</a
+      ><a name="6315"
+      > </a
+      ><a name="6316" href="lib.Base.html#1998" class="Datatype Operator"
+      >==</a
+      ><a name="6318"
+      > </a
+      ><a name="6319" href="lib.Base.html#7589" class="Function"
+      >idf</a
+      ><a name="6322"
+      > </a
+      ><a name="6323" href="lib.types.Nat.html#136" class="Datatype"
+      >&#8469;</a
+      ><a name="6324"
+      >
+  </a
+      ><a name="6327" href="trunc-inverse.html#6295" class="Function"
+      >proof'</a
+      ><a name="6333"
+      > </a
+      ><a name="6334" class="Symbol"
+      >=</a
+      ><a name="6335"
+      > </a
+      ><a name="6336" href="lib.Funext.html#3978" class="Function"
+      >&#955;=</a
+      ><a name="6338"
+      > </a
+      ><a name="6339" href="trunc-inverse.html#6239" class="Function"
+      >proof</a
+      ><a name="6344"
+      >
+
+</a
+      ><a name="6346" class="Comment"
+      >-- A very simple lemma: composing with an equality is an equivalence.</a
+      ><a name="6415"
+      >
+</a
+      ><a name="6416" class="Keyword"
+      >module</a
+      ><a name="6422"
+      > </a
+      ><a name="6423" href="trunc-inverse.html#6423" class="Module"
+      >_</a
+      ><a name="6424"
+      > </a
+      ><a name="6425" class="Symbol"
+      >{</a
+      ><a name="6426" href="trunc-inverse.html#6426" class="Bound"
+      >i</a
+      ><a name="6427" class="Symbol"
+      >}</a
+      ><a name="6428"
+      > </a
+      ><a name="6429" class="Symbol"
+      >(</a
+      ><a name="6430" href="trunc-inverse.html#6430" class="Bound"
+      >A</a
+      ><a name="6431"
+      > </a
+      ><a name="6432" class="Symbol"
+      >:</a
+      ><a name="6433"
+      > </a
+      ><a name="6434" href="lib.Base.html#1263" class="Function"
+      >Type</a
+      ><a name="6438"
+      > </a
+      ><a name="6439" href="trunc-inverse.html#6426" class="Bound"
+      >i</a
+      ><a name="6440" class="Symbol"
+      >)</a
+      ><a name="6441"
+      > </a
+      ><a name="6442" class="Symbol"
+      >(</a
+      ><a name="6443" href="trunc-inverse.html#6443" class="Bound"
+      >a</a
+      ><a name="6444"
+      > </a
+      ><a name="6445" href="trunc-inverse.html#6445" class="Bound"
+      >b</a
+      ><a name="6446"
+      > </a
+      ><a name="6447" class="Symbol"
+      >:</a
+      ><a name="6448"
+      > </a
+      ><a name="6449" href="trunc-inverse.html#6430" class="Bound"
+      >A</a
+      ><a name="6450" class="Symbol"
+      >)</a
+      ><a name="6451"
+      > </a
+      ><a name="6452" class="Keyword"
+      >where</a
+      ><a name="6457"
+      >
+  </a
+      ><a name="6460" href="trunc-inverse.html#6460" class="Function"
+      >&#8729;-is-eq</a
+      ><a name="6467"
+      > </a
+      ><a name="6468" class="Symbol"
+      >:</a
+      ><a name="6469"
+      > </a
+      ><a name="6470" class="Symbol"
+      >(</a
+      ><a name="6471" href="trunc-inverse.html#6471" class="Bound"
+      >x</a
+      ><a name="6472"
+      > </a
+      ><a name="6473" class="Symbol"
+      >:</a
+      ><a name="6474"
+      > </a
+      ><a name="6475" href="trunc-inverse.html#6430" class="Bound"
+      >A</a
+      ><a name="6476" class="Symbol"
+      >)</a
+      ><a name="6477"
+      > </a
+      ><a name="6478" class="Symbol"
+      >(</a
+      ><a name="6479" href="trunc-inverse.html#6479" class="Bound"
+      >p</a
+      ><a name="6480"
+      > </a
+      ><a name="6481" class="Symbol"
+      >:</a
+      ><a name="6482"
+      > </a
+      ><a name="6483" href="trunc-inverse.html#6471" class="Bound"
+      >x</a
+      ><a name="6484"
+      > </a
+      ><a name="6485" href="lib.Base.html#1998" class="Datatype Operator"
+      >==</a
+      ><a name="6487"
+      > </a
+      ><a name="6488" href="trunc-inverse.html#6443" class="Bound"
+      >a</a
+      ><a name="6489" class="Symbol"
+      >)</a
+      ><a name="6490"
+      > </a
+      ><a name="6491" class="Symbol"
+      >&#8594;</a
+      ><a name="6492"
+      > </a
+      ><a name="6493" href="lib.Equivalences.html#986" class="Record"
+      >is-equiv</a
+      ><a name="6501"
+      > </a
+      ><a name="6502" class="Symbol"
+      >(</a
+      ><a name="6503" href="lib.PathGroupoid.html#406" class="Function Operator"
+      >_&#8729;_</a
+      ><a name="6506"
+      > </a
+      ><a name="6507" class="Symbol"
+      >{</a
+      ><a name="6508"
+      >z </a
+      ><a name="6510" class="Symbol"
+      >=</a
+      ><a name="6511"
+      > </a
+      ><a name="6512" href="trunc-inverse.html#6445" class="Bound"
+      >b</a
+      ><a name="6513" class="Symbol"
+      >}</a
+      ><a name="6514"
+      > </a
+      ><a name="6515" href="trunc-inverse.html#6479" class="Bound"
+      >p</a
+      ><a name="6516" class="Symbol"
+      >)</a
+      ><a name="6517"
+      >
+  </a
+      ><a name="6520" href="trunc-inverse.html#6460" class="Function"
+      >&#8729;-is-eq</a
+      ><a name="6527"
+      > </a
+      ><a name="6528" class="DottedPattern Symbol"
+      >.</a
+      ><a name="6529" href="trunc-inverse.html#6443" class="DottedPattern Bound"
+      >a</a
+      ><a name="6530"
+      > </a
+      ><a name="6531" href="lib.Base.html#2049" class="InductiveConstructor"
+      >idp</a
+      ><a name="6534"
+      > </a
+      ><a name="6535" class="Symbol"
+      >=</a
+      ><a name="6536"
+      > </a
+      ><a name="6537" href="lib.Equivalences.html#3786" class="Function"
+      >idf-is-equiv</a
+      ><a name="6549"
+      > </a
+      ><a name="6550" class="Symbol"
+      >_</a
+      ><a name="6551"
+      >
+
+</a
+      ><a name="6553" class="Comment"
+      >{- My second example of homogeneous types is the class of (inhabited)
+   path spaces. -}</a
+      ><a name="6641"
+      >
+</a
+      ><a name="6642" class="Keyword"
+      >module</a
+      ><a name="6648"
+      > </a
+      ><a name="6649" href="trunc-inverse.html#6649" class="Module"
+      >path-hom</a
+      ><a name="6657"
+      > </a
+      ><a name="6658" class="Symbol"
+      >{</a
+      ><a name="6659" href="trunc-inverse.html#6659" class="Bound"
+      >i</a
+      ><a name="6660" class="Symbol"
+      >}</a
+      ><a name="6661"
+      > </a
+      ><a name="6662" class="Symbol"
+      >(</a
+      ><a name="6663" href="trunc-inverse.html#6663" class="Bound"
+      >A</a
+      ><a name="6664"
+      > </a
+      ><a name="6665" class="Symbol"
+      >:</a
+      ><a name="6666"
+      > </a
+      ><a name="6667" href="lib.Base.html#1263" class="Function"
+      >Type</a
+      ><a name="6671"
+      > </a
+      ><a name="6672" href="trunc-inverse.html#6659" class="Bound"
+      >i</a
+      ><a name="6673" class="Symbol"
+      >)</a
+      ><a name="6674"
+      > </a
+      ><a name="6675" class="Symbol"
+      >(</a
+      ><a name="6676" href="trunc-inverse.html#6676" class="Bound"
+      >a&#8321;</a
+      ><a name="6678"
+      > </a
+      ><a name="6679" href="trunc-inverse.html#6679" class="Bound"
+      >a&#8322;</a
+      ><a name="6681"
+      > </a
+      ><a name="6682" class="Symbol"
+      >:</a
+      ><a name="6683"
+      > </a
+      ><a name="6684" href="trunc-inverse.html#6663" class="Bound"
+      >A</a
+      ><a name="6685" class="Symbol"
+      >)</a
+      ><a name="6686"
+      > </a
+      ><a name="6687" class="Symbol"
+      >(</a
+      ><a name="6688" href="trunc-inverse.html#6688" class="Bound"
+      >p</a
+      ><a name="6689"
+      > </a
+      ><a name="6690" class="Symbol"
+      >:</a
+      ><a name="6691"
+      > </a
+      ><a name="6692" href="trunc-inverse.html#6676" class="Bound"
+      >a&#8321;</a
+      ><a name="6694"
+      > </a
+      ><a name="6695" href="lib.Base.html#1998" class="Datatype Operator"
+      >==</a
+      ><a name="6697"
+      > </a
+      ><a name="6698" href="trunc-inverse.html#6679" class="Bound"
+      >a&#8322;</a
+      ><a name="6700" class="Symbol"
+      >)</a
+      ><a name="6701"
+      > </a
+      ><a name="6702" class="Keyword"
+      >where</a
+      ><a name="6707"
+      >
+
+  </a
+      ><a name="6711" href="trunc-inverse.html#6711" class="Function"
+      >is-hom</a
+      ><a name="6717"
+      > </a
+      ><a name="6718" class="Symbol"
+      >:</a
+      ><a name="6719"
+      > </a
+      ><a name="6720" href="trunc-inverse.html#2414" class="Function"
+      >is-homogeneous</a
+      ><a name="6734"
+      > </a
+      ><a name="6735" class="Symbol"
+      >(</a
+      ><a name="6736" href="trunc-inverse.html#6676" class="Bound"
+      >a&#8321;</a
+      ><a name="6738"
+      > </a
+      ><a name="6739" href="lib.Base.html#1998" class="Datatype Operator"
+      >==</a
+      ><a name="6741"
+      > </a
+      ><a name="6742" href="trunc-inverse.html#6679" class="Bound"
+      >a&#8322;</a
+      ><a name="6744"
+      > </a
+      ><a name="6745" href="lib.Base.html#5059" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="6746"
+      > </a
+      ><a name="6747" href="trunc-inverse.html#6688" class="Bound"
+      >p</a
+      ><a name="6748" class="Symbol"
+      >)</a
+      ><a name="6749"
+      >
+  </a
+      ><a name="6752" href="trunc-inverse.html#6711" class="Function"
+      >is-hom</a
+      ><a name="6758"
+      > </a
+      ><a name="6759" href="trunc-inverse.html#6759" class="Bound"
+      >q</a
+      ><a name="6760"
+      > </a
+      ><a name="6761" class="Symbol"
+      >=</a
+      ><a name="6762"
+      > </a
+      ><a name="6763" href="lib.Base.html#5114" class="Function"
+      >pair=</a
+      ><a name="6768"
+      > </a
+      ><a name="6769" class="Symbol"
+      >(</a
+      ><a name="6770" href="lib.Univalence.html#696" class="Postulate"
+      >ua</a
+      ><a name="6772"
+      > </a
+      ><a name="6773" href="trunc-inverse.html#6791" class="Function"
+      >eq</a
+      ><a name="6775" class="Symbol"
+      >)</a
+      ><a name="6776"
+      > </a
+      ><a name="6777" href="trunc-inverse.html#6880" class="Function"
+      >p-q</a
+      ><a name="6780"
+      > </a
+      ><a name="6781" class="Keyword"
+      >where</a
+      ><a name="6786"
+      >
+    </a
+      ><a name="6791" href="trunc-inverse.html#6791" class="Function"
+      >eq</a
+      ><a name="6793"
+      > </a
+      ><a name="6794" class="Symbol"
+      >:</a
+      ><a name="6795"
+      > </a
+      ><a name="6796" class="Symbol"
+      >(</a
+      ><a name="6797" href="trunc-inverse.html#6676" class="Bound"
+      >a&#8321;</a
+      ><a name="6799"
+      > </a
+      ><a name="6800" href="lib.Base.html#1998" class="Datatype Operator"
+      >==</a
+      ><a name="6802"
+      > </a
+      ><a name="6803" href="trunc-inverse.html#6679" class="Bound"
+      >a&#8322;</a
+      ><a name="6805" class="Symbol"
+      >)</a
+      ><a name="6806"
+      > </a
+      ><a name="6807" href="lib.Equivalences.html#2994" class="Function Operator"
+      >&#8771;</a
+      ><a name="6808"
+      > </a
+      ><a name="6809" class="Symbol"
+      >(</a
+      ><a name="6810" href="trunc-inverse.html#6676" class="Bound"
+      >a&#8321;</a
+      ><a name="6812"
+      > </a
+      ><a name="6813" href="lib.Base.html#1998" class="Datatype Operator"
+      >==</a
+      ><a name="6815"
+      > </a
+      ><a name="6816" href="trunc-inverse.html#6679" class="Bound"
+      >a&#8322;</a
+      ><a name="6818" class="Symbol"
+      >)</a
+      ><a name="6819"
+      >
+    </a
+      ><a name="6824" href="trunc-inverse.html#6791" class="Function"
+      >eq</a
+      ><a name="6826"
+      > </a
+      ><a name="6827" class="Symbol"
+      >=</a
+      ><a name="6828"
+      > </a
+      ><a name="6829" href="lib.PathGroupoid.html#406" class="Function Operator"
+      >_&#8729;_</a
+      ><a name="6832"
+      > </a
+      ><a name="6833" class="Symbol"
+      >(</a
+      ><a name="6834" href="trunc-inverse.html#6688" class="Bound"
+      >p</a
+      ><a name="6835"
+      > </a
+      ><a name="6836" href="lib.PathGroupoid.html#406" class="Function Operator"
+      >&#8729;</a
+      ><a name="6837"
+      > </a
+      ><a name="6838" href="lib.PathGroupoid.html#1079" class="Function"
+      >!</a
+      ><a name="6839"
+      > </a
+      ><a name="6840" href="trunc-inverse.html#6759" class="Bound"
+      >q</a
+      ><a name="6841" class="Symbol"
+      >)</a
+      ><a name="6842"
+      > </a
+      ><a name="6843" href="lib.Base.html#5059" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="6844"
+      > </a
+      ><a name="6845" href="trunc-inverse.html#6460" class="Function"
+      >&#8729;-is-eq</a
+      ><a name="6852"
+      > </a
+      ><a name="6853" href="trunc-inverse.html#6663" class="Bound"
+      >A</a
+      ><a name="6854"
+      > </a
+      ><a name="6855" href="trunc-inverse.html#6676" class="Bound"
+      >a&#8321;</a
+      ><a name="6857"
+      > </a
+      ><a name="6858" href="trunc-inverse.html#6679" class="Bound"
+      >a&#8322;</a
+      ><a name="6860"
+      > </a
+      ><a name="6861" href="trunc-inverse.html#6676" class="Bound"
+      >a&#8321;</a
+      ><a name="6863"
+      > </a
+      ><a name="6864" class="Symbol"
+      >(</a
+      ><a name="6865" href="trunc-inverse.html#6688" class="Bound"
+      >p</a
+      ><a name="6866"
+      > </a
+      ><a name="6867" href="lib.PathGroupoid.html#406" class="Function Operator"
+      >&#8729;</a
+      ><a name="6868"
+      > </a
+      ><a name="6869" href="lib.PathGroupoid.html#1079" class="Function"
+      >!</a
+      ><a name="6870"
+      > </a
+      ><a name="6871" href="trunc-inverse.html#6759" class="Bound"
+      >q</a
+      ><a name="6872" class="Symbol"
+      >)</a
+      ><a name="6873"
+      > 
+
+    </a
+      ><a name="6880" href="trunc-inverse.html#6880" class="Function"
+      >p-q</a
+      ><a name="6883"
+      > </a
+      ><a name="6884" class="Symbol"
+      >:</a
+      ><a name="6885"
+      > </a
+      ><a name="6886" href="lib.Base.html#3067" class="Function"
+      >PathOver</a
+      ><a name="6894"
+      > </a
+      ><a name="6895" class="Symbol"
+      >_</a
+      ><a name="6896"
+      > </a
+      ><a name="6897" class="Symbol"
+      >(</a
+      ><a name="6898" href="lib.Univalence.html#696" class="Postulate"
+      >ua</a
+      ><a name="6900"
+      > </a
+      ><a name="6901" href="trunc-inverse.html#6791" class="Function"
+      >eq</a
+      ><a name="6903" class="Symbol"
+      >)</a
+      ><a name="6904"
+      > </a
+      ><a name="6905" href="trunc-inverse.html#6759" class="Bound"
+      >q</a
+      ><a name="6906"
+      > </a
+      ><a name="6907" href="trunc-inverse.html#6688" class="Bound"
+      >p</a
+      ><a name="6908"
+      >
+    </a
+      ><a name="6913" href="trunc-inverse.html#6880" class="Function"
+      >p-q</a
+      ><a name="6916"
+      > </a
+      ><a name="6917" class="Symbol"
+      >=</a
+      ><a name="6918"
+      > </a
+      ><a name="6919" href="lib.Univalence.html#1685" class="Function"
+      >&#8595;-idf-ua-in</a
+      ><a name="6930"
+      > </a
+      ><a name="6931" class="Symbol"
+      >_</a
+      ><a name="6932"
+      > </a
+      ><a name="6933" class="Symbol"
+      >(</a
+      ><a name="6934" href="lib.Equivalences.html#3306" class="Function"
+      >&#8211;&gt;</a
+      ><a name="6936"
+      > </a
+      ><a name="6937" href="trunc-inverse.html#6791" class="Function"
+      >eq</a
+      ><a name="6939"
+      > </a
+      ><a name="6940" href="trunc-inverse.html#6759" class="Bound"
+      >q</a
+      ><a name="6941"
+      > </a
+      ><a name="6942" href="lib.Base.html#7188" class="Function Operator"
+      >=&#10216;</a
+      ><a name="6944"
+      > </a
+      ><a name="6945" href="lib.Base.html#2049" class="InductiveConstructor"
+      >idp</a
+      ><a name="6948"
+      > </a
+      ><a name="6949" href="lib.Base.html#7188" class="Function Operator"
+      >&#10217;</a
+      ><a name="6950"
+      >
+                         </a
+      ><a name="6976" class="Symbol"
+      >(</a
+      ><a name="6977" href="trunc-inverse.html#6688" class="Bound"
+      >p</a
+      ><a name="6978"
+      > </a
+      ><a name="6979" href="lib.PathGroupoid.html#406" class="Function Operator"
+      >&#8729;</a
+      ><a name="6980"
+      > </a
+      ><a name="6981" href="lib.PathGroupoid.html#1079" class="Function"
+      >!</a
+      ><a name="6982"
+      > </a
+      ><a name="6983" href="trunc-inverse.html#6759" class="Bound"
+      >q</a
+      ><a name="6984" class="Symbol"
+      >)</a
+      ><a name="6985"
+      > </a
+      ><a name="6986" href="lib.PathGroupoid.html#406" class="Function Operator"
+      >&#8729;</a
+      ><a name="6987"
+      > </a
+      ><a name="6988" href="trunc-inverse.html#6759" class="Bound"
+      >q</a
+      ><a name="6989"
+      >  </a
+      ><a name="6991" href="lib.Base.html#7188" class="Function Operator"
+      >=&#10216;</a
+      ><a name="6993"
+      > </a
+      ><a name="6994" href="lib.PathGroupoid.html#726" class="Function"
+      >&#8729;-assoc</a
+      ><a name="7001"
+      > </a
+      ><a name="7002" href="trunc-inverse.html#6688" class="Bound"
+      >p</a
+      ><a name="7003"
+      > </a
+      ><a name="7004" class="Symbol"
+      >(</a
+      ><a name="7005" href="lib.PathGroupoid.html#1079" class="Function"
+      >!</a
+      ><a name="7006"
+      > </a
+      ><a name="7007" href="trunc-inverse.html#6759" class="Bound"
+      >q</a
+      ><a name="7008" class="Symbol"
+      >)</a
+      ><a name="7009"
+      > </a
+      ><a name="7010" href="trunc-inverse.html#6759" class="Bound"
+      >q</a
+      ><a name="7011"
+      > </a
+      ><a name="7012" href="lib.Base.html#7188" class="Function Operator"
+      >&#10217;</a
+      ><a name="7013"
+      >
+                          </a
+      ><a name="7040" href="trunc-inverse.html#6688" class="Bound"
+      >p</a
+      ><a name="7041"
+      > </a
+      ><a name="7042" href="lib.PathGroupoid.html#406" class="Function Operator"
+      >&#8729;</a
+      ><a name="7043"
+      > </a
+      ><a name="7044" href="lib.PathGroupoid.html#1079" class="Function"
+      >!</a
+      ><a name="7045"
+      > </a
+      ><a name="7046" href="trunc-inverse.html#6759" class="Bound"
+      >q</a
+      ><a name="7047"
+      > </a
+      ><a name="7048" href="lib.PathGroupoid.html#406" class="Function Operator"
+      >&#8729;</a
+      ><a name="7049"
+      > </a
+      ><a name="7050" href="trunc-inverse.html#6759" class="Bound"
+      >q</a
+      ><a name="7051"
+      >   </a
+      ><a name="7054" href="lib.Base.html#7188" class="Function Operator"
+      >=&#10216;</a
+      ><a name="7056"
+      > </a
+      ><a name="7057" class="Symbol"
+      >(</a
+      ><a name="7058" href="lib.Base.html#3617" class="Function"
+      >ap</a
+      ><a name="7060"
+      > </a
+      ><a name="7061" class="Symbol"
+      >(</a
+      ><a name="7062" href="lib.PathGroupoid.html#406" class="Function Operator"
+      >_&#8729;_</a
+      ><a name="7065"
+      > </a
+      ><a name="7066" href="trunc-inverse.html#6688" class="Bound"
+      >p</a
+      ><a name="7067" class="Symbol"
+      >)</a
+      ><a name="7068"
+      > </a
+      ><a name="7069" class="Symbol"
+      >(</a
+      ><a name="7070" href="lib.PathGroupoid.html#1130" class="Function"
+      >!-inv-l</a
+      ><a name="7077"
+      > </a
+      ><a name="7078" href="trunc-inverse.html#6759" class="Bound"
+      >q</a
+      ><a name="7079" class="Symbol"
+      >))</a
+      ><a name="7081"
+      > </a
+      ><a name="7082" href="lib.PathGroupoid.html#406" class="Function Operator"
+      >&#8729;</a
+      ><a name="7083"
+      > </a
+      ><a name="7084" href="lib.PathGroupoid.html#903" class="Function"
+      >&#8729;-unit-r</a
+      ><a name="7092"
+      > </a
+      ><a name="7093" class="Symbol"
+      >_</a
+      ><a name="7094"
+      > </a
+      ><a name="7095" href="lib.Base.html#7188" class="Function Operator"
+      >&#10217;</a
+      ><a name="7096"
+      >
+                          </a
+      ><a name="7123" href="trunc-inverse.html#6688" class="Bound"
+      >p</a
+      ><a name="7124"
+      > </a
+      ><a name="7125" href="lib.Base.html#7283" class="Function Operator"
+      >&#8718;</a
+      ><a name="7126" class="Symbol"
+      >)</a
+      ><a name="7127"
+      >
+
+</a
+      ><a name="7129" class="Comment"
+      >-- As an example, take any type X with any point x. The path space</a
+      ><a name="7195"
+      >
+</a
+      ><a name="7196" class="Comment"
+      >-- x == x is trivially inhabited.</a
+      ><a name="7229"
+      >
+</a
+      ><a name="7230" class="Keyword"
+      >module</a
+      ><a name="7236"
+      > </a
+      ><a name="7237" href="trunc-inverse.html#7237" class="Module"
+      >example-path</a
+      ><a name="7249"
+      > </a
+      ><a name="7250" class="Symbol"
+      >{</a
+      ><a name="7251" href="trunc-inverse.html#7251" class="Bound"
+      >i</a
+      ><a name="7252" class="Symbol"
+      >}</a
+      ><a name="7253"
+      > </a
+      ><a name="7254" class="Symbol"
+      >(</a
+      ><a name="7255" href="trunc-inverse.html#7255" class="Bound"
+      >X</a
+      ><a name="7256"
+      > </a
+      ><a name="7257" class="Symbol"
+      >:</a
+      ><a name="7258"
+      > </a
+      ><a name="7259" href="lib.Base.html#1263" class="Function"
+      >Type</a
+      ><a name="7263"
+      > </a
+      ><a name="7264" href="trunc-inverse.html#7251" class="Bound"
+      >i</a
+      ><a name="7265" class="Symbol"
+      >)</a
+      ><a name="7266"
+      > </a
+      ><a name="7267" class="Symbol"
+      >(</a
+      ><a name="7268" href="trunc-inverse.html#7268" class="Bound"
+      >x</a
+      ><a name="7269"
+      > </a
+      ><a name="7270" class="Symbol"
+      >:</a
+      ><a name="7271"
+      > </a
+      ><a name="7272" href="trunc-inverse.html#7255" class="Bound"
+      >X</a
+      ><a name="7273" class="Symbol"
+      >)</a
+      ><a name="7274"
+      > </a
+      ><a name="7275" class="Keyword"
+      >where</a
+      ><a name="7280"
+      >
+  </a
+      ><a name="7283" class="Keyword"
+      >open</a
+      ><a name="7287"
+      > </a
+      ><a name="7288" href="trunc-inverse.html#2838" class="Module"
+      >hom-myst</a
+      ><a name="7296"
+      > </a
+      ><a name="7297" class="Symbol"
+      >(</a
+      ><a name="7298" href="trunc-inverse.html#7268" class="Bound"
+      >x</a
+      ><a name="7299"
+      > </a
+      ><a name="7300" href="lib.Base.html#1998" class="Datatype Operator"
+      >==</a
+      ><a name="7302"
+      > </a
+      ><a name="7303" href="trunc-inverse.html#7268" class="Bound"
+      >x</a
+      ><a name="7304"
+      > </a
+      ><a name="7305" href="lib.Base.html#5059" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="7306"
+      > </a
+      ><a name="7307" href="lib.Base.html#2049" class="InductiveConstructor"
+      >idp</a
+      ><a name="7310" class="Symbol"
+      >)</a
+      ><a name="7311"
+      >
+  </a
+      ><a name="7314" class="Keyword"
+      >open</a
+      ><a name="7318"
+      > </a
+      ><a name="7319" href="trunc-inverse.html#6649" class="Module"
+      >path-hom</a
+      ><a name="7327"
+      > </a
+      ><a name="7328" href="trunc-inverse.html#7255" class="Bound"
+      >X</a
+      ><a name="7329"
+      > </a
+      ><a name="7330" href="trunc-inverse.html#7268" class="Bound"
+      >x</a
+      ><a name="7331"
+      > </a
+      ><a name="7332" href="trunc-inverse.html#7268" class="Bound"
+      >x</a
+      ><a name="7333"
+      > </a
+      ><a name="7334" href="lib.Base.html#2049" class="InductiveConstructor"
+      >idp</a
+      ><a name="7337"
+      >
+
+  </a
+      ><a name="7341" href="trunc-inverse.html#7341" class="Function"
+      >myst-path</a
+      ><a name="7350"
+      > </a
+      ><a name="7351" class="Symbol"
+      >=</a
+      ><a name="7352"
+      > </a
+      ><a name="7353" href="trunc-inverse.html#3060" class="Function"
+      >myst</a
+      ><a name="7357"
+      > </a
+      ><a name="7358" href="trunc-inverse.html#6711" class="Function"
+      >is-hom</a
+      ><a name="7364"
+      >
+
+  </a
+      ><a name="7368" class="Comment"
+      >-- again, the identity map on the path space can be factored through</a
+      ><a name="7436"
+      >
+  </a
+      ><a name="7439" class="Comment"
+      >-- &#8739;_&#8739;, and we have never assumed that X is an h-set.</a
+      ><a name="7492"
+      >
+  </a
+      ><a name="7495" href="trunc-inverse.html#7495" class="Function"
+      >id-factored</a
+      ><a name="7506"
+      > </a
+      ><a name="7507" class="Symbol"
+      >:</a
+      ><a name="7508"
+      > </a
+      ><a name="7509" class="Symbol"
+      >(</a
+      ><a name="7510" href="trunc-inverse.html#7268" class="Bound"
+      >x</a
+      ><a name="7511"
+      > </a
+      ><a name="7512" href="lib.Base.html#1998" class="Datatype Operator"
+      >==</a
+      ><a name="7514"
+      > </a
+      ><a name="7515" href="trunc-inverse.html#7268" class="Bound"
+      >x</a
+      ><a name="7516" class="Symbol"
+      >)</a
+      ><a name="7517"
+      > </a
+      ><a name="7518" class="Symbol"
+      >&#8594;</a
+      ><a name="7519"
+      > </a
+      ><a name="7520" class="Symbol"
+      >(</a
+      ><a name="7521" href="trunc-inverse.html#7268" class="Bound"
+      >x</a
+      ><a name="7522"
+      > </a
+      ><a name="7523" href="lib.Base.html#1998" class="Datatype Operator"
+      >==</a
+      ><a name="7525"
+      > </a
+      ><a name="7526" href="trunc-inverse.html#7268" class="Bound"
+      >x</a
+      ><a name="7527" class="Symbol"
+      >)</a
+      ><a name="7528"
+      >
+  </a
+      ><a name="7531" href="trunc-inverse.html#7495" class="Function"
+      >id-factored</a
+      ><a name="7542"
+      > </a
+      ><a name="7543" class="Symbol"
+      >=</a
+      ><a name="7544"
+      > </a
+      ><a name="7545" href="trunc-inverse.html#7341" class="Function"
+      >myst-path</a
+      ><a name="7554"
+      > </a
+      ><a name="7555" href="lib.Base.html#7730" class="Function Operator"
+      >&#8728;</a
+      ><a name="7556"
+      > </a
+      ><a name="7557" href="trunc-inverse.html#2720" class="Function Operator"
+      >&#8739;_&#8739;</a
+      ><a name="7560"
+      >
+
+  </a
+      ><a name="7564" href="trunc-inverse.html#7564" class="Function"
+      >proof</a
+      ><a name="7569"
+      > </a
+      ><a name="7570" class="Symbol"
+      >:</a
+      ><a name="7571"
+      > </a
+      ><a name="7572" class="Symbol"
+      >(</a
+      ><a name="7573" href="trunc-inverse.html#7573" class="Bound"
+      >p</a
+      ><a name="7574"
+      > </a
+      ><a name="7575" class="Symbol"
+      >:</a
+      ><a name="7576"
+      > </a
+      ><a name="7577" href="trunc-inverse.html#7268" class="Bound"
+      >x</a
+      ><a name="7578"
+      > </a
+      ><a name="7579" href="lib.Base.html#1998" class="Datatype Operator"
+      >==</a
+      ><a name="7581"
+      > </a
+      ><a name="7582" href="trunc-inverse.html#7268" class="Bound"
+      >x</a
+      ><a name="7583" class="Symbol"
+      >)</a
+      ><a name="7584"
+      > </a
+      ><a name="7585" class="Symbol"
+      >&#8594;</a
+      ><a name="7586"
+      > </a
+      ><a name="7587" href="trunc-inverse.html#7495" class="Function"
+      >id-factored</a
+      ><a name="7598"
+      > </a
+      ><a name="7599" href="trunc-inverse.html#7573" class="Bound"
+      >p</a
+      ><a name="7600"
+      > </a
+      ><a name="7601" href="lib.Base.html#1998" class="Datatype Operator"
+      >==</a
+      ><a name="7603"
+      > </a
+      ><a name="7604" href="trunc-inverse.html#7573" class="Bound"
+      >p</a
+      ><a name="7605"
+      >
+  </a
+      ><a name="7608" href="trunc-inverse.html#7564" class="Function"
+      >proof</a
+      ><a name="7613"
+      > </a
+      ><a name="7614" href="trunc-inverse.html#7614" class="Bound"
+      >p</a
+      ><a name="7615"
+      > </a
+      ><a name="7616" class="Symbol"
+      >=</a
+      ><a name="7617"
+      > </a
+      ><a name="7618" href="lib.Base.html#2049" class="InductiveConstructor"
+      >idp</a
+      ><a name="7621"
+      >
+
+  </a
+      ><a name="7625" href="trunc-inverse.html#7625" class="Function"
+      >proof'</a
+      ><a name="7631"
+      > </a
+      ><a name="7632" class="Symbol"
+      >:</a
+      ><a name="7633"
+      > </a
+      ><a name="7634" href="trunc-inverse.html#7495" class="Function"
+      >id-factored</a
+      ><a name="7645"
+      > </a
+      ><a name="7646" href="lib.Base.html#1998" class="Datatype Operator"
+      >==</a
+      ><a name="7648"
+      > </a
+      ><a name="7649" href="lib.Base.html#7589" class="Function"
+      >idf</a
+      ><a name="7652"
+      > </a
+      ><a name="7653" class="Symbol"
+      >(</a
+      ><a name="7654" href="trunc-inverse.html#7268" class="Bound"
+      >x</a
+      ><a name="7655"
+      > </a
+      ><a name="7656" href="lib.Base.html#1998" class="Datatype Operator"
+      >==</a
+      ><a name="7658"
+      > </a
+      ><a name="7659" href="trunc-inverse.html#7268" class="Bound"
+      >x</a
+      ><a name="7660" class="Symbol"
+      >)</a
+      ><a name="7661"
+      >
+  </a
+      ><a name="7664" href="trunc-inverse.html#7625" class="Function"
+      >proof'</a
+      ><a name="7670"
+      > </a
+      ><a name="7671" class="Symbol"
+      >=</a
+      ><a name="7672"
+      > </a
+      ><a name="7673" href="lib.Funext.html#3978" class="Function"
+      >&#955;=</a
+      ><a name="7675"
+      > </a
+      ><a name="7676" href="trunc-inverse.html#7564" class="Function"
+      >proof</a
+      ><a name="7681"
+      >
+
+
+</a
+      ><a name="7684" class="Comment"
+      >{- Let us go back to the example with natural numbers. The term 'myst'
+   can be used to reveal a secret that was hidden with &#8739;_&#8739;. -}</a
+      ><a name="7817"
+      >
+</a
+      ><a name="7818" class="Keyword"
+      >module</a
+      ><a name="7824"
+      > </a
+      ><a name="7825" href="trunc-inverse.html#7825" class="Module"
+      >_</a
+      ><a name="7826"
+      > </a
+      ><a name="7827" class="Keyword"
+      >where</a
+      ><a name="7832"
+      >
+  </a
+      ><a name="7835" class="Keyword"
+      >open</a
+      ><a name="7839"
+      > </a
+      ><a name="7840" href="trunc-inverse.html#6025" class="Module"
+      >example-&#8469;</a
+      ><a name="7849"
+      > 
+
+  </a
+      ><a name="7854" class="Comment"
+      >-- let us hide a number</a
+      ><a name="7877"
+      >
+  </a
+      ><a name="7880" class="Keyword"
+      >module</a
+      ><a name="7886"
+      > </a
+      ><a name="7887" href="trunc-inverse.html#7887" class="Module"
+      >_</a
+      ><a name="7888"
+      > </a
+      ><a name="7889" class="Keyword"
+      >where</a
+      ><a name="7894"
+      >
+    </a
+      ><a name="7899" class="Keyword"
+      >private</a
+      ><a name="7906"
+      >
+      </a
+      ><a name="7913" class="Comment"
+      >-- a hidden number:</a
+      ><a name="7932"
+      >
+      </a
+      ><a name="7939" href="trunc-inverse.html#7939" class="Function"
+      >seventeen</a
+      ><a name="7948"
+      > </a
+      ><a name="7949" class="Symbol"
+      >:</a
+      ><a name="7950"
+      > </a
+      ><a name="7951" href="lib.types.Nat.html#136" class="Datatype"
+      >&#8469;</a
+      ><a name="7952"
+      >
+      </a
+      ><a name="7959" href="trunc-inverse.html#7939" class="Function"
+      >seventeen</a
+      ><a name="7968"
+      > </a
+      ><a name="7969" class="Symbol"
+      >=</a
+      ><a name="7970"
+      > </a
+      ><a name="7971" class="Number"
+      >17</a
+      ><a name="7973"
+      >
+      </a
+      ><a name="7980" class="Comment"
+      >-- a hidden number that is not even an actual number:</a
+      ><a name="8033"
+      >
+      </a
+      ><a name="8040" class="Keyword"
+      >postulate</a
+      ><a name="8049"
+      > </a
+      ><a name="8050" href="trunc-inverse.html#8050" class="Postulate"
+      >a</a
+      ><a name="8051"
+      > </a
+      ><a name="8052" class="Symbol"
+      >:</a
+      ><a name="8053"
+      > </a
+      ><a name="8054" href="lib.types.Nat.html#136" class="Datatype"
+      >&#8469;</a
+      ><a name="8055"
+      >
+    
+    </a
+      ><a name="8065" class="Comment"
+      >-- to the outside, only the truncated versions are revealed.</a
+      ><a name="8125"
+      >
+    </a
+      ><a name="8130" href="trunc-inverse.html#8130" class="Function"
+      >hidden&#8321;</a
+      ><a name="8137"
+      > </a
+      ><a name="8138" class="Symbol"
+      >:</a
+      ><a name="8139"
+      > </a
+      ><a name="8140" href="trunc-inverse.html#2675" class="Function Operator"
+      >&#8741;</a
+      ><a name="8141"
+      > </a
+      ><a name="8142" href="lib.types.Nat.html#136" class="Datatype"
+      >&#8469;</a
+      ><a name="8143"
+      > </a
+      ><a name="8144" href="trunc-inverse.html#2675" class="Function Operator"
+      >&#8741;</a
+      ><a name="8145"
+      >
+    </a
+      ><a name="8150" href="trunc-inverse.html#8130" class="Function"
+      >hidden&#8321;</a
+      ><a name="8157"
+      > </a
+      ><a name="8158" class="Symbol"
+      >=</a
+      ><a name="8159"
+      > </a
+      ><a name="8160" href="trunc-inverse.html#2720" class="Function Operator"
+      >&#8739;</a
+      ><a name="8161"
+      > </a
+      ><a name="8162" href="trunc-inverse.html#7939" class="Function"
+      >seventeen</a
+      ><a name="8171"
+      > </a
+      ><a name="8172" href="trunc-inverse.html#2720" class="Function Operator"
+      >&#8739;</a
+      ><a name="8173"
+      >
+    </a
+      ><a name="8178" href="trunc-inverse.html#8178" class="Function"
+      >hidden&#8322;</a
+      ><a name="8185"
+      > </a
+      ><a name="8186" class="Symbol"
+      >:</a
+      ><a name="8187"
+      > </a
+      ><a name="8188" href="trunc-inverse.html#2675" class="Function Operator"
+      >&#8741;</a
+      ><a name="8189"
+      > </a
+      ><a name="8190" href="lib.types.Nat.html#136" class="Datatype"
+      >&#8469;</a
+      ><a name="8191"
+      > </a
+      ><a name="8192" href="trunc-inverse.html#2675" class="Function Operator"
+      >&#8741;</a
+      ><a name="8193"
+      >
+    </a
+      ><a name="8198" href="trunc-inverse.html#8178" class="Function"
+      >hidden&#8322;</a
+      ><a name="8205"
+      > </a
+      ><a name="8206" class="Symbol"
+      >=</a
+      ><a name="8207"
+      > </a
+      ><a name="8208" href="trunc-inverse.html#2720" class="Function Operator"
+      >&#8739;</a
+      ><a name="8209"
+      > </a
+      ><a name="8210" href="trunc-inverse.html#8050" class="Postulate"
+      >a</a
+      ><a name="8211"
+      > </a
+      ><a name="8212" href="trunc-inverse.html#2720" class="Function Operator"
+      >&#8739;</a
+      ><a name="8213"
+      >
+
+  </a
+      ><a name="8217" class="Comment"
+      >-- It is impossble to refer to seventeen and a as they are </a
+      ><a name="8276"
+      >
+  </a
+      ><a name="8279" class="Comment"
+      >-- not visible any more. We can still reveal their secrets.</a
+      ><a name="8338"
+      >
+  </a
+      ><a name="8341" href="trunc-inverse.html#8341" class="Function"
+      >reveal</a
+      ><a name="8347"
+      > </a
+      ><a name="8348" class="Symbol"
+      >:</a
+      ><a name="8349"
+      > </a
+      ><a name="8350" href="lib.types.Nat.html#136" class="Datatype"
+      >&#8469;</a
+      ><a name="8351"
+      >
+  </a
+      ><a name="8354" href="trunc-inverse.html#8341" class="Function"
+      >reveal</a
+      ><a name="8360"
+      > </a
+      ><a name="8361" class="Symbol"
+      >=</a
+      ><a name="8362"
+      > </a
+      ><a name="8363" href="trunc-inverse.html#6091" class="Function"
+      >myst-&#8469;</a
+      ><a name="8369"
+      > </a
+      ><a name="8370" href="trunc-inverse.html#8130" class="Function"
+      >hidden&#8321;</a
+      ><a name="8377"
+      > 
+  </a
+      ><a name="8381" href="trunc-inverse.html#8381" class="Function"
+      >uncover</a
+      ><a name="8388"
+      > </a
+      ><a name="8389" class="Symbol"
+      >:</a
+      ><a name="8390"
+      > </a
+      ><a name="8391" href="lib.types.Nat.html#136" class="Datatype"
+      >&#8469;</a
+      ><a name="8392"
+      >
+  </a
+      ><a name="8395" href="trunc-inverse.html#8381" class="Function"
+      >uncover</a
+      ><a name="8402"
+      > </a
+      ><a name="8403" class="Symbol"
+      >=</a
+      ><a name="8404"
+      > </a
+      ><a name="8405" href="trunc-inverse.html#6091" class="Function"
+      >myst-&#8469;</a
+      ><a name="8411"
+      > </a
+      ><a name="8412" href="trunc-inverse.html#8178" class="Function"
+      >hidden&#8322;</a
+      ><a name="8419"
+      >
+
+  </a
+      ><a name="8423" class="Comment"
+      >{- In Agda, we can normalize an expression with ctrl-c ctrl-n.
+
+     As it should be, we cannot check seventeen and a:
+
+       ctrl-c ctrl-n seventeen
+       result: [...] not in scope [...]
+
+       ctrl-c ctrl-n a
+       result: [...] not in scope [...]
+
+     However, I can still reveal the hidden information:
+
+       ctrl-c ctrl-n reveal 
+       result: 17
+
+       ctrl-c ctrl-n uncover
+       result: .trunc-inverse._._.a
+  -}</a
+      ><a name="8854"
+      >
+
+
+\end{code}
+
+</a
+      ><a name="8869" class="Comment"
+      >The crux is, of course, that the type of 'myst' is not</a
+      ><a name="8923"
+      >
+</a
+      ><a name="8924" class="Comment"
+      >&#8741; X &#8741; &#8594; X. In fact, the type of 'myst' is rather complicated', </a
+      ><a name="8987"
+      >
+</a
+      ><a name="8988" class="Comment"
+      >and it was already given above:</a
+      ><a name="9019"
+      >
+
+</a
+      ><a name="9021" class="Comment"
+      >  myst : (x : &#8741; X &#8741;) &#8594; (fst &#8728; fst &#8728; f-lifted) x</a
+      ><a name="9068"
+      >
+
+</a
+      ><a name="9070" class="Comment"
+      >The reason why the whole construction works is that, whenever x</a
+      ><a name="9133"
+      >
+</a
+      ><a name="9134" class="Comment"
+      >is instantiated with &#8739; a &#8739; (which are actually the only elements</a
+      ><a name="9198"
+      >
+</a
+      ><a name="9199" class="Comment"
+      >of &#8741; X &#8741; that we have), the expression in the &quot;codomain&quot; of myst</a
+      ><a name="9263"
+      >
+</a
+      ><a name="9264" class="Comment"
+      >reduces to X (and, in particular, does not depend on &#8739; a &#8739;).</a
+      ><a name="9324"
+      >
+
+</a
+      ><a name="9326" class="Comment"
+      >Further, note that the term 'myst' is independent of the proof</a
+      ><a name="9388"
+      >
+</a
+      ><a name="9389" class="Comment"
+      >that X is homogeneous. We can thus reveal information that was </a
+      ><a name="9452"
+      >
+</a
+      ><a name="9453" class="Comment"
+      >hidden by &#8739;_&#8739; for any type. In general, we will not be able to </a
+      ><a name="9516"
+      >
+</a
+      ><a name="9517" class="Comment"
+      >close all holes as we cannot show that an arbitrary type is</a
+      ><a name="9576"
+      >
+</a
+      ><a name="9577" class="Comment"
+      >homogeneous, but the secret will be revealed nevertheless.</a
+      ><a name="9635"
+      >
+</a
+      ></pre
+    ></body
+  ></html
+>

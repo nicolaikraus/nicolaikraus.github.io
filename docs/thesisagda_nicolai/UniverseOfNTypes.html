@@ -1,0 +1,1997 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+><head
+  ><title
+    >UniverseOfNTypes</title
+    ><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"
+     /><meta http-equiv="Content-Style-Type" content="text/css"
+     /><link href="Agda.css" rel="stylesheet" type="text/css"
+     /></head
+  ><body
+  ><pre
+    ><a name="1" class="Symbol"
+      >{-#</a
+      ><a name="4"
+      > </a
+      ><a name="5" class="Keyword"
+      >OPTIONS</a
+      ><a name="12"
+      > --without-K </a
+      ><a name="25" class="Symbol"
+      >#-}</a
+      ><a name="28"
+      >
+
+</a
+      ><a name="30" class="Comment"
+      >{- The type of all types in some universe with a fixed truncation level
+   behaves like a universe itself. In this utility module, we develop
+   some notation for efficiently working with this pseudo-universe.
+   It will lead to considerably briefer and more comprehensible proofs. -}</a
+      ><a name="314"
+      >
+</a
+      ><a name="315" class="Keyword"
+      >module</a
+      ><a name="321"
+      > </a
+      ><a name="322" href="UniverseOfNTypes.html#1" class="Module"
+      >UniverseOfNTypes</a
+      ><a name="338"
+      > </a
+      ><a name="339" class="Keyword"
+      >where</a
+      ><a name="344"
+      >
+
+</a
+      ><a name="346" class="Keyword"
+      >open</a
+      ><a name="350"
+      > </a
+      ><a name="351" class="Keyword"
+      >import</a
+      ><a name="357"
+      > </a
+      ><a name="358" href="lib.Basics.html#1" class="Module"
+      >lib.Basics</a
+      ><a name="368"
+      >
+</a
+      ><a name="369" class="Keyword"
+      >open</a
+      ><a name="373"
+      > </a
+      ><a name="374" class="Keyword"
+      >import</a
+      ><a name="380"
+      > </a
+      ><a name="381" href="lib.NType2.html#1" class="Module"
+      >lib.NType2</a
+      ><a name="391"
+      >
+</a
+      ><a name="392" class="Keyword"
+      >open</a
+      ><a name="396"
+      > </a
+      ><a name="397" class="Keyword"
+      >import</a
+      ><a name="403"
+      > </a
+      ><a name="404" href="lib.types.Pi.html#1" class="Module"
+      >lib.types.Pi</a
+      ><a name="416"
+      >
+</a
+      ><a name="417" class="Keyword"
+      >open</a
+      ><a name="421"
+      > </a
+      ><a name="422" class="Keyword"
+      >import</a
+      ><a name="428"
+      > </a
+      ><a name="429" href="lib.types.Sigma.html#1" class="Module"
+      >lib.types.Sigma</a
+      ><a name="444"
+      >
+</a
+      ><a name="445" class="Keyword"
+      >open</a
+      ><a name="449"
+      > </a
+      ><a name="450" class="Keyword"
+      >import</a
+      ><a name="456"
+      > </a
+      ><a name="457" href="lib.types.TLevel.html#1" class="Module"
+      >lib.types.TLevel</a
+      ><a name="473"
+      >
+</a
+      ><a name="474" class="Keyword"
+      >open</a
+      ><a name="478"
+      > </a
+      ><a name="479" class="Keyword"
+      >import</a
+      ><a name="485"
+      > </a
+      ><a name="486" href="lib.types.Unit.html#1" class="Module"
+      >lib.types.Unit</a
+      ><a name="500"
+      >
+
+</a
+      ><a name="502" class="Keyword"
+      >open</a
+      ><a name="506"
+      > </a
+      ><a name="507" class="Keyword"
+      >import</a
+      ><a name="513"
+      > </a
+      ><a name="514" href="Preliminaries.html#1" class="Module"
+      >Preliminaries</a
+      ><a name="527"
+      >
+
+
+</a
+      ><a name="530" class="Keyword"
+      >module</a
+      ><a name="536"
+      > </a
+      ><a name="537" href="UniverseOfNTypes.html#537" class="Module"
+      >_</a
+      ><a name="538"
+      > </a
+      ><a name="539" class="Symbol"
+      >{</a
+      ><a name="540" href="UniverseOfNTypes.html#540" class="Bound"
+      >n</a
+      ><a name="541"
+      > </a
+      ><a name="542" class="Symbol"
+      >:</a
+      ><a name="543"
+      > </a
+      ><a name="544" href="lib.Base.html#8715" class="Function"
+      >&#8469;&#8331;&#8322;</a
+      ><a name="547" class="Symbol"
+      >}</a
+      ><a name="548"
+      > </a
+      ><a name="549" class="Keyword"
+      >where</a
+      ><a name="554"
+      >
+  </a
+      ><a name="557" href="UniverseOfNTypes.html#557" class="Function Operator"
+      >&#10214;_&#10215;</a
+      ><a name="560"
+      > </a
+      ><a name="561" class="Symbol"
+      >:</a
+      ><a name="562"
+      > </a
+      ><a name="563" class="Symbol"
+      >&#8704;</a
+      ><a name="564"
+      > </a
+      ><a name="565" class="Symbol"
+      >{</a
+      ><a name="566" href="UniverseOfNTypes.html#566" class="Bound"
+      >i</a
+      ><a name="567" class="Symbol"
+      >}</a
+      ><a name="568"
+      > </a
+      ><a name="569" class="Symbol"
+      >&#8594;</a
+      ><a name="570"
+      > </a
+      ><a name="571" href="UniverseOfNTypes.html#540" class="Bound"
+      >n</a
+      ><a name="572"
+      > </a
+      ><a name="573" href="lib.NType2.html#2683" class="Function Operator"
+      >-Type</a
+      ><a name="578"
+      > </a
+      ><a name="579" href="UniverseOfNTypes.html#566" class="Bound"
+      >i</a
+      ><a name="580"
+      > </a
+      ><a name="581" class="Symbol"
+      >&#8594;</a
+      ><a name="582"
+      > </a
+      ><a name="583" href="lib.Base.html#1123" class="Function"
+      >Type</a
+      ><a name="587"
+      > </a
+      ><a name="588" href="UniverseOfNTypes.html#566" class="Bound"
+      >i</a
+      ><a name="589"
+      >
+  </a
+      ><a name="592" href="UniverseOfNTypes.html#557" class="Function Operator"
+      >&#10214;</a
+      ><a name="593"
+      > </a
+      ><a name="594" class="Symbol"
+      >(</a
+      ><a name="595" href="UniverseOfNTypes.html#595" class="Bound"
+      >B</a
+      ><a name="596"
+      > </a
+      ><a name="597" href="lib.Base.html#4919" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="598"
+      > </a
+      ><a name="599" class="Symbol"
+      >_)</a
+      ><a name="601"
+      > </a
+      ><a name="602" href="UniverseOfNTypes.html#557" class="Function Operator"
+      >&#10215;</a
+      ><a name="603"
+      > </a
+      ><a name="604" class="Symbol"
+      >=</a
+      ><a name="605"
+      > </a
+      ><a name="606" href="UniverseOfNTypes.html#595" class="Bound"
+      >B</a
+      ><a name="607"
+      >
+
+</a
+      ><a name="609" class="Keyword"
+      >module</a
+      ><a name="615"
+      > </a
+      ><a name="616" href="UniverseOfNTypes.html#616" class="Module"
+      >_</a
+      ><a name="617"
+      > </a
+      ><a name="618" class="Symbol"
+      >{</a
+      ><a name="619" href="UniverseOfNTypes.html#619" class="Bound"
+      >n</a
+      ><a name="620"
+      > </a
+      ><a name="621" class="Symbol"
+      >:</a
+      ><a name="622"
+      > </a
+      ><a name="623" href="lib.Base.html#8715" class="Function"
+      >&#8469;&#8331;&#8322;</a
+      ><a name="626" class="Symbol"
+      >}</a
+      ><a name="627"
+      > </a
+      ><a name="628" class="Keyword"
+      >where</a
+      ><a name="633"
+      >
+  </a
+      ><a name="636" href="UniverseOfNTypes.html#636" class="Function"
+      >Lift-&#8804;</a
+      ><a name="642"
+      > </a
+      ><a name="643" class="Symbol"
+      >:</a
+      ><a name="644"
+      > </a
+      ><a name="645" class="Symbol"
+      >&#8704;</a
+      ><a name="646"
+      > </a
+      ><a name="647" class="Symbol"
+      >{</a
+      ><a name="648" href="UniverseOfNTypes.html#648" class="Bound"
+      >i</a
+      ><a name="649"
+      > </a
+      ><a name="650" href="UniverseOfNTypes.html#650" class="Bound"
+      >j</a
+      ><a name="651" class="Symbol"
+      >}</a
+      ><a name="652"
+      > </a
+      ><a name="653" class="Symbol"
+      >&#8594;</a
+      ><a name="654"
+      > </a
+      ><a name="655" href="UniverseOfNTypes.html#619" class="Bound"
+      >n</a
+      ><a name="656"
+      > </a
+      ><a name="657" href="lib.NType2.html#2683" class="Function Operator"
+      >-Type</a
+      ><a name="662"
+      > </a
+      ><a name="663" href="UniverseOfNTypes.html#648" class="Bound"
+      >i</a
+      ><a name="664"
+      > </a
+      ><a name="665" class="Symbol"
+      >&#8594;</a
+      ><a name="666"
+      > </a
+      ><a name="667" href="UniverseOfNTypes.html#619" class="Bound"
+      >n</a
+      ><a name="668"
+      > </a
+      ><a name="669" href="lib.NType2.html#2683" class="Function Operator"
+      >-Type</a
+      ><a name="674"
+      > </a
+      ><a name="675" class="Symbol"
+      >(</a
+      ><a name="676" href="UniverseOfNTypes.html#648" class="Bound"
+      >i</a
+      ><a name="677"
+      > </a
+      ><a name="678" href="Preliminaries.html#483" class="Function Operator"
+      >&#8852;</a
+      ><a name="679"
+      > </a
+      ><a name="680" href="UniverseOfNTypes.html#650" class="Bound"
+      >j</a
+      ><a name="681" class="Symbol"
+      >)</a
+      ><a name="682"
+      >
+  </a
+      ><a name="685" href="UniverseOfNTypes.html#636" class="Function"
+      >Lift-&#8804;</a
+      ><a name="691"
+      > </a
+      ><a name="692" class="Symbol"
+      >{</a
+      ><a name="693" href="UniverseOfNTypes.html#693" class="Bound"
+      >i</a
+      ><a name="694" class="Symbol"
+      >}</a
+      ><a name="695"
+      > </a
+      ><a name="696" class="Symbol"
+      >{</a
+      ><a name="697" href="UniverseOfNTypes.html#697" class="Bound"
+      >j</a
+      ><a name="698" class="Symbol"
+      >}</a
+      ><a name="699"
+      > </a
+      ><a name="700" class="Symbol"
+      >(</a
+      ><a name="701" href="UniverseOfNTypes.html#701" class="Bound"
+      >A</a
+      ><a name="702"
+      > </a
+      ><a name="703" href="lib.Base.html#4919" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="704"
+      > </a
+      ><a name="705" href="UniverseOfNTypes.html#705" class="Bound"
+      >h</a
+      ><a name="706" class="Symbol"
+      >)</a
+      ><a name="707"
+      > </a
+      ><a name="708" class="Symbol"
+      >=</a
+      ><a name="709"
+      > </a
+      ><a name="710" class="Symbol"
+      >(</a
+      ><a name="711" href="lib.Base.html#5914" class="Record"
+      >Lift</a
+      ><a name="715"
+      > </a
+      ><a name="716" class="Symbol"
+      >{</a
+      ><a name="717" class="Argument"
+      >j</a
+      ><a name="718"
+      > </a
+      ><a name="719" class="Symbol"
+      >=</a
+      ><a name="720"
+      > </a
+      ><a name="721" href="UniverseOfNTypes.html#697" class="Bound"
+      >j</a
+      ><a name="722" class="Symbol"
+      >}</a
+      ><a name="723"
+      > </a
+      ><a name="724" href="UniverseOfNTypes.html#701" class="Bound"
+      >A</a
+      ><a name="725"
+      > </a
+      ><a name="726" href="lib.Base.html#4919" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="727"
+      > </a
+      ><a name="728" href="lib.Equivalences.html#7216" class="Function"
+      >equiv-preserves-level</a
+      ><a name="749"
+      > </a
+      ><a name="750" class="Symbol"
+      >(</a
+      ><a name="751" href="lib.Equivalences.html#5012" class="Function"
+      >lift-equiv</a
+      ><a name="761"
+      > </a
+      ><a name="762" href="lib.Equivalences.html#4644" class="Function Operator"
+      >&#8315;&#185;</a
+      ><a name="764" class="Symbol"
+      >)</a
+      ><a name="765"
+      > </a
+      ><a name="766" href="UniverseOfNTypes.html#705" class="Bound"
+      >h</a
+      ><a name="767" class="Symbol"
+      >)</a
+      ><a name="768"
+      >
+
+  </a
+      ><a name="772" href="UniverseOfNTypes.html#772" class="Function"
+      >raise</a
+      ><a name="777"
+      > </a
+      ><a name="778" class="Symbol"
+      >:</a
+      ><a name="779"
+      > </a
+      ><a name="780" class="Symbol"
+      >&#8704;</a
+      ><a name="781"
+      > </a
+      ><a name="782" class="Symbol"
+      >{</a
+      ><a name="783" href="UniverseOfNTypes.html#783" class="Bound"
+      >i</a
+      ><a name="784" class="Symbol"
+      >}</a
+      ><a name="785"
+      > </a
+      ><a name="786" class="Symbol"
+      >&#8594;</a
+      ><a name="787"
+      > </a
+      ><a name="788" href="UniverseOfNTypes.html#619" class="Bound"
+      >n</a
+      ><a name="789"
+      > </a
+      ><a name="790" href="lib.NType2.html#2683" class="Function Operator"
+      >-Type</a
+      ><a name="795"
+      > </a
+      ><a name="796" href="UniverseOfNTypes.html#783" class="Bound"
+      >i</a
+      ><a name="797"
+      > </a
+      ><a name="798" class="Symbol"
+      >&#8594;</a
+      ><a name="799"
+      > </a
+      ><a name="800" href="lib.Base.html#8688" class="InductiveConstructor"
+      >S</a
+      ><a name="801"
+      > </a
+      ><a name="802" href="UniverseOfNTypes.html#619" class="Bound"
+      >n</a
+      ><a name="803"
+      > </a
+      ><a name="804" href="lib.NType2.html#2683" class="Function Operator"
+      >-Type</a
+      ><a name="809"
+      > </a
+      ><a name="810" href="UniverseOfNTypes.html#783" class="Bound"
+      >i</a
+      ><a name="811"
+      >
+  </a
+      ><a name="814" href="UniverseOfNTypes.html#772" class="Function"
+      >raise</a
+      ><a name="819"
+      > </a
+      ><a name="820" class="Symbol"
+      >(</a
+      ><a name="821" href="UniverseOfNTypes.html#821" class="Bound"
+      >A</a
+      ><a name="822"
+      > </a
+      ><a name="823" href="lib.Base.html#4919" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="824"
+      > </a
+      ><a name="825" href="UniverseOfNTypes.html#825" class="Bound"
+      >h</a
+      ><a name="826" class="Symbol"
+      >)</a
+      ><a name="827"
+      > </a
+      ><a name="828" class="Symbol"
+      >=</a
+      ><a name="829"
+      > </a
+      ><a name="830" class="Symbol"
+      >(</a
+      ><a name="831" href="UniverseOfNTypes.html#821" class="Bound"
+      >A</a
+      ><a name="832"
+      > </a
+      ><a name="833" href="lib.Base.html#4919" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="834"
+      > </a
+      ><a name="835" href="lib.NType.html#1024" class="Function"
+      >raise-level</a
+      ><a name="846"
+      > </a
+      ><a name="847" href="UniverseOfNTypes.html#619" class="Bound"
+      >n</a
+      ><a name="848"
+      > </a
+      ><a name="849" href="UniverseOfNTypes.html#825" class="Bound"
+      >h</a
+      ><a name="850" class="Symbol"
+      >)</a
+      ><a name="851"
+      >
+
+  </a
+      ><a name="855" href="UniverseOfNTypes.html#855" class="Function"
+      >raise-&#8804;T</a
+      ><a name="863"
+      > </a
+      ><a name="864" class="Symbol"
+      >:</a
+      ><a name="865"
+      > </a
+      ><a name="866" class="Symbol"
+      >&#8704;</a
+      ><a name="867"
+      > </a
+      ><a name="868" class="Symbol"
+      >{</a
+      ><a name="869" href="UniverseOfNTypes.html#869" class="Bound"
+      >i</a
+      ><a name="870" class="Symbol"
+      >}</a
+      ><a name="871"
+      > </a
+      ><a name="872" class="Symbol"
+      >{</a
+      ><a name="873" href="UniverseOfNTypes.html#873" class="Bound"
+      >m</a
+      ><a name="874"
+      > </a
+      ><a name="875" href="UniverseOfNTypes.html#875" class="Bound"
+      >n</a
+      ><a name="876"
+      > </a
+      ><a name="877" class="Symbol"
+      >:</a
+      ><a name="878"
+      > </a
+      ><a name="879" href="lib.Base.html#8715" class="Function"
+      >&#8469;&#8331;&#8322;</a
+      ><a name="882" class="Symbol"
+      >}</a
+      ><a name="883"
+      > </a
+      ><a name="884" class="Symbol"
+      >&#8594;</a
+      ><a name="885"
+      > </a
+      ><a name="886" href="UniverseOfNTypes.html#873" class="Bound"
+      >m</a
+      ><a name="887"
+      > </a
+      ><a name="888" href="lib.types.TLevel.html#884" class="Function Operator"
+      >&#8804;T</a
+      ><a name="890"
+      > </a
+      ><a name="891" href="UniverseOfNTypes.html#875" class="Bound"
+      >n</a
+      ><a name="892"
+      > </a
+      ><a name="893" class="Symbol"
+      >&#8594;</a
+      ><a name="894"
+      > </a
+      ><a name="895" href="UniverseOfNTypes.html#873" class="Bound"
+      >m</a
+      ><a name="896"
+      > </a
+      ><a name="897" href="lib.NType2.html#2683" class="Function Operator"
+      >-Type</a
+      ><a name="902"
+      > </a
+      ><a name="903" href="UniverseOfNTypes.html#869" class="Bound"
+      >i</a
+      ><a name="904"
+      > </a
+      ><a name="905" class="Symbol"
+      >&#8594;</a
+      ><a name="906"
+      > </a
+      ><a name="907" href="UniverseOfNTypes.html#875" class="Bound"
+      >n</a
+      ><a name="908"
+      > </a
+      ><a name="909" href="lib.NType2.html#2683" class="Function Operator"
+      >-Type</a
+      ><a name="914"
+      > </a
+      ><a name="915" href="UniverseOfNTypes.html#869" class="Bound"
+      >i</a
+      ><a name="916"
+      >
+  </a
+      ><a name="919" href="UniverseOfNTypes.html#855" class="Function"
+      >raise-&#8804;T</a
+      ><a name="927"
+      > </a
+      ><a name="928" href="UniverseOfNTypes.html#928" class="Bound"
+      >p</a
+      ><a name="929"
+      > </a
+      ><a name="930" class="Symbol"
+      >(</a
+      ><a name="931" href="UniverseOfNTypes.html#931" class="Bound"
+      >A</a
+      ><a name="932"
+      > </a
+      ><a name="933" href="lib.Base.html#4919" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="934"
+      > </a
+      ><a name="935" href="UniverseOfNTypes.html#935" class="Bound"
+      >h</a
+      ><a name="936" class="Symbol"
+      >)</a
+      ><a name="937"
+      > </a
+      ><a name="938" class="Symbol"
+      >=</a
+      ><a name="939"
+      > </a
+      ><a name="940" class="Symbol"
+      >(</a
+      ><a name="941" href="UniverseOfNTypes.html#931" class="Bound"
+      >A</a
+      ><a name="942"
+      > </a
+      ><a name="943" href="lib.Base.html#4919" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="944"
+      > </a
+      ><a name="945" href="lib.NType2.html#5400" class="Function"
+      >raise-level-&#8804;T</a
+      ><a name="959"
+      > </a
+      ><a name="960" href="UniverseOfNTypes.html#928" class="Bound"
+      >p</a
+      ><a name="961"
+      > </a
+      ><a name="962" href="UniverseOfNTypes.html#935" class="Bound"
+      >h</a
+      ><a name="963" class="Symbol"
+      >)</a
+      ><a name="964"
+      >
+
+  </a
+      ><a name="968" href="UniverseOfNTypes.html#968" class="Function"
+      >&#8868;-&#8804;</a
+      ><a name="971"
+      > </a
+      ><a name="972" class="Symbol"
+      >:</a
+      ><a name="973"
+      > </a
+      ><a name="974" href="UniverseOfNTypes.html#619" class="Bound"
+      >n</a
+      ><a name="975"
+      > </a
+      ><a name="976" href="lib.NType2.html#2683" class="Function Operator"
+      >-Type</a
+      ><a name="981"
+      > </a
+      ><a name="982" href="Agda.Primitive.html#580" class="Primitive"
+      >lzero</a
+      ><a name="987"
+      >
+  </a
+      ><a name="990" href="UniverseOfNTypes.html#968" class="Function"
+      >&#8868;-&#8804;</a
+      ><a name="993"
+      > </a
+      ><a name="994" class="Symbol"
+      >=</a
+      ><a name="995"
+      > </a
+      ><a name="996" class="Symbol"
+      >(</a
+      ><a name="997" href="lib.types.Unit.html#83" class="Function"
+      >&#8868;</a
+      ><a name="998"
+      > </a
+      ><a name="999" href="lib.Base.html#4919" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="1000"
+      > </a
+      ><a name="1001" href="lib.NType2.html#5400" class="Function"
+      >raise-level-&#8804;T</a
+      ><a name="1015"
+      > </a
+      ><a name="1016" class="Symbol"
+      >(</a
+      ><a name="1017" href="lib.types.TLevel.html#1020" class="Function"
+      >-2&#8804;T</a
+      ><a name="1021"
+      > </a
+      ><a name="1022" href="UniverseOfNTypes.html#619" class="Bound"
+      >n</a
+      ><a name="1023" class="Symbol"
+      >)</a
+      ><a name="1024"
+      > </a
+      ><a name="1025" href="lib.types.Unit.html#140" class="Function"
+      >Unit-is-contr</a
+      ><a name="1038" class="Symbol"
+      >)</a
+      ><a name="1039"
+      >
+
+  </a
+      ><a name="1043" href="UniverseOfNTypes.html#1043" class="Function"
+      >&#928;-&#8804;</a
+      ><a name="1046"
+      > </a
+      ><a name="1047" class="Symbol"
+      >:</a
+      ><a name="1048"
+      > </a
+      ><a name="1049" class="Symbol"
+      >&#8704;</a
+      ><a name="1050"
+      > </a
+      ><a name="1051" class="Symbol"
+      >{</a
+      ><a name="1052" href="UniverseOfNTypes.html#1052" class="Bound"
+      >i</a
+      ><a name="1053"
+      > </a
+      ><a name="1054" href="UniverseOfNTypes.html#1054" class="Bound"
+      >j</a
+      ><a name="1055" class="Symbol"
+      >}</a
+      ><a name="1056"
+      > </a
+      ><a name="1057" class="Symbol"
+      >(</a
+      ><a name="1058" href="UniverseOfNTypes.html#1058" class="Bound"
+      >A</a
+      ><a name="1059"
+      > </a
+      ><a name="1060" class="Symbol"
+      >:</a
+      ><a name="1061"
+      > </a
+      ><a name="1062" href="lib.Base.html#1123" class="Function"
+      >Type</a
+      ><a name="1066"
+      > </a
+      ><a name="1067" href="UniverseOfNTypes.html#1052" class="Bound"
+      >i</a
+      ><a name="1068" class="Symbol"
+      >)</a
+      ><a name="1069"
+      > </a
+      ><a name="1070" class="Symbol"
+      >&#8594;</a
+      ><a name="1071"
+      > </a
+      ><a name="1072" class="Symbol"
+      >(</a
+      ><a name="1073" href="UniverseOfNTypes.html#1058" class="Bound"
+      >A</a
+      ><a name="1074"
+      > </a
+      ><a name="1075" class="Symbol"
+      >&#8594;</a
+      ><a name="1076"
+      > </a
+      ><a name="1077" href="UniverseOfNTypes.html#619" class="Bound"
+      >n</a
+      ><a name="1078"
+      > </a
+      ><a name="1079" href="lib.NType2.html#2683" class="Function Operator"
+      >-Type</a
+      ><a name="1084"
+      > </a
+      ><a name="1085" href="UniverseOfNTypes.html#1054" class="Bound"
+      >j</a
+      ><a name="1086" class="Symbol"
+      >)</a
+      ><a name="1087"
+      > </a
+      ><a name="1088" class="Symbol"
+      >&#8594;</a
+      ><a name="1089"
+      > </a
+      ><a name="1090" href="UniverseOfNTypes.html#619" class="Bound"
+      >n</a
+      ><a name="1091"
+      > </a
+      ><a name="1092" href="lib.NType2.html#2683" class="Function Operator"
+      >-Type</a
+      ><a name="1097"
+      > </a
+      ><a name="1098" class="Symbol"
+      >(</a
+      ><a name="1099" href="UniverseOfNTypes.html#1052" class="Bound"
+      >i</a
+      ><a name="1100"
+      > </a
+      ><a name="1101" href="Preliminaries.html#483" class="Function Operator"
+      >&#8852;</a
+      ><a name="1102"
+      > </a
+      ><a name="1103" href="UniverseOfNTypes.html#1054" class="Bound"
+      >j</a
+      ><a name="1104" class="Symbol"
+      >)</a
+      ><a name="1105"
+      >
+  </a
+      ><a name="1108" href="UniverseOfNTypes.html#1043" class="Function"
+      >&#928;-&#8804;</a
+      ><a name="1111"
+      > </a
+      ><a name="1112" href="UniverseOfNTypes.html#1112" class="Bound"
+      >A</a
+      ><a name="1113"
+      > </a
+      ><a name="1114" href="UniverseOfNTypes.html#1114" class="Bound"
+      >B</a
+      ><a name="1115"
+      > </a
+      ><a name="1116" class="Symbol"
+      >=</a
+      ><a name="1117"
+      > </a
+      ><a name="1118" class="Symbol"
+      >(</a
+      ><a name="1119" href="lib.Base.html#4658" class="Function"
+      >&#928;</a
+      ><a name="1120"
+      > </a
+      ><a name="1121" href="UniverseOfNTypes.html#1112" class="Bound"
+      >A</a
+      ><a name="1122"
+      > </a
+      ><a name="1123" class="Symbol"
+      >(</a
+      ><a name="1124" href="lib.Base.html#4935" class="Field"
+      >fst</a
+      ><a name="1127"
+      > </a
+      ><a name="1128" href="lib.Base.html#7590" class="Function Operator"
+      >&#8728;</a
+      ><a name="1129"
+      > </a
+      ><a name="1130" href="UniverseOfNTypes.html#1114" class="Bound"
+      >B</a
+      ><a name="1131" class="Symbol"
+      >)</a
+      ><a name="1132"
+      > </a
+      ><a name="1133" href="lib.Base.html#4919" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="1134"
+      > </a
+      ><a name="1135" href="lib.types.Pi.html#109" class="Function"
+      >&#928;-level</a
+      ><a name="1142"
+      > </a
+      ><a name="1143" class="Symbol"
+      >(</a
+      ><a name="1144" href="lib.Base.html#4947" class="Field"
+      >snd</a
+      ><a name="1147"
+      > </a
+      ><a name="1148" href="lib.Base.html#7590" class="Function Operator"
+      >&#8728;</a
+      ><a name="1149"
+      > </a
+      ><a name="1150" href="UniverseOfNTypes.html#1114" class="Bound"
+      >B</a
+      ><a name="1151" class="Symbol"
+      >))</a
+      ><a name="1153"
+      >
+
+  </a
+      ><a name="1157" class="Keyword"
+      >infixr</a
+      ><a name="1163"
+      > </a
+      ><a name="1164" class="Number"
+      >2</a
+      ><a name="1165"
+      > _&#8594;-&#8804;_
+
+  </a
+      ><a name="1175" href="UniverseOfNTypes.html#1175" class="Function Operator"
+      >_&#8594;-&#8804;_</a
+      ><a name="1180"
+      > </a
+      ><a name="1181" class="Symbol"
+      >:</a
+      ><a name="1182"
+      > </a
+      ><a name="1183" class="Symbol"
+      >&#8704;</a
+      ><a name="1184"
+      > </a
+      ><a name="1185" class="Symbol"
+      >{</a
+      ><a name="1186" href="UniverseOfNTypes.html#1186" class="Bound"
+      >i</a
+      ><a name="1187"
+      > </a
+      ><a name="1188" href="UniverseOfNTypes.html#1188" class="Bound"
+      >j</a
+      ><a name="1189" class="Symbol"
+      >}</a
+      ><a name="1190"
+      > </a
+      ><a name="1191" class="Symbol"
+      >&#8594;</a
+      ><a name="1192"
+      > </a
+      ><a name="1193" href="lib.Base.html#1123" class="Function"
+      >Type</a
+      ><a name="1197"
+      > </a
+      ><a name="1198" href="UniverseOfNTypes.html#1186" class="Bound"
+      >i</a
+      ><a name="1199"
+      > </a
+      ><a name="1200" class="Symbol"
+      >&#8594;</a
+      ><a name="1201"
+      > </a
+      ><a name="1202" href="UniverseOfNTypes.html#619" class="Bound"
+      >n</a
+      ><a name="1203"
+      > </a
+      ><a name="1204" href="lib.NType2.html#2683" class="Function Operator"
+      >-Type</a
+      ><a name="1209"
+      > </a
+      ><a name="1210" href="UniverseOfNTypes.html#1188" class="Bound"
+      >j</a
+      ><a name="1211"
+      > </a
+      ><a name="1212" class="Symbol"
+      >&#8594;</a
+      ><a name="1213"
+      > </a
+      ><a name="1214" href="UniverseOfNTypes.html#619" class="Bound"
+      >n</a
+      ><a name="1215"
+      > </a
+      ><a name="1216" href="lib.NType2.html#2683" class="Function Operator"
+      >-Type</a
+      ><a name="1221"
+      > </a
+      ><a name="1222" class="Symbol"
+      >(</a
+      ><a name="1223" href="UniverseOfNTypes.html#1186" class="Bound"
+      >i</a
+      ><a name="1224"
+      > </a
+      ><a name="1225" href="Preliminaries.html#483" class="Function Operator"
+      >&#8852;</a
+      ><a name="1226"
+      > </a
+      ><a name="1227" href="UniverseOfNTypes.html#1188" class="Bound"
+      >j</a
+      ><a name="1228" class="Symbol"
+      >)</a
+      ><a name="1229"
+      >
+  </a
+      ><a name="1232" href="UniverseOfNTypes.html#1232" class="Bound"
+      >A</a
+      ><a name="1233"
+      > </a
+      ><a name="1234" href="UniverseOfNTypes.html#1175" class="Function Operator"
+      >&#8594;-&#8804;</a
+      ><a name="1237"
+      > </a
+      ><a name="1238" href="UniverseOfNTypes.html#1238" class="Bound"
+      >B</a
+      ><a name="1239"
+      > </a
+      ><a name="1240" class="Symbol"
+      >=</a
+      ><a name="1241"
+      > </a
+      ><a name="1242" href="UniverseOfNTypes.html#1043" class="Function"
+      >&#928;-&#8804;</a
+      ><a name="1245"
+      > </a
+      ><a name="1246" href="UniverseOfNTypes.html#1232" class="Bound"
+      >A</a
+      ><a name="1247"
+      > </a
+      ><a name="1248" class="Symbol"
+      >(&#955;</a
+      ><a name="1250"
+      > </a
+      ><a name="1251" href="UniverseOfNTypes.html#1251" class="Bound"
+      >_</a
+      ><a name="1252"
+      > </a
+      ><a name="1253" class="Symbol"
+      >&#8594;</a
+      ><a name="1254"
+      > </a
+      ><a name="1255" href="UniverseOfNTypes.html#1238" class="Bound"
+      >B</a
+      ><a name="1256" class="Symbol"
+      >)</a
+      ><a name="1257"
+      >
+
+  </a
+      ><a name="1261" href="UniverseOfNTypes.html#1261" class="Function"
+      >&#931;-&#8804;</a
+      ><a name="1264"
+      > </a
+      ><a name="1265" class="Symbol"
+      >:</a
+      ><a name="1266"
+      > </a
+      ><a name="1267" class="Symbol"
+      >&#8704;</a
+      ><a name="1268"
+      > </a
+      ><a name="1269" class="Symbol"
+      >{</a
+      ><a name="1270" href="UniverseOfNTypes.html#1270" class="Bound"
+      >i</a
+      ><a name="1271"
+      > </a
+      ><a name="1272" href="UniverseOfNTypes.html#1272" class="Bound"
+      >j</a
+      ><a name="1273" class="Symbol"
+      >}</a
+      ><a name="1274"
+      > </a
+      ><a name="1275" class="Symbol"
+      >(</a
+      ><a name="1276" href="UniverseOfNTypes.html#1276" class="Bound"
+      >A</a
+      ><a name="1277"
+      > </a
+      ><a name="1278" class="Symbol"
+      >:</a
+      ><a name="1279"
+      > </a
+      ><a name="1280" href="UniverseOfNTypes.html#619" class="Bound"
+      >n</a
+      ><a name="1281"
+      > </a
+      ><a name="1282" href="lib.NType2.html#2683" class="Function Operator"
+      >-Type</a
+      ><a name="1287"
+      > </a
+      ><a name="1288" href="UniverseOfNTypes.html#1270" class="Bound"
+      >i</a
+      ><a name="1289" class="Symbol"
+      >)</a
+      ><a name="1290"
+      > </a
+      ><a name="1291" class="Symbol"
+      >&#8594;</a
+      ><a name="1292"
+      > </a
+      ><a name="1293" class="Symbol"
+      >(</a
+      ><a name="1294" href="UniverseOfNTypes.html#557" class="Function Operator"
+      >&#10214;</a
+      ><a name="1295"
+      > </a
+      ><a name="1296" href="UniverseOfNTypes.html#1276" class="Bound"
+      >A</a
+      ><a name="1297"
+      > </a
+      ><a name="1298" href="UniverseOfNTypes.html#557" class="Function Operator"
+      >&#10215;</a
+      ><a name="1299"
+      > </a
+      ><a name="1300" class="Symbol"
+      >&#8594;</a
+      ><a name="1301"
+      > </a
+      ><a name="1302" href="UniverseOfNTypes.html#619" class="Bound"
+      >n</a
+      ><a name="1303"
+      > </a
+      ><a name="1304" href="lib.NType2.html#2683" class="Function Operator"
+      >-Type</a
+      ><a name="1309"
+      > </a
+      ><a name="1310" href="UniverseOfNTypes.html#1272" class="Bound"
+      >j</a
+      ><a name="1311" class="Symbol"
+      >)</a
+      ><a name="1312"
+      > </a
+      ><a name="1313" class="Symbol"
+      >&#8594;</a
+      ><a name="1314"
+      > </a
+      ><a name="1315" href="UniverseOfNTypes.html#619" class="Bound"
+      >n</a
+      ><a name="1316"
+      > </a
+      ><a name="1317" href="lib.NType2.html#2683" class="Function Operator"
+      >-Type</a
+      ><a name="1322"
+      > </a
+      ><a name="1323" class="Symbol"
+      >(</a
+      ><a name="1324" href="UniverseOfNTypes.html#1270" class="Bound"
+      >i</a
+      ><a name="1325"
+      > </a
+      ><a name="1326" href="Preliminaries.html#483" class="Function Operator"
+      >&#8852;</a
+      ><a name="1327"
+      > </a
+      ><a name="1328" href="UniverseOfNTypes.html#1272" class="Bound"
+      >j</a
+      ><a name="1329" class="Symbol"
+      >)</a
+      ><a name="1330"
+      >
+  </a
+      ><a name="1333" href="UniverseOfNTypes.html#1261" class="Function"
+      >&#931;-&#8804;</a
+      ><a name="1336"
+      > </a
+      ><a name="1337" href="UniverseOfNTypes.html#1337" class="Bound"
+      >A</a
+      ><a name="1338"
+      > </a
+      ><a name="1339" href="UniverseOfNTypes.html#1339" class="Bound"
+      >B</a
+      ><a name="1340"
+      > </a
+      ><a name="1341" class="Symbol"
+      >=</a
+      ><a name="1342"
+      > </a
+      ><a name="1343" class="Symbol"
+      >(</a
+      ><a name="1344" href="lib.Base.html#4843" class="Record"
+      >&#931;</a
+      ><a name="1345"
+      > </a
+      ><a name="1346" href="UniverseOfNTypes.html#557" class="Function Operator"
+      >&#10214;</a
+      ><a name="1347"
+      > </a
+      ><a name="1348" href="UniverseOfNTypes.html#1337" class="Bound"
+      >A</a
+      ><a name="1349"
+      > </a
+      ><a name="1350" href="UniverseOfNTypes.html#557" class="Function Operator"
+      >&#10215;</a
+      ><a name="1351"
+      > </a
+      ><a name="1352" class="Symbol"
+      >(&#955;</a
+      ><a name="1354"
+      > </a
+      ><a name="1355" href="UniverseOfNTypes.html#1355" class="Bound"
+      >a</a
+      ><a name="1356"
+      > </a
+      ><a name="1357" class="Symbol"
+      >&#8594;</a
+      ><a name="1358"
+      > </a
+      ><a name="1359" href="UniverseOfNTypes.html#557" class="Function Operator"
+      >&#10214;</a
+      ><a name="1360"
+      > </a
+      ><a name="1361" href="UniverseOfNTypes.html#1339" class="Bound"
+      >B</a
+      ><a name="1362"
+      > </a
+      ><a name="1363" href="UniverseOfNTypes.html#1355" class="Bound"
+      >a</a
+      ><a name="1364"
+      > </a
+      ><a name="1365" href="UniverseOfNTypes.html#557" class="Function Operator"
+      >&#10215;</a
+      ><a name="1366" class="Symbol"
+      >)</a
+      ><a name="1367"
+      > </a
+      ><a name="1368" href="lib.Base.html#4919" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="1369"
+      > </a
+      ><a name="1370" href="lib.types.Sigma.html#2342" class="Function"
+      >&#931;-level</a
+      ><a name="1377"
+      > </a
+      ><a name="1378" class="Symbol"
+      >(</a
+      ><a name="1379" href="lib.Base.html#4947" class="Field"
+      >snd</a
+      ><a name="1382"
+      > </a
+      ><a name="1383" href="UniverseOfNTypes.html#1337" class="Bound"
+      >A</a
+      ><a name="1384" class="Symbol"
+      >)</a
+      ><a name="1385"
+      > </a
+      ><a name="1386" class="Symbol"
+      >(</a
+      ><a name="1387" href="lib.Base.html#4947" class="Field"
+      >snd</a
+      ><a name="1390"
+      > </a
+      ><a name="1391" href="lib.Base.html#7590" class="Function Operator"
+      >&#8728;</a
+      ><a name="1392"
+      > </a
+      ><a name="1393" href="UniverseOfNTypes.html#1339" class="Bound"
+      >B</a
+      ><a name="1394" class="Symbol"
+      >))</a
+      ><a name="1396"
+      >
+
+  </a
+      ><a name="1400" class="Keyword"
+      >infixr</a
+      ><a name="1406"
+      > </a
+      ><a name="1407" class="Number"
+      >4</a
+      ><a name="1408"
+      > _&#215;-&#8804;_
+
+  </a
+      ><a name="1418" href="UniverseOfNTypes.html#1418" class="Function Operator"
+      >_&#215;-&#8804;_</a
+      ><a name="1423"
+      > </a
+      ><a name="1424" class="Symbol"
+      >:</a
+      ><a name="1425"
+      > </a
+      ><a name="1426" class="Symbol"
+      >&#8704;</a
+      ><a name="1427"
+      > </a
+      ><a name="1428" class="Symbol"
+      >{</a
+      ><a name="1429" href="UniverseOfNTypes.html#1429" class="Bound"
+      >i</a
+      ><a name="1430"
+      > </a
+      ><a name="1431" href="UniverseOfNTypes.html#1431" class="Bound"
+      >j</a
+      ><a name="1432" class="Symbol"
+      >}</a
+      ><a name="1433"
+      > </a
+      ><a name="1434" class="Symbol"
+      >&#8594;</a
+      ><a name="1435"
+      > </a
+      ><a name="1436" href="UniverseOfNTypes.html#619" class="Bound"
+      >n</a
+      ><a name="1437"
+      > </a
+      ><a name="1438" href="lib.NType2.html#2683" class="Function Operator"
+      >-Type</a
+      ><a name="1443"
+      > </a
+      ><a name="1444" href="UniverseOfNTypes.html#1429" class="Bound"
+      >i</a
+      ><a name="1445"
+      > </a
+      ><a name="1446" class="Symbol"
+      >&#8594;</a
+      ><a name="1447"
+      > </a
+      ><a name="1448" href="UniverseOfNTypes.html#619" class="Bound"
+      >n</a
+      ><a name="1449"
+      > </a
+      ><a name="1450" href="lib.NType2.html#2683" class="Function Operator"
+      >-Type</a
+      ><a name="1455"
+      > </a
+      ><a name="1456" href="UniverseOfNTypes.html#1431" class="Bound"
+      >j</a
+      ><a name="1457"
+      > </a
+      ><a name="1458" class="Symbol"
+      >&#8594;</a
+      ><a name="1459"
+      > </a
+      ><a name="1460" href="UniverseOfNTypes.html#619" class="Bound"
+      >n</a
+      ><a name="1461"
+      > </a
+      ><a name="1462" href="lib.NType2.html#2683" class="Function Operator"
+      >-Type</a
+      ><a name="1467"
+      > </a
+      ><a name="1468" class="Symbol"
+      >(</a
+      ><a name="1469" href="UniverseOfNTypes.html#1429" class="Bound"
+      >i</a
+      ><a name="1470"
+      > </a
+      ><a name="1471" href="Preliminaries.html#483" class="Function Operator"
+      >&#8852;</a
+      ><a name="1472"
+      > </a
+      ><a name="1473" href="UniverseOfNTypes.html#1431" class="Bound"
+      >j</a
+      ><a name="1474" class="Symbol"
+      >)</a
+      ><a name="1475"
+      >
+  </a
+      ><a name="1478" href="UniverseOfNTypes.html#1478" class="Bound"
+      >A</a
+      ><a name="1479"
+      > </a
+      ><a name="1480" href="UniverseOfNTypes.html#1418" class="Function Operator"
+      >&#215;-&#8804;</a
+      ><a name="1483"
+      > </a
+      ><a name="1484" href="UniverseOfNTypes.html#1484" class="Bound"
+      >B</a
+      ><a name="1485"
+      > </a
+      ><a name="1486" class="Symbol"
+      >=</a
+      ><a name="1487"
+      > </a
+      ><a name="1488" href="UniverseOfNTypes.html#1261" class="Function"
+      >&#931;-&#8804;</a
+      ><a name="1491"
+      > </a
+      ><a name="1492" href="UniverseOfNTypes.html#1478" class="Bound"
+      >A</a
+      ><a name="1493"
+      > </a
+      ><a name="1494" class="Symbol"
+      >(&#955;</a
+      ><a name="1496"
+      > </a
+      ><a name="1497" href="UniverseOfNTypes.html#1497" class="Bound"
+      >_</a
+      ><a name="1498"
+      > </a
+      ><a name="1499" class="Symbol"
+      >&#8594;</a
+      ><a name="1500"
+      > </a
+      ><a name="1501" href="UniverseOfNTypes.html#1484" class="Bound"
+      >B</a
+      ><a name="1502" class="Symbol"
+      >)</a
+      ><a name="1503"
+      >
+
+  </a
+      ><a name="1507" href="UniverseOfNTypes.html#1507" class="Function"
+      >Path-&lt;</a
+      ><a name="1513"
+      > </a
+      ><a name="1514" class="Symbol"
+      >:</a
+      ><a name="1515"
+      > </a
+      ><a name="1516" class="Symbol"
+      >&#8704;</a
+      ><a name="1517"
+      > </a
+      ><a name="1518" class="Symbol"
+      >{</a
+      ><a name="1519" href="UniverseOfNTypes.html#1519" class="Bound"
+      >i</a
+      ><a name="1520" class="Symbol"
+      >}</a
+      ><a name="1521"
+      > </a
+      ><a name="1522" class="Symbol"
+      >(</a
+      ><a name="1523" href="UniverseOfNTypes.html#1523" class="Bound"
+      >A</a
+      ><a name="1524"
+      > </a
+      ><a name="1525" class="Symbol"
+      >:</a
+      ><a name="1526"
+      > </a
+      ><a name="1527" href="lib.Base.html#8688" class="InductiveConstructor"
+      >S</a
+      ><a name="1528"
+      > </a
+      ><a name="1529" href="UniverseOfNTypes.html#619" class="Bound"
+      >n</a
+      ><a name="1530"
+      > </a
+      ><a name="1531" href="lib.NType2.html#2683" class="Function Operator"
+      >-Type</a
+      ><a name="1536"
+      > </a
+      ><a name="1537" href="UniverseOfNTypes.html#1519" class="Bound"
+      >i</a
+      ><a name="1538" class="Symbol"
+      >)</a
+      ><a name="1539"
+      > </a
+      ><a name="1540" class="Symbol"
+      >(</a
+      ><a name="1541" href="UniverseOfNTypes.html#1541" class="Bound"
+      >x</a
+      ><a name="1542"
+      > </a
+      ><a name="1543" href="UniverseOfNTypes.html#1543" class="Bound"
+      >y</a
+      ><a name="1544"
+      > </a
+      ><a name="1545" class="Symbol"
+      >:</a
+      ><a name="1546"
+      > </a
+      ><a name="1547" href="UniverseOfNTypes.html#557" class="Function Operator"
+      >&#10214;</a
+      ><a name="1548"
+      > </a
+      ><a name="1549" href="UniverseOfNTypes.html#1523" class="Bound"
+      >A</a
+      ><a name="1550"
+      > </a
+      ><a name="1551" href="UniverseOfNTypes.html#557" class="Function Operator"
+      >&#10215;</a
+      ><a name="1552" class="Symbol"
+      >)</a
+      ><a name="1553"
+      > </a
+      ><a name="1554" class="Symbol"
+      >&#8594;</a
+      ><a name="1555"
+      > </a
+      ><a name="1556" href="UniverseOfNTypes.html#619" class="Bound"
+      >n</a
+      ><a name="1557"
+      > </a
+      ><a name="1558" href="lib.NType2.html#2683" class="Function Operator"
+      >-Type</a
+      ><a name="1563"
+      > </a
+      ><a name="1564" href="UniverseOfNTypes.html#1519" class="Bound"
+      >i</a
+      ><a name="1565"
+      >
+  </a
+      ><a name="1568" href="UniverseOfNTypes.html#1507" class="Function"
+      >Path-&lt;</a
+      ><a name="1574"
+      > </a
+      ><a name="1575" href="UniverseOfNTypes.html#1575" class="Bound"
+      >A</a
+      ><a name="1576"
+      > </a
+      ><a name="1577" href="UniverseOfNTypes.html#1577" class="Bound"
+      >x</a
+      ><a name="1578"
+      > </a
+      ><a name="1579" href="UniverseOfNTypes.html#1579" class="Bound"
+      >y</a
+      ><a name="1580"
+      > </a
+      ><a name="1581" class="Symbol"
+      >=</a
+      ><a name="1582"
+      > </a
+      ><a name="1583" class="Symbol"
+      >(</a
+      ><a name="1584" href="UniverseOfNTypes.html#1577" class="Bound"
+      >x</a
+      ><a name="1585"
+      > </a
+      ><a name="1586" href="lib.Base.html#1858" class="Datatype Operator"
+      >==</a
+      ><a name="1588"
+      > </a
+      ><a name="1589" href="UniverseOfNTypes.html#1579" class="Bound"
+      >y</a
+      ><a name="1590"
+      > </a
+      ><a name="1591" href="lib.Base.html#4919" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="1592"
+      > </a
+      ><a name="1593" href="lib.Base.html#4947" class="Field"
+      >snd</a
+      ><a name="1596"
+      > </a
+      ><a name="1597" href="UniverseOfNTypes.html#1575" class="Bound"
+      >A</a
+      ><a name="1598"
+      > </a
+      ><a name="1599" class="Symbol"
+      >_</a
+      ><a name="1600"
+      > </a
+      ><a name="1601" class="Symbol"
+      >_)</a
+      ><a name="1603"
+      >
+
+  </a
+      ><a name="1607" href="UniverseOfNTypes.html#1607" class="Function"
+      >Path-&#8804;</a
+      ><a name="1613"
+      > </a
+      ><a name="1614" class="Symbol"
+      >:</a
+      ><a name="1615"
+      > </a
+      ><a name="1616" class="Symbol"
+      >&#8704;</a
+      ><a name="1617"
+      > </a
+      ><a name="1618" class="Symbol"
+      >{</a
+      ><a name="1619" href="UniverseOfNTypes.html#1619" class="Bound"
+      >i</a
+      ><a name="1620" class="Symbol"
+      >}</a
+      ><a name="1621"
+      > </a
+      ><a name="1622" class="Symbol"
+      >(</a
+      ><a name="1623" href="UniverseOfNTypes.html#1623" class="Bound"
+      >A</a
+      ><a name="1624"
+      > </a
+      ><a name="1625" class="Symbol"
+      >:</a
+      ><a name="1626"
+      > </a
+      ><a name="1627" href="UniverseOfNTypes.html#619" class="Bound"
+      >n</a
+      ><a name="1628"
+      > </a
+      ><a name="1629" href="lib.NType2.html#2683" class="Function Operator"
+      >-Type</a
+      ><a name="1634"
+      > </a
+      ><a name="1635" href="UniverseOfNTypes.html#1619" class="Bound"
+      >i</a
+      ><a name="1636" class="Symbol"
+      >)</a
+      ><a name="1637"
+      > </a
+      ><a name="1638" class="Symbol"
+      >(</a
+      ><a name="1639" href="UniverseOfNTypes.html#1639" class="Bound"
+      >x</a
+      ><a name="1640"
+      > </a
+      ><a name="1641" href="UniverseOfNTypes.html#1641" class="Bound"
+      >y</a
+      ><a name="1642"
+      > </a
+      ><a name="1643" class="Symbol"
+      >:</a
+      ><a name="1644"
+      > </a
+      ><a name="1645" href="UniverseOfNTypes.html#557" class="Function Operator"
+      >&#10214;</a
+      ><a name="1646"
+      > </a
+      ><a name="1647" href="UniverseOfNTypes.html#1623" class="Bound"
+      >A</a
+      ><a name="1648"
+      > </a
+      ><a name="1649" href="UniverseOfNTypes.html#557" class="Function Operator"
+      >&#10215;</a
+      ><a name="1650" class="Symbol"
+      >)</a
+      ><a name="1651"
+      > </a
+      ><a name="1652" class="Symbol"
+      >&#8594;</a
+      ><a name="1653"
+      > </a
+      ><a name="1654" href="UniverseOfNTypes.html#619" class="Bound"
+      >n</a
+      ><a name="1655"
+      > </a
+      ><a name="1656" href="lib.NType2.html#2683" class="Function Operator"
+      >-Type</a
+      ><a name="1661"
+      > </a
+      ><a name="1662" href="UniverseOfNTypes.html#1619" class="Bound"
+      >i</a
+      ><a name="1663"
+      >
+  </a
+      ><a name="1666" href="UniverseOfNTypes.html#1607" class="Function"
+      >Path-&#8804;</a
+      ><a name="1672"
+      > </a
+      ><a name="1673" href="UniverseOfNTypes.html#1673" class="Bound"
+      >A</a
+      ><a name="1674"
+      > </a
+      ><a name="1675" href="UniverseOfNTypes.html#1675" class="Bound"
+      >x</a
+      ><a name="1676"
+      > </a
+      ><a name="1677" href="UniverseOfNTypes.html#1677" class="Bound"
+      >y</a
+      ><a name="1678"
+      > </a
+      ><a name="1679" class="Symbol"
+      >=</a
+      ><a name="1680"
+      > </a
+      ><a name="1681" href="UniverseOfNTypes.html#1507" class="Function"
+      >Path-&lt;</a
+      ><a name="1687"
+      > </a
+      ><a name="1688" class="Symbol"
+      >(</a
+      ><a name="1689" href="UniverseOfNTypes.html#772" class="Function"
+      >raise</a
+      ><a name="1694"
+      > </a
+      ><a name="1695" href="UniverseOfNTypes.html#1673" class="Bound"
+      >A</a
+      ><a name="1696" class="Symbol"
+      >)</a
+      ><a name="1697"
+      > </a
+      ><a name="1698" href="UniverseOfNTypes.html#1675" class="Bound"
+      >x</a
+      ><a name="1699"
+      > </a
+      ><a name="1700" href="UniverseOfNTypes.html#1677" class="Bound"
+      >y</a
+      ><a name="1701"
+      >
+
+  </a
+      ><a name="1705" href="UniverseOfNTypes.html#1705" class="Function Operator"
+      >_&#8771;-&#8804;_</a
+      ><a name="1710"
+      > </a
+      ><a name="1711" class="Symbol"
+      >:</a
+      ><a name="1712"
+      > </a
+      ><a name="1713" class="Symbol"
+      >&#8704;</a
+      ><a name="1714"
+      > </a
+      ><a name="1715" class="Symbol"
+      >{</a
+      ><a name="1716" href="UniverseOfNTypes.html#1716" class="Bound"
+      >i</a
+      ><a name="1717"
+      > </a
+      ><a name="1718" href="UniverseOfNTypes.html#1718" class="Bound"
+      >j</a
+      ><a name="1719" class="Symbol"
+      >}</a
+      ><a name="1720"
+      > </a
+      ><a name="1721" class="Symbol"
+      >(</a
+      ><a name="1722" href="UniverseOfNTypes.html#1722" class="Bound"
+      >A</a
+      ><a name="1723"
+      > </a
+      ><a name="1724" class="Symbol"
+      >:</a
+      ><a name="1725"
+      > </a
+      ><a name="1726" href="UniverseOfNTypes.html#619" class="Bound"
+      >n</a
+      ><a name="1727"
+      > </a
+      ><a name="1728" href="lib.NType2.html#2683" class="Function Operator"
+      >-Type</a
+      ><a name="1733"
+      > </a
+      ><a name="1734" href="UniverseOfNTypes.html#1716" class="Bound"
+      >i</a
+      ><a name="1735" class="Symbol"
+      >)</a
+      ><a name="1736"
+      > </a
+      ><a name="1737" class="Symbol"
+      >(</a
+      ><a name="1738" href="UniverseOfNTypes.html#1738" class="Bound"
+      >B</a
+      ><a name="1739"
+      > </a
+      ><a name="1740" class="Symbol"
+      >:</a
+      ><a name="1741"
+      > </a
+      ><a name="1742" href="UniverseOfNTypes.html#619" class="Bound"
+      >n</a
+      ><a name="1743"
+      > </a
+      ><a name="1744" href="lib.NType2.html#2683" class="Function Operator"
+      >-Type</a
+      ><a name="1749"
+      > </a
+      ><a name="1750" href="UniverseOfNTypes.html#1718" class="Bound"
+      >j</a
+      ><a name="1751" class="Symbol"
+      >)</a
+      ><a name="1752"
+      > </a
+      ><a name="1753" class="Symbol"
+      >&#8594;</a
+      ><a name="1754"
+      > </a
+      ><a name="1755" href="UniverseOfNTypes.html#619" class="Bound"
+      >n</a
+      ><a name="1756"
+      > </a
+      ><a name="1757" href="lib.NType2.html#2683" class="Function Operator"
+      >-Type</a
+      ><a name="1762"
+      > </a
+      ><a name="1763" class="Symbol"
+      >(</a
+      ><a name="1764" href="UniverseOfNTypes.html#1716" class="Bound"
+      >i</a
+      ><a name="1765"
+      > </a
+      ><a name="1766" href="Preliminaries.html#483" class="Function Operator"
+      >&#8852;</a
+      ><a name="1767"
+      > </a
+      ><a name="1768" href="UniverseOfNTypes.html#1718" class="Bound"
+      >j</a
+      ><a name="1769" class="Symbol"
+      >)</a
+      ><a name="1770"
+      >
+  </a
+      ><a name="1773" href="UniverseOfNTypes.html#1773" class="Bound"
+      >A</a
+      ><a name="1774"
+      > </a
+      ><a name="1775" href="UniverseOfNTypes.html#1705" class="Function Operator"
+      >&#8771;-&#8804;</a
+      ><a name="1778"
+      > </a
+      ><a name="1779" href="UniverseOfNTypes.html#1779" class="Bound"
+      >B</a
+      ><a name="1780"
+      > </a
+      ><a name="1781" class="Symbol"
+      >=</a
+      ><a name="1782"
+      > </a
+      ><a name="1783" class="Symbol"
+      >(</a
+      ><a name="1784" href="UniverseOfNTypes.html#557" class="Function Operator"
+      >&#10214;</a
+      ><a name="1785"
+      > </a
+      ><a name="1786" href="UniverseOfNTypes.html#1773" class="Bound"
+      >A</a
+      ><a name="1787"
+      > </a
+      ><a name="1788" href="UniverseOfNTypes.html#557" class="Function Operator"
+      >&#10215;</a
+      ><a name="1789"
+      > </a
+      ><a name="1790" href="lib.Equivalences.html#2994" class="Function Operator"
+      >&#8771;</a
+      ><a name="1791"
+      > </a
+      ><a name="1792" href="UniverseOfNTypes.html#557" class="Function Operator"
+      >&#10214;</a
+      ><a name="1793"
+      > </a
+      ><a name="1794" href="UniverseOfNTypes.html#1779" class="Bound"
+      >B</a
+      ><a name="1795"
+      > </a
+      ><a name="1796" href="UniverseOfNTypes.html#557" class="Function Operator"
+      >&#10215;</a
+      ><a name="1797"
+      > </a
+      ><a name="1798" href="lib.Base.html#4919" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="1799"
+      > </a
+      ><a name="1800" href="lib.NType2.html#3029" class="Function"
+      >&#8771;-level</a
+      ><a name="1807"
+      > </a
+      ><a name="1808" class="Symbol"
+      >(</a
+      ><a name="1809" href="lib.Base.html#4947" class="Field"
+      >snd</a
+      ><a name="1812"
+      > </a
+      ><a name="1813" href="UniverseOfNTypes.html#1773" class="Bound"
+      >A</a
+      ><a name="1814" class="Symbol"
+      >)</a
+      ><a name="1815"
+      > </a
+      ><a name="1816" class="Symbol"
+      >(</a
+      ><a name="1817" href="lib.Base.html#4947" class="Field"
+      >snd</a
+      ><a name="1820"
+      > </a
+      ><a name="1821" href="UniverseOfNTypes.html#1779" class="Bound"
+      >B</a
+      ><a name="1822" class="Symbol"
+      >))</a
+      ><a name="1824"
+      >
+
+</a
+      ><a name="1826" href="UniverseOfNTypes.html#1826" class="Function Operator"
+      >_-Type-&#8804;_</a
+      ><a name="1835"
+      > </a
+      ><a name="1836" class="Symbol"
+      >:</a
+      ><a name="1837"
+      > </a
+      ><a name="1838" class="Symbol"
+      >(</a
+      ><a name="1839" href="UniverseOfNTypes.html#1839" class="Bound"
+      >n</a
+      ><a name="1840"
+      > </a
+      ><a name="1841" class="Symbol"
+      >:</a
+      ><a name="1842"
+      > </a
+      ><a name="1843" href="lib.Base.html#8715" class="Function"
+      >&#8469;&#8331;&#8322;</a
+      ><a name="1846" class="Symbol"
+      >)</a
+      ><a name="1847"
+      > </a
+      ><a name="1848" class="Symbol"
+      >(</a
+      ><a name="1849" href="UniverseOfNTypes.html#1849" class="Bound"
+      >i</a
+      ><a name="1850"
+      > </a
+      ><a name="1851" class="Symbol"
+      >:</a
+      ><a name="1852"
+      > </a
+      ><a name="1853" href="Agda.Primitive.html#379" class="Postulate"
+      >ULevel</a
+      ><a name="1859" class="Symbol"
+      >)</a
+      ><a name="1860"
+      > </a
+      ><a name="1861" class="Symbol"
+      >&#8594;</a
+      ><a name="1862"
+      > </a
+      ><a name="1863" href="lib.Base.html#8688" class="InductiveConstructor"
+      >S</a
+      ><a name="1864"
+      > </a
+      ><a name="1865" href="UniverseOfNTypes.html#1839" class="Bound"
+      >n</a
+      ><a name="1866"
+      > </a
+      ><a name="1867" href="lib.NType2.html#2683" class="Function Operator"
+      >-Type</a
+      ><a name="1872"
+      > </a
+      ><a name="1873" href="Agda.Primitive.html#596" class="Primitive"
+      >lsucc</a
+      ><a name="1878"
+      > </a
+      ><a name="1879" href="UniverseOfNTypes.html#1849" class="Bound"
+      >i</a
+      ><a name="1880"
+      >
+</a
+      ><a name="1881" href="UniverseOfNTypes.html#1881" class="Bound"
+      >n</a
+      ><a name="1882"
+      > </a
+      ><a name="1883" href="UniverseOfNTypes.html#1826" class="Function Operator"
+      >-Type-&#8804;</a
+      ><a name="1890"
+      > </a
+      ><a name="1891" href="UniverseOfNTypes.html#1891" class="Bound"
+      >i</a
+      ><a name="1892"
+      > </a
+      ><a name="1893" class="Symbol"
+      >=</a
+      ><a name="1894"
+      > </a
+      ><a name="1895" class="Symbol"
+      >(</a
+      ><a name="1896" href="UniverseOfNTypes.html#1881" class="Bound"
+      >n</a
+      ><a name="1897"
+      > </a
+      ><a name="1898" href="lib.NType2.html#2683" class="Function Operator"
+      >-Type</a
+      ><a name="1903"
+      > </a
+      ><a name="1904" href="UniverseOfNTypes.html#1891" class="Bound"
+      >i</a
+      ><a name="1905"
+      > </a
+      ><a name="1906" href="lib.Base.html#4919" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="1907"
+      > </a
+      ><a name="1908" href="UniverseOfNTypes.html#1881" class="Bound"
+      >n</a
+      ><a name="1909"
+      > </a
+      ><a name="1910" href="lib.NType2.html#4692" class="Function Operator"
+      >-Type-level</a
+      ><a name="1921"
+      > </a
+      ><a name="1922" href="UniverseOfNTypes.html#1891" class="Bound"
+      >i</a
+      ><a name="1923" class="Symbol"
+      >)</a
+      ><a name="1924"
+      >
+</a
+      ></pre
+    ></body
+  ></html
+>

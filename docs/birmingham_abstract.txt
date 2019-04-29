@@ -1,0 +1,17 @@
+Homotopy Type Theory and Hedberg's Theorem
+
+Intensional Martin-Loef Type Theory, the foundation of systems such as 
+Coq and Agda, is currently experiencing a revolution. One of its 
+subtleties are equality types: Seemingly among the simplest inductive 
+types, are they probably one of the hardest to understand.
+In recent years, the justification for a certain axiom, guaranteeing the 
+uniqueness of equality proofs, has been questioned. It turned out that, 
+after dropping it, type theory has a model in a field that is 
+well-researched by mathematicians. At the same time, many desirable 
+properties of type theory can be obtained, some of which seemed to be 
+impossible before.
+In this talk, I provide an introduction to this interesting development, 
+usually referred to as "Homotopy Type Theory". Further, I demonstrate 
+generalizations of Hedberg's theorem as an example of reasoning in the 
+"new" system, based on joint work with Thorsten Altenkirch, Thierry 
+Coquand and Martin Escardo.

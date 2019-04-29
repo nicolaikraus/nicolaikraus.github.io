@@ -1,0 +1,1690 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+><head
+  ><title
+    >Deltaplus</title
+    ><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"
+     /><meta http-equiv="Content-Style-Type" content="text/css"
+     /><link href="Agda.css" rel="stylesheet" type="text/css"
+     /></head
+  ><body
+  ><pre
+    ><a name="1" class="Symbol"
+      >{-#</a
+      ><a name="4"
+      > </a
+      ><a name="5" class="Keyword"
+      >OPTIONS</a
+      ><a name="12"
+      > --without-K </a
+      ><a name="25" class="Symbol"
+      >#-}</a
+      ><a name="28"
+      >
+
+</a
+      ><a name="30" class="Keyword"
+      >module</a
+      ><a name="36"
+      > </a
+      ><a name="37" href="Deltaplus.html#1" class="Module"
+      >Deltaplus</a
+      ><a name="46"
+      > </a
+      ><a name="47" class="Keyword"
+      >where</a
+      ><a name="52"
+      >
+
+</a
+      ><a name="54" class="Comment"
+      >{- Chapter 9.2: Semi-Simplicial Types
+
+   This file contains the definition of the index category 
+   for semi-simplicial with judgmental categorical laws: &#916;&#8330;
+   In other words, we check Proposition 9.2.1.
+
+   We want to keep it independent of the other files,
+   so we do not import anything. -}</a
+      ><a name="350"
+      >
+
+</a
+      ><a name="352" class="Comment"
+      >{- For simplicity, we only use the lowest universe
+   (totally sufficient) -}</a
+      ><a name="429"
+      > 
+</a
+      ><a name="431" href="Deltaplus.html#431" class="Function"
+      >Type</a
+      ><a name="435"
+      > </a
+      ><a name="436" class="Symbol"
+      >=</a
+      ><a name="437"
+      > </a
+      ><a name="438" class="PrimitiveType"
+      >Set</a
+      ><a name="441"
+      > 
+
+</a
+      ><a name="444" class="Comment"
+      >-- the empty type</a
+      ><a name="461"
+      >
+</a
+      ><a name="462" class="Keyword"
+      >data</a
+      ><a name="466"
+      > </a
+      ><a name="467" href="Deltaplus.html#467" class="Datatype"
+      >Empty</a
+      ><a name="472"
+      > </a
+      ><a name="473" class="Symbol"
+      >:</a
+      ><a name="474"
+      > </a
+      ><a name="475" href="Deltaplus.html#431" class="Function"
+      >Type</a
+      ><a name="479"
+      > </a
+      ><a name="480" class="Keyword"
+      >where</a
+      ><a name="485"
+      >
+
+</a
+      ><a name="487" class="Comment"
+      >-- the unit type</a
+      ><a name="503"
+      >
+</a
+      ><a name="504" class="Keyword"
+      >data</a
+      ><a name="508"
+      > </a
+      ><a name="509" href="Deltaplus.html#509" class="Datatype"
+      >&#8868;</a
+      ><a name="510"
+      > </a
+      ><a name="511" class="Symbol"
+      >:</a
+      ><a name="512"
+      > </a
+      ><a name="513" href="Deltaplus.html#431" class="Function"
+      >Type</a
+      ><a name="517"
+      > </a
+      ><a name="518" class="Keyword"
+      >where</a
+      ><a name="523"
+      >
+  </a
+      ><a name="526" href="Deltaplus.html#526" class="InductiveConstructor"
+      >*</a
+      ><a name="527"
+      > </a
+      ><a name="528" class="Symbol"
+      >:</a
+      ><a name="529"
+      > </a
+      ><a name="530" href="Deltaplus.html#509" class="Datatype"
+      >&#8868;</a
+      ><a name="531"
+      >
+
+</a
+      ><a name="533" class="Comment"
+      >-- the natural numbers</a
+      ><a name="555"
+      >
+</a
+      ><a name="556" class="Keyword"
+      >data</a
+      ><a name="560"
+      > </a
+      ><a name="561" href="Deltaplus.html#561" class="Datatype"
+      >&#8469;</a
+      ><a name="562"
+      > </a
+      ><a name="563" class="Symbol"
+      >:</a
+      ><a name="564"
+      > </a
+      ><a name="565" href="Deltaplus.html#431" class="Function"
+      >Type</a
+      ><a name="569"
+      > </a
+      ><a name="570" class="Keyword"
+      >where</a
+      ><a name="575"
+      >
+  </a
+      ><a name="578" href="Deltaplus.html#578" class="InductiveConstructor"
+      >O</a
+      ><a name="579"
+      > </a
+      ><a name="580" class="Symbol"
+      >:</a
+      ><a name="581"
+      > </a
+      ><a name="582" href="Deltaplus.html#561" class="Datatype"
+      >&#8469;</a
+      ><a name="583"
+      >
+  </a
+      ><a name="586" href="Deltaplus.html#586" class="InductiveConstructor"
+      >S</a
+      ><a name="587"
+      > </a
+      ><a name="588" class="Symbol"
+      >:</a
+      ><a name="589"
+      > </a
+      ><a name="590" class="Symbol"
+      >(</a
+      ><a name="591" href="Deltaplus.html#591" class="Bound"
+      >n</a
+      ><a name="592"
+      > </a
+      ><a name="593" class="Symbol"
+      >:</a
+      ><a name="594"
+      > </a
+      ><a name="595" href="Deltaplus.html#561" class="Datatype"
+      >&#8469;</a
+      ><a name="596" class="Symbol"
+      >)</a
+      ><a name="597"
+      > </a
+      ><a name="598" class="Symbol"
+      >&#8594;</a
+      ><a name="599"
+      > </a
+      ><a name="600" href="Deltaplus.html#561" class="Datatype"
+      >&#8469;</a
+      ><a name="601"
+      >
+
+
+</a
+      ><a name="604" class="Comment"
+      >{- Finite types: these are the 
+
+   ===  OBJECTS of &#916;&#8330; ===
+
+-}</a
+      ><a name="666"
+      >
+</a
+      ><a name="667" class="Keyword"
+      >data</a
+      ><a name="671"
+      > </a
+      ><a name="672" href="Deltaplus.html#672" class="Datatype"
+      >Fin</a
+      ><a name="675"
+      > </a
+      ><a name="676" class="Symbol"
+      >:</a
+      ><a name="677"
+      > </a
+      ><a name="678" href="Deltaplus.html#561" class="Datatype"
+      >&#8469;</a
+      ><a name="679"
+      > </a
+      ><a name="680" class="Symbol"
+      >&#8594;</a
+      ><a name="681"
+      > </a
+      ><a name="682" href="Deltaplus.html#431" class="Function"
+      >Type</a
+      ><a name="686"
+      > </a
+      ><a name="687" class="Keyword"
+      >where</a
+      ><a name="692"
+      >
+  </a
+      ><a name="695" href="Deltaplus.html#695" class="InductiveConstructor"
+      >fz</a
+      ><a name="697"
+      > </a
+      ><a name="698" class="Symbol"
+      >:</a
+      ><a name="699"
+      > </a
+      ><a name="700" class="Symbol"
+      >{</a
+      ><a name="701" href="Deltaplus.html#701" class="Bound"
+      >n</a
+      ><a name="702"
+      > </a
+      ><a name="703" class="Symbol"
+      >:</a
+      ><a name="704"
+      > </a
+      ><a name="705" href="Deltaplus.html#561" class="Datatype"
+      >&#8469;</a
+      ><a name="706" class="Symbol"
+      >}</a
+      ><a name="707"
+      > </a
+      ><a name="708" class="Symbol"
+      >&#8594;</a
+      ><a name="709"
+      > </a
+      ><a name="710" href="Deltaplus.html#672" class="Datatype"
+      >Fin</a
+      ><a name="713"
+      > </a
+      ><a name="714" class="Symbol"
+      >(</a
+      ><a name="715" href="Deltaplus.html#586" class="InductiveConstructor"
+      >S</a
+      ><a name="716"
+      > </a
+      ><a name="717" href="Deltaplus.html#701" class="Bound"
+      >n</a
+      ><a name="718" class="Symbol"
+      >)</a
+      ><a name="719"
+      >
+  </a
+      ><a name="722" href="Deltaplus.html#722" class="InductiveConstructor"
+      >fs</a
+      ><a name="724"
+      > </a
+      ><a name="725" class="Symbol"
+      >:</a
+      ><a name="726"
+      > </a
+      ><a name="727" class="Symbol"
+      >{</a
+      ><a name="728" href="Deltaplus.html#728" class="Bound"
+      >n</a
+      ><a name="729"
+      > </a
+      ><a name="730" class="Symbol"
+      >:</a
+      ><a name="731"
+      > </a
+      ><a name="732" href="Deltaplus.html#561" class="Datatype"
+      >&#8469;</a
+      ><a name="733" class="Symbol"
+      >}</a
+      ><a name="734"
+      > </a
+      ><a name="735" class="Symbol"
+      >&#8594;</a
+      ><a name="736"
+      > </a
+      ><a name="737" href="Deltaplus.html#672" class="Datatype"
+      >Fin</a
+      ><a name="740"
+      > </a
+      ><a name="741" href="Deltaplus.html#728" class="Bound"
+      >n</a
+      ><a name="742"
+      > </a
+      ><a name="743" class="Symbol"
+      >&#8594;</a
+      ><a name="744"
+      > </a
+      ><a name="745" href="Deltaplus.html#672" class="Datatype"
+      >Fin</a
+      ><a name="748"
+      > </a
+      ><a name="749" class="Symbol"
+      >(</a
+      ><a name="750" href="Deltaplus.html#586" class="InductiveConstructor"
+      >S</a
+      ><a name="751"
+      > </a
+      ><a name="752" href="Deltaplus.html#728" class="Bound"
+      >n</a
+      ><a name="753" class="Symbol"
+      >)</a
+      ><a name="754"
+      >
+
+</a
+      ><a name="756" class="Comment"
+      >-- &gt;-relation on finite types</a
+      ><a name="785"
+      >
+</a
+      ><a name="786" href="Deltaplus.html#786" class="Function Operator"
+      >_&gt;fin_</a
+      ><a name="792"
+      > </a
+      ><a name="793" class="Symbol"
+      >:</a
+      ><a name="794"
+      > </a
+      ><a name="795" class="Symbol"
+      >{</a
+      ><a name="796" href="Deltaplus.html#796" class="Bound"
+      >n</a
+      ><a name="797"
+      > </a
+      ><a name="798" class="Symbol"
+      >:</a
+      ><a name="799"
+      > </a
+      ><a name="800" href="Deltaplus.html#561" class="Datatype"
+      >&#8469;</a
+      ><a name="801" class="Symbol"
+      >}</a
+      ><a name="802"
+      > </a
+      ><a name="803" class="Symbol"
+      >&#8594;</a
+      ><a name="804"
+      > </a
+      ><a name="805" class="Symbol"
+      >(</a
+      ><a name="806" href="Deltaplus.html#806" class="Bound"
+      >i</a
+      ><a name="807"
+      > </a
+      ><a name="808" href="Deltaplus.html#808" class="Bound"
+      >j</a
+      ><a name="809"
+      > </a
+      ><a name="810" class="Symbol"
+      >:</a
+      ><a name="811"
+      > </a
+      ><a name="812" href="Deltaplus.html#672" class="Datatype"
+      >Fin</a
+      ><a name="815"
+      > </a
+      ><a name="816" href="Deltaplus.html#796" class="Bound"
+      >n</a
+      ><a name="817" class="Symbol"
+      >)</a
+      ><a name="818"
+      > </a
+      ><a name="819" class="Symbol"
+      >&#8594;</a
+      ><a name="820"
+      > </a
+      ><a name="821" class="PrimitiveType"
+      >Set</a
+      ><a name="824"
+      >
+</a
+      ><a name="825" href="Deltaplus.html#695" class="InductiveConstructor"
+      >fz</a
+      ><a name="827"
+      > </a
+      ><a name="828" href="Deltaplus.html#786" class="Function Operator"
+      >&gt;fin</a
+      ><a name="832"
+      > </a
+      ><a name="833" href="Deltaplus.html#833" class="Bound"
+      >i</a
+      ><a name="834"
+      > </a
+      ><a name="835" class="Symbol"
+      >=</a
+      ><a name="836"
+      > </a
+      ><a name="837" href="Deltaplus.html#467" class="Datatype"
+      >Empty</a
+      ><a name="842"
+      >
+</a
+      ><a name="843" href="Deltaplus.html#722" class="InductiveConstructor"
+      >fs</a
+      ><a name="845"
+      > </a
+      ><a name="846" href="Deltaplus.html#846" class="Bound"
+      >j</a
+      ><a name="847"
+      > </a
+      ><a name="848" href="Deltaplus.html#786" class="Function Operator"
+      >&gt;fin</a
+      ><a name="852"
+      > </a
+      ><a name="853" href="Deltaplus.html#695" class="InductiveConstructor"
+      >fz</a
+      ><a name="855"
+      > </a
+      ><a name="856" class="Symbol"
+      >=</a
+      ><a name="857"
+      > </a
+      ><a name="858" href="Deltaplus.html#509" class="Datatype"
+      >&#8868;</a
+      ><a name="859"
+      >
+</a
+      ><a name="860" href="Deltaplus.html#722" class="InductiveConstructor"
+      >fs</a
+      ><a name="862"
+      > </a
+      ><a name="863" href="Deltaplus.html#863" class="Bound"
+      >j</a
+      ><a name="864"
+      > </a
+      ><a name="865" href="Deltaplus.html#786" class="Function Operator"
+      >&gt;fin</a
+      ><a name="869"
+      > </a
+      ><a name="870" href="Deltaplus.html#722" class="InductiveConstructor"
+      >fs</a
+      ><a name="872"
+      > </a
+      ><a name="873" href="Deltaplus.html#873" class="Bound"
+      >i</a
+      ><a name="874"
+      > </a
+      ><a name="875" class="Symbol"
+      >=</a
+      ><a name="876"
+      > </a
+      ><a name="877" href="Deltaplus.html#863" class="Bound"
+      >j</a
+      ><a name="878"
+      > </a
+      ><a name="879" href="Deltaplus.html#786" class="Function Operator"
+      >&gt;fin</a
+      ><a name="883"
+      > </a
+      ><a name="884" href="Deltaplus.html#873" class="Bound"
+      >i</a
+      ><a name="885"
+      >
+
+</a
+      ><a name="887" class="Comment"
+      >{- the proposition [we do not need to prove propositionality here, but 
+   we could prove it easily] that a function is increasing;
+   this is the tricky part: it needs to be done in a way which ensures
+   that composition will behave nicely (strictly associative etc) later -}</a
+      ><a name="1164"
+      >
+</a
+      ><a name="1165" href="Deltaplus.html#1165" class="Function"
+      >is-increasing</a
+      ><a name="1178"
+      > </a
+      ><a name="1179" class="Symbol"
+      >:</a
+      ><a name="1180"
+      > </a
+      ><a name="1181" class="Symbol"
+      >{</a
+      ><a name="1182" href="Deltaplus.html#1182" class="Bound"
+      >m</a
+      ><a name="1183"
+      > </a
+      ><a name="1184" href="Deltaplus.html#1184" class="Bound"
+      >n</a
+      ><a name="1185"
+      > </a
+      ><a name="1186" class="Symbol"
+      >:</a
+      ><a name="1187"
+      > </a
+      ><a name="1188" href="Deltaplus.html#561" class="Datatype"
+      >&#8469;</a
+      ><a name="1189" class="Symbol"
+      >}</a
+      ><a name="1190"
+      > </a
+      ><a name="1191" class="Symbol"
+      >&#8594;</a
+      ><a name="1192"
+      > </a
+      ><a name="1193" class="Symbol"
+      >(</a
+      ><a name="1194" href="Deltaplus.html#672" class="Datatype"
+      >Fin</a
+      ><a name="1197"
+      > </a
+      ><a name="1198" href="Deltaplus.html#1182" class="Bound"
+      >m</a
+      ><a name="1199"
+      > </a
+      ><a name="1200" class="Symbol"
+      >&#8594;</a
+      ><a name="1201"
+      > </a
+      ><a name="1202" href="Deltaplus.html#672" class="Datatype"
+      >Fin</a
+      ><a name="1205"
+      > </a
+      ><a name="1206" href="Deltaplus.html#1184" class="Bound"
+      >n</a
+      ><a name="1207" class="Symbol"
+      >)</a
+      ><a name="1208"
+      > </a
+      ><a name="1209" class="Symbol"
+      >&#8594;</a
+      ><a name="1210"
+      > </a
+      ><a name="1211" href="Deltaplus.html#431" class="Function"
+      >Type</a
+      ><a name="1215"
+      >
+</a
+      ><a name="1216" href="Deltaplus.html#1165" class="Function"
+      >is-increasing</a
+      ><a name="1229"
+      > </a
+      ><a name="1230" class="Symbol"
+      >{</a
+      ><a name="1231" href="Deltaplus.html#1231" class="Bound"
+      >m</a
+      ><a name="1232" class="Symbol"
+      >}</a
+      ><a name="1233"
+      > </a
+      ><a name="1234" class="Symbol"
+      >{</a
+      ><a name="1235" href="Deltaplus.html#1235" class="Bound"
+      >n</a
+      ><a name="1236" class="Symbol"
+      >}</a
+      ><a name="1237"
+      > </a
+      ><a name="1238" href="Deltaplus.html#1238" class="Bound"
+      >f</a
+      ><a name="1239"
+      > </a
+      ><a name="1240" class="Symbol"
+      >=</a
+      ><a name="1241"
+      > </a
+      ><a name="1242" class="Symbol"
+      >{</a
+      ><a name="1243" href="Deltaplus.html#1243" class="Bound"
+      >j</a
+      ><a name="1244"
+      > </a
+      ><a name="1245" href="Deltaplus.html#1245" class="Bound"
+      >i</a
+      ><a name="1246"
+      > </a
+      ><a name="1247" class="Symbol"
+      >:</a
+      ><a name="1248"
+      > </a
+      ><a name="1249" href="Deltaplus.html#672" class="Datatype"
+      >Fin</a
+      ><a name="1252"
+      > </a
+      ><a name="1253" href="Deltaplus.html#1231" class="Bound"
+      >m</a
+      ><a name="1254" class="Symbol"
+      >}</a
+      ><a name="1255"
+      > </a
+      ><a name="1256" class="Symbol"
+      >&#8594;</a
+      ><a name="1257"
+      > </a
+      ><a name="1258" class="Symbol"
+      >(</a
+      ><a name="1259" href="Deltaplus.html#1243" class="Bound"
+      >j</a
+      ><a name="1260"
+      > </a
+      ><a name="1261" href="Deltaplus.html#786" class="Function Operator"
+      >&gt;fin</a
+      ><a name="1265"
+      > </a
+      ><a name="1266" href="Deltaplus.html#1245" class="Bound"
+      >i</a
+      ><a name="1267" class="Symbol"
+      >)</a
+      ><a name="1268"
+      > </a
+      ><a name="1269" class="Symbol"
+      >&#8594;</a
+      ><a name="1270"
+      > </a
+      ><a name="1271" class="Symbol"
+      >((</a
+      ><a name="1273" href="Deltaplus.html#1238" class="Bound"
+      >f</a
+      ><a name="1274"
+      > </a
+      ><a name="1275" href="Deltaplus.html#1243" class="Bound"
+      >j</a
+      ><a name="1276" class="Symbol"
+      >)</a
+      ><a name="1277"
+      > </a
+      ><a name="1278" href="Deltaplus.html#786" class="Function Operator"
+      >&gt;fin</a
+      ><a name="1282"
+      > </a
+      ><a name="1283" class="Symbol"
+      >(</a
+      ><a name="1284" href="Deltaplus.html#1238" class="Bound"
+      >f</a
+      ><a name="1285"
+      > </a
+      ><a name="1286" href="Deltaplus.html#1245" class="Bound"
+      >i</a
+      ><a name="1287" class="Symbol"
+      >))</a
+      ><a name="1289"
+      >
+
+
+</a
+      ><a name="1292" class="Keyword"
+      >infixr</a
+      ><a name="1298"
+      > </a
+      ><a name="1299" class="Number"
+      >1</a
+      ><a name="1300"
+      > _,_
+
+</a
+      ><a name="1306" class="Keyword"
+      >record</a
+      ><a name="1312"
+      > </a
+      ><a name="1313" href="Deltaplus.html#1313" class="Record"
+      >&#931;</a
+      ><a name="1314"
+      > </a
+      ><a name="1315" class="Symbol"
+      >(</a
+      ><a name="1316" href="Deltaplus.html#1316" class="Bound"
+      >A</a
+      ><a name="1317"
+      > </a
+      ><a name="1318" class="Symbol"
+      >:</a
+      ><a name="1319"
+      > </a
+      ><a name="1320" href="Deltaplus.html#431" class="Function"
+      >Type</a
+      ><a name="1324" class="Symbol"
+      >)</a
+      ><a name="1325"
+      > </a
+      ><a name="1326" class="Symbol"
+      >(</a
+      ><a name="1327" href="Deltaplus.html#1327" class="Bound"
+      >B</a
+      ><a name="1328"
+      > </a
+      ><a name="1329" class="Symbol"
+      >:</a
+      ><a name="1330"
+      > </a
+      ><a name="1331" href="Deltaplus.html#1316" class="Bound"
+      >A</a
+      ><a name="1332"
+      > </a
+      ><a name="1333" class="Symbol"
+      >&#8594;</a
+      ><a name="1334"
+      > </a
+      ><a name="1335" href="Deltaplus.html#431" class="Function"
+      >Type</a
+      ><a name="1339" class="Symbol"
+      >)</a
+      ><a name="1340"
+      > </a
+      ><a name="1341" class="Symbol"
+      >:</a
+      ><a name="1342"
+      > </a
+      ><a name="1343" href="Deltaplus.html#431" class="Function"
+      >Type</a
+      ><a name="1347"
+      > </a
+      ><a name="1348" class="Keyword"
+      >where</a
+      ><a name="1353"
+      >
+  </a
+      ><a name="1356" class="Keyword"
+      >constructor</a
+      ><a name="1367"
+      > </a
+      ><a name="1368" href="Deltaplus.html#1368" class="InductiveConstructor Operator"
+      >_,_</a
+      ><a name="1371"
+      >
+  </a
+      ><a name="1374" class="Keyword"
+      >field</a
+      ><a name="1379"
+      >
+    </a
+      ><a name="1384" href="Deltaplus.html#1384" class="Field"
+      >fst</a
+      ><a name="1387"
+      > </a
+      ><a name="1388" class="Symbol"
+      >:</a
+      ><a name="1389"
+      > </a
+      ><a name="1390" href="Deltaplus.html#1316" class="Bound"
+      >A</a
+      ><a name="1391"
+      >
+    </a
+      ><a name="1396" href="Deltaplus.html#1396" class="Field"
+      >snd</a
+      ><a name="1399"
+      > </a
+      ><a name="1400" class="Symbol"
+      >:</a
+      ><a name="1401"
+      > </a
+      ><a name="1402" href="Deltaplus.html#1327" class="Bound"
+      >B</a
+      ><a name="1403"
+      > </a
+      ><a name="1404" href="Deltaplus.html#1384" class="Bound"
+      >fst</a
+      ><a name="1407"
+      >
+
+</a
+      ><a name="1409" class="Comment"
+      >{- Strictly increasing maps: these are the
+
+   === MORPHISMS of &#916;&#8330; ===
+
+-}</a
+      ><a name="1483"
+      >
+</a
+      ><a name="1484" href="Deltaplus.html#1484" class="Function Operator"
+      >_&#8658;+_</a
+      ><a name="1488"
+      > </a
+      ><a name="1489" class="Symbol"
+      >:</a
+      ><a name="1490"
+      > </a
+      ><a name="1491" href="Deltaplus.html#561" class="Datatype"
+      >&#8469;</a
+      ><a name="1492"
+      > </a
+      ><a name="1493" class="Symbol"
+      >&#8594;</a
+      ><a name="1494"
+      > </a
+      ><a name="1495" href="Deltaplus.html#561" class="Datatype"
+      >&#8469;</a
+      ><a name="1496"
+      > </a
+      ><a name="1497" class="Symbol"
+      >&#8594;</a
+      ><a name="1498"
+      > </a
+      ><a name="1499" class="PrimitiveType"
+      >Set</a
+      ><a name="1502"
+      >
+</a
+      ><a name="1503" href="Deltaplus.html#1503" class="Bound"
+      >m</a
+      ><a name="1504"
+      > </a
+      ><a name="1505" href="Deltaplus.html#1484" class="Function Operator"
+      >&#8658;+</a
+      ><a name="1507"
+      > </a
+      ><a name="1508" href="Deltaplus.html#1508" class="Bound"
+      >n</a
+      ><a name="1509"
+      > </a
+      ><a name="1510" class="Symbol"
+      >=</a
+      ><a name="1511"
+      > </a
+      ><a name="1512" href="Deltaplus.html#1313" class="Record"
+      >&#931;</a
+      ><a name="1513"
+      > </a
+      ><a name="1514" class="Symbol"
+      >(</a
+      ><a name="1515" href="Deltaplus.html#672" class="Datatype"
+      >Fin</a
+      ><a name="1518"
+      > </a
+      ><a name="1519" href="Deltaplus.html#1503" class="Bound"
+      >m</a
+      ><a name="1520"
+      > </a
+      ><a name="1521" class="Symbol"
+      >&#8594;</a
+      ><a name="1522"
+      > </a
+      ><a name="1523" href="Deltaplus.html#672" class="Datatype"
+      >Fin</a
+      ><a name="1526"
+      > </a
+      ><a name="1527" href="Deltaplus.html#1508" class="Bound"
+      >n</a
+      ><a name="1528" class="Symbol"
+      >)</a
+      ><a name="1529"
+      > </a
+      ><a name="1530" href="Deltaplus.html#1165" class="Function"
+      >is-increasing</a
+      ><a name="1543"
+      >
+
+</a
+      ><a name="1545" href="Deltaplus.html#1545" class="Function Operator"
+      >_&#8728;+_</a
+      ><a name="1549"
+      > </a
+      ><a name="1550" class="Symbol"
+      >:</a
+      ><a name="1551"
+      > </a
+      ><a name="1552" class="Symbol"
+      >{</a
+      ><a name="1553" href="Deltaplus.html#1553" class="Bound"
+      >l</a
+      ><a name="1554"
+      > </a
+      ><a name="1555" href="Deltaplus.html#1555" class="Bound"
+      >m</a
+      ><a name="1556"
+      > </a
+      ><a name="1557" href="Deltaplus.html#1557" class="Bound"
+      >n</a
+      ><a name="1558"
+      > </a
+      ><a name="1559" class="Symbol"
+      >:</a
+      ><a name="1560"
+      > </a
+      ><a name="1561" href="Deltaplus.html#561" class="Datatype"
+      >&#8469;</a
+      ><a name="1562" class="Symbol"
+      >}</a
+      ><a name="1563"
+      > </a
+      ><a name="1564" class="Symbol"
+      >&#8594;</a
+      ><a name="1565"
+      > </a
+      ><a name="1566" class="Symbol"
+      >(</a
+      ><a name="1567" href="Deltaplus.html#1555" class="Bound"
+      >m</a
+      ><a name="1568"
+      > </a
+      ><a name="1569" href="Deltaplus.html#1484" class="Function Operator"
+      >&#8658;+</a
+      ><a name="1571"
+      > </a
+      ><a name="1572" href="Deltaplus.html#1557" class="Bound"
+      >n</a
+      ><a name="1573" class="Symbol"
+      >)</a
+      ><a name="1574"
+      > </a
+      ><a name="1575" class="Symbol"
+      >&#8594;</a
+      ><a name="1576"
+      > </a
+      ><a name="1577" class="Symbol"
+      >(</a
+      ><a name="1578" href="Deltaplus.html#1553" class="Bound"
+      >l</a
+      ><a name="1579"
+      > </a
+      ><a name="1580" href="Deltaplus.html#1484" class="Function Operator"
+      >&#8658;+</a
+      ><a name="1582"
+      > </a
+      ><a name="1583" href="Deltaplus.html#1555" class="Bound"
+      >m</a
+      ><a name="1584" class="Symbol"
+      >)</a
+      ><a name="1585"
+      > </a
+      ><a name="1586" class="Symbol"
+      >&#8594;</a
+      ><a name="1587"
+      > </a
+      ><a name="1588" class="Symbol"
+      >(</a
+      ><a name="1589" href="Deltaplus.html#1553" class="Bound"
+      >l</a
+      ><a name="1590"
+      > </a
+      ><a name="1591" href="Deltaplus.html#1484" class="Function Operator"
+      >&#8658;+</a
+      ><a name="1593"
+      > </a
+      ><a name="1594" href="Deltaplus.html#1557" class="Bound"
+      >n</a
+      ><a name="1595" class="Symbol"
+      >)</a
+      ><a name="1596"
+      >
+</a
+      ><a name="1597" class="Symbol"
+      >(</a
+      ><a name="1598" href="Deltaplus.html#1598" class="Bound"
+      >g</a
+      ><a name="1599"
+      > </a
+      ><a name="1600" href="Deltaplus.html#1368" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="1601"
+      > </a
+      ><a name="1602" href="Deltaplus.html#1602" class="Bound"
+      >p&#8322;</a
+      ><a name="1604" class="Symbol"
+      >)</a
+      ><a name="1605"
+      > </a
+      ><a name="1606" href="Deltaplus.html#1545" class="Function Operator"
+      >&#8728;+</a
+      ><a name="1608"
+      > </a
+      ><a name="1609" class="Symbol"
+      >(</a
+      ><a name="1610" href="Deltaplus.html#1610" class="Bound"
+      >f</a
+      ><a name="1611"
+      > </a
+      ><a name="1612" href="Deltaplus.html#1368" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="1613"
+      > </a
+      ><a name="1614" href="Deltaplus.html#1614" class="Bound"
+      >p&#8321;</a
+      ><a name="1616" class="Symbol"
+      >)</a
+      ><a name="1617"
+      > </a
+      ><a name="1618" class="Symbol"
+      >=</a
+      ><a name="1619"
+      > </a
+      ><a name="1620" class="Symbol"
+      >(&#955;</a
+      ><a name="1622"
+      > </a
+      ><a name="1623" href="Deltaplus.html#1623" class="Bound"
+      >i</a
+      ><a name="1624"
+      > </a
+      ><a name="1625" class="Symbol"
+      >&#8594;</a
+      ><a name="1626"
+      > </a
+      ><a name="1627" href="Deltaplus.html#1598" class="Bound"
+      >g</a
+      ><a name="1628" class="Symbol"
+      >(</a
+      ><a name="1629" href="Deltaplus.html#1610" class="Bound"
+      >f</a
+      ><a name="1630" class="Symbol"
+      >(</a
+      ><a name="1631" href="Deltaplus.html#1623" class="Bound"
+      >i</a
+      ><a name="1632" class="Symbol"
+      >)))</a
+      ><a name="1635"
+      > </a
+      ><a name="1636" href="Deltaplus.html#1368" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="1637"
+      > </a
+      ><a name="1638" class="Symbol"
+      >(&#955;</a
+      ><a name="1640"
+      > </a
+      ><a name="1641" href="Deltaplus.html#1641" class="Bound"
+      >p</a
+      ><a name="1642"
+      > </a
+      ><a name="1643" class="Symbol"
+      >&#8594;</a
+      ><a name="1644"
+      > </a
+      ><a name="1645" href="Deltaplus.html#1602" class="Bound"
+      >p&#8322;</a
+      ><a name="1647"
+      > </a
+      ><a name="1648" class="Symbol"
+      >(</a
+      ><a name="1649" href="Deltaplus.html#1614" class="Bound"
+      >p&#8321;</a
+      ><a name="1651"
+      > </a
+      ><a name="1652" href="Deltaplus.html#1641" class="Bound"
+      >p</a
+      ><a name="1653" class="Symbol"
+      >))</a
+      ><a name="1655"
+      >
+
+
+</a
+      ><a name="1658" class="Comment"
+      >-- === IDENTITY MORPHISMS of &#916;&#8330; ===</a
+      ><a name="1693"
+      >
+
+</a
+      ><a name="1695" href="Deltaplus.html#1695" class="Function"
+      >id&#916;&#8330;</a
+      ><a name="1699"
+      > </a
+      ><a name="1700" class="Symbol"
+      >:</a
+      ><a name="1701"
+      > </a
+      ><a name="1702" class="Symbol"
+      >&#8704;</a
+      ><a name="1703"
+      > </a
+      ><a name="1704" class="Symbol"
+      >{</a
+      ><a name="1705" href="Deltaplus.html#1705" class="Bound"
+      >n</a
+      ><a name="1706" class="Symbol"
+      >}</a
+      ><a name="1707"
+      > </a
+      ><a name="1708" class="Symbol"
+      >&#8594;</a
+      ><a name="1709"
+      > </a
+      ><a name="1710" href="Deltaplus.html#1705" class="Bound"
+      >n</a
+      ><a name="1711"
+      > </a
+      ><a name="1712" href="Deltaplus.html#1484" class="Function Operator"
+      >&#8658;+</a
+      ><a name="1714"
+      > </a
+      ><a name="1715" href="Deltaplus.html#1705" class="Bound"
+      >n</a
+      ><a name="1716"
+      >
+</a
+      ><a name="1717" href="Deltaplus.html#1695" class="Function"
+      >id&#916;&#8330;</a
+      ><a name="1721"
+      > </a
+      ><a name="1722" class="Symbol"
+      >=</a
+      ><a name="1723"
+      > </a
+      ><a name="1724" class="Symbol"
+      >(&#955;</a
+      ><a name="1726"
+      > </a
+      ><a name="1727" href="Deltaplus.html#1727" class="Bound"
+      >x</a
+      ><a name="1728"
+      > </a
+      ><a name="1729" class="Symbol"
+      >&#8594;</a
+      ><a name="1730"
+      > </a
+      ><a name="1731" href="Deltaplus.html#1727" class="Bound"
+      >x</a
+      ><a name="1732" class="Symbol"
+      >)</a
+      ><a name="1733"
+      > </a
+      ><a name="1734" href="Deltaplus.html#1368" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="1735"
+      > </a
+      ><a name="1736" class="Symbol"
+      >(&#955;</a
+      ><a name="1738"
+      > </a
+      ><a name="1739" href="Deltaplus.html#1739" class="Bound"
+      >p</a
+      ><a name="1740"
+      > </a
+      ><a name="1741" class="Symbol"
+      >&#8594;</a
+      ><a name="1742"
+      > </a
+      ><a name="1743" href="Deltaplus.html#1739" class="Bound"
+      >p</a
+      ><a name="1744" class="Symbol"
+      >)</a
+      ><a name="1745"
+      >
+
+
+</a
+      ><a name="1748" class="Comment"
+      >{- Now, let us check that the categorical laws hold judgmentally.
+   To do this, we use the usual notion of equality. -}</a
+      ><a name="1868"
+      >
+
+</a
+      ><a name="1870" class="Keyword"
+      >infix</a
+      ><a name="1875"
+      > </a
+      ><a name="1876" class="Number"
+      >3</a
+      ><a name="1877"
+      > _==_
+
+</a
+      ><a name="1884" class="Keyword"
+      >data</a
+      ><a name="1888"
+      > </a
+      ><a name="1889" href="Deltaplus.html#1889" class="Datatype Operator"
+      >_==_</a
+      ><a name="1893"
+      > </a
+      ><a name="1894" class="Symbol"
+      >{</a
+      ><a name="1895" href="Deltaplus.html#1895" class="Bound"
+      >A</a
+      ><a name="1896"
+      > </a
+      ><a name="1897" class="Symbol"
+      >:</a
+      ><a name="1898"
+      > </a
+      ><a name="1899" href="Deltaplus.html#431" class="Function"
+      >Type</a
+      ><a name="1903" class="Symbol"
+      >}</a
+      ><a name="1904"
+      > </a
+      ><a name="1905" class="Symbol"
+      >(</a
+      ><a name="1906" href="Deltaplus.html#1906" class="Bound"
+      >a</a
+      ><a name="1907"
+      > </a
+      ><a name="1908" class="Symbol"
+      >:</a
+      ><a name="1909"
+      > </a
+      ><a name="1910" href="Deltaplus.html#1895" class="Bound"
+      >A</a
+      ><a name="1911" class="Symbol"
+      >)</a
+      ><a name="1912"
+      > </a
+      ><a name="1913" class="Symbol"
+      >:</a
+      ><a name="1914"
+      > </a
+      ><a name="1915" href="Deltaplus.html#1895" class="Bound"
+      >A</a
+      ><a name="1916"
+      > </a
+      ><a name="1917" class="Symbol"
+      >&#8594;</a
+      ><a name="1918"
+      > </a
+      ><a name="1919" href="Deltaplus.html#431" class="Function"
+      >Type</a
+      ><a name="1923"
+      > </a
+      ><a name="1924" class="Keyword"
+      >where</a
+      ><a name="1929"
+      >
+  </a
+      ><a name="1932" href="Deltaplus.html#1932" class="InductiveConstructor"
+      >idp</a
+      ><a name="1935"
+      > </a
+      ><a name="1936" class="Symbol"
+      >:</a
+      ><a name="1937"
+      > </a
+      ><a name="1938" href="Deltaplus.html#1906" class="Bound"
+      >a</a
+      ><a name="1939"
+      > </a
+      ><a name="1940" href="Deltaplus.html#1889" class="Datatype Operator"
+      >==</a
+      ><a name="1942"
+      > </a
+      ><a name="1943" href="Deltaplus.html#1906" class="Bound"
+      >a</a
+      ><a name="1944"
+      >
+
+
+</a
+      ><a name="1947" class="Comment"
+      >-- === IDENTITY LAWS ===</a
+      ><a name="1971"
+      >
+
+</a
+      ><a name="1973" href="Deltaplus.html#1973" class="Function"
+      >id-comp</a
+      ><a name="1980"
+      > </a
+      ><a name="1981" class="Symbol"
+      >:</a
+      ><a name="1982"
+      > </a
+      ><a name="1983" class="Symbol"
+      >&#8704;</a
+      ><a name="1984"
+      > </a
+      ><a name="1985" class="Symbol"
+      >{</a
+      ><a name="1986" href="Deltaplus.html#1986" class="Bound"
+      >m</a
+      ><a name="1987"
+      > </a
+      ><a name="1988" href="Deltaplus.html#1988" class="Bound"
+      >n</a
+      ><a name="1989" class="Symbol"
+      >}</a
+      ><a name="1990"
+      > </a
+      ><a name="1991" class="Symbol"
+      >&#8594;</a
+      ><a name="1992"
+      > </a
+      ><a name="1993" class="Symbol"
+      >(</a
+      ><a name="1994" href="Deltaplus.html#1994" class="Bound"
+      >f</a
+      ><a name="1995"
+      > </a
+      ><a name="1996" class="Symbol"
+      >:</a
+      ><a name="1997"
+      > </a
+      ><a name="1998" href="Deltaplus.html#1986" class="Bound"
+      >m</a
+      ><a name="1999"
+      > </a
+      ><a name="2000" href="Deltaplus.html#1484" class="Function Operator"
+      >&#8658;+</a
+      ><a name="2002"
+      > </a
+      ><a name="2003" href="Deltaplus.html#1988" class="Bound"
+      >n</a
+      ><a name="2004" class="Symbol"
+      >)</a
+      ><a name="2005"
+      > </a
+      ><a name="2006" class="Symbol"
+      >&#8594;</a
+      ><a name="2007"
+      > </a
+      ><a name="2008" class="Symbol"
+      >(</a
+      ><a name="2009" href="Deltaplus.html#1695" class="Function"
+      >id&#916;&#8330;</a
+      ><a name="2013"
+      > </a
+      ><a name="2014" href="Deltaplus.html#1545" class="Function Operator"
+      >&#8728;+</a
+      ><a name="2016"
+      > </a
+      ><a name="2017" href="Deltaplus.html#1994" class="Bound"
+      >f</a
+      ><a name="2018" class="Symbol"
+      >)</a
+      ><a name="2019"
+      > </a
+      ><a name="2020" href="Deltaplus.html#1889" class="Datatype Operator"
+      >==</a
+      ><a name="2022"
+      > </a
+      ><a name="2023" href="Deltaplus.html#1994" class="Bound"
+      >f</a
+      ><a name="2024"
+      >
+</a
+      ><a name="2025" href="Deltaplus.html#1973" class="Function"
+      >id-comp</a
+      ><a name="2032"
+      > </a
+      ><a name="2033" href="Deltaplus.html#2033" class="Bound"
+      >f</a
+      ><a name="2034"
+      > </a
+      ><a name="2035" class="Symbol"
+      >=</a
+      ><a name="2036"
+      > </a
+      ><a name="2037" href="Deltaplus.html#1932" class="InductiveConstructor"
+      >idp</a
+      ><a name="2040"
+      >
+
+</a
+      ><a name="2042" href="Deltaplus.html#2042" class="Function"
+      >comp-id</a
+      ><a name="2049"
+      > </a
+      ><a name="2050" class="Symbol"
+      >:</a
+      ><a name="2051"
+      > </a
+      ><a name="2052" class="Symbol"
+      >&#8704;</a
+      ><a name="2053"
+      > </a
+      ><a name="2054" class="Symbol"
+      >{</a
+      ><a name="2055" href="Deltaplus.html#2055" class="Bound"
+      >m</a
+      ><a name="2056"
+      > </a
+      ><a name="2057" href="Deltaplus.html#2057" class="Bound"
+      >n</a
+      ><a name="2058" class="Symbol"
+      >}</a
+      ><a name="2059"
+      > </a
+      ><a name="2060" class="Symbol"
+      >&#8594;</a
+      ><a name="2061"
+      > </a
+      ><a name="2062" class="Symbol"
+      >(</a
+      ><a name="2063" href="Deltaplus.html#2063" class="Bound"
+      >f</a
+      ><a name="2064"
+      > </a
+      ><a name="2065" class="Symbol"
+      >:</a
+      ><a name="2066"
+      > </a
+      ><a name="2067" href="Deltaplus.html#2055" class="Bound"
+      >m</a
+      ><a name="2068"
+      > </a
+      ><a name="2069" href="Deltaplus.html#1484" class="Function Operator"
+      >&#8658;+</a
+      ><a name="2071"
+      > </a
+      ><a name="2072" href="Deltaplus.html#2057" class="Bound"
+      >n</a
+      ><a name="2073" class="Symbol"
+      >)</a
+      ><a name="2074"
+      > </a
+      ><a name="2075" class="Symbol"
+      >&#8594;</a
+      ><a name="2076"
+      > </a
+      ><a name="2077" class="Symbol"
+      >(</a
+      ><a name="2078" href="Deltaplus.html#2063" class="Bound"
+      >f</a
+      ><a name="2079"
+      > </a
+      ><a name="2080" href="Deltaplus.html#1545" class="Function Operator"
+      >&#8728;+</a
+      ><a name="2082"
+      > </a
+      ><a name="2083" href="Deltaplus.html#1695" class="Function"
+      >id&#916;&#8330;</a
+      ><a name="2087" class="Symbol"
+      >)</a
+      ><a name="2088"
+      > </a
+      ><a name="2089" href="Deltaplus.html#1889" class="Datatype Operator"
+      >==</a
+      ><a name="2091"
+      > </a
+      ><a name="2092" href="Deltaplus.html#2063" class="Bound"
+      >f</a
+      ><a name="2093"
+      >
+</a
+      ><a name="2094" href="Deltaplus.html#2042" class="Function"
+      >comp-id</a
+      ><a name="2101"
+      > </a
+      ><a name="2102" href="Deltaplus.html#2102" class="Bound"
+      >f</a
+      ><a name="2103"
+      > </a
+      ><a name="2104" class="Symbol"
+      >=</a
+      ><a name="2105"
+      > </a
+      ><a name="2106" href="Deltaplus.html#1932" class="InductiveConstructor"
+      >idp</a
+      ><a name="2109"
+      >
+
+</a
+      ><a name="2111" class="Comment"
+      >-- === ASSOCIATIVITY LAW ===</a
+      ><a name="2139"
+      >
+
+</a
+      ><a name="2141" href="Deltaplus.html#2141" class="Function"
+      >comp-assoc</a
+      ><a name="2151"
+      > </a
+      ><a name="2152" class="Symbol"
+      >:</a
+      ><a name="2153"
+      > </a
+      ><a name="2154" class="Symbol"
+      >&#8704;</a
+      ><a name="2155"
+      > </a
+      ><a name="2156" class="Symbol"
+      >{</a
+      ><a name="2157" href="Deltaplus.html#2157" class="Bound"
+      >i</a
+      ><a name="2158"
+      > </a
+      ><a name="2159" href="Deltaplus.html#2159" class="Bound"
+      >j</a
+      ><a name="2160"
+      > </a
+      ><a name="2161" href="Deltaplus.html#2161" class="Bound"
+      >m</a
+      ><a name="2162"
+      > </a
+      ><a name="2163" href="Deltaplus.html#2163" class="Bound"
+      >n</a
+      ><a name="2164" class="Symbol"
+      >}</a
+      ><a name="2165"
+      > </a
+      ><a name="2166" class="Symbol"
+      >&#8594;</a
+      ><a name="2167"
+      > </a
+      ><a name="2168" class="Symbol"
+      >(</a
+      ><a name="2169" href="Deltaplus.html#2169" class="Bound"
+      >f</a
+      ><a name="2170"
+      > </a
+      ><a name="2171" class="Symbol"
+      >:</a
+      ><a name="2172"
+      > </a
+      ><a name="2173" href="Deltaplus.html#2157" class="Bound"
+      >i</a
+      ><a name="2174"
+      > </a
+      ><a name="2175" href="Deltaplus.html#1484" class="Function Operator"
+      >&#8658;+</a
+      ><a name="2177"
+      > </a
+      ><a name="2178" href="Deltaplus.html#2159" class="Bound"
+      >j</a
+      ><a name="2179" class="Symbol"
+      >)</a
+      ><a name="2180"
+      > </a
+      ><a name="2181" class="Symbol"
+      >&#8594;</a
+      ><a name="2182"
+      > </a
+      ><a name="2183" class="Symbol"
+      >(</a
+      ><a name="2184" href="Deltaplus.html#2184" class="Bound"
+      >g</a
+      ><a name="2185"
+      > </a
+      ><a name="2186" class="Symbol"
+      >:</a
+      ><a name="2187"
+      > </a
+      ><a name="2188" href="Deltaplus.html#2159" class="Bound"
+      >j</a
+      ><a name="2189"
+      > </a
+      ><a name="2190" href="Deltaplus.html#1484" class="Function Operator"
+      >&#8658;+</a
+      ><a name="2192"
+      > </a
+      ><a name="2193" href="Deltaplus.html#2161" class="Bound"
+      >m</a
+      ><a name="2194" class="Symbol"
+      >)</a
+      ><a name="2195"
+      > </a
+      ><a name="2196" class="Symbol"
+      >&#8594;</a
+      ><a name="2197"
+      > </a
+      ><a name="2198" class="Symbol"
+      >(</a
+      ><a name="2199" href="Deltaplus.html#2199" class="Bound"
+      >h</a
+      ><a name="2200"
+      > </a
+      ><a name="2201" class="Symbol"
+      >:</a
+      ><a name="2202"
+      > </a
+      ><a name="2203" href="Deltaplus.html#2161" class="Bound"
+      >m</a
+      ><a name="2204"
+      > </a
+      ><a name="2205" href="Deltaplus.html#1484" class="Function Operator"
+      >&#8658;+</a
+      ><a name="2207"
+      > </a
+      ><a name="2208" href="Deltaplus.html#2163" class="Bound"
+      >n</a
+      ><a name="2209" class="Symbol"
+      >)</a
+      ><a name="2210"
+      >
+             </a
+      ><a name="2224" class="Symbol"
+      >&#8594;</a
+      ><a name="2225"
+      > </a
+      ><a name="2226" href="Deltaplus.html#2199" class="Bound"
+      >h</a
+      ><a name="2227"
+      > </a
+      ><a name="2228" href="Deltaplus.html#1545" class="Function Operator"
+      >&#8728;+</a
+      ><a name="2230"
+      > </a
+      ><a name="2231" class="Symbol"
+      >(</a
+      ><a name="2232" href="Deltaplus.html#2184" class="Bound"
+      >g</a
+      ><a name="2233"
+      > </a
+      ><a name="2234" href="Deltaplus.html#1545" class="Function Operator"
+      >&#8728;+</a
+      ><a name="2236"
+      > </a
+      ><a name="2237" href="Deltaplus.html#2169" class="Bound"
+      >f</a
+      ><a name="2238" class="Symbol"
+      >)</a
+      ><a name="2239"
+      > </a
+      ><a name="2240" href="Deltaplus.html#1889" class="Datatype Operator"
+      >==</a
+      ><a name="2242"
+      > </a
+      ><a name="2243" class="Symbol"
+      >(</a
+      ><a name="2244" href="Deltaplus.html#2199" class="Bound"
+      >h</a
+      ><a name="2245"
+      > </a
+      ><a name="2246" href="Deltaplus.html#1545" class="Function Operator"
+      >&#8728;+</a
+      ><a name="2248"
+      > </a
+      ><a name="2249" href="Deltaplus.html#2184" class="Bound"
+      >g</a
+      ><a name="2250" class="Symbol"
+      >)</a
+      ><a name="2251"
+      > </a
+      ><a name="2252" href="Deltaplus.html#1545" class="Function Operator"
+      >&#8728;+</a
+      ><a name="2254"
+      > </a
+      ><a name="2255" href="Deltaplus.html#2169" class="Bound"
+      >f</a
+      ><a name="2256"
+      >
+</a
+      ><a name="2257" href="Deltaplus.html#2141" class="Function"
+      >comp-assoc</a
+      ><a name="2267"
+      > </a
+      ><a name="2268" href="Deltaplus.html#2268" class="Bound"
+      >f</a
+      ><a name="2269"
+      > </a
+      ><a name="2270" href="Deltaplus.html#2270" class="Bound"
+      >g</a
+      ><a name="2271"
+      > </a
+      ><a name="2272" href="Deltaplus.html#2272" class="Bound"
+      >h</a
+      ><a name="2273"
+      > </a
+      ><a name="2274" class="Symbol"
+      >=</a
+      ><a name="2275"
+      > </a
+      ><a name="2276" href="Deltaplus.html#1932" class="InductiveConstructor"
+      >idp</a
+      ><a name="2279"
+      >
+</a
+      ></pre
+    ></body
+  ></html
+>

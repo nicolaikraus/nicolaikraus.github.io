@@ -1,0 +1,3288 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+><head
+  ><title
+    >homotopy.SuspAdjointLoop</title
+    ><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"
+     /><meta http-equiv="Content-Style-Type" content="text/css"
+     /><link href="Agda.css" rel="stylesheet" type="text/css"
+     /></head
+  ><body
+  ><pre
+    ><a name="1" class="Symbol"
+      >{-#</a
+      ><a name="4"
+      > </a
+      ><a name="5" class="Keyword"
+      >OPTIONS</a
+      ><a name="12"
+      > --without-K </a
+      ><a name="25" class="Symbol"
+      >#-}</a
+      ><a name="28"
+      >
+
+</a
+      ><a name="30" class="Keyword"
+      >open</a
+      ><a name="34"
+      > </a
+      ><a name="35" class="Keyword"
+      >import</a
+      ><a name="41"
+      > </a
+      ><a name="42" href="HoTT.html#1" class="Module"
+      >HoTT</a
+      ><a name="46"
+      >
+</a
+      ><a name="47" class="Keyword"
+      >open</a
+      ><a name="51"
+      > </a
+      ><a name="52" class="Keyword"
+      >import</a
+      ><a name="58"
+      > </a
+      ><a name="59" href="homotopy.PtdAdjoint.html#1" class="Module"
+      >homotopy.PtdAdjoint</a
+      ><a name="78"
+      >
+
+</a
+      ><a name="80" class="Keyword"
+      >module</a
+      ><a name="86"
+      > </a
+      ><a name="87" href="homotopy.SuspAdjointLoop.html#1" class="Module"
+      >homotopy.SuspAdjointLoop</a
+      ><a name="111"
+      > </a
+      ><a name="112" class="Keyword"
+      >where</a
+      ><a name="117"
+      >
+
+</a
+      ><a name="119" class="Keyword"
+      >module</a
+      ><a name="125"
+      > </a
+      ><a name="126" href="homotopy.SuspAdjointLoop.html#126" class="Module"
+      >&#931;&#8867;&#937;</a
+      ><a name="129"
+      > </a
+      ><a name="130" class="Symbol"
+      >{</a
+      ><a name="131" href="homotopy.SuspAdjointLoop.html#131" class="Bound"
+      >i</a
+      ><a name="132" class="Symbol"
+      >}</a
+      ><a name="133"
+      > </a
+      ><a name="134" class="Keyword"
+      >where</a
+      ><a name="139"
+      >
+
+  </a
+      ><a name="143" href="homotopy.SuspAdjointLoop.html#143" class="Function"
+      >SuspFunctor</a
+      ><a name="154"
+      > </a
+      ><a name="155" class="Symbol"
+      >:</a
+      ><a name="156"
+      > </a
+      ><a name="157" href="homotopy.PtdAdjoint.html#161" class="Record"
+      >PtdFunctor</a
+      ><a name="167"
+      > </a
+      ><a name="168" href="homotopy.SuspAdjointLoop.html#131" class="Bound"
+      >i</a
+      ><a name="169"
+      > </a
+      ><a name="170" href="homotopy.SuspAdjointLoop.html#131" class="Bound"
+      >i</a
+      ><a name="171"
+      >
+  </a
+      ><a name="174" href="homotopy.SuspAdjointLoop.html#143" class="Function"
+      >SuspFunctor</a
+      ><a name="185"
+      > </a
+      ><a name="186" class="Symbol"
+      >=</a
+      ><a name="187"
+      > </a
+      ><a name="188" class="Keyword"
+      >record</a
+      ><a name="194"
+      > </a
+      ><a name="195" class="Symbol"
+      >{</a
+      ><a name="196"
+      >
+    </a
+      ><a name="201" class="Field"
+      >obj</a
+      ><a name="204"
+      > </a
+      ><a name="205" class="Symbol"
+      >=</a
+      ><a name="206"
+      > </a
+      ><a name="207" href="lib.types.Suspension.html#1279" class="Function"
+      >&#8857;Susp</a
+      ><a name="212" class="Symbol"
+      >;</a
+      ><a name="213"
+      >
+    </a
+      ><a name="218" class="Field"
+      >arr</a
+      ><a name="221"
+      > </a
+      ><a name="222" class="Symbol"
+      >=</a
+      ><a name="223"
+      > </a
+      ><a name="224" href="lib.types.Suspension.html#2104" class="Function"
+      >&#8857;susp-fmap</a
+      ><a name="234" class="Symbol"
+      >;</a
+      ><a name="235"
+      >
+    </a
+      ><a name="240" class="Field"
+      >id</a
+      ><a name="242"
+      > </a
+      ><a name="243" class="Symbol"
+      >=</a
+      ><a name="244"
+      > </a
+      ><a name="245" href="lib.types.Suspension.html#2443" class="Function"
+      >&#8857;susp-fmap-idf</a
+      ><a name="259" class="Symbol"
+      >;</a
+      ><a name="260"
+      >
+    </a
+      ><a name="265" class="Field"
+      >comp</a
+      ><a name="269"
+      > </a
+      ><a name="270" class="Symbol"
+      >=</a
+      ><a name="271"
+      > </a
+      ><a name="272" href="lib.types.Suspension.html#3407" class="Function"
+      >&#8857;susp-fmap-&#8728;</a
+      ><a name="284" class="Symbol"
+      >}</a
+      ><a name="285"
+      >
+
+  </a
+      ><a name="289" href="homotopy.SuspAdjointLoop.html#289" class="Function"
+      >LoopFunctor</a
+      ><a name="300"
+      > </a
+      ><a name="301" class="Symbol"
+      >:</a
+      ><a name="302"
+      > </a
+      ><a name="303" href="homotopy.PtdAdjoint.html#161" class="Record"
+      >PtdFunctor</a
+      ><a name="313"
+      > </a
+      ><a name="314" href="homotopy.SuspAdjointLoop.html#131" class="Bound"
+      >i</a
+      ><a name="315"
+      > </a
+      ><a name="316" href="homotopy.SuspAdjointLoop.html#131" class="Bound"
+      >i</a
+      ><a name="317"
+      >
+  </a
+      ><a name="320" href="homotopy.SuspAdjointLoop.html#289" class="Function"
+      >LoopFunctor</a
+      ><a name="331"
+      > </a
+      ><a name="332" class="Symbol"
+      >=</a
+      ><a name="333"
+      > </a
+      ><a name="334" class="Keyword"
+      >record</a
+      ><a name="340"
+      > </a
+      ><a name="341" class="Symbol"
+      >{</a
+      ><a name="342"
+      >
+    </a
+      ><a name="347" class="Field"
+      >obj</a
+      ><a name="350"
+      > </a
+      ><a name="351" class="Symbol"
+      >=</a
+      ><a name="352"
+      > </a
+      ><a name="353" href="lib.types.LoopSpace.html#423" class="Function"
+      >&#8857;&#937;</a
+      ><a name="355" class="Symbol"
+      >;</a
+      ><a name="356"
+      >
+    </a
+      ><a name="361" class="Field"
+      >arr</a
+      ><a name="364"
+      > </a
+      ><a name="365" class="Symbol"
+      >=</a
+      ><a name="366"
+      > </a
+      ><a name="367" href="lib.types.LoopSpace.html#1264" class="Function"
+      >&#8857;ap</a
+      ><a name="370" class="Symbol"
+      >;</a
+      ><a name="371"
+      >
+    </a
+      ><a name="376" class="Field"
+      >id</a
+      ><a name="378"
+      > </a
+      ><a name="379" class="Symbol"
+      >=</a
+      ><a name="380"
+      > </a
+      ><a name="381" class="Symbol"
+      >&#955;</a
+      ><a name="382"
+      > </a
+      ><a name="383" href="homotopy.SuspAdjointLoop.html#383" class="Bound"
+      >_</a
+      ><a name="384"
+      > </a
+      ><a name="385" class="Symbol"
+      >&#8594;</a
+      ><a name="386"
+      > </a
+      ><a name="387" href="lib.types.LoopSpace.html#1795" class="Function"
+      >&#8857;ap-idf</a
+      ><a name="394" class="Symbol"
+      >;</a
+      ><a name="395"
+      >
+    </a
+      ><a name="400" class="Field"
+      >comp</a
+      ><a name="404"
+      > </a
+      ><a name="405" class="Symbol"
+      >=</a
+      ><a name="406"
+      > </a
+      ><a name="407" href="lib.types.LoopSpace.html#1610" class="Function"
+      >&#8857;ap-&#8728;</a
+      ><a name="412" class="Symbol"
+      >}</a
+      ><a name="413"
+      >
+
+  </a
+      ><a name="417" class="Keyword"
+      >module</a
+      ><a name="423"
+      > </a
+      ><a name="424" href="homotopy.SuspAdjointLoop.html#424" class="Module"
+      >_</a
+      ><a name="425"
+      > </a
+      ><a name="426" class="Symbol"
+      >(</a
+      ><a name="427" href="homotopy.SuspAdjointLoop.html#427" class="Bound"
+      >X</a
+      ><a name="428"
+      > </a
+      ><a name="429" class="Symbol"
+      >:</a
+      ><a name="430"
+      > </a
+      ><a name="431" href="lib.types.Pointed.html#167" class="Function"
+      >Ptd</a
+      ><a name="434"
+      > </a
+      ><a name="435" href="homotopy.SuspAdjointLoop.html#131" class="Bound"
+      >i</a
+      ><a name="436" class="Symbol"
+      >)</a
+      ><a name="437"
+      > </a
+      ><a name="438" class="Keyword"
+      >where</a
+      ><a name="443"
+      >
+
+    </a
+      ><a name="449" href="homotopy.SuspAdjointLoop.html#449" class="Function"
+      >&#951;</a
+      ><a name="450"
+      > </a
+      ><a name="451" class="Symbol"
+      >:</a
+      ><a name="452"
+      > </a
+      ><a name="453" href="lib.Base.html#5098" class="Field"
+      >fst</a
+      ><a name="456"
+      > </a
+      ><a name="457" href="homotopy.SuspAdjointLoop.html#427" class="Bound"
+      >X</a
+      ><a name="458"
+      > </a
+      ><a name="459" class="Symbol"
+      >&#8594;</a
+      ><a name="460"
+      > </a
+      ><a name="461" href="lib.types.LoopSpace.html#480" class="Function"
+      >&#937;</a
+      ><a name="462"
+      > </a
+      ><a name="463" class="Symbol"
+      >(</a
+      ><a name="464" href="lib.types.Suspension.html#1279" class="Function"
+      >&#8857;Susp</a
+      ><a name="469"
+      > </a
+      ><a name="470" href="homotopy.SuspAdjointLoop.html#427" class="Bound"
+      >X</a
+      ><a name="471" class="Symbol"
+      >)</a
+      ><a name="472"
+      >
+    </a
+      ><a name="477" href="homotopy.SuspAdjointLoop.html#449" class="Function"
+      >&#951;</a
+      ><a name="478"
+      > </a
+      ><a name="479" href="homotopy.SuspAdjointLoop.html#479" class="Bound"
+      >x</a
+      ><a name="480"
+      > </a
+      ><a name="481" class="Symbol"
+      >=</a
+      ><a name="482"
+      > </a
+      ><a name="483" href="lib.types.Suspension.html#623" class="Function"
+      >merid</a
+      ><a name="488"
+      > </a
+      ><a name="489" class="Symbol"
+      >_</a
+      ><a name="490"
+      > </a
+      ><a name="491" href="homotopy.SuspAdjointLoop.html#479" class="Bound"
+      >x</a
+      ><a name="492"
+      > </a
+      ><a name="493" href="lib.PathGroupoid.html#407" class="Function Operator"
+      >&#8729;</a
+      ><a name="494"
+      > </a
+      ><a name="495" href="lib.PathGroupoid.html#1213" class="Function"
+      >!</a
+      ><a name="496"
+      > </a
+      ><a name="497" class="Symbol"
+      >(</a
+      ><a name="498" href="lib.types.Suspension.html#623" class="Function"
+      >merid</a
+      ><a name="503"
+      > </a
+      ><a name="504" class="Symbol"
+      >_</a
+      ><a name="505"
+      > </a
+      ><a name="506" class="Symbol"
+      >(</a
+      ><a name="507" href="lib.Base.html#5110" class="Field"
+      >snd</a
+      ><a name="510"
+      > </a
+      ><a name="511" href="homotopy.SuspAdjointLoop.html#427" class="Bound"
+      >X</a
+      ><a name="512" class="Symbol"
+      >))</a
+      ><a name="514"
+      >
+
+    </a
+      ><a name="520" class="Keyword"
+      >module</a
+      ><a name="526"
+      > </a
+      ><a name="527" href="homotopy.SuspAdjointLoop.html#527" class="Module"
+      >E</a
+      ><a name="528"
+      > </a
+      ><a name="529" class="Symbol"
+      >=</a
+      ><a name="530"
+      > </a
+      ><a name="531" href="lib.types.Suspension.html#916" class="Module"
+      >SuspensionRec</a
+      ><a name="544"
+      > </a
+      ><a name="545" class="Symbol"
+      >(</a
+      ><a name="546" href="lib.types.LoopSpace.html#480" class="Function"
+      >&#937;</a
+      ><a name="547"
+      > </a
+      ><a name="548" href="homotopy.SuspAdjointLoop.html#427" class="Bound"
+      >X</a
+      ><a name="549" class="Symbol"
+      >)</a
+      ><a name="550"
+      > </a
+      ><a name="551" class="Symbol"
+      >(</a
+      ><a name="552" href="lib.Base.html#5110" class="Field"
+      >snd</a
+      ><a name="555"
+      > </a
+      ><a name="556" href="homotopy.SuspAdjointLoop.html#427" class="Bound"
+      >X</a
+      ><a name="557" class="Symbol"
+      >)</a
+      ><a name="558"
+      > </a
+      ><a name="559" class="Symbol"
+      >(</a
+      ><a name="560" href="lib.Base.html#5110" class="Field"
+      >snd</a
+      ><a name="563"
+      > </a
+      ><a name="564" href="homotopy.SuspAdjointLoop.html#427" class="Bound"
+      >X</a
+      ><a name="565" class="Symbol"
+      >)</a
+      ><a name="566"
+      > </a
+      ><a name="567" class="Symbol"
+      >(</a
+      ><a name="568" href="lib.Base.html#7627" class="Function"
+      >idf</a
+      ><a name="571"
+      > </a
+      ><a name="572" class="Symbol"
+      >_)</a
+      ><a name="574"
+      >
+
+    </a
+      ><a name="580" href="homotopy.SuspAdjointLoop.html#580" class="Function"
+      >&#949;</a
+      ><a name="581"
+      > </a
+      ><a name="582" class="Symbol"
+      >:</a
+      ><a name="583"
+      > </a
+      ><a name="584" href="lib.Base.html#5098" class="Field"
+      >fst</a
+      ><a name="587"
+      > </a
+      ><a name="588" class="Symbol"
+      >(</a
+      ><a name="589" href="lib.types.Suspension.html#1279" class="Function"
+      >&#8857;Susp</a
+      ><a name="594"
+      > </a
+      ><a name="595" class="Symbol"
+      >(</a
+      ><a name="596" href="lib.types.LoopSpace.html#423" class="Function"
+      >&#8857;&#937;</a
+      ><a name="598"
+      > </a
+      ><a name="599" href="homotopy.SuspAdjointLoop.html#427" class="Bound"
+      >X</a
+      ><a name="600" class="Symbol"
+      >))</a
+      ><a name="602"
+      > </a
+      ><a name="603" class="Symbol"
+      >&#8594;</a
+      ><a name="604"
+      > </a
+      ><a name="605" href="lib.Base.html#5098" class="Field"
+      >fst</a
+      ><a name="608"
+      > </a
+      ><a name="609" href="homotopy.SuspAdjointLoop.html#427" class="Bound"
+      >X</a
+      ><a name="610"
+      >
+    </a
+      ><a name="615" href="homotopy.SuspAdjointLoop.html#580" class="Function"
+      >&#949;</a
+      ><a name="616"
+      > </a
+      ><a name="617" class="Symbol"
+      >=</a
+      ><a name="618"
+      > </a
+      ><a name="619" href="lib.types.Pushout.html#1762" class="Function"
+      >E.f</a
+      ><a name="622"
+      >
+
+    </a
+      ><a name="628" href="homotopy.SuspAdjointLoop.html#628" class="Function"
+      >&#8857;&#951;</a
+      ><a name="630"
+      > </a
+      ><a name="631" class="Symbol"
+      >:</a
+      ><a name="632"
+      > </a
+      ><a name="633" href="lib.Base.html#5098" class="Field"
+      >fst</a
+      ><a name="636"
+      > </a
+      ><a name="637" class="Symbol"
+      >(</a
+      ><a name="638" href="homotopy.SuspAdjointLoop.html#427" class="Bound"
+      >X</a
+      ><a name="639"
+      > </a
+      ><a name="640" href="lib.types.Pointed.html#300" class="Function Operator"
+      >&#8857;&#8594;</a
+      ><a name="642"
+      > </a
+      ><a name="643" href="lib.types.LoopSpace.html#423" class="Function"
+      >&#8857;&#937;</a
+      ><a name="645"
+      > </a
+      ><a name="646" class="Symbol"
+      >(</a
+      ><a name="647" href="lib.types.Suspension.html#1279" class="Function"
+      >&#8857;Susp</a
+      ><a name="652"
+      > </a
+      ><a name="653" href="homotopy.SuspAdjointLoop.html#427" class="Bound"
+      >X</a
+      ><a name="654" class="Symbol"
+      >))</a
+      ><a name="656"
+      >
+    </a
+      ><a name="661" href="homotopy.SuspAdjointLoop.html#628" class="Function"
+      >&#8857;&#951;</a
+      ><a name="663"
+      > </a
+      ><a name="664" class="Symbol"
+      >=</a
+      ><a name="665"
+      > </a
+      ><a name="666" class="Symbol"
+      >(</a
+      ><a name="667" href="homotopy.SuspAdjointLoop.html#449" class="Function"
+      >&#951;</a
+      ><a name="668"
+      > </a
+      ><a name="669" href="lib.Base.html#5082" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="670"
+      > </a
+      ><a name="671" href="lib.PathGroupoid.html#1417" class="Function"
+      >!-inv-r</a
+      ><a name="678"
+      > </a
+      ><a name="679" class="Symbol"
+      >(</a
+      ><a name="680" href="lib.types.Suspension.html#623" class="Function"
+      >merid</a
+      ><a name="685"
+      > </a
+      ><a name="686" class="Symbol"
+      >_</a
+      ><a name="687"
+      > </a
+      ><a name="688" class="Symbol"
+      >(</a
+      ><a name="689" href="lib.Base.html#5110" class="Field"
+      >snd</a
+      ><a name="692"
+      > </a
+      ><a name="693" href="homotopy.SuspAdjointLoop.html#427" class="Bound"
+      >X</a
+      ><a name="694" class="Symbol"
+      >)))</a
+      ><a name="697"
+      >
+
+    </a
+      ><a name="703" href="homotopy.SuspAdjointLoop.html#703" class="Function"
+      >&#8857;&#949;</a
+      ><a name="705"
+      > </a
+      ><a name="706" class="Symbol"
+      >:</a
+      ><a name="707"
+      > </a
+      ><a name="708" href="lib.Base.html#5098" class="Field"
+      >fst</a
+      ><a name="711"
+      > </a
+      ><a name="712" class="Symbol"
+      >(</a
+      ><a name="713" href="lib.types.Suspension.html#1279" class="Function"
+      >&#8857;Susp</a
+      ><a name="718"
+      > </a
+      ><a name="719" class="Symbol"
+      >(</a
+      ><a name="720" href="lib.types.LoopSpace.html#423" class="Function"
+      >&#8857;&#937;</a
+      ><a name="722"
+      > </a
+      ><a name="723" href="homotopy.SuspAdjointLoop.html#427" class="Bound"
+      >X</a
+      ><a name="724" class="Symbol"
+      >)</a
+      ><a name="725"
+      > </a
+      ><a name="726" href="lib.types.Pointed.html#300" class="Function Operator"
+      >&#8857;&#8594;</a
+      ><a name="728"
+      > </a
+      ><a name="729" href="homotopy.SuspAdjointLoop.html#427" class="Bound"
+      >X</a
+      ><a name="730" class="Symbol"
+      >)</a
+      ><a name="731"
+      >
+    </a
+      ><a name="736" href="homotopy.SuspAdjointLoop.html#703" class="Function"
+      >&#8857;&#949;</a
+      ><a name="738"
+      > </a
+      ><a name="739" class="Symbol"
+      >=</a
+      ><a name="740"
+      > </a
+      ><a name="741" class="Symbol"
+      >(</a
+      ><a name="742" href="homotopy.SuspAdjointLoop.html#580" class="Function"
+      >&#949;</a
+      ><a name="743"
+      > </a
+      ><a name="744" href="lib.Base.html#5082" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="745"
+      > </a
+      ><a name="746" href="lib.Base.html#1917" class="InductiveConstructor"
+      >idp</a
+      ><a name="749" class="Symbol"
+      >)</a
+      ><a name="750"
+      >
+
+  </a
+      ><a name="754" href="homotopy.SuspAdjointLoop.html#754" class="Function"
+      >&#951;-natural</a
+      ><a name="763"
+      > </a
+      ><a name="764" class="Symbol"
+      >:</a
+      ><a name="765"
+      > </a
+      ><a name="766" class="Symbol"
+      >{</a
+      ><a name="767" href="homotopy.SuspAdjointLoop.html#767" class="Bound"
+      >X</a
+      ><a name="768"
+      > </a
+      ><a name="769" href="homotopy.SuspAdjointLoop.html#769" class="Bound"
+      >Y</a
+      ><a name="770"
+      > </a
+      ><a name="771" class="Symbol"
+      >:</a
+      ><a name="772"
+      > </a
+      ><a name="773" href="lib.types.Pointed.html#167" class="Function"
+      >Ptd</a
+      ><a name="776"
+      > </a
+      ><a name="777" href="homotopy.SuspAdjointLoop.html#131" class="Bound"
+      >i</a
+      ><a name="778" class="Symbol"
+      >}</a
+      ><a name="779"
+      > </a
+      ><a name="780" class="Symbol"
+      >(</a
+      ><a name="781" href="homotopy.SuspAdjointLoop.html#781" class="Bound"
+      >f</a
+      ><a name="782"
+      > </a
+      ><a name="783" class="Symbol"
+      >:</a
+      ><a name="784"
+      > </a
+      ><a name="785" href="lib.Base.html#5098" class="Field"
+      >fst</a
+      ><a name="788"
+      > </a
+      ><a name="789" class="Symbol"
+      >(</a
+      ><a name="790" href="homotopy.SuspAdjointLoop.html#767" class="Bound"
+      >X</a
+      ><a name="791"
+      > </a
+      ><a name="792" href="lib.types.Pointed.html#300" class="Function Operator"
+      >&#8857;&#8594;</a
+      ><a name="794"
+      > </a
+      ><a name="795" href="homotopy.SuspAdjointLoop.html#769" class="Bound"
+      >Y</a
+      ><a name="796" class="Symbol"
+      >))</a
+      ><a name="798"
+      >
+    </a
+      ><a name="803" class="Symbol"
+      >&#8594;</a
+      ><a name="804"
+      > </a
+      ><a name="805" href="homotopy.SuspAdjointLoop.html#628" class="Function"
+      >&#8857;&#951;</a
+      ><a name="807"
+      > </a
+      ><a name="808" href="homotopy.SuspAdjointLoop.html#769" class="Bound"
+      >Y</a
+      ><a name="809"
+      > </a
+      ><a name="810" href="lib.types.Pointed.html#864" class="Function Operator"
+      >&#8857;&#8728;</a
+      ><a name="812"
+      > </a
+      ><a name="813" href="homotopy.SuspAdjointLoop.html#781" class="Bound"
+      >f</a
+      ><a name="814"
+      > </a
+      ><a name="815" href="lib.Base.html#1866" class="Datatype Operator"
+      >==</a
+      ><a name="817"
+      > </a
+      ><a name="818" href="lib.types.LoopSpace.html#1264" class="Function"
+      >&#8857;ap</a
+      ><a name="821"
+      > </a
+      ><a name="822" class="Symbol"
+      >(</a
+      ><a name="823" href="lib.types.Suspension.html#2104" class="Function"
+      >&#8857;susp-fmap</a
+      ><a name="833"
+      > </a
+      ><a name="834" href="homotopy.SuspAdjointLoop.html#781" class="Bound"
+      >f</a
+      ><a name="835" class="Symbol"
+      >)</a
+      ><a name="836"
+      > </a
+      ><a name="837" href="lib.types.Pointed.html#864" class="Function Operator"
+      >&#8857;&#8728;</a
+      ><a name="839"
+      > </a
+      ><a name="840" href="homotopy.SuspAdjointLoop.html#628" class="Function"
+      >&#8857;&#951;</a
+      ><a name="842"
+      > </a
+      ><a name="843" href="homotopy.SuspAdjointLoop.html#767" class="Bound"
+      >X</a
+      ><a name="844"
+      >
+  </a
+      ><a name="847" href="homotopy.SuspAdjointLoop.html#754" class="Function"
+      >&#951;-natural</a
+      ><a name="856"
+      > </a
+      ><a name="857" class="Symbol"
+      >{</a
+      ><a name="858" class="Argument"
+      >X</a
+      ><a name="859"
+      > </a
+      ><a name="860" class="Symbol"
+      >=</a
+      ><a name="861"
+      > </a
+      ><a name="862" href="homotopy.SuspAdjointLoop.html#862" class="Bound"
+      >X</a
+      ><a name="863" class="Symbol"
+      >}</a
+      ><a name="864"
+      > </a
+      ><a name="865" class="Symbol"
+      >(</a
+      ><a name="866" href="homotopy.SuspAdjointLoop.html#866" class="Bound"
+      >f</a
+      ><a name="867"
+      > </a
+      ><a name="868" href="lib.Base.html#5082" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="869"
+      > </a
+      ><a name="870" href="lib.Base.html#1917" class="InductiveConstructor"
+      >idp</a
+      ><a name="873" class="Symbol"
+      >)</a
+      ><a name="874"
+      > </a
+      ><a name="875" class="Symbol"
+      >=</a
+      ><a name="876"
+      > </a
+      ><a name="877" href="lib.types.Pointed.html#3367" class="Function"
+      >&#8857;&#955;=</a
+      ><a name="880"
+      >
+    </a
+      ><a name="885" class="Symbol"
+      >(&#955;</a
+      ><a name="887"
+      > </a
+      ><a name="888" href="homotopy.SuspAdjointLoop.html#888" class="Bound"
+      >x</a
+      ><a name="889"
+      > </a
+      ><a name="890" class="Symbol"
+      >&#8594;</a
+      ><a name="891"
+      > </a
+      ><a name="892" href="lib.PathGroupoid.html#1213" class="Function"
+      >!</a
+      ><a name="893"
+      > </a
+      ><a name="894" href="lib.Base.html#7969" class="Function Operator"
+      >$</a
+      ><a name="895"
+      >
+      </a
+      ><a name="902" href="lib.PathFunctor.html#465" class="Function"
+      >ap-&#8729;</a
+      ><a name="906"
+      > </a
+      ><a name="907" class="Symbol"
+      >(</a
+      ><a name="908" href="lib.types.Suspension.html#1990" class="Function"
+      >susp-fmap</a
+      ><a name="917"
+      > </a
+      ><a name="918" href="homotopy.SuspAdjointLoop.html#866" class="Bound"
+      >f</a
+      ><a name="919" class="Symbol"
+      >)</a
+      ><a name="920"
+      > </a
+      ><a name="921" class="Symbol"
+      >(</a
+      ><a name="922" href="lib.types.Suspension.html#623" class="Function"
+      >merid</a
+      ><a name="927"
+      > </a
+      ><a name="928" class="Symbol"
+      >_</a
+      ><a name="929"
+      > </a
+      ><a name="930" href="homotopy.SuspAdjointLoop.html#888" class="Bound"
+      >x</a
+      ><a name="931" class="Symbol"
+      >)</a
+      ><a name="932"
+      > </a
+      ><a name="933" class="Symbol"
+      >(</a
+      ><a name="934" href="lib.PathGroupoid.html#1213" class="Function"
+      >!</a
+      ><a name="935"
+      > </a
+      ><a name="936" class="Symbol"
+      >(</a
+      ><a name="937" href="lib.types.Suspension.html#623" class="Function"
+      >merid</a
+      ><a name="942"
+      > </a
+      ><a name="943" class="Symbol"
+      >_</a
+      ><a name="944"
+      > </a
+      ><a name="945" class="Symbol"
+      >(</a
+      ><a name="946" href="lib.Base.html#5110" class="Field"
+      >snd</a
+      ><a name="949"
+      > </a
+      ><a name="950" href="homotopy.SuspAdjointLoop.html#862" class="Bound"
+      >X</a
+      ><a name="951" class="Symbol"
+      >)))</a
+      ><a name="954"
+      >
+      </a
+      ><a name="961" href="lib.PathGroupoid.html#407" class="Function Operator"
+      >&#8729;</a
+      ><a name="962"
+      > </a
+      ><a name="963" href="lib.types.Pushout.html#1793" class="Function"
+      >SuspFmap.glue-&#946;</a
+      ><a name="978"
+      > </a
+      ><a name="979" href="homotopy.SuspAdjointLoop.html#866" class="Bound"
+      >f</a
+      ><a name="980"
+      > </a
+      ><a name="981" href="homotopy.SuspAdjointLoop.html#888" class="Bound"
+      >x</a
+      ><a name="982"
+      >
+        </a
+      ><a name="991" href="lib.PathGroupoid.html#2198" class="Function Operator"
+      >&#8729;2</a
+      ><a name="993"
+      > </a
+      ><a name="994" class="Symbol"
+      >(</a
+      ><a name="995" href="lib.PathFunctor.html#279" class="Function"
+      >ap-!</a
+      ><a name="999"
+      > </a
+      ><a name="1000" class="Symbol"
+      >(</a
+      ><a name="1001" href="lib.types.Suspension.html#1990" class="Function"
+      >susp-fmap</a
+      ><a name="1010"
+      > </a
+      ><a name="1011" href="homotopy.SuspAdjointLoop.html#866" class="Bound"
+      >f</a
+      ><a name="1012" class="Symbol"
+      >)</a
+      ><a name="1013"
+      > </a
+      ><a name="1014" class="Symbol"
+      >(</a
+      ><a name="1015" href="lib.types.Suspension.html#623" class="Function"
+      >merid</a
+      ><a name="1020"
+      > </a
+      ><a name="1021" class="Symbol"
+      >_</a
+      ><a name="1022"
+      > </a
+      ><a name="1023" class="Symbol"
+      >(</a
+      ><a name="1024" href="lib.Base.html#5110" class="Field"
+      >snd</a
+      ><a name="1027"
+      > </a
+      ><a name="1028" href="homotopy.SuspAdjointLoop.html#862" class="Bound"
+      >X</a
+      ><a name="1029" class="Symbol"
+      >))</a
+      ><a name="1031"
+      >
+            </a
+      ><a name="1044" href="lib.PathGroupoid.html#407" class="Function Operator"
+      >&#8729;</a
+      ><a name="1045"
+      > </a
+      ><a name="1046" href="lib.Base.html#3639" class="Function"
+      >ap</a
+      ><a name="1048"
+      > </a
+      ><a name="1049" href="lib.PathGroupoid.html#1213" class="Function"
+      >!</a
+      ><a name="1050"
+      > </a
+      ><a name="1051" class="Symbol"
+      >(</a
+      ><a name="1052" href="lib.types.Pushout.html#1793" class="Function"
+      >SuspFmap.glue-&#946;</a
+      ><a name="1067"
+      > </a
+      ><a name="1068" href="homotopy.SuspAdjointLoop.html#866" class="Bound"
+      >f</a
+      ><a name="1069"
+      > </a
+      ><a name="1070" class="Symbol"
+      >(</a
+      ><a name="1071" href="lib.Base.html#5110" class="Field"
+      >snd</a
+      ><a name="1074"
+      > </a
+      ><a name="1075" href="homotopy.SuspAdjointLoop.html#862" class="Bound"
+      >X</a
+      ><a name="1076" class="Symbol"
+      >))))</a
+      ><a name="1080"
+      >
+    </a
+      ><a name="1085" class="Symbol"
+      >(</a
+      ><a name="1086" href="homotopy.SuspAdjointLoop.html#1170" class="Function"
+      >pt-lemma</a
+      ><a name="1094"
+      > </a
+      ><a name="1095" class="Symbol"
+      >(</a
+      ><a name="1096" href="lib.types.Suspension.html#1990" class="Function"
+      >susp-fmap</a
+      ><a name="1105"
+      > </a
+      ><a name="1106" href="homotopy.SuspAdjointLoop.html#866" class="Bound"
+      >f</a
+      ><a name="1107" class="Symbol"
+      >)</a
+      ><a name="1108"
+      > </a
+      ><a name="1109" class="Symbol"
+      >(</a
+      ><a name="1110" href="lib.types.Suspension.html#623" class="Function"
+      >merid</a
+      ><a name="1115"
+      > </a
+      ><a name="1116" class="Symbol"
+      >_</a
+      ><a name="1117"
+      > </a
+      ><a name="1118" class="Symbol"
+      >(</a
+      ><a name="1119" href="lib.Base.html#5110" class="Field"
+      >snd</a
+      ><a name="1122"
+      > </a
+      ><a name="1123" href="homotopy.SuspAdjointLoop.html#862" class="Bound"
+      >X</a
+      ><a name="1124" class="Symbol"
+      >))</a
+      ><a name="1126"
+      > </a
+      ><a name="1127" class="Symbol"
+      >(</a
+      ><a name="1128" href="lib.types.Pushout.html#1793" class="Function"
+      >SuspFmap.glue-&#946;</a
+      ><a name="1143"
+      > </a
+      ><a name="1144" href="homotopy.SuspAdjointLoop.html#866" class="Bound"
+      >f</a
+      ><a name="1145"
+      > </a
+      ><a name="1146" class="Symbol"
+      >(</a
+      ><a name="1147" href="lib.Base.html#5110" class="Field"
+      >snd</a
+      ><a name="1150"
+      > </a
+      ><a name="1151" href="homotopy.SuspAdjointLoop.html#862" class="Bound"
+      >X</a
+      ><a name="1152" class="Symbol"
+      >)))</a
+      ><a name="1155"
+      >
+    </a
+      ><a name="1160" class="Keyword"
+      >where</a
+      ><a name="1165"
+      >
+    </a
+      ><a name="1170" href="homotopy.SuspAdjointLoop.html#1170" class="Function"
+      >pt-lemma</a
+      ><a name="1178"
+      > </a
+      ><a name="1179" class="Symbol"
+      >:</a
+      ><a name="1180"
+      > </a
+      ><a name="1181" class="Symbol"
+      >&#8704;</a
+      ><a name="1182"
+      > </a
+      ><a name="1183" class="Symbol"
+      >{</a
+      ><a name="1184" href="homotopy.SuspAdjointLoop.html#1184" class="Bound"
+      >i</a
+      ><a name="1185"
+      > </a
+      ><a name="1186" href="homotopy.SuspAdjointLoop.html#1186" class="Bound"
+      >j</a
+      ><a name="1187" class="Symbol"
+      >}</a
+      ><a name="1188"
+      > </a
+      ><a name="1189" class="Symbol"
+      >{</a
+      ><a name="1190" href="homotopy.SuspAdjointLoop.html#1190" class="Bound"
+      >A</a
+      ><a name="1191"
+      > </a
+      ><a name="1192" class="Symbol"
+      >:</a
+      ><a name="1193"
+      > </a
+      ><a name="1194" href="lib.Base.html#1132" class="Function"
+      >Type</a
+      ><a name="1198"
+      > </a
+      ><a name="1199" href="homotopy.SuspAdjointLoop.html#1184" class="Bound"
+      >i</a
+      ><a name="1200" class="Symbol"
+      >}</a
+      ><a name="1201"
+      > </a
+      ><a name="1202" class="Symbol"
+      >{</a
+      ><a name="1203" href="homotopy.SuspAdjointLoop.html#1203" class="Bound"
+      >B</a
+      ><a name="1204"
+      > </a
+      ><a name="1205" class="Symbol"
+      >:</a
+      ><a name="1206"
+      > </a
+      ><a name="1207" href="lib.Base.html#1132" class="Function"
+      >Type</a
+      ><a name="1211"
+      > </a
+      ><a name="1212" href="homotopy.SuspAdjointLoop.html#1186" class="Bound"
+      >j</a
+      ><a name="1213" class="Symbol"
+      >}</a
+      ><a name="1214"
+      > </a
+      ><a name="1215" class="Symbol"
+      >(</a
+      ><a name="1216" href="homotopy.SuspAdjointLoop.html#1216" class="Bound"
+      >f</a
+      ><a name="1217"
+      > </a
+      ><a name="1218" class="Symbol"
+      >:</a
+      ><a name="1219"
+      > </a
+      ><a name="1220" href="homotopy.SuspAdjointLoop.html#1190" class="Bound"
+      >A</a
+      ><a name="1221"
+      > </a
+      ><a name="1222" class="Symbol"
+      >&#8594;</a
+      ><a name="1223"
+      > </a
+      ><a name="1224" href="homotopy.SuspAdjointLoop.html#1203" class="Bound"
+      >B</a
+      ><a name="1225" class="Symbol"
+      >)</a
+      ><a name="1226"
+      >
+      </a
+      ><a name="1233" class="Symbol"
+      >{</a
+      ><a name="1234" href="homotopy.SuspAdjointLoop.html#1234" class="Bound"
+      >x</a
+      ><a name="1235"
+      > </a
+      ><a name="1236" href="homotopy.SuspAdjointLoop.html#1236" class="Bound"
+      >y</a
+      ><a name="1237"
+      > </a
+      ><a name="1238" class="Symbol"
+      >:</a
+      ><a name="1239"
+      > </a
+      ><a name="1240" href="homotopy.SuspAdjointLoop.html#1190" class="Bound"
+      >A</a
+      ><a name="1241" class="Symbol"
+      >}</a
+      ><a name="1242"
+      > </a
+      ><a name="1243" class="Symbol"
+      >(</a
+      ><a name="1244" href="homotopy.SuspAdjointLoop.html#1244" class="Bound"
+      >p</a
+      ><a name="1245"
+      > </a
+      ><a name="1246" class="Symbol"
+      >:</a
+      ><a name="1247"
+      > </a
+      ><a name="1248" href="homotopy.SuspAdjointLoop.html#1234" class="Bound"
+      >x</a
+      ><a name="1249"
+      > </a
+      ><a name="1250" href="lib.Base.html#1866" class="Datatype Operator"
+      >==</a
+      ><a name="1252"
+      > </a
+      ><a name="1253" href="homotopy.SuspAdjointLoop.html#1236" class="Bound"
+      >y</a
+      ><a name="1254" class="Symbol"
+      >)</a
+      ><a name="1255"
+      > </a
+      ><a name="1256" class="Symbol"
+      >{</a
+      ><a name="1257" href="homotopy.SuspAdjointLoop.html#1257" class="Bound"
+      >q</a
+      ><a name="1258"
+      > </a
+      ><a name="1259" class="Symbol"
+      >:</a
+      ><a name="1260"
+      > </a
+      ><a name="1261" href="homotopy.SuspAdjointLoop.html#1216" class="Bound"
+      >f</a
+      ><a name="1262"
+      > </a
+      ><a name="1263" href="homotopy.SuspAdjointLoop.html#1234" class="Bound"
+      >x</a
+      ><a name="1264"
+      > </a
+      ><a name="1265" href="lib.Base.html#1866" class="Datatype Operator"
+      >==</a
+      ><a name="1267"
+      > </a
+      ><a name="1268" href="homotopy.SuspAdjointLoop.html#1216" class="Bound"
+      >f</a
+      ><a name="1269"
+      > </a
+      ><a name="1270" href="homotopy.SuspAdjointLoop.html#1236" class="Bound"
+      >y</a
+      ><a name="1271" class="Symbol"
+      >}</a
+      ><a name="1272"
+      > </a
+      ><a name="1273" class="Symbol"
+      >(</a
+      ><a name="1274" href="homotopy.SuspAdjointLoop.html#1274" class="Bound"
+      >&#945;</a
+      ><a name="1275"
+      > </a
+      ><a name="1276" class="Symbol"
+      >:</a
+      ><a name="1277"
+      > </a
+      ><a name="1278" href="lib.Base.html#3639" class="Function"
+      >ap</a
+      ><a name="1280"
+      > </a
+      ><a name="1281" href="homotopy.SuspAdjointLoop.html#1216" class="Bound"
+      >f</a
+      ><a name="1282"
+      > </a
+      ><a name="1283" href="homotopy.SuspAdjointLoop.html#1244" class="Bound"
+      >p</a
+      ><a name="1284"
+      > </a
+      ><a name="1285" href="lib.Base.html#1866" class="Datatype Operator"
+      >==</a
+      ><a name="1287"
+      > </a
+      ><a name="1288" href="homotopy.SuspAdjointLoop.html#1257" class="Bound"
+      >q</a
+      ><a name="1289" class="Symbol"
+      >)</a
+      ><a name="1290"
+      >
+      </a
+      ><a name="1297" class="Symbol"
+      >&#8594;</a
+      ><a name="1298"
+      > </a
+      ><a name="1299" href="lib.PathGroupoid.html#1417" class="Function"
+      >!-inv-r</a
+      ><a name="1306"
+      > </a
+      ><a name="1307" href="homotopy.SuspAdjointLoop.html#1257" class="Bound"
+      >q</a
+      ><a name="1308"
+      > </a
+      ><a name="1309" href="lib.Base.html#1866" class="Datatype Operator"
+      >==</a
+      ><a name="1311"
+      > </a
+      ><a name="1312" class="Symbol"
+      >(</a
+      ><a name="1313" href="lib.PathGroupoid.html#1213" class="Function"
+      >!</a
+      ><a name="1314"
+      > </a
+      ><a name="1315" href="lib.Base.html#7969" class="Function Operator"
+      >$</a
+      ><a name="1316"
+      > </a
+      ><a name="1317" href="lib.PathFunctor.html#465" class="Function"
+      >ap-&#8729;</a
+      ><a name="1321"
+      > </a
+      ><a name="1322" href="homotopy.SuspAdjointLoop.html#1216" class="Bound"
+      >f</a
+      ><a name="1323"
+      > </a
+      ><a name="1324" href="homotopy.SuspAdjointLoop.html#1244" class="Bound"
+      >p</a
+      ><a name="1325"
+      > </a
+      ><a name="1326" class="Symbol"
+      >(</a
+      ><a name="1327" href="lib.PathGroupoid.html#1213" class="Function"
+      >!</a
+      ><a name="1328"
+      > </a
+      ><a name="1329" href="homotopy.SuspAdjointLoop.html#1244" class="Bound"
+      >p</a
+      ><a name="1330" class="Symbol"
+      >)</a
+      ><a name="1331"
+      > </a
+      ><a name="1332" href="lib.PathGroupoid.html#407" class="Function Operator"
+      >&#8729;</a
+      ><a name="1333"
+      > </a
+      ><a name="1334" href="homotopy.SuspAdjointLoop.html#1274" class="Bound"
+      >&#945;</a
+      ><a name="1335"
+      > </a
+      ><a name="1336" href="lib.PathGroupoid.html#2198" class="Function Operator"
+      >&#8729;2</a
+      ><a name="1338"
+      > </a
+      ><a name="1339" class="Symbol"
+      >(</a
+      ><a name="1340" href="lib.PathFunctor.html#279" class="Function"
+      >ap-!</a
+      ><a name="1344"
+      > </a
+      ><a name="1345" href="homotopy.SuspAdjointLoop.html#1216" class="Bound"
+      >f</a
+      ><a name="1346"
+      > </a
+      ><a name="1347" href="homotopy.SuspAdjointLoop.html#1244" class="Bound"
+      >p</a
+      ><a name="1348"
+      > </a
+      ><a name="1349" href="lib.PathGroupoid.html#407" class="Function Operator"
+      >&#8729;</a
+      ><a name="1350"
+      > </a
+      ><a name="1351" href="lib.Base.html#3639" class="Function"
+      >ap</a
+      ><a name="1353"
+      > </a
+      ><a name="1354" href="lib.PathGroupoid.html#1213" class="Function"
+      >!</a
+      ><a name="1355"
+      > </a
+      ><a name="1356" href="homotopy.SuspAdjointLoop.html#1274" class="Bound"
+      >&#945;</a
+      ><a name="1357" class="Symbol"
+      >))</a
+      ><a name="1359"
+      >
+                     </a
+      ><a name="1381" href="lib.PathGroupoid.html#407" class="Function Operator"
+      >&#8729;</a
+      ><a name="1382"
+      > </a
+      ><a name="1383" href="lib.Base.html#3639" class="Function"
+      >ap</a
+      ><a name="1385"
+      > </a
+      ><a name="1386" class="Symbol"
+      >(</a
+      ><a name="1387" href="lib.Base.html#3639" class="Function"
+      >ap</a
+      ><a name="1389"
+      > </a
+      ><a name="1390" href="homotopy.SuspAdjointLoop.html#1216" class="Bound"
+      >f</a
+      ><a name="1391" class="Symbol"
+      >)</a
+      ><a name="1392"
+      > </a
+      ><a name="1393" class="Symbol"
+      >(</a
+      ><a name="1394" href="lib.PathGroupoid.html#1417" class="Function"
+      >!-inv-r</a
+      ><a name="1401"
+      > </a
+      ><a name="1402" href="homotopy.SuspAdjointLoop.html#1244" class="Bound"
+      >p</a
+      ><a name="1403" class="Symbol"
+      >)</a
+      ><a name="1404"
+      > </a
+      ><a name="1405" href="lib.PathGroupoid.html#407" class="Function Operator"
+      >&#8729;</a
+      ><a name="1406"
+      > </a
+      ><a name="1407" href="lib.Base.html#1917" class="InductiveConstructor"
+      >idp</a
+      ><a name="1410"
+      >
+    </a
+      ><a name="1415" href="homotopy.SuspAdjointLoop.html#1170" class="Function"
+      >pt-lemma</a
+      ><a name="1423"
+      > </a
+      ><a name="1424" href="homotopy.SuspAdjointLoop.html#1424" class="Bound"
+      >f</a
+      ><a name="1425"
+      > </a
+      ><a name="1426" href="lib.Base.html#1917" class="InductiveConstructor"
+      >idp</a
+      ><a name="1429"
+      > </a
+      ><a name="1430" href="lib.Base.html#1917" class="InductiveConstructor"
+      >idp</a
+      ><a name="1433"
+      > </a
+      ><a name="1434" class="Symbol"
+      >=</a
+      ><a name="1435"
+      > </a
+      ><a name="1436" href="lib.Base.html#1917" class="InductiveConstructor"
+      >idp</a
+      ><a name="1439"
+      >
+
+  </a
+      ><a name="1443" href="homotopy.SuspAdjointLoop.html#1443" class="Function"
+      >&#949;-natural</a
+      ><a name="1452"
+      > </a
+      ><a name="1453" class="Symbol"
+      >:</a
+      ><a name="1454"
+      > </a
+      ><a name="1455" class="Symbol"
+      >{</a
+      ><a name="1456" href="homotopy.SuspAdjointLoop.html#1456" class="Bound"
+      >X</a
+      ><a name="1457"
+      > </a
+      ><a name="1458" href="homotopy.SuspAdjointLoop.html#1458" class="Bound"
+      >Y</a
+      ><a name="1459"
+      > </a
+      ><a name="1460" class="Symbol"
+      >:</a
+      ><a name="1461"
+      > </a
+      ><a name="1462" href="lib.types.Pointed.html#167" class="Function"
+      >Ptd</a
+      ><a name="1465"
+      > </a
+      ><a name="1466" href="homotopy.SuspAdjointLoop.html#131" class="Bound"
+      >i</a
+      ><a name="1467" class="Symbol"
+      >}</a
+      ><a name="1468"
+      > </a
+      ><a name="1469" class="Symbol"
+      >(</a
+      ><a name="1470" href="homotopy.SuspAdjointLoop.html#1470" class="Bound"
+      >f</a
+      ><a name="1471"
+      > </a
+      ><a name="1472" class="Symbol"
+      >:</a
+      ><a name="1473"
+      > </a
+      ><a name="1474" href="lib.Base.html#5098" class="Field"
+      >fst</a
+      ><a name="1477"
+      > </a
+      ><a name="1478" class="Symbol"
+      >(</a
+      ><a name="1479" href="homotopy.SuspAdjointLoop.html#1456" class="Bound"
+      >X</a
+      ><a name="1480"
+      > </a
+      ><a name="1481" href="lib.types.Pointed.html#300" class="Function Operator"
+      >&#8857;&#8594;</a
+      ><a name="1483"
+      > </a
+      ><a name="1484" href="homotopy.SuspAdjointLoop.html#1458" class="Bound"
+      >Y</a
+      ><a name="1485" class="Symbol"
+      >))</a
+      ><a name="1487"
+      >
+    </a
+      ><a name="1492" class="Symbol"
+      >&#8594;</a
+      ><a name="1493"
+      > </a
+      ><a name="1494" href="homotopy.SuspAdjointLoop.html#703" class="Function"
+      >&#8857;&#949;</a
+      ><a name="1496"
+      > </a
+      ><a name="1497" href="homotopy.SuspAdjointLoop.html#1458" class="Bound"
+      >Y</a
+      ><a name="1498"
+      > </a
+      ><a name="1499" href="lib.types.Pointed.html#864" class="Function Operator"
+      >&#8857;&#8728;</a
+      ><a name="1501"
+      > </a
+      ><a name="1502" href="lib.types.Suspension.html#2104" class="Function"
+      >&#8857;susp-fmap</a
+      ><a name="1512"
+      > </a
+      ><a name="1513" class="Symbol"
+      >(</a
+      ><a name="1514" href="lib.types.LoopSpace.html#1264" class="Function"
+      >&#8857;ap</a
+      ><a name="1517"
+      > </a
+      ><a name="1518" href="homotopy.SuspAdjointLoop.html#1470" class="Bound"
+      >f</a
+      ><a name="1519" class="Symbol"
+      >)</a
+      ><a name="1520"
+      > </a
+      ><a name="1521" href="lib.Base.html#1866" class="Datatype Operator"
+      >==</a
+      ><a name="1523"
+      > </a
+      ><a name="1524" href="homotopy.SuspAdjointLoop.html#1470" class="Bound"
+      >f</a
+      ><a name="1525"
+      > </a
+      ><a name="1526" href="lib.types.Pointed.html#864" class="Function Operator"
+      >&#8857;&#8728;</a
+      ><a name="1528"
+      > </a
+      ><a name="1529" href="homotopy.SuspAdjointLoop.html#703" class="Function"
+      >&#8857;&#949;</a
+      ><a name="1531"
+      > </a
+      ><a name="1532" href="homotopy.SuspAdjointLoop.html#1456" class="Bound"
+      >X</a
+      ><a name="1533"
+      >
+  </a
+      ><a name="1536" href="homotopy.SuspAdjointLoop.html#1443" class="Function"
+      >&#949;-natural</a
+      ><a name="1545"
+      > </a
+      ><a name="1546" class="Symbol"
+      >(</a
+      ><a name="1547" href="homotopy.SuspAdjointLoop.html#1547" class="Bound"
+      >f</a
+      ><a name="1548"
+      > </a
+      ><a name="1549" href="lib.Base.html#5082" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="1550"
+      > </a
+      ><a name="1551" href="lib.Base.html#1917" class="InductiveConstructor"
+      >idp</a
+      ><a name="1554" class="Symbol"
+      >)</a
+      ><a name="1555"
+      > </a
+      ><a name="1556" class="Symbol"
+      >=</a
+      ><a name="1557"
+      > </a
+      ><a name="1558" href="lib.types.Pointed.html#3367" class="Function"
+      >&#8857;&#955;=</a
+      ><a name="1561"
+      >
+    </a
+      ><a name="1566" class="Symbol"
+      >(</a
+      ><a name="1567" href="lib.types.Pushout.html#1160" class="Function"
+      >SuspensionElim.f</a
+      ><a name="1583"
+      > </a
+      ><a name="1584" class="Symbol"
+      >_</a
+      ><a name="1585"
+      > </a
+      ><a name="1586" href="lib.Base.html#1917" class="InductiveConstructor"
+      >idp</a
+      ><a name="1589"
+      > </a
+      ><a name="1590" href="lib.Base.html#1917" class="InductiveConstructor"
+      >idp</a
+      ><a name="1593"
+      >
+      </a
+      ><a name="1600" class="Symbol"
+      >(&#955;</a
+      ><a name="1602"
+      > </a
+      ><a name="1603" href="homotopy.SuspAdjointLoop.html#1603" class="Bound"
+      >p</a
+      ><a name="1604"
+      > </a
+      ><a name="1605" class="Symbol"
+      >&#8594;</a
+      ><a name="1606"
+      > </a
+      ><a name="1607" href="lib.cubical.Square.html#8160" class="Function"
+      >&#8595;-='-from-square</a
+      ><a name="1623"
+      > </a
+      ><a name="1624" href="lib.Base.html#7969" class="Function Operator"
+      >$</a
+      ><a name="1625"
+      > </a
+      ><a name="1626" href="lib.cubical.Square.html#2845" class="Function"
+      >vert-degen-square</a
+      ><a name="1643"
+      > </a
+      ><a name="1644" href="lib.Base.html#7969" class="Function Operator"
+      >$</a
+      ><a name="1645"
+      >
+        </a
+      ><a name="1654" href="lib.PathFunctor.html#1831" class="Function"
+      >ap-&#8728;</a
+      ><a name="1658"
+      > </a
+      ><a name="1659" class="Symbol"
+      >(</a
+      ><a name="1660" href="homotopy.SuspAdjointLoop.html#580" class="Function"
+      >&#949;</a
+      ><a name="1661"
+      > </a
+      ><a name="1662" class="Symbol"
+      >_)</a
+      ><a name="1664"
+      > </a
+      ><a name="1665" class="Symbol"
+      >(</a
+      ><a name="1666" href="lib.types.Suspension.html#1990" class="Function"
+      >susp-fmap</a
+      ><a name="1675"
+      > </a
+      ><a name="1676" class="Symbol"
+      >(</a
+      ><a name="1677" href="lib.Base.html#3639" class="Function"
+      >ap</a
+      ><a name="1679"
+      > </a
+      ><a name="1680" href="homotopy.SuspAdjointLoop.html#1547" class="Bound"
+      >f</a
+      ><a name="1681" class="Symbol"
+      >))</a
+      ><a name="1683"
+      > </a
+      ><a name="1684" class="Symbol"
+      >(</a
+      ><a name="1685" href="lib.types.Suspension.html#623" class="Function"
+      >merid</a
+      ><a name="1690"
+      > </a
+      ><a name="1691" class="Symbol"
+      >_</a
+      ><a name="1692"
+      > </a
+      ><a name="1693" href="homotopy.SuspAdjointLoop.html#1603" class="Bound"
+      >p</a
+      ><a name="1694" class="Symbol"
+      >)</a
+      ><a name="1695"
+      >
+        </a
+      ><a name="1704" href="lib.PathGroupoid.html#407" class="Function Operator"
+      >&#8729;</a
+      ><a name="1705"
+      > </a
+      ><a name="1706" href="lib.Base.html#3639" class="Function"
+      >ap</a
+      ><a name="1708"
+      > </a
+      ><a name="1709" class="Symbol"
+      >(</a
+      ><a name="1710" href="lib.Base.html#3639" class="Function"
+      >ap</a
+      ><a name="1712"
+      > </a
+      ><a name="1713" class="Symbol"
+      >(</a
+      ><a name="1714" href="homotopy.SuspAdjointLoop.html#580" class="Function"
+      >&#949;</a
+      ><a name="1715"
+      > </a
+      ><a name="1716" class="Symbol"
+      >_))</a
+      ><a name="1719"
+      > </a
+      ><a name="1720" class="Symbol"
+      >(</a
+      ><a name="1721" href="lib.types.Pushout.html#1793" class="Function"
+      >SuspFmap.glue-&#946;</a
+      ><a name="1736"
+      > </a
+      ><a name="1737" class="Symbol"
+      >(</a
+      ><a name="1738" href="lib.Base.html#3639" class="Function"
+      >ap</a
+      ><a name="1740"
+      > </a
+      ><a name="1741" href="homotopy.SuspAdjointLoop.html#1547" class="Bound"
+      >f</a
+      ><a name="1742" class="Symbol"
+      >)</a
+      ><a name="1743"
+      > </a
+      ><a name="1744" href="homotopy.SuspAdjointLoop.html#1603" class="Bound"
+      >p</a
+      ><a name="1745" class="Symbol"
+      >)</a
+      ><a name="1746"
+      >
+        </a
+      ><a name="1755" href="lib.PathGroupoid.html#407" class="Function Operator"
+      >&#8729;</a
+      ><a name="1756"
+      > </a
+      ><a name="1757" href="lib.types.Pushout.html#1793" class="Function"
+      >E.glue-&#946;</a
+      ><a name="1765"
+      > </a
+      ><a name="1766" class="Symbol"
+      >_</a
+      ><a name="1767"
+      > </a
+      ><a name="1768" class="Symbol"
+      >(</a
+      ><a name="1769" href="lib.Base.html#3639" class="Function"
+      >ap</a
+      ><a name="1771"
+      > </a
+      ><a name="1772" href="homotopy.SuspAdjointLoop.html#1547" class="Bound"
+      >f</a
+      ><a name="1773"
+      > </a
+      ><a name="1774" href="homotopy.SuspAdjointLoop.html#1603" class="Bound"
+      >p</a
+      ><a name="1775" class="Symbol"
+      >)</a
+      ><a name="1776"
+      >
+        </a
+      ><a name="1785" href="lib.PathGroupoid.html#407" class="Function Operator"
+      >&#8729;</a
+      ><a name="1786"
+      > </a
+      ><a name="1787" href="lib.Base.html#3639" class="Function"
+      >ap</a
+      ><a name="1789"
+      > </a
+      ><a name="1790" class="Symbol"
+      >(</a
+      ><a name="1791" href="lib.Base.html#3639" class="Function"
+      >ap</a
+      ><a name="1793"
+      > </a
+      ><a name="1794" href="homotopy.SuspAdjointLoop.html#1547" class="Bound"
+      >f</a
+      ><a name="1795" class="Symbol"
+      >)</a
+      ><a name="1796"
+      > </a
+      ><a name="1797" class="Symbol"
+      >(</a
+      ><a name="1798" href="lib.PathGroupoid.html#1213" class="Function"
+      >!</a
+      ><a name="1799"
+      > </a
+      ><a name="1800" class="Symbol"
+      >(</a
+      ><a name="1801" href="lib.types.Pushout.html#1793" class="Function"
+      >E.glue-&#946;</a
+      ><a name="1809"
+      > </a
+      ><a name="1810" class="Symbol"
+      >_</a
+      ><a name="1811"
+      > </a
+      ><a name="1812" href="homotopy.SuspAdjointLoop.html#1603" class="Bound"
+      >p</a
+      ><a name="1813" class="Symbol"
+      >))</a
+      ><a name="1815"
+      >
+        </a
+      ><a name="1824" href="lib.PathGroupoid.html#407" class="Function Operator"
+      >&#8729;</a
+      ><a name="1825"
+      > </a
+      ><a name="1826" href="lib.PathFunctor.html#1674" class="Function"
+      >&#8728;-ap</a
+      ><a name="1830"
+      > </a
+      ><a name="1831" href="homotopy.SuspAdjointLoop.html#1547" class="Bound"
+      >f</a
+      ><a name="1832"
+      > </a
+      ><a name="1833" class="Symbol"
+      >(</a
+      ><a name="1834" href="homotopy.SuspAdjointLoop.html#580" class="Function"
+      >&#949;</a
+      ><a name="1835"
+      > </a
+      ><a name="1836" class="Symbol"
+      >_)</a
+      ><a name="1838"
+      > </a
+      ><a name="1839" class="Symbol"
+      >(</a
+      ><a name="1840" href="lib.types.Suspension.html#623" class="Function"
+      >merid</a
+      ><a name="1845"
+      > </a
+      ><a name="1846" class="Symbol"
+      >_</a
+      ><a name="1847"
+      > </a
+      ><a name="1848" href="homotopy.SuspAdjointLoop.html#1603" class="Bound"
+      >p</a
+      ><a name="1849" class="Symbol"
+      >)))</a
+      ><a name="1852"
+      >
+    </a
+      ><a name="1857" href="lib.Base.html#1917" class="InductiveConstructor"
+      >idp</a
+      ><a name="1860"
+      >
+
+  </a
+      ><a name="1864" href="homotopy.SuspAdjointLoop.html#1864" class="Function"
+      >&#949;&#931;-&#931;&#951;</a
+      ><a name="1869"
+      > </a
+      ><a name="1870" class="Symbol"
+      >:</a
+      ><a name="1871"
+      > </a
+      ><a name="1872" class="Symbol"
+      >(</a
+      ><a name="1873" href="homotopy.SuspAdjointLoop.html#1873" class="Bound"
+      >X</a
+      ><a name="1874"
+      > </a
+      ><a name="1875" class="Symbol"
+      >:</a
+      ><a name="1876"
+      > </a
+      ><a name="1877" href="lib.types.Pointed.html#167" class="Function"
+      >Ptd</a
+      ><a name="1880"
+      > </a
+      ><a name="1881" href="homotopy.SuspAdjointLoop.html#131" class="Bound"
+      >i</a
+      ><a name="1882" class="Symbol"
+      >)</a
+      ><a name="1883"
+      > </a
+      ><a name="1884" class="Symbol"
+      >&#8594;</a
+      ><a name="1885"
+      > </a
+      ><a name="1886" href="homotopy.SuspAdjointLoop.html#703" class="Function"
+      >&#8857;&#949;</a
+      ><a name="1888"
+      > </a
+      ><a name="1889" class="Symbol"
+      >(</a
+      ><a name="1890" href="lib.types.Suspension.html#1279" class="Function"
+      >&#8857;Susp</a
+      ><a name="1895"
+      > </a
+      ><a name="1896" href="homotopy.SuspAdjointLoop.html#1873" class="Bound"
+      >X</a
+      ><a name="1897" class="Symbol"
+      >)</a
+      ><a name="1898"
+      > </a
+      ><a name="1899" href="lib.types.Pointed.html#864" class="Function Operator"
+      >&#8857;&#8728;</a
+      ><a name="1901"
+      > </a
+      ><a name="1902" href="lib.types.Suspension.html#2104" class="Function"
+      >&#8857;susp-fmap</a
+      ><a name="1912"
+      > </a
+      ><a name="1913" class="Symbol"
+      >(</a
+      ><a name="1914" href="homotopy.SuspAdjointLoop.html#628" class="Function"
+      >&#8857;&#951;</a
+      ><a name="1916"
+      > </a
+      ><a name="1917" href="homotopy.SuspAdjointLoop.html#1873" class="Bound"
+      >X</a
+      ><a name="1918" class="Symbol"
+      >)</a
+      ><a name="1919"
+      > </a
+      ><a name="1920" href="lib.Base.html#1866" class="Datatype Operator"
+      >==</a
+      ><a name="1922"
+      > </a
+      ><a name="1923" href="lib.types.Pointed.html#704" class="Function"
+      >&#8857;idf</a
+      ><a name="1927"
+      > </a
+      ><a name="1928" class="Symbol"
+      >_</a
+      ><a name="1929"
+      >
+  </a
+      ><a name="1932" href="homotopy.SuspAdjointLoop.html#1864" class="Function"
+      >&#949;&#931;-&#931;&#951;</a
+      ><a name="1937"
+      > </a
+      ><a name="1938" href="homotopy.SuspAdjointLoop.html#1938" class="Bound"
+      >X</a
+      ><a name="1939"
+      > </a
+      ><a name="1940" class="Symbol"
+      >=</a
+      ><a name="1941"
+      > </a
+      ><a name="1942" href="lib.types.Pointed.html#3367" class="Function"
+      >&#8857;&#955;=</a
+      ><a name="1945"
+      >
+    </a
+      ><a name="1950" class="Symbol"
+      >(</a
+      ><a name="1951" href="lib.types.Pushout.html#1160" class="Function"
+      >SuspensionElim.f</a
+      ><a name="1967"
+      > </a
+      ><a name="1968" class="Symbol"
+      >_</a
+      ><a name="1969"
+      >
+      </a
+      ><a name="1976" href="lib.Base.html#1917" class="InductiveConstructor"
+      >idp</a
+      ><a name="1979"
+      >
+      </a
+      ><a name="1986" class="Symbol"
+      >(</a
+      ><a name="1987" href="lib.types.Suspension.html#623" class="Function"
+      >merid</a
+      ><a name="1992"
+      > </a
+      ><a name="1993" class="Symbol"
+      >_</a
+      ><a name="1994"
+      > </a
+      ><a name="1995" class="Symbol"
+      >(</a
+      ><a name="1996" href="lib.Base.html#5110" class="Field"
+      >snd</a
+      ><a name="1999"
+      > </a
+      ><a name="2000" href="homotopy.SuspAdjointLoop.html#1938" class="Bound"
+      >X</a
+      ><a name="2001" class="Symbol"
+      >))</a
+      ><a name="2003"
+      >
+      </a
+      ><a name="2010" class="Symbol"
+      >(&#955;</a
+      ><a name="2012"
+      > </a
+      ><a name="2013" href="homotopy.SuspAdjointLoop.html#2013" class="Bound"
+      >x</a
+      ><a name="2014"
+      > </a
+      ><a name="2015" class="Symbol"
+      >&#8594;</a
+      ><a name="2016"
+      > </a
+      ><a name="2017" href="lib.cubical.Square.html#8160" class="Function"
+      >&#8595;-='-from-square</a
+      ><a name="2033"
+      > </a
+      ><a name="2034" href="lib.Base.html#7969" class="Function Operator"
+      >$</a
+      ><a name="2035"
+      >
+        </a
+      ><a name="2044" class="Symbol"
+      >(</a
+      ><a name="2045" href="lib.PathFunctor.html#1831" class="Function"
+      >ap-&#8728;</a
+      ><a name="2049"
+      > </a
+      ><a name="2050" class="Symbol"
+      >(</a
+      ><a name="2051" href="homotopy.SuspAdjointLoop.html#580" class="Function"
+      >&#949;</a
+      ><a name="2052"
+      > </a
+      ><a name="2053" class="Symbol"
+      >(</a
+      ><a name="2054" href="lib.types.Suspension.html#1279" class="Function"
+      >&#8857;Susp</a
+      ><a name="2059"
+      > </a
+      ><a name="2060" href="homotopy.SuspAdjointLoop.html#1938" class="Bound"
+      >X</a
+      ><a name="2061" class="Symbol"
+      >))</a
+      ><a name="2063"
+      > </a
+      ><a name="2064" class="Symbol"
+      >(</a
+      ><a name="2065" href="lib.types.Suspension.html#1990" class="Function"
+      >susp-fmap</a
+      ><a name="2074"
+      > </a
+      ><a name="2075" class="Symbol"
+      >(</a
+      ><a name="2076" href="homotopy.SuspAdjointLoop.html#449" class="Function"
+      >&#951;</a
+      ><a name="2077"
+      > </a
+      ><a name="2078" href="homotopy.SuspAdjointLoop.html#1938" class="Bound"
+      >X</a
+      ><a name="2079" class="Symbol"
+      >))</a
+      ><a name="2081"
+      > </a
+      ><a name="2082" class="Symbol"
+      >(</a
+      ><a name="2083" href="lib.types.Suspension.html#623" class="Function"
+      >merid</a
+      ><a name="2088"
+      > </a
+      ><a name="2089" class="Symbol"
+      >_</a
+      ><a name="2090"
+      > </a
+      ><a name="2091" href="homotopy.SuspAdjointLoop.html#2013" class="Bound"
+      >x</a
+      ><a name="2092" class="Symbol"
+      >)</a
+      ><a name="2093"
+      >
+         </a
+      ><a name="2103" href="lib.PathGroupoid.html#407" class="Function Operator"
+      >&#8729;</a
+      ><a name="2104"
+      > </a
+      ><a name="2105" href="lib.Base.html#3639" class="Function"
+      >ap</a
+      ><a name="2107"
+      > </a
+      ><a name="2108" class="Symbol"
+      >(</a
+      ><a name="2109" href="lib.Base.html#3639" class="Function"
+      >ap</a
+      ><a name="2111"
+      > </a
+      ><a name="2112" class="Symbol"
+      >(</a
+      ><a name="2113" href="homotopy.SuspAdjointLoop.html#580" class="Function"
+      >&#949;</a
+      ><a name="2114"
+      > </a
+      ><a name="2115" class="Symbol"
+      >(</a
+      ><a name="2116" href="lib.types.Suspension.html#1279" class="Function"
+      >&#8857;Susp</a
+      ><a name="2121"
+      > </a
+      ><a name="2122" href="homotopy.SuspAdjointLoop.html#1938" class="Bound"
+      >X</a
+      ><a name="2123" class="Symbol"
+      >)))</a
+      ><a name="2126"
+      > </a
+      ><a name="2127" class="Symbol"
+      >(</a
+      ><a name="2128" href="lib.types.Pushout.html#1793" class="Function"
+      >SuspFmap.glue-&#946;</a
+      ><a name="2143"
+      > </a
+      ><a name="2144" class="Symbol"
+      >(</a
+      ><a name="2145" href="homotopy.SuspAdjointLoop.html#449" class="Function"
+      >&#951;</a
+      ><a name="2146"
+      > </a
+      ><a name="2147" href="homotopy.SuspAdjointLoop.html#1938" class="Bound"
+      >X</a
+      ><a name="2148" class="Symbol"
+      >)</a
+      ><a name="2149"
+      > </a
+      ><a name="2150" href="homotopy.SuspAdjointLoop.html#2013" class="Bound"
+      >x</a
+      ><a name="2151" class="Symbol"
+      >)</a
+      ><a name="2152"
+      >
+         </a
+      ><a name="2162" href="lib.PathGroupoid.html#407" class="Function Operator"
+      >&#8729;</a
+      ><a name="2163"
+      > </a
+      ><a name="2164" href="lib.types.Pushout.html#1793" class="Function"
+      >E.glue-&#946;</a
+      ><a name="2172"
+      > </a
+      ><a name="2173" class="Symbol"
+      >_</a
+      ><a name="2174"
+      > </a
+      ><a name="2175" class="Symbol"
+      >(</a
+      ><a name="2176" href="lib.types.Suspension.html#623" class="Function"
+      >merid</a
+      ><a name="2181"
+      > </a
+      ><a name="2182" class="Symbol"
+      >_</a
+      ><a name="2183"
+      > </a
+      ><a name="2184" href="homotopy.SuspAdjointLoop.html#2013" class="Bound"
+      >x</a
+      ><a name="2185"
+      > </a
+      ><a name="2186" href="lib.PathGroupoid.html#407" class="Function Operator"
+      >&#8729;</a
+      ><a name="2187"
+      > </a
+      ><a name="2188" href="lib.PathGroupoid.html#1213" class="Function"
+      >!</a
+      ><a name="2189"
+      > </a
+      ><a name="2190" class="Symbol"
+      >(</a
+      ><a name="2191" href="lib.types.Suspension.html#623" class="Function"
+      >merid</a
+      ><a name="2196"
+      > </a
+      ><a name="2197" class="Symbol"
+      >_</a
+      ><a name="2198"
+      > </a
+      ><a name="2199" class="Symbol"
+      >(</a
+      ><a name="2200" href="lib.Base.html#5110" class="Field"
+      >snd</a
+      ><a name="2203"
+      > </a
+      ><a name="2204" href="homotopy.SuspAdjointLoop.html#1938" class="Bound"
+      >X</a
+      ><a name="2205" class="Symbol"
+      >))))</a
+      ><a name="2209"
+      >
+        </a
+      ><a name="2218" href="lib.cubical.Square.html#11162" class="Function Operator"
+      >&#8729;v&#8865;</a
+      ><a name="2221"
+      > </a
+      ><a name="2222" href="homotopy.SuspAdjointLoop.html#2324" class="Function"
+      >square-lemma</a
+      ><a name="2234"
+      > </a
+      ><a name="2235" class="Symbol"
+      >(</a
+      ><a name="2236" href="lib.types.Suspension.html#623" class="Function"
+      >merid</a
+      ><a name="2241"
+      > </a
+      ><a name="2242" class="Symbol"
+      >_</a
+      ><a name="2243"
+      > </a
+      ><a name="2244" href="homotopy.SuspAdjointLoop.html#2013" class="Bound"
+      >x</a
+      ><a name="2245" class="Symbol"
+      >)</a
+      ><a name="2246"
+      > </a
+      ><a name="2247" class="Symbol"
+      >(</a
+      ><a name="2248" href="lib.types.Suspension.html#623" class="Function"
+      >merid</a
+      ><a name="2253"
+      > </a
+      ><a name="2254" class="Symbol"
+      >_</a
+      ><a name="2255"
+      > </a
+      ><a name="2256" class="Symbol"
+      >(</a
+      ><a name="2257" href="lib.Base.html#5110" class="Field"
+      >snd</a
+      ><a name="2260"
+      > </a
+      ><a name="2261" href="homotopy.SuspAdjointLoop.html#1938" class="Bound"
+      >X</a
+      ><a name="2262" class="Symbol"
+      >))</a
+      ><a name="2264"
+      >
+        </a
+      ><a name="2273" href="lib.cubical.Square.html#11384" class="Function Operator"
+      >&#8865;v&#8729;</a
+      ><a name="2276"
+      > </a
+      ><a name="2277" href="lib.PathGroupoid.html#1213" class="Function"
+      >!</a
+      ><a name="2278"
+      > </a
+      ><a name="2279" class="Symbol"
+      >(</a
+      ><a name="2280" href="lib.PathFunctor.html#2106" class="Function"
+      >ap-idf</a
+      ><a name="2286"
+      > </a
+      ><a name="2287" class="Symbol"
+      >(</a
+      ><a name="2288" href="lib.types.Suspension.html#623" class="Function"
+      >merid</a
+      ><a name="2293"
+      > </a
+      ><a name="2294" class="Symbol"
+      >_</a
+      ><a name="2295"
+      > </a
+      ><a name="2296" href="homotopy.SuspAdjointLoop.html#2013" class="Bound"
+      >x</a
+      ><a name="2297" class="Symbol"
+      >))))</a
+      ><a name="2301"
+      >
+    </a
+      ><a name="2306" href="lib.Base.html#1917" class="InductiveConstructor"
+      >idp</a
+      ><a name="2309"
+      >
+    </a
+      ><a name="2314" class="Keyword"
+      >where</a
+      ><a name="2319"
+      >
+    </a
+      ><a name="2324" href="homotopy.SuspAdjointLoop.html#2324" class="Function"
+      >square-lemma</a
+      ><a name="2336"
+      > </a
+      ><a name="2337" class="Symbol"
+      >:</a
+      ><a name="2338"
+      > </a
+      ><a name="2339" class="Symbol"
+      >&#8704;</a
+      ><a name="2340"
+      > </a
+      ><a name="2341" class="Symbol"
+      >{</a
+      ><a name="2342" href="homotopy.SuspAdjointLoop.html#2342" class="Bound"
+      >i</a
+      ><a name="2343" class="Symbol"
+      >}</a
+      ><a name="2344"
+      > </a
+      ><a name="2345" class="Symbol"
+      >{</a
+      ><a name="2346" href="homotopy.SuspAdjointLoop.html#2346" class="Bound"
+      >A</a
+      ><a name="2347"
+      > </a
+      ><a name="2348" class="Symbol"
+      >:</a
+      ><a name="2349"
+      > </a
+      ><a name="2350" href="lib.Base.html#1132" class="Function"
+      >Type</a
+      ><a name="2354"
+      > </a
+      ><a name="2355" href="homotopy.SuspAdjointLoop.html#2342" class="Bound"
+      >i</a
+      ><a name="2356" class="Symbol"
+      >}</a
+      ><a name="2357"
+      > </a
+      ><a name="2358" class="Symbol"
+      >{</a
+      ><a name="2359" href="homotopy.SuspAdjointLoop.html#2359" class="Bound"
+      >x</a
+      ><a name="2360"
+      > </a
+      ><a name="2361" href="homotopy.SuspAdjointLoop.html#2361" class="Bound"
+      >y</a
+      ><a name="2362"
+      > </a
+      ><a name="2363" href="homotopy.SuspAdjointLoop.html#2363" class="Bound"
+      >z</a
+      ><a name="2364"
+      > </a
+      ><a name="2365" class="Symbol"
+      >:</a
+      ><a name="2366"
+      > </a
+      ><a name="2367" href="homotopy.SuspAdjointLoop.html#2346" class="Bound"
+      >A</a
+      ><a name="2368" class="Symbol"
+      >}</a
+      ><a name="2369"
+      >
+      </a
+      ><a name="2376" class="Symbol"
+      >(</a
+      ><a name="2377" href="homotopy.SuspAdjointLoop.html#2377" class="Bound"
+      >p</a
+      ><a name="2378"
+      > </a
+      ><a name="2379" class="Symbol"
+      >:</a
+      ><a name="2380"
+      > </a
+      ><a name="2381" href="homotopy.SuspAdjointLoop.html#2359" class="Bound"
+      >x</a
+      ><a name="2382"
+      > </a
+      ><a name="2383" href="lib.Base.html#1866" class="Datatype Operator"
+      >==</a
+      ><a name="2385"
+      > </a
+      ><a name="2386" href="homotopy.SuspAdjointLoop.html#2361" class="Bound"
+      >y</a
+      ><a name="2387" class="Symbol"
+      >)</a
+      ><a name="2388"
+      > </a
+      ><a name="2389" class="Symbol"
+      >(</a
+      ><a name="2390" href="homotopy.SuspAdjointLoop.html#2390" class="Bound"
+      >q</a
+      ><a name="2391"
+      > </a
+      ><a name="2392" class="Symbol"
+      >:</a
+      ><a name="2393"
+      > </a
+      ><a name="2394" href="homotopy.SuspAdjointLoop.html#2363" class="Bound"
+      >z</a
+      ><a name="2395"
+      > </a
+      ><a name="2396" href="lib.Base.html#1866" class="Datatype Operator"
+      >==</a
+      ><a name="2398"
+      > </a
+      ><a name="2399" href="homotopy.SuspAdjointLoop.html#2361" class="Bound"
+      >y</a
+      ><a name="2400" class="Symbol"
+      >)</a
+      ><a name="2401"
+      >
+      </a
+      ><a name="2408" class="Symbol"
+      >&#8594;</a
+      ><a name="2409"
+      > </a
+      ><a name="2410" href="lib.cubical.Square.html#144" class="Datatype"
+      >Square</a
+      ><a name="2416"
+      > </a
+      ><a name="2417" href="lib.Base.html#1917" class="InductiveConstructor"
+      >idp</a
+      ><a name="2420"
+      > </a
+      ><a name="2421" class="Symbol"
+      >(</a
+      ><a name="2422" href="homotopy.SuspAdjointLoop.html#2377" class="Bound"
+      >p</a
+      ><a name="2423"
+      > </a
+      ><a name="2424" href="lib.PathGroupoid.html#407" class="Function Operator"
+      >&#8729;</a
+      ><a name="2425"
+      > </a
+      ><a name="2426" href="lib.PathGroupoid.html#1213" class="Function"
+      >!</a
+      ><a name="2427"
+      > </a
+      ><a name="2428" href="homotopy.SuspAdjointLoop.html#2390" class="Bound"
+      >q</a
+      ><a name="2429" class="Symbol"
+      >)</a
+      ><a name="2430"
+      > </a
+      ><a name="2431" href="homotopy.SuspAdjointLoop.html#2377" class="Bound"
+      >p</a
+      ><a name="2432"
+      > </a
+      ><a name="2433" href="homotopy.SuspAdjointLoop.html#2390" class="Bound"
+      >q</a
+      ><a name="2434"
+      >
+    </a
+      ><a name="2439" href="homotopy.SuspAdjointLoop.html#2324" class="Function"
+      >square-lemma</a
+      ><a name="2451"
+      > </a
+      ><a name="2452" href="lib.Base.html#1917" class="InductiveConstructor"
+      >idp</a
+      ><a name="2455"
+      > </a
+      ><a name="2456" href="lib.Base.html#1917" class="InductiveConstructor"
+      >idp</a
+      ><a name="2459"
+      > </a
+      ><a name="2460" class="Symbol"
+      >=</a
+      ><a name="2461"
+      > </a
+      ><a name="2462" href="lib.cubical.Square.html#271" class="InductiveConstructor"
+      >ids</a
+      ><a name="2465"
+      >
+
+  </a
+      ><a name="2469" href="homotopy.SuspAdjointLoop.html#2469" class="Function"
+      >&#937;&#949;-&#951;&#937;</a
+      ><a name="2474"
+      > </a
+      ><a name="2475" class="Symbol"
+      >:</a
+      ><a name="2476"
+      > </a
+      ><a name="2477" class="Symbol"
+      >(</a
+      ><a name="2478" href="homotopy.SuspAdjointLoop.html#2478" class="Bound"
+      >X</a
+      ><a name="2479"
+      > </a
+      ><a name="2480" class="Symbol"
+      >:</a
+      ><a name="2481"
+      > </a
+      ><a name="2482" href="lib.types.Pointed.html#167" class="Function"
+      >Ptd</a
+      ><a name="2485"
+      > </a
+      ><a name="2486" href="homotopy.SuspAdjointLoop.html#131" class="Bound"
+      >i</a
+      ><a name="2487" class="Symbol"
+      >)</a
+      ><a name="2488"
+      > </a
+      ><a name="2489" class="Symbol"
+      >&#8594;</a
+      ><a name="2490"
+      > </a
+      ><a name="2491" href="lib.types.LoopSpace.html#1264" class="Function"
+      >&#8857;ap</a
+      ><a name="2494"
+      > </a
+      ><a name="2495" class="Symbol"
+      >(</a
+      ><a name="2496" href="homotopy.SuspAdjointLoop.html#703" class="Function"
+      >&#8857;&#949;</a
+      ><a name="2498"
+      > </a
+      ><a name="2499" href="homotopy.SuspAdjointLoop.html#2478" class="Bound"
+      >X</a
+      ><a name="2500" class="Symbol"
+      >)</a
+      ><a name="2501"
+      > </a
+      ><a name="2502" href="lib.types.Pointed.html#864" class="Function Operator"
+      >&#8857;&#8728;</a
+      ><a name="2504"
+      > </a
+      ><a name="2505" href="homotopy.SuspAdjointLoop.html#628" class="Function"
+      >&#8857;&#951;</a
+      ><a name="2507"
+      > </a
+      ><a name="2508" class="Symbol"
+      >(</a
+      ><a name="2509" href="lib.types.LoopSpace.html#423" class="Function"
+      >&#8857;&#937;</a
+      ><a name="2511"
+      > </a
+      ><a name="2512" href="homotopy.SuspAdjointLoop.html#2478" class="Bound"
+      >X</a
+      ><a name="2513" class="Symbol"
+      >)</a
+      ><a name="2514"
+      > </a
+      ><a name="2515" href="lib.Base.html#1866" class="Datatype Operator"
+      >==</a
+      ><a name="2517"
+      > </a
+      ><a name="2518" href="lib.types.Pointed.html#704" class="Function"
+      >&#8857;idf</a
+      ><a name="2522"
+      > </a
+      ><a name="2523" class="Symbol"
+      >_</a
+      ><a name="2524"
+      >
+  </a
+      ><a name="2527" href="homotopy.SuspAdjointLoop.html#2469" class="Function"
+      >&#937;&#949;-&#951;&#937;</a
+      ><a name="2532"
+      > </a
+      ><a name="2533" href="homotopy.SuspAdjointLoop.html#2533" class="Bound"
+      >X</a
+      ><a name="2534"
+      > </a
+      ><a name="2535" class="Symbol"
+      >=</a
+      ><a name="2536"
+      > </a
+      ><a name="2537" href="lib.types.Pointed.html#3367" class="Function"
+      >&#8857;&#955;=</a
+      ><a name="2540"
+      >
+    </a
+      ><a name="2545" class="Symbol"
+      >(&#955;</a
+      ><a name="2547"
+      > </a
+      ><a name="2548" href="homotopy.SuspAdjointLoop.html#2548" class="Bound"
+      >p</a
+      ><a name="2549"
+      > </a
+      ><a name="2550" class="Symbol"
+      >&#8594;</a
+      ><a name="2551"
+      > </a
+      ><a name="2552" href="lib.PathFunctor.html#465" class="Function"
+      >ap-&#8729;</a
+      ><a name="2556"
+      > </a
+      ><a name="2557" class="Symbol"
+      >(</a
+      ><a name="2558" href="homotopy.SuspAdjointLoop.html#580" class="Function"
+      >&#949;</a
+      ><a name="2559"
+      > </a
+      ><a name="2560" href="homotopy.SuspAdjointLoop.html#2533" class="Bound"
+      >X</a
+      ><a name="2561" class="Symbol"
+      >)</a
+      ><a name="2562"
+      > </a
+      ><a name="2563" class="Symbol"
+      >(</a
+      ><a name="2564" href="lib.types.Suspension.html#623" class="Function"
+      >merid</a
+      ><a name="2569"
+      > </a
+      ><a name="2570" class="Symbol"
+      >_</a
+      ><a name="2571"
+      > </a
+      ><a name="2572" href="homotopy.SuspAdjointLoop.html#2548" class="Bound"
+      >p</a
+      ><a name="2573" class="Symbol"
+      >)</a
+      ><a name="2574"
+      > </a
+      ><a name="2575" class="Symbol"
+      >(</a
+      ><a name="2576" href="lib.PathGroupoid.html#1213" class="Function"
+      >!</a
+      ><a name="2577"
+      > </a
+      ><a name="2578" class="Symbol"
+      >(</a
+      ><a name="2579" href="lib.types.Suspension.html#623" class="Function"
+      >merid</a
+      ><a name="2584"
+      > </a
+      ><a name="2585" class="Symbol"
+      >_</a
+      ><a name="2586"
+      > </a
+      ><a name="2587" href="lib.Base.html#1917" class="InductiveConstructor"
+      >idp</a
+      ><a name="2590" class="Symbol"
+      >))</a
+      ><a name="2592"
+      >
+         </a
+      ><a name="2602" href="lib.PathGroupoid.html#407" class="Function Operator"
+      >&#8729;</a
+      ><a name="2603"
+      > </a
+      ><a name="2604" class="Symbol"
+      >(</a
+      ><a name="2605" href="lib.types.Pushout.html#1793" class="Function"
+      >E.glue-&#946;</a
+      ><a name="2613"
+      > </a
+      ><a name="2614" href="homotopy.SuspAdjointLoop.html#2533" class="Bound"
+      >X</a
+      ><a name="2615"
+      > </a
+      ><a name="2616" href="homotopy.SuspAdjointLoop.html#2548" class="Bound"
+      >p</a
+      ><a name="2617"
+      > </a
+      ><a name="2618" href="lib.PathGroupoid.html#2198" class="Function Operator"
+      >&#8729;2</a
+      ><a name="2620"
+      > </a
+      ><a name="2621" class="Symbol"
+      >(</a
+      ><a name="2622" href="lib.PathFunctor.html#279" class="Function"
+      >ap-!</a
+      ><a name="2626"
+      > </a
+      ><a name="2627" class="Symbol"
+      >(</a
+      ><a name="2628" href="homotopy.SuspAdjointLoop.html#580" class="Function"
+      >&#949;</a
+      ><a name="2629"
+      > </a
+      ><a name="2630" href="homotopy.SuspAdjointLoop.html#2533" class="Bound"
+      >X</a
+      ><a name="2631" class="Symbol"
+      >)</a
+      ><a name="2632"
+      > </a
+      ><a name="2633" class="Symbol"
+      >(</a
+      ><a name="2634" href="lib.types.Suspension.html#623" class="Function"
+      >merid</a
+      ><a name="2639"
+      > </a
+      ><a name="2640" class="Symbol"
+      >_</a
+      ><a name="2641"
+      > </a
+      ><a name="2642" href="lib.Base.html#1917" class="InductiveConstructor"
+      >idp</a
+      ><a name="2645" class="Symbol"
+      >)</a
+      ><a name="2646"
+      > </a
+      ><a name="2647" href="lib.PathGroupoid.html#407" class="Function Operator"
+      >&#8729;</a
+      ><a name="2648"
+      > </a
+      ><a name="2649" href="lib.Base.html#3639" class="Function"
+      >ap</a
+      ><a name="2651"
+      > </a
+      ><a name="2652" href="lib.PathGroupoid.html#1213" class="Function"
+      >!</a
+      ><a name="2653"
+      > </a
+      ><a name="2654" class="Symbol"
+      >(</a
+      ><a name="2655" href="lib.types.Pushout.html#1793" class="Function"
+      >E.glue-&#946;</a
+      ><a name="2663"
+      > </a
+      ><a name="2664" href="homotopy.SuspAdjointLoop.html#2533" class="Bound"
+      >X</a
+      ><a name="2665"
+      > </a
+      ><a name="2666" href="lib.Base.html#1917" class="InductiveConstructor"
+      >idp</a
+      ><a name="2669" class="Symbol"
+      >)))</a
+      ><a name="2672"
+      >
+         </a
+      ><a name="2682" href="lib.PathGroupoid.html#407" class="Function Operator"
+      >&#8729;</a
+      ><a name="2683"
+      > </a
+      ><a name="2684" href="lib.PathGroupoid.html#1037" class="Function"
+      >&#8729;-unit-r</a
+      ><a name="2692"
+      > </a
+      ><a name="2693" class="Symbol"
+      >_)</a
+      ><a name="2695"
+      >
+    </a
+      ><a name="2700" class="Symbol"
+      >(</a
+      ><a name="2701" href="homotopy.SuspAdjointLoop.html#2762" class="Function"
+      >pt-lemma</a
+      ><a name="2709"
+      > </a
+      ><a name="2710" class="Symbol"
+      >(</a
+      ><a name="2711" href="homotopy.SuspAdjointLoop.html#580" class="Function"
+      >&#949;</a
+      ><a name="2712"
+      > </a
+      ><a name="2713" href="homotopy.SuspAdjointLoop.html#2533" class="Bound"
+      >X</a
+      ><a name="2714" class="Symbol"
+      >)</a
+      ><a name="2715"
+      > </a
+      ><a name="2716" class="Symbol"
+      >(</a
+      ><a name="2717" href="lib.types.Suspension.html#623" class="Function"
+      >merid</a
+      ><a name="2722"
+      > </a
+      ><a name="2723" class="Symbol"
+      >_</a
+      ><a name="2724"
+      > </a
+      ><a name="2725" href="lib.Base.html#1917" class="InductiveConstructor"
+      >idp</a
+      ><a name="2728" class="Symbol"
+      >)</a
+      ><a name="2729"
+      > </a
+      ><a name="2730" class="Symbol"
+      >(</a
+      ><a name="2731" href="lib.types.Pushout.html#1793" class="Function"
+      >E.glue-&#946;</a
+      ><a name="2739"
+      > </a
+      ><a name="2740" href="homotopy.SuspAdjointLoop.html#2533" class="Bound"
+      >X</a
+      ><a name="2741"
+      > </a
+      ><a name="2742" href="lib.Base.html#1917" class="InductiveConstructor"
+      >idp</a
+      ><a name="2745" class="Symbol"
+      >))</a
+      ><a name="2747"
+      >
+    </a
+      ><a name="2752" class="Keyword"
+      >where</a
+      ><a name="2757"
+      >
+    </a
+      ><a name="2762" href="homotopy.SuspAdjointLoop.html#2762" class="Function"
+      >pt-lemma</a
+      ><a name="2770"
+      > </a
+      ><a name="2771" class="Symbol"
+      >:</a
+      ><a name="2772"
+      > </a
+      ><a name="2773" class="Symbol"
+      >&#8704;</a
+      ><a name="2774"
+      > </a
+      ><a name="2775" class="Symbol"
+      >{</a
+      ><a name="2776" href="homotopy.SuspAdjointLoop.html#2776" class="Bound"
+      >i</a
+      ><a name="2777"
+      > </a
+      ><a name="2778" href="homotopy.SuspAdjointLoop.html#2778" class="Bound"
+      >j</a
+      ><a name="2779" class="Symbol"
+      >}</a
+      ><a name="2780"
+      > </a
+      ><a name="2781" class="Symbol"
+      >{</a
+      ><a name="2782" href="homotopy.SuspAdjointLoop.html#2782" class="Bound"
+      >A</a
+      ><a name="2783"
+      > </a
+      ><a name="2784" class="Symbol"
+      >:</a
+      ><a name="2785"
+      > </a
+      ><a name="2786" href="lib.Base.html#1132" class="Function"
+      >Type</a
+      ><a name="2790"
+      > </a
+      ><a name="2791" href="homotopy.SuspAdjointLoop.html#2776" class="Bound"
+      >i</a
+      ><a name="2792" class="Symbol"
+      >}</a
+      ><a name="2793"
+      > </a
+      ><a name="2794" class="Symbol"
+      >{</a
+      ><a name="2795" href="homotopy.SuspAdjointLoop.html#2795" class="Bound"
+      >B</a
+      ><a name="2796"
+      > </a
+      ><a name="2797" class="Symbol"
+      >:</a
+      ><a name="2798"
+      > </a
+      ><a name="2799" href="lib.Base.html#1132" class="Function"
+      >Type</a
+      ><a name="2803"
+      > </a
+      ><a name="2804" href="homotopy.SuspAdjointLoop.html#2778" class="Bound"
+      >j</a
+      ><a name="2805" class="Symbol"
+      >}</a
+      ><a name="2806"
+      > </a
+      ><a name="2807" class="Symbol"
+      >(</a
+      ><a name="2808" href="homotopy.SuspAdjointLoop.html#2808" class="Bound"
+      >f</a
+      ><a name="2809"
+      > </a
+      ><a name="2810" class="Symbol"
+      >:</a
+      ><a name="2811"
+      > </a
+      ><a name="2812" href="homotopy.SuspAdjointLoop.html#2782" class="Bound"
+      >A</a
+      ><a name="2813"
+      > </a
+      ><a name="2814" class="Symbol"
+      >&#8594;</a
+      ><a name="2815"
+      > </a
+      ><a name="2816" href="homotopy.SuspAdjointLoop.html#2795" class="Bound"
+      >B</a
+      ><a name="2817" class="Symbol"
+      >)</a
+      ><a name="2818"
+      >
+      </a
+      ><a name="2825" class="Symbol"
+      >{</a
+      ><a name="2826" href="homotopy.SuspAdjointLoop.html#2826" class="Bound"
+      >x</a
+      ><a name="2827"
+      > </a
+      ><a name="2828" href="homotopy.SuspAdjointLoop.html#2828" class="Bound"
+      >y</a
+      ><a name="2829"
+      > </a
+      ><a name="2830" class="Symbol"
+      >:</a
+      ><a name="2831"
+      > </a
+      ><a name="2832" href="homotopy.SuspAdjointLoop.html#2782" class="Bound"
+      >A</a
+      ><a name="2833" class="Symbol"
+      >}</a
+      ><a name="2834"
+      > </a
+      ><a name="2835" class="Symbol"
+      >(</a
+      ><a name="2836" href="homotopy.SuspAdjointLoop.html#2836" class="Bound"
+      >p</a
+      ><a name="2837"
+      > </a
+      ><a name="2838" class="Symbol"
+      >:</a
+      ><a name="2839"
+      > </a
+      ><a name="2840" href="homotopy.SuspAdjointLoop.html#2826" class="Bound"
+      >x</a
+      ><a name="2841"
+      > </a
+      ><a name="2842" href="lib.Base.html#1866" class="Datatype Operator"
+      >==</a
+      ><a name="2844"
+      > </a
+      ><a name="2845" href="homotopy.SuspAdjointLoop.html#2828" class="Bound"
+      >y</a
+      ><a name="2846" class="Symbol"
+      >)</a
+      ><a name="2847"
+      > </a
+      ><a name="2848" class="Symbol"
+      >{</a
+      ><a name="2849" href="homotopy.SuspAdjointLoop.html#2849" class="Bound"
+      >q</a
+      ><a name="2850"
+      > </a
+      ><a name="2851" class="Symbol"
+      >:</a
+      ><a name="2852"
+      > </a
+      ><a name="2853" href="homotopy.SuspAdjointLoop.html#2808" class="Bound"
+      >f</a
+      ><a name="2854"
+      > </a
+      ><a name="2855" href="homotopy.SuspAdjointLoop.html#2826" class="Bound"
+      >x</a
+      ><a name="2856"
+      > </a
+      ><a name="2857" href="lib.Base.html#1866" class="Datatype Operator"
+      >==</a
+      ><a name="2859"
+      > </a
+      ><a name="2860" href="homotopy.SuspAdjointLoop.html#2808" class="Bound"
+      >f</a
+      ><a name="2861"
+      > </a
+      ><a name="2862" href="homotopy.SuspAdjointLoop.html#2828" class="Bound"
+      >y</a
+      ><a name="2863" class="Symbol"
+      >}</a
+      ><a name="2864"
+      > </a
+      ><a name="2865" class="Symbol"
+      >(</a
+      ><a name="2866" href="homotopy.SuspAdjointLoop.html#2866" class="Bound"
+      >&#945;</a
+      ><a name="2867"
+      > </a
+      ><a name="2868" class="Symbol"
+      >:</a
+      ><a name="2869"
+      > </a
+      ><a name="2870" href="lib.Base.html#3639" class="Function"
+      >ap</a
+      ><a name="2872"
+      > </a
+      ><a name="2873" href="homotopy.SuspAdjointLoop.html#2808" class="Bound"
+      >f</a
+      ><a name="2874"
+      > </a
+      ><a name="2875" href="homotopy.SuspAdjointLoop.html#2836" class="Bound"
+      >p</a
+      ><a name="2876"
+      > </a
+      ><a name="2877" href="lib.Base.html#1866" class="Datatype Operator"
+      >==</a
+      ><a name="2879"
+      > </a
+      ><a name="2880" href="homotopy.SuspAdjointLoop.html#2849" class="Bound"
+      >q</a
+      ><a name="2881" class="Symbol"
+      >)</a
+      ><a name="2882"
+      >
+      </a
+      ><a name="2889" class="Symbol"
+      >&#8594;</a
+      ><a name="2890"
+      > </a
+      ><a name="2891" href="lib.Base.html#3639" class="Function"
+      >ap</a
+      ><a name="2893"
+      > </a
+      ><a name="2894" class="Symbol"
+      >(</a
+      ><a name="2895" href="lib.Base.html#3639" class="Function"
+      >ap</a
+      ><a name="2897"
+      > </a
+      ><a name="2898" href="homotopy.SuspAdjointLoop.html#2808" class="Bound"
+      >f</a
+      ><a name="2899" class="Symbol"
+      >)</a
+      ><a name="2900"
+      > </a
+      ><a name="2901" class="Symbol"
+      >(</a
+      ><a name="2902" href="lib.PathGroupoid.html#1417" class="Function"
+      >!-inv-r</a
+      ><a name="2909"
+      > </a
+      ><a name="2910" href="homotopy.SuspAdjointLoop.html#2836" class="Bound"
+      >p</a
+      ><a name="2911" class="Symbol"
+      >)</a
+      ><a name="2912"
+      > </a
+      ><a name="2913" href="lib.PathGroupoid.html#407" class="Function Operator"
+      >&#8729;</a
+      ><a name="2914"
+      > </a
+      ><a name="2915" href="lib.Base.html#1917" class="InductiveConstructor"
+      >idp</a
+      ><a name="2918"
+      >
+        </a
+      ><a name="2927" href="lib.Base.html#1866" class="Datatype Operator"
+      >==</a
+      ><a name="2929"
+      > </a
+      ><a name="2930" class="Symbol"
+      >(</a
+      ><a name="2931" href="lib.PathFunctor.html#465" class="Function"
+      >ap-&#8729;</a
+      ><a name="2935"
+      > </a
+      ><a name="2936" href="homotopy.SuspAdjointLoop.html#2808" class="Bound"
+      >f</a
+      ><a name="2937"
+      > </a
+      ><a name="2938" href="homotopy.SuspAdjointLoop.html#2836" class="Bound"
+      >p</a
+      ><a name="2939"
+      > </a
+      ><a name="2940" class="Symbol"
+      >(</a
+      ><a name="2941" href="lib.PathGroupoid.html#1213" class="Function"
+      >!</a
+      ><a name="2942"
+      > </a
+      ><a name="2943" href="homotopy.SuspAdjointLoop.html#2836" class="Bound"
+      >p</a
+      ><a name="2944" class="Symbol"
+      >)</a
+      ><a name="2945"
+      > </a
+      ><a name="2946" href="lib.PathGroupoid.html#407" class="Function Operator"
+      >&#8729;</a
+      ><a name="2947"
+      > </a
+      ><a name="2948" class="Symbol"
+      >(</a
+      ><a name="2949" href="homotopy.SuspAdjointLoop.html#2866" class="Bound"
+      >&#945;</a
+      ><a name="2950"
+      > </a
+      ><a name="2951" href="lib.PathGroupoid.html#2198" class="Function Operator"
+      >&#8729;2</a
+      ><a name="2953"
+      > </a
+      ><a name="2954" class="Symbol"
+      >(</a
+      ><a name="2955" href="lib.PathFunctor.html#279" class="Function"
+      >ap-!</a
+      ><a name="2959"
+      > </a
+      ><a name="2960" href="homotopy.SuspAdjointLoop.html#2808" class="Bound"
+      >f</a
+      ><a name="2961"
+      > </a
+      ><a name="2962" href="homotopy.SuspAdjointLoop.html#2836" class="Bound"
+      >p</a
+      ><a name="2963"
+      > </a
+      ><a name="2964" href="lib.PathGroupoid.html#407" class="Function Operator"
+      >&#8729;</a
+      ><a name="2965"
+      > </a
+      ><a name="2966" href="lib.Base.html#3639" class="Function"
+      >ap</a
+      ><a name="2968"
+      > </a
+      ><a name="2969" href="lib.PathGroupoid.html#1213" class="Function"
+      >!</a
+      ><a name="2970"
+      > </a
+      ><a name="2971" href="homotopy.SuspAdjointLoop.html#2866" class="Bound"
+      >&#945;</a
+      ><a name="2972" class="Symbol"
+      >))</a
+      ><a name="2974"
+      > </a
+      ><a name="2975" href="lib.PathGroupoid.html#407" class="Function Operator"
+      >&#8729;</a
+      ><a name="2976"
+      > </a
+      ><a name="2977" href="lib.PathGroupoid.html#1417" class="Function"
+      >!-inv-r</a
+      ><a name="2984"
+      > </a
+      ><a name="2985" href="homotopy.SuspAdjointLoop.html#2849" class="Bound"
+      >q</a
+      ><a name="2986" class="Symbol"
+      >)</a
+      ><a name="2987"
+      > </a
+      ><a name="2988" href="lib.PathGroupoid.html#407" class="Function Operator"
+      >&#8729;</a
+      ><a name="2989"
+      > </a
+      ><a name="2990" href="lib.Base.html#1917" class="InductiveConstructor"
+      >idp</a
+      ><a name="2993"
+      >
+    </a
+      ><a name="2998" href="homotopy.SuspAdjointLoop.html#2762" class="Function"
+      >pt-lemma</a
+      ><a name="3006"
+      > </a
+      ><a name="3007" href="homotopy.SuspAdjointLoop.html#3007" class="Bound"
+      >f</a
+      ><a name="3008"
+      > </a
+      ><a name="3009" href="lib.Base.html#1917" class="InductiveConstructor"
+      >idp</a
+      ><a name="3012"
+      > </a
+      ><a name="3013" href="lib.Base.html#1917" class="InductiveConstructor"
+      >idp</a
+      ><a name="3016"
+      > </a
+      ><a name="3017" class="Symbol"
+      >=</a
+      ><a name="3018"
+      > </a
+      ><a name="3019" href="lib.Base.html#1917" class="InductiveConstructor"
+      >idp</a
+      ><a name="3022"
+      >
+
+  </a
+      ><a name="3026" href="homotopy.SuspAdjointLoop.html#3026" class="Function"
+      >adj</a
+      ><a name="3029"
+      > </a
+      ><a name="3030" class="Symbol"
+      >:</a
+      ><a name="3031"
+      > </a
+      ><a name="3032" href="homotopy.PtdAdjoint.html#505" class="Record"
+      >CounitUnitAdjoint</a
+      ><a name="3049"
+      > </a
+      ><a name="3050" href="homotopy.SuspAdjointLoop.html#143" class="Function"
+      >SuspFunctor</a
+      ><a name="3061"
+      > </a
+      ><a name="3062" href="homotopy.SuspAdjointLoop.html#289" class="Function"
+      >LoopFunctor</a
+      ><a name="3073"
+      >
+  </a
+      ><a name="3076" href="homotopy.SuspAdjointLoop.html#3026" class="Function"
+      >adj</a
+      ><a name="3079"
+      > </a
+      ><a name="3080" class="Symbol"
+      >=</a
+      ><a name="3081"
+      > </a
+      ><a name="3082" class="Keyword"
+      >record</a
+      ><a name="3088"
+      > </a
+      ><a name="3089" class="Symbol"
+      >{</a
+      ><a name="3090"
+      >
+    </a
+      ><a name="3095" class="Field"
+      >&#951;</a
+      ><a name="3096"
+      > </a
+      ><a name="3097" class="Symbol"
+      >=</a
+      ><a name="3098"
+      > </a
+      ><a name="3099" href="homotopy.SuspAdjointLoop.html#628" class="Function"
+      >&#8857;&#951;</a
+      ><a name="3101" class="Symbol"
+      >;</a
+      ><a name="3102"
+      >
+    </a
+      ><a name="3107" class="Field"
+      >&#949;</a
+      ><a name="3108"
+      > </a
+      ><a name="3109" class="Symbol"
+      >=</a
+      ><a name="3110"
+      > </a
+      ><a name="3111" href="homotopy.SuspAdjointLoop.html#703" class="Function"
+      >&#8857;&#949;</a
+      ><a name="3113" class="Symbol"
+      >;</a
+      ><a name="3114"
+      >
+
+    </a
+      ><a name="3120" class="Field"
+      >&#951;-natural</a
+      ><a name="3129"
+      > </a
+      ><a name="3130" class="Symbol"
+      >=</a
+      ><a name="3131"
+      > </a
+      ><a name="3132" href="homotopy.SuspAdjointLoop.html#754" class="Function"
+      >&#951;-natural</a
+      ><a name="3141" class="Symbol"
+      >;</a
+      ><a name="3142"
+      >
+    </a
+      ><a name="3147" class="Field"
+      >&#949;-natural</a
+      ><a name="3156"
+      > </a
+      ><a name="3157" class="Symbol"
+      >=</a
+      ><a name="3158"
+      > </a
+      ><a name="3159" href="homotopy.SuspAdjointLoop.html#1443" class="Function"
+      >&#949;-natural</a
+      ><a name="3168" class="Symbol"
+      >;</a
+      ><a name="3169"
+      >
+
+    </a
+      ><a name="3175" class="Field"
+      >&#949;F-F&#951;</a
+      ><a name="3180"
+      > </a
+      ><a name="3181" class="Symbol"
+      >=</a
+      ><a name="3182"
+      > </a
+      ><a name="3183" href="homotopy.SuspAdjointLoop.html#1864" class="Function"
+      >&#949;&#931;-&#931;&#951;</a
+      ><a name="3188" class="Symbol"
+      >;</a
+      ><a name="3189"
+      >
+    </a
+      ><a name="3194" class="Field"
+      >G&#949;-&#951;G</a
+      ><a name="3199"
+      > </a
+      ><a name="3200" class="Symbol"
+      >=</a
+      ><a name="3201"
+      > </a
+      ><a name="3202" href="homotopy.SuspAdjointLoop.html#2469" class="Function"
+      >&#937;&#949;-&#951;&#937;</a
+      ><a name="3207" class="Symbol"
+      >}</a
+      ><a name="3208"
+      >
+
+</a
+      ></pre
+    ></body
+  ></html
+>

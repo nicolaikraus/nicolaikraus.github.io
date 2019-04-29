@@ -1,0 +1,343 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+><head
+  ><title
+    >INDEX_NotionsOfAnonymousExistence</title
+    ><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"
+     /><meta http-equiv="Content-Style-Type" content="text/css"
+     /><link href="Agda.css" rel="stylesheet" type="text/css"
+     /></head
+  ><body
+  ><pre
+    ><a name="1" class="Comment"
+      >{- 
+
+This is the Agda formalization of
+
+      NOTIONS OF ANONYMOUS EXISTENCE IN MARTIN-LOF TYPE THEORY
+
+                              by
+
+Nicolai Kraus, Martin Escardo, Thierry Coquand, Thorsten Altenkirch
+
+This file stays very close to the article. Because of this, not all 
+proofs are given in the way that is most elegant for a formalization. 
+In fact, often re-ordering statements would lead to a shorter 
+presentation. The order that we have chosen in the article makes our 
+results, as we hope, understandable and gives sufficient motivation.
+
+This file type check with Agda 2.3.3 (and is expected to type check
+with later versions).
+-}</a
+      ><a name="643"
+      >
+
+</a
+      ><a name="645" class="Keyword"
+      >module</a
+      ><a name="651"
+      > </a
+      ><a name="652" href="INDEX_NotionsOfAnonymousExistence.html#1" class="Module Operator"
+      >INDEX_NotionsOfAnonymousExistence</a
+      ><a name="685"
+      > </a
+      ><a name="686" class="Keyword"
+      >where</a
+      ><a name="691"
+      >
+
+</a
+      ><a name="693" class="Comment"
+      >-- We use the following library files (some of them slightly modified </a
+      ><a name="763"
+      >
+</a
+      ><a name="764" class="Comment"
+      >-- by Christian Sattler in order to be useable with the current Agda </a
+      ><a name="833"
+      >
+</a
+      ><a name="834" class="Comment"
+      >-- version 2.3.3):</a
+      ><a name="852"
+      >
+
+</a
+      ><a name="854" class="Keyword"
+      >open</a
+      ><a name="858"
+      > </a
+      ><a name="859" class="Keyword"
+      >import</a
+      ><a name="865"
+      > </a
+      ><a name="866" href="library.Basics.html#1" class="Module"
+      >library.Basics</a
+      ><a name="880"
+      > </a
+      ><a name="881" class="Keyword"
+      >hiding</a
+      ><a name="887"
+      > </a
+      ><a name="888" class="Symbol"
+      >(</a
+      ><a name="889"
+      >Type </a
+      ><a name="894" class="Symbol"
+      >;</a
+      ><a name="895"
+      > &#931;</a
+      ><a name="897" class="Symbol"
+      >)</a
+      ><a name="898"
+      >
+</a
+      ><a name="899" class="Keyword"
+      >open</a
+      ><a name="903"
+      > </a
+      ><a name="904" class="Keyword"
+      >import</a
+      ><a name="910"
+      > </a
+      ><a name="911" href="library.types.Sigma.html#1" class="Module"
+      >library.types.Sigma</a
+      ><a name="930"
+      >
+</a
+      ><a name="931" class="Keyword"
+      >open</a
+      ><a name="935"
+      > </a
+      ><a name="936" class="Keyword"
+      >import</a
+      ><a name="942"
+      > </a
+      ><a name="943" href="library.types.Pi.html#1" class="Module"
+      >library.types.Pi</a
+      ><a name="959"
+      >
+</a
+      ><a name="960" class="Keyword"
+      >open</a
+      ><a name="964"
+      > </a
+      ><a name="965" class="Keyword"
+      >import</a
+      ><a name="971"
+      > </a
+      ><a name="972" href="library.types.Bool.html#1" class="Module"
+      >library.types.Bool</a
+      ><a name="990"
+      >
+</a
+      ><a name="991" class="Keyword"
+      >open</a
+      ><a name="995"
+      > </a
+      ><a name="996" class="Keyword"
+      >import</a
+      ><a name="1002"
+      > </a
+      ><a name="1003" href="library.NType2.html#1" class="Module"
+      >library.NType2</a
+      ><a name="1017"
+      >
+</a
+      ><a name="1018" class="Keyword"
+      >open</a
+      ><a name="1022"
+      > </a
+      ><a name="1023" class="Keyword"
+      >import</a
+      ><a name="1029"
+      > </a
+      ><a name="1030" href="library.types.Paths.html#1" class="Module"
+      >library.types.Paths</a
+      ><a name="1049"
+      >
+
+</a
+      ><a name="1051" class="Comment"
+      >-- OUR FORMALIZATION</a
+      ><a name="1071"
+      >
+
+</a
+      ><a name="1073" class="Comment"
+      >-- Section 1: Introduction</a
+      ><a name="1099"
+      >
+</a
+      ><a name="1100" class="Comment"
+      >-- (no formalization)</a
+      ><a name="1121"
+      >
+
+</a
+      ><a name="1123" class="Comment"
+      >-- Section 2: Preliminaries</a
+      ><a name="1150"
+      >
+</a
+      ><a name="1151" class="Keyword"
+      >open</a
+      ><a name="1155"
+      > </a
+      ><a name="1156" class="Keyword"
+      >import</a
+      ><a name="1162"
+      > </a
+      ><a name="1163" href="Sec2preliminaries.html#1" class="Module"
+      >Sec2preliminaries</a
+      ><a name="1180"
+      >
+
+</a
+      ><a name="1182" class="Comment"
+      >-- Section 3: Hedberg's Theorem</a
+      ><a name="1213"
+      >
+</a
+      ><a name="1214" class="Keyword"
+      >open</a
+      ><a name="1218"
+      > </a
+      ><a name="1219" class="Keyword"
+      >import</a
+      ><a name="1225"
+      > </a
+      ><a name="1226" href="Sec3hedberg.html#1" class="Module"
+      >Sec3hedberg</a
+      ><a name="1237"
+      >
+
+</a
+      ><a name="1239" class="Comment"
+      >-- Section 4: Collapsibility implies H-Stability</a
+      ><a name="1287"
+      >
+</a
+      ><a name="1288" class="Keyword"
+      >open</a
+      ><a name="1292"
+      > </a
+      ><a name="1293" class="Keyword"
+      >import</a
+      ><a name="1299"
+      > </a
+      ><a name="1300" href="Sec4collapsibility.html#1" class="Module"
+      >Sec4collapsibility</a
+      ><a name="1318"
+      >
+
+</a
+      ><a name="1320" class="Comment"
+      >-- Section 5: Factorizing Weakly Constant Functions</a
+      ><a name="1371"
+      >
+</a
+      ><a name="1372" class="Keyword"
+      >open</a
+      ><a name="1376"
+      > </a
+      ><a name="1377" class="Keyword"
+      >import</a
+      ><a name="1383"
+      > </a
+      ><a name="1384" href="Sec5factorConst.html#1" class="Module"
+      >Sec5factorConst</a
+      ><a name="1399"
+      >
+
+</a
+      ><a name="1401" class="Comment"
+      >-- Section 6: Global Collapsibility implies Decidable Equality</a
+      ><a name="1463"
+      >
+</a
+      ><a name="1464" class="Keyword"
+      >open</a
+      ><a name="1468"
+      > </a
+      ><a name="1469" class="Keyword"
+      >import</a
+      ><a name="1475"
+      > </a
+      ><a name="1476" href="Sec6collImplDecEq.html#1" class="Module"
+      >Sec6collImplDecEq</a
+      ><a name="1493"
+      >
+
+</a
+      ><a name="1495" class="Comment"
+      >-- Section 7: Populatedness</a
+      ><a name="1522"
+      >
+</a
+      ><a name="1523" class="Keyword"
+      >open</a
+      ><a name="1527"
+      > </a
+      ><a name="1528" class="Keyword"
+      >import</a
+      ><a name="1534"
+      > </a
+      ><a name="1535" href="Sec7populatedness.html#1" class="Module"
+      >Sec7populatedness</a
+      ><a name="1552"
+      >
+
+</a
+      ><a name="1554" class="Comment"
+      >-- Section 8: Taboos and Counter-Models</a
+      ><a name="1593"
+      >
+</a
+      ><a name="1594" class="Keyword"
+      >open</a
+      ><a name="1598"
+      > </a
+      ><a name="1599" class="Keyword"
+      >import</a
+      ><a name="1605"
+      > </a
+      ><a name="1606" href="Sec8taboos.html#1" class="Module"
+      >Sec8taboos</a
+      ><a name="1616"
+      >
+
+</a
+      ><a name="1618" class="Comment"
+      >-- Section 9: Propositional Truncation with Judgmental Computation Rule</a
+      ><a name="1689"
+      >
+</a
+      ><a name="1690" class="Keyword"
+      >open</a
+      ><a name="1694"
+      > </a
+      ><a name="1695" class="Keyword"
+      >import</a
+      ><a name="1701"
+      > </a
+      ><a name="1702" href="Sec9judgmentalBeta.html#1" class="Module"
+      >Sec9judgmentalBeta</a
+      ><a name="1720"
+      >
+
+</a
+      ><a name="1722" class="Comment"
+      >-- Section 10: Conclusion and Open Problems</a
+      ><a name="1765"
+      >
+</a
+      ><a name="1766" class="Comment"
+      >-- (no formalization)</a
+      ><a name="1787"
+      >
+</a
+      ></pre
+    ></body
+  ></html
+>

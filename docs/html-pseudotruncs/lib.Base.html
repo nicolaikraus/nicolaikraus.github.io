@@ -1,0 +1,6740 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+><head
+  ><title
+    >lib.Base</title
+    ><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"
+     /><meta http-equiv="Content-Style-Type" content="text/css"
+     /><link href="Agda.css" rel="stylesheet" type="text/css"
+     /></head
+  ><body
+  ><pre
+    ><a name="1" class="Symbol"
+      >{-#</a
+      ><a name="4"
+      > </a
+      ><a name="5" class="Keyword"
+      >OPTIONS</a
+      ><a name="12"
+      > --without-K </a
+      ><a name="25" class="Symbol"
+      >#-}</a
+      ><a name="28"
+      >
+
+</a
+      ><a name="30" class="Comment"
+      >{-
+This file contains a bunch of basic stuff which is needed early.
+Maybe it should be organised better.
+-}</a
+      ><a name="137"
+      >
+
+</a
+      ><a name="139" class="Keyword"
+      >module</a
+      ><a name="145"
+      > </a
+      ><a name="146" href="lib.Base.html#1" class="Module"
+      >lib.Base</a
+      ><a name="154"
+      > </a
+      ><a name="155" class="Keyword"
+      >where</a
+      ><a name="160"
+      >
+
+</a
+      ><a name="162" class="Comment"
+      >{- Universes and typing
+
+Agda has explicit universe polymorphism, which means that there is an actual
+type of universe levels on which you can quantify. This type is called [ULevel]
+and comes equipped with the following operations:
+
+- [lzero] : [ULevel] (in order to have at least one universe)
+- [lsucc] : [ULevel &#8594; ULevel] (the [i]th universe level is a term in the
+  [lsucc i]th universe)
+- [lmax] : [ULevel &#8594; ULevel &#8594; ULevel] (in order to type dependent products (where
+  the codomain is in a uniform universe level)
+
+This type is postulated below and linked to Agda&#8217;s universe polymorphism
+mechanism via the built-in module Agda.Primitive (it&#8217;s the new way).
+
+In plain Agda, the [i]th universe is called [Set i], which is not a very good
+name from the point of view of HoTT, so we define [Type] as a synonym of [Set]
+and [Set] should never be used again.
+-}</a
+      ><a name="1024"
+      >
+
+</a
+      ><a name="1026" class="Keyword"
+      >open</a
+      ><a name="1030"
+      > </a
+      ><a name="1031" class="Keyword"
+      >import</a
+      ><a name="1037"
+      > </a
+      ><a name="1038" href="Agda.Primitive.html#1" class="Module"
+      >Agda.Primitive</a
+      ><a name="1052"
+      > </a
+      ><a name="1053" class="Keyword"
+      >public</a
+      ><a name="1059"
+      > </a
+      ><a name="1060" class="Keyword"
+      >using</a
+      ><a name="1065"
+      > </a
+      ><a name="1066" class="Symbol"
+      >(</a
+      ><a name="1067"
+      >lzero</a
+      ><a name="1072" class="Symbol"
+      >)</a
+      ><a name="1073"
+      >
+  </a
+      ><a name="1076" class="Keyword"
+      >renaming</a
+      ><a name="1084"
+      > </a
+      ><a name="1085" class="Symbol"
+      >(</a
+      ><a name="1086"
+      >Level </a
+      ><a name="1092" class="Symbol"
+      >to</a
+      ><a name="1094"
+      > ULevel</a
+      ><a name="1101" class="Symbol"
+      >;</a
+      ><a name="1102"
+      > lsuc </a
+      ><a name="1108" class="Symbol"
+      >to</a
+      ><a name="1110"
+      > lsucc</a
+      ><a name="1116" class="Symbol"
+      >;</a
+      ><a name="1117"
+      > _&#8852;_ </a
+      ><a name="1122" class="Symbol"
+      >to</a
+      ><a name="1124"
+      > lmax</a
+      ><a name="1129" class="Symbol"
+      >)</a
+      ><a name="1130"
+      >
+
+</a
+      ><a name="1132" href="lib.Base.html#1132" class="Function"
+      >Type</a
+      ><a name="1136"
+      > </a
+      ><a name="1137" class="Symbol"
+      >:</a
+      ><a name="1138"
+      > </a
+      ><a name="1139" class="Symbol"
+      >(</a
+      ><a name="1140" href="lib.Base.html#1140" class="Bound"
+      >i</a
+      ><a name="1141"
+      > </a
+      ><a name="1142" class="Symbol"
+      >:</a
+      ><a name="1143"
+      > </a
+      ><a name="1144" href="Agda.Primitive.html#379" class="Postulate"
+      >ULevel</a
+      ><a name="1150" class="Symbol"
+      >)</a
+      ><a name="1151"
+      > </a
+      ><a name="1152" class="Symbol"
+      >&#8594;</a
+      ><a name="1153"
+      > </a
+      ><a name="1154" class="PrimitiveType"
+      >Set</a
+      ><a name="1157"
+      > </a
+      ><a name="1158" class="Symbol"
+      >(</a
+      ><a name="1159" href="Agda.Primitive.html#596" class="Primitive"
+      >lsucc</a
+      ><a name="1164"
+      > </a
+      ><a name="1165" href="lib.Base.html#1140" class="Bound"
+      >i</a
+      ><a name="1166" class="Symbol"
+      >)</a
+      ><a name="1167"
+      >
+</a
+      ><a name="1168" href="lib.Base.html#1132" class="Function"
+      >Type</a
+      ><a name="1172"
+      > </a
+      ><a name="1173" href="lib.Base.html#1173" class="Bound"
+      >i</a
+      ><a name="1174"
+      > </a
+      ><a name="1175" class="Symbol"
+      >=</a
+      ><a name="1176"
+      > </a
+      ><a name="1177" class="PrimitiveType"
+      >Set</a
+      ><a name="1180"
+      > </a
+      ><a name="1181" href="lib.Base.html#1173" class="Bound"
+      >i</a
+      ><a name="1182"
+      >
+
+</a
+      ><a name="1184" href="lib.Base.html#1184" class="Function"
+      >Type&#8320;</a
+      ><a name="1189"
+      > </a
+      ><a name="1190" class="Symbol"
+      >=</a
+      ><a name="1191"
+      > </a
+      ><a name="1192" href="lib.Base.html#1132" class="Function"
+      >Type</a
+      ><a name="1196"
+      > </a
+      ><a name="1197" href="Agda.Primitive.html#580" class="Primitive"
+      >lzero</a
+      ><a name="1202"
+      >
+</a
+      ><a name="1203" href="lib.Base.html#1203" class="Function"
+      >Type0</a
+      ><a name="1208"
+      > </a
+      ><a name="1209" class="Symbol"
+      >=</a
+      ><a name="1210"
+      > </a
+      ><a name="1211" href="lib.Base.html#1132" class="Function"
+      >Type</a
+      ><a name="1215"
+      > </a
+      ><a name="1216" href="Agda.Primitive.html#580" class="Primitive"
+      >lzero</a
+      ><a name="1221"
+      >
+
+</a
+      ><a name="1223" href="lib.Base.html#1223" class="Function"
+      >Type&#8321;</a
+      ><a name="1228"
+      > </a
+      ><a name="1229" class="Symbol"
+      >=</a
+      ><a name="1230"
+      > </a
+      ><a name="1231" href="lib.Base.html#1132" class="Function"
+      >Type</a
+      ><a name="1235"
+      > </a
+      ><a name="1236" class="Symbol"
+      >(</a
+      ><a name="1237" href="Agda.Primitive.html#596" class="Primitive"
+      >lsucc</a
+      ><a name="1242"
+      > </a
+      ><a name="1243" href="Agda.Primitive.html#580" class="Primitive"
+      >lzero</a
+      ><a name="1248" class="Symbol"
+      >)</a
+      ><a name="1249"
+      >
+</a
+      ><a name="1250" href="lib.Base.html#1250" class="Function"
+      >Type1</a
+      ><a name="1255"
+      > </a
+      ><a name="1256" class="Symbol"
+      >=</a
+      ><a name="1257"
+      > </a
+      ><a name="1258" href="lib.Base.html#1132" class="Function"
+      >Type</a
+      ><a name="1262"
+      > </a
+      ><a name="1263" class="Symbol"
+      >(</a
+      ><a name="1264" href="Agda.Primitive.html#596" class="Primitive"
+      >lsucc</a
+      ><a name="1269"
+      > </a
+      ><a name="1270" href="Agda.Primitive.html#580" class="Primitive"
+      >lzero</a
+      ><a name="1275" class="Symbol"
+      >)</a
+      ><a name="1276"
+      >
+
+</a
+      ><a name="1278" class="Comment"
+      >{-
+There is no built-in or standard way to coerce an ambiguous term to a given type
+(like [u : A] in ML), the symbol [:] is reserved, and the Unicode [&#8758;] is really
+a bad idea.
+So we&#8217;re using the symbol [_:&gt;_], which has the advantage that it can micmic
+Coq&#8217;s [u = v :&gt; A].
+-}</a
+      ><a name="1553"
+      >
+
+</a
+      ><a name="1555" href="lib.Base.html#1555" class="Function"
+      >of-type</a
+      ><a name="1562"
+      > </a
+      ><a name="1563" class="Symbol"
+      >:</a
+      ><a name="1564"
+      > </a
+      ><a name="1565" class="Symbol"
+      >&#8704;</a
+      ><a name="1566"
+      > </a
+      ><a name="1567" class="Symbol"
+      >{</a
+      ><a name="1568" href="lib.Base.html#1568" class="Bound"
+      >i</a
+      ><a name="1569" class="Symbol"
+      >}</a
+      ><a name="1570"
+      > </a
+      ><a name="1571" class="Symbol"
+      >(</a
+      ><a name="1572" href="lib.Base.html#1572" class="Bound"
+      >A</a
+      ><a name="1573"
+      > </a
+      ><a name="1574" class="Symbol"
+      >:</a
+      ><a name="1575"
+      > </a
+      ><a name="1576" href="lib.Base.html#1132" class="Function"
+      >Type</a
+      ><a name="1580"
+      > </a
+      ><a name="1581" href="lib.Base.html#1568" class="Bound"
+      >i</a
+      ><a name="1582" class="Symbol"
+      >)</a
+      ><a name="1583"
+      > </a
+      ><a name="1584" class="Symbol"
+      >(</a
+      ><a name="1585" href="lib.Base.html#1585" class="Bound"
+      >u</a
+      ><a name="1586"
+      > </a
+      ><a name="1587" class="Symbol"
+      >:</a
+      ><a name="1588"
+      > </a
+      ><a name="1589" href="lib.Base.html#1572" class="Bound"
+      >A</a
+      ><a name="1590" class="Symbol"
+      >)</a
+      ><a name="1591"
+      > </a
+      ><a name="1592" class="Symbol"
+      >&#8594;</a
+      ><a name="1593"
+      > </a
+      ><a name="1594" href="lib.Base.html#1572" class="Bound"
+      >A</a
+      ><a name="1595"
+      >
+</a
+      ><a name="1596" href="lib.Base.html#1555" class="Function"
+      >of-type</a
+      ><a name="1603"
+      > </a
+      ><a name="1604" href="lib.Base.html#1604" class="Bound"
+      >A</a
+      ><a name="1605"
+      > </a
+      ><a name="1606" href="lib.Base.html#1606" class="Bound"
+      >u</a
+      ><a name="1607"
+      > </a
+      ><a name="1608" class="Symbol"
+      >=</a
+      ><a name="1609"
+      > </a
+      ><a name="1610" href="lib.Base.html#1606" class="Bound"
+      >u</a
+      ><a name="1611"
+      >
+
+</a
+      ><a name="1613" class="Keyword"
+      >infix</a
+      ><a name="1618"
+      > </a
+      ><a name="1619" class="Number"
+      >40</a
+      ><a name="1621"
+      > of-type
+</a
+      ><a name="1630" class="Keyword"
+      >syntax</a
+      ><a name="1636"
+      > of-type A u </a
+      ><a name="1649" class="Symbol"
+      >=</a
+      ><a name="1650"
+      >  u :&gt; A
+
+</a
+      ><a name="1660" class="Comment"
+      >{- Identity type
+
+The identity type is called [Path] and [_==_] because the symbol [=] is
+reserved in Agda.
+The constant path is [idp]. Note that all arguments of [idp] are implicit.
+-}</a
+      ><a name="1845"
+      >
+
+</a
+      ><a name="1847" class="Keyword"
+      >infix</a
+      ><a name="1852"
+      > </a
+      ><a name="1853" class="Number"
+      >30</a
+      ><a name="1855"
+      > _==_
+</a
+      ><a name="1861" class="Keyword"
+      >data</a
+      ><a name="1865"
+      > </a
+      ><a name="1866" href="lib.Base.html#1866" class="Datatype Operator"
+      >_==_</a
+      ><a name="1870"
+      > </a
+      ><a name="1871" class="Symbol"
+      >{</a
+      ><a name="1872" href="lib.Base.html#1872" class="Bound"
+      >i</a
+      ><a name="1873" class="Symbol"
+      >}</a
+      ><a name="1874"
+      > </a
+      ><a name="1875" class="Symbol"
+      >{</a
+      ><a name="1876" href="lib.Base.html#1876" class="Bound"
+      >A</a
+      ><a name="1877"
+      > </a
+      ><a name="1878" class="Symbol"
+      >:</a
+      ><a name="1879"
+      > </a
+      ><a name="1880" href="lib.Base.html#1132" class="Function"
+      >Type</a
+      ><a name="1884"
+      > </a
+      ><a name="1885" href="lib.Base.html#1872" class="Bound"
+      >i</a
+      ><a name="1886" class="Symbol"
+      >}</a
+      ><a name="1887"
+      > </a
+      ><a name="1888" class="Symbol"
+      >(</a
+      ><a name="1889" href="lib.Base.html#1889" class="Bound"
+      >a</a
+      ><a name="1890"
+      > </a
+      ><a name="1891" class="Symbol"
+      >:</a
+      ><a name="1892"
+      > </a
+      ><a name="1893" href="lib.Base.html#1876" class="Bound"
+      >A</a
+      ><a name="1894" class="Symbol"
+      >)</a
+      ><a name="1895"
+      > </a
+      ><a name="1896" class="Symbol"
+      >:</a
+      ><a name="1897"
+      > </a
+      ><a name="1898" href="lib.Base.html#1876" class="Bound"
+      >A</a
+      ><a name="1899"
+      > </a
+      ><a name="1900" class="Symbol"
+      >&#8594;</a
+      ><a name="1901"
+      > </a
+      ><a name="1902" href="lib.Base.html#1132" class="Function"
+      >Type</a
+      ><a name="1906"
+      > </a
+      ><a name="1907" href="lib.Base.html#1872" class="Bound"
+      >i</a
+      ><a name="1908"
+      > </a
+      ><a name="1909" class="Keyword"
+      >where</a
+      ><a name="1914"
+      >
+  </a
+      ><a name="1917" href="lib.Base.html#1917" class="InductiveConstructor"
+      >idp</a
+      ><a name="1920"
+      > </a
+      ><a name="1921" class="Symbol"
+      >:</a
+      ><a name="1922"
+      > </a
+      ><a name="1923" href="lib.Base.html#1889" class="Bound"
+      >a</a
+      ><a name="1924"
+      > </a
+      ><a name="1925" href="lib.Base.html#1866" class="Datatype Operator"
+      >==</a
+      ><a name="1927"
+      > </a
+      ><a name="1928" href="lib.Base.html#1889" class="Bound"
+      >a</a
+      ><a name="1929"
+      >
+
+</a
+      ><a name="1931" href="lib.Base.html#1931" class="Function"
+      >Path</a
+      ><a name="1935"
+      > </a
+      ><a name="1936" class="Symbol"
+      >=</a
+      ><a name="1937"
+      > </a
+      ><a name="1938" href="lib.Base.html#1866" class="Datatype Operator"
+      >_==_</a
+      ><a name="1942"
+      >
+
+</a
+      ><a name="1944" class="Symbol"
+      >{-#</a
+      ><a name="1947"
+      > </a
+      ><a name="1948" class="Keyword"
+      >BUILTIN</a
+      ><a name="1955"
+      > EQUALITY </a
+      ><a name="1965" href="lib.Base.html#1866" class="Datatype Operator"
+      >_==_</a
+      ><a name="1969"
+      > </a
+      ><a name="1970" class="Symbol"
+      >#-}</a
+      ><a name="1973"
+      >
+</a
+      ><a name="1974" class="Symbol"
+      >{-#</a
+      ><a name="1977"
+      > </a
+      ><a name="1978" class="Keyword"
+      >BUILTIN</a
+      ><a name="1985"
+      > REFL  </a
+      ><a name="1992" href="lib.Base.html#1917" class="InductiveConstructor"
+      >idp</a
+      ><a name="1995"
+      > </a
+      ><a name="1996" class="Symbol"
+      >#-}</a
+      ><a name="1999"
+      >
+
+</a
+      ><a name="2001" class="Comment"
+      >{- Paulin-Mohring J rule
+
+At the time I&#8217;m writing this (July 2013), the identity type is somehow broken in
+Agda dev, it behaves more or less as the Martin-L&#246;f identity type instead of
+behaving like the Paulin-Mohring identity type.
+So here is the Paulin-Mohring J rule -}</a
+      ><a name="2272"
+      >
+
+</a
+      ><a name="2274" href="lib.Base.html#2274" class="Function"
+      >J</a
+      ><a name="2275"
+      > </a
+      ><a name="2276" class="Symbol"
+      >:</a
+      ><a name="2277"
+      > </a
+      ><a name="2278" class="Symbol"
+      >&#8704;</a
+      ><a name="2279"
+      > </a
+      ><a name="2280" class="Symbol"
+      >{</a
+      ><a name="2281" href="lib.Base.html#2281" class="Bound"
+      >i</a
+      ><a name="2282"
+      > </a
+      ><a name="2283" href="lib.Base.html#2283" class="Bound"
+      >j</a
+      ><a name="2284" class="Symbol"
+      >}</a
+      ><a name="2285"
+      > </a
+      ><a name="2286" class="Symbol"
+      >{</a
+      ><a name="2287" href="lib.Base.html#2287" class="Bound"
+      >A</a
+      ><a name="2288"
+      > </a
+      ><a name="2289" class="Symbol"
+      >:</a
+      ><a name="2290"
+      > </a
+      ><a name="2291" href="lib.Base.html#1132" class="Function"
+      >Type</a
+      ><a name="2295"
+      > </a
+      ><a name="2296" href="lib.Base.html#2281" class="Bound"
+      >i</a
+      ><a name="2297" class="Symbol"
+      >}</a
+      ><a name="2298"
+      > </a
+      ><a name="2299" class="Symbol"
+      >{</a
+      ><a name="2300" href="lib.Base.html#2300" class="Bound"
+      >a</a
+      ><a name="2301"
+      > </a
+      ><a name="2302" class="Symbol"
+      >:</a
+      ><a name="2303"
+      > </a
+      ><a name="2304" href="lib.Base.html#2287" class="Bound"
+      >A</a
+      ><a name="2305" class="Symbol"
+      >}</a
+      ><a name="2306"
+      > </a
+      ><a name="2307" class="Symbol"
+      >(</a
+      ><a name="2308" href="lib.Base.html#2308" class="Bound"
+      >B</a
+      ><a name="2309"
+      > </a
+      ><a name="2310" class="Symbol"
+      >:</a
+      ><a name="2311"
+      > </a
+      ><a name="2312" class="Symbol"
+      >(</a
+      ><a name="2313" href="lib.Base.html#2313" class="Bound"
+      >a'</a
+      ><a name="2315"
+      > </a
+      ><a name="2316" class="Symbol"
+      >:</a
+      ><a name="2317"
+      > </a
+      ><a name="2318" href="lib.Base.html#2287" class="Bound"
+      >A</a
+      ><a name="2319" class="Symbol"
+      >)</a
+      ><a name="2320"
+      > </a
+      ><a name="2321" class="Symbol"
+      >(</a
+      ><a name="2322" href="lib.Base.html#2322" class="Bound"
+      >p</a
+      ><a name="2323"
+      > </a
+      ><a name="2324" class="Symbol"
+      >:</a
+      ><a name="2325"
+      > </a
+      ><a name="2326" href="lib.Base.html#2300" class="Bound"
+      >a</a
+      ><a name="2327"
+      > </a
+      ><a name="2328" href="lib.Base.html#1866" class="Datatype Operator"
+      >==</a
+      ><a name="2330"
+      > </a
+      ><a name="2331" href="lib.Base.html#2313" class="Bound"
+      >a'</a
+      ><a name="2333" class="Symbol"
+      >)</a
+      ><a name="2334"
+      > </a
+      ><a name="2335" class="Symbol"
+      >&#8594;</a
+      ><a name="2336"
+      > </a
+      ><a name="2337" href="lib.Base.html#1132" class="Function"
+      >Type</a
+      ><a name="2341"
+      > </a
+      ><a name="2342" href="lib.Base.html#2283" class="Bound"
+      >j</a
+      ><a name="2343" class="Symbol"
+      >)</a
+      ><a name="2344"
+      > </a
+      ><a name="2345" class="Symbol"
+      >(</a
+      ><a name="2346" href="lib.Base.html#2346" class="Bound"
+      >d</a
+      ><a name="2347"
+      > </a
+      ><a name="2348" class="Symbol"
+      >:</a
+      ><a name="2349"
+      > </a
+      ><a name="2350" href="lib.Base.html#2308" class="Bound"
+      >B</a
+      ><a name="2351"
+      > </a
+      ><a name="2352" href="lib.Base.html#2300" class="Bound"
+      >a</a
+      ><a name="2353"
+      > </a
+      ><a name="2354" href="lib.Base.html#1917" class="InductiveConstructor"
+      >idp</a
+      ><a name="2357" class="Symbol"
+      >)</a
+      ><a name="2358"
+      >
+  </a
+      ><a name="2361" class="Symbol"
+      >{</a
+      ><a name="2362" href="lib.Base.html#2362" class="Bound"
+      >a'</a
+      ><a name="2364"
+      > </a
+      ><a name="2365" class="Symbol"
+      >:</a
+      ><a name="2366"
+      > </a
+      ><a name="2367" href="lib.Base.html#2287" class="Bound"
+      >A</a
+      ><a name="2368" class="Symbol"
+      >}</a
+      ><a name="2369"
+      > </a
+      ><a name="2370" class="Symbol"
+      >(</a
+      ><a name="2371" href="lib.Base.html#2371" class="Bound"
+      >p</a
+      ><a name="2372"
+      > </a
+      ><a name="2373" class="Symbol"
+      >:</a
+      ><a name="2374"
+      > </a
+      ><a name="2375" href="lib.Base.html#2300" class="Bound"
+      >a</a
+      ><a name="2376"
+      > </a
+      ><a name="2377" href="lib.Base.html#1866" class="Datatype Operator"
+      >==</a
+      ><a name="2379"
+      > </a
+      ><a name="2380" href="lib.Base.html#2362" class="Bound"
+      >a'</a
+      ><a name="2382" class="Symbol"
+      >)</a
+      ><a name="2383"
+      > </a
+      ><a name="2384" class="Symbol"
+      >&#8594;</a
+      ><a name="2385"
+      > </a
+      ><a name="2386" href="lib.Base.html#2308" class="Bound"
+      >B</a
+      ><a name="2387"
+      > </a
+      ><a name="2388" href="lib.Base.html#2362" class="Bound"
+      >a'</a
+      ><a name="2390"
+      > </a
+      ><a name="2391" href="lib.Base.html#2371" class="Bound"
+      >p</a
+      ><a name="2392"
+      >
+</a
+      ><a name="2393" href="lib.Base.html#2274" class="Function"
+      >J</a
+      ><a name="2394"
+      > </a
+      ><a name="2395" href="lib.Base.html#2395" class="Bound"
+      >B</a
+      ><a name="2396"
+      > </a
+      ><a name="2397" href="lib.Base.html#2397" class="Bound"
+      >d</a
+      ><a name="2398"
+      > </a
+      ><a name="2399" href="lib.Base.html#1917" class="InductiveConstructor"
+      >idp</a
+      ><a name="2402"
+      > </a
+      ><a name="2403" class="Symbol"
+      >=</a
+      ><a name="2404"
+      > </a
+      ><a name="2405" href="lib.Base.html#2397" class="Bound"
+      >d</a
+      ><a name="2406"
+      >
+
+</a
+      ><a name="2408" href="lib.Base.html#2408" class="Function"
+      >J'</a
+      ><a name="2410"
+      > </a
+      ><a name="2411" class="Symbol"
+      >:</a
+      ><a name="2412"
+      > </a
+      ><a name="2413" class="Symbol"
+      >&#8704;</a
+      ><a name="2414"
+      > </a
+      ><a name="2415" class="Symbol"
+      >{</a
+      ><a name="2416" href="lib.Base.html#2416" class="Bound"
+      >i</a
+      ><a name="2417"
+      > </a
+      ><a name="2418" href="lib.Base.html#2418" class="Bound"
+      >j</a
+      ><a name="2419" class="Symbol"
+      >}</a
+      ><a name="2420"
+      > </a
+      ><a name="2421" class="Symbol"
+      >{</a
+      ><a name="2422" href="lib.Base.html#2422" class="Bound"
+      >A</a
+      ><a name="2423"
+      > </a
+      ><a name="2424" class="Symbol"
+      >:</a
+      ><a name="2425"
+      > </a
+      ><a name="2426" href="lib.Base.html#1132" class="Function"
+      >Type</a
+      ><a name="2430"
+      > </a
+      ><a name="2431" href="lib.Base.html#2416" class="Bound"
+      >i</a
+      ><a name="2432" class="Symbol"
+      >}</a
+      ><a name="2433"
+      > </a
+      ><a name="2434" class="Symbol"
+      >{</a
+      ><a name="2435" href="lib.Base.html#2435" class="Bound"
+      >a</a
+      ><a name="2436"
+      > </a
+      ><a name="2437" class="Symbol"
+      >:</a
+      ><a name="2438"
+      > </a
+      ><a name="2439" href="lib.Base.html#2422" class="Bound"
+      >A</a
+      ><a name="2440" class="Symbol"
+      >}</a
+      ><a name="2441"
+      > </a
+      ><a name="2442" class="Symbol"
+      >(</a
+      ><a name="2443" href="lib.Base.html#2443" class="Bound"
+      >B</a
+      ><a name="2444"
+      > </a
+      ><a name="2445" class="Symbol"
+      >:</a
+      ><a name="2446"
+      > </a
+      ><a name="2447" class="Symbol"
+      >(</a
+      ><a name="2448" href="lib.Base.html#2448" class="Bound"
+      >a'</a
+      ><a name="2450"
+      > </a
+      ><a name="2451" class="Symbol"
+      >:</a
+      ><a name="2452"
+      > </a
+      ><a name="2453" href="lib.Base.html#2422" class="Bound"
+      >A</a
+      ><a name="2454" class="Symbol"
+      >)</a
+      ><a name="2455"
+      > </a
+      ><a name="2456" class="Symbol"
+      >(</a
+      ><a name="2457" href="lib.Base.html#2457" class="Bound"
+      >p</a
+      ><a name="2458"
+      > </a
+      ><a name="2459" class="Symbol"
+      >:</a
+      ><a name="2460"
+      > </a
+      ><a name="2461" href="lib.Base.html#2448" class="Bound"
+      >a'</a
+      ><a name="2463"
+      > </a
+      ><a name="2464" href="lib.Base.html#1866" class="Datatype Operator"
+      >==</a
+      ><a name="2466"
+      > </a
+      ><a name="2467" href="lib.Base.html#2435" class="Bound"
+      >a</a
+      ><a name="2468" class="Symbol"
+      >)</a
+      ><a name="2469"
+      > </a
+      ><a name="2470" class="Symbol"
+      >&#8594;</a
+      ><a name="2471"
+      > </a
+      ><a name="2472" href="lib.Base.html#1132" class="Function"
+      >Type</a
+      ><a name="2476"
+      > </a
+      ><a name="2477" href="lib.Base.html#2418" class="Bound"
+      >j</a
+      ><a name="2478" class="Symbol"
+      >)</a
+      ><a name="2479"
+      > </a
+      ><a name="2480" class="Symbol"
+      >(</a
+      ><a name="2481" href="lib.Base.html#2481" class="Bound"
+      >d</a
+      ><a name="2482"
+      > </a
+      ><a name="2483" class="Symbol"
+      >:</a
+      ><a name="2484"
+      > </a
+      ><a name="2485" href="lib.Base.html#2443" class="Bound"
+      >B</a
+      ><a name="2486"
+      > </a
+      ><a name="2487" href="lib.Base.html#2435" class="Bound"
+      >a</a
+      ><a name="2488"
+      > </a
+      ><a name="2489" href="lib.Base.html#1917" class="InductiveConstructor"
+      >idp</a
+      ><a name="2492" class="Symbol"
+      >)</a
+      ><a name="2493"
+      >
+  </a
+      ><a name="2496" class="Symbol"
+      >{</a
+      ><a name="2497" href="lib.Base.html#2497" class="Bound"
+      >a'</a
+      ><a name="2499"
+      > </a
+      ><a name="2500" class="Symbol"
+      >:</a
+      ><a name="2501"
+      > </a
+      ><a name="2502" href="lib.Base.html#2422" class="Bound"
+      >A</a
+      ><a name="2503" class="Symbol"
+      >}</a
+      ><a name="2504"
+      > </a
+      ><a name="2505" class="Symbol"
+      >(</a
+      ><a name="2506" href="lib.Base.html#2506" class="Bound"
+      >p</a
+      ><a name="2507"
+      > </a
+      ><a name="2508" class="Symbol"
+      >:</a
+      ><a name="2509"
+      > </a
+      ><a name="2510" href="lib.Base.html#2497" class="Bound"
+      >a'</a
+      ><a name="2512"
+      > </a
+      ><a name="2513" href="lib.Base.html#1866" class="Datatype Operator"
+      >==</a
+      ><a name="2515"
+      > </a
+      ><a name="2516" href="lib.Base.html#2435" class="Bound"
+      >a</a
+      ><a name="2517" class="Symbol"
+      >)</a
+      ><a name="2518"
+      > </a
+      ><a name="2519" class="Symbol"
+      >&#8594;</a
+      ><a name="2520"
+      > </a
+      ><a name="2521" href="lib.Base.html#2443" class="Bound"
+      >B</a
+      ><a name="2522"
+      > </a
+      ><a name="2523" href="lib.Base.html#2497" class="Bound"
+      >a'</a
+      ><a name="2525"
+      > </a
+      ><a name="2526" href="lib.Base.html#2506" class="Bound"
+      >p</a
+      ><a name="2527"
+      >
+</a
+      ><a name="2528" href="lib.Base.html#2408" class="Function"
+      >J'</a
+      ><a name="2530"
+      > </a
+      ><a name="2531" href="lib.Base.html#2531" class="Bound"
+      >B</a
+      ><a name="2532"
+      > </a
+      ><a name="2533" href="lib.Base.html#2533" class="Bound"
+      >d</a
+      ><a name="2534"
+      > </a
+      ><a name="2535" href="lib.Base.html#1917" class="InductiveConstructor"
+      >idp</a
+      ><a name="2538"
+      > </a
+      ><a name="2539" class="Symbol"
+      >=</a
+      ><a name="2540"
+      > </a
+      ><a name="2541" href="lib.Base.html#2533" class="Bound"
+      >d</a
+      ><a name="2542"
+      >
+
+</a
+      ><a name="2544" class="Comment"
+      >{- Unit type
+
+The unit type is defined as record so that we also get the &#951;-rule definitionally.
+-}</a
+      ><a name="2642"
+      >
+
+</a
+      ><a name="2644" class="Keyword"
+      >record</a
+      ><a name="2650"
+      > </a
+      ><a name="2651" href="lib.Base.html#2651" class="Record"
+      >Unit</a
+      ><a name="2655"
+      > </a
+      ><a name="2656" class="Symbol"
+      >:</a
+      ><a name="2657"
+      > </a
+      ><a name="2658" href="lib.Base.html#1184" class="Function"
+      >Type&#8320;</a
+      ><a name="2663"
+      > </a
+      ><a name="2664" class="Keyword"
+      >where</a
+      ><a name="2669"
+      >
+  </a
+      ><a name="2672" class="Keyword"
+      >constructor</a
+      ><a name="2683"
+      > </a
+      ><a name="2684" href="lib.Base.html#2684" class="InductiveConstructor"
+      >unit</a
+      ><a name="2688"
+      >
+
+</a
+      ><a name="2690" class="Comment"
+      >{- Dependent paths
+
+The notion of dependent path is a very important notion.
+If you have a dependent type [B] over [A], a path [p : x == y] in [A] and two
+points [u : B x] and [v : B y], there is a type [u == v [ B &#8595; p ]] of paths from
+[u] to [v] lying over the path [p].
+By definition, if [p] is a constant path, then [u == v [ B &#8595; p ]] is just an
+ordinary path in the fiber.
+-}</a
+      ><a name="3069"
+      >
+
+</a
+      ><a name="3071" href="lib.Base.html#3071" class="Function"
+      >PathOver</a
+      ><a name="3079"
+      > </a
+      ><a name="3080" class="Symbol"
+      >:</a
+      ><a name="3081"
+      > </a
+      ><a name="3082" class="Symbol"
+      >&#8704;</a
+      ><a name="3083"
+      > </a
+      ><a name="3084" class="Symbol"
+      >{</a
+      ><a name="3085" href="lib.Base.html#3085" class="Bound"
+      >i</a
+      ><a name="3086"
+      > </a
+      ><a name="3087" href="lib.Base.html#3087" class="Bound"
+      >j</a
+      ><a name="3088" class="Symbol"
+      >}</a
+      ><a name="3089"
+      > </a
+      ><a name="3090" class="Symbol"
+      >{</a
+      ><a name="3091" href="lib.Base.html#3091" class="Bound"
+      >A</a
+      ><a name="3092"
+      > </a
+      ><a name="3093" class="Symbol"
+      >:</a
+      ><a name="3094"
+      > </a
+      ><a name="3095" href="lib.Base.html#1132" class="Function"
+      >Type</a
+      ><a name="3099"
+      > </a
+      ><a name="3100" href="lib.Base.html#3085" class="Bound"
+      >i</a
+      ><a name="3101" class="Symbol"
+      >}</a
+      ><a name="3102"
+      > </a
+      ><a name="3103" class="Symbol"
+      >(</a
+      ><a name="3104" href="lib.Base.html#3104" class="Bound"
+      >B</a
+      ><a name="3105"
+      > </a
+      ><a name="3106" class="Symbol"
+      >:</a
+      ><a name="3107"
+      > </a
+      ><a name="3108" href="lib.Base.html#3091" class="Bound"
+      >A</a
+      ><a name="3109"
+      > </a
+      ><a name="3110" class="Symbol"
+      >&#8594;</a
+      ><a name="3111"
+      > </a
+      ><a name="3112" href="lib.Base.html#1132" class="Function"
+      >Type</a
+      ><a name="3116"
+      > </a
+      ><a name="3117" href="lib.Base.html#3087" class="Bound"
+      >j</a
+      ><a name="3118" class="Symbol"
+      >)</a
+      ><a name="3119"
+      >
+  </a
+      ><a name="3122" class="Symbol"
+      >{</a
+      ><a name="3123" href="lib.Base.html#3123" class="Bound"
+      >x</a
+      ><a name="3124"
+      > </a
+      ><a name="3125" href="lib.Base.html#3125" class="Bound"
+      >y</a
+      ><a name="3126"
+      > </a
+      ><a name="3127" class="Symbol"
+      >:</a
+      ><a name="3128"
+      > </a
+      ><a name="3129" href="lib.Base.html#3091" class="Bound"
+      >A</a
+      ><a name="3130" class="Symbol"
+      >}</a
+      ><a name="3131"
+      > </a
+      ><a name="3132" class="Symbol"
+      >(</a
+      ><a name="3133" href="lib.Base.html#3133" class="Bound"
+      >p</a
+      ><a name="3134"
+      > </a
+      ><a name="3135" class="Symbol"
+      >:</a
+      ><a name="3136"
+      > </a
+      ><a name="3137" href="lib.Base.html#3123" class="Bound"
+      >x</a
+      ><a name="3138"
+      > </a
+      ><a name="3139" href="lib.Base.html#1866" class="Datatype Operator"
+      >==</a
+      ><a name="3141"
+      > </a
+      ><a name="3142" href="lib.Base.html#3125" class="Bound"
+      >y</a
+      ><a name="3143" class="Symbol"
+      >)</a
+      ><a name="3144"
+      > </a
+      ><a name="3145" class="Symbol"
+      >(</a
+      ><a name="3146" href="lib.Base.html#3146" class="Bound"
+      >u</a
+      ><a name="3147"
+      > </a
+      ><a name="3148" class="Symbol"
+      >:</a
+      ><a name="3149"
+      > </a
+      ><a name="3150" href="lib.Base.html#3104" class="Bound"
+      >B</a
+      ><a name="3151"
+      > </a
+      ><a name="3152" href="lib.Base.html#3123" class="Bound"
+      >x</a
+      ><a name="3153" class="Symbol"
+      >)</a
+      ><a name="3154"
+      > </a
+      ><a name="3155" class="Symbol"
+      >(</a
+      ><a name="3156" href="lib.Base.html#3156" class="Bound"
+      >v</a
+      ><a name="3157"
+      > </a
+      ><a name="3158" class="Symbol"
+      >:</a
+      ><a name="3159"
+      > </a
+      ><a name="3160" href="lib.Base.html#3104" class="Bound"
+      >B</a
+      ><a name="3161"
+      > </a
+      ><a name="3162" href="lib.Base.html#3125" class="Bound"
+      >y</a
+      ><a name="3163" class="Symbol"
+      >)</a
+      ><a name="3164"
+      > </a
+      ><a name="3165" class="Symbol"
+      >&#8594;</a
+      ><a name="3166"
+      > </a
+      ><a name="3167" href="lib.Base.html#1132" class="Function"
+      >Type</a
+      ><a name="3171"
+      > </a
+      ><a name="3172" href="lib.Base.html#3087" class="Bound"
+      >j</a
+      ><a name="3173"
+      >
+</a
+      ><a name="3174" href="lib.Base.html#3071" class="Function"
+      >PathOver</a
+      ><a name="3182"
+      > </a
+      ><a name="3183" href="lib.Base.html#3183" class="Bound"
+      >B</a
+      ><a name="3184"
+      > </a
+      ><a name="3185" href="lib.Base.html#1917" class="InductiveConstructor"
+      >idp</a
+      ><a name="3188"
+      > </a
+      ><a name="3189" href="lib.Base.html#3189" class="Bound"
+      >u</a
+      ><a name="3190"
+      > </a
+      ><a name="3191" href="lib.Base.html#3191" class="Bound"
+      >v</a
+      ><a name="3192"
+      > </a
+      ><a name="3193" class="Symbol"
+      >=</a
+      ><a name="3194"
+      > </a
+      ><a name="3195" class="Symbol"
+      >(</a
+      ><a name="3196" href="lib.Base.html#3189" class="Bound"
+      >u</a
+      ><a name="3197"
+      > </a
+      ><a name="3198" href="lib.Base.html#1866" class="Datatype Operator"
+      >==</a
+      ><a name="3200"
+      > </a
+      ><a name="3201" href="lib.Base.html#3191" class="Bound"
+      >v</a
+      ><a name="3202" class="Symbol"
+      >)</a
+      ><a name="3203"
+      >
+
+</a
+      ><a name="3205" class="Keyword"
+      >infix</a
+      ><a name="3210"
+      > </a
+      ><a name="3211" class="Number"
+      >30</a
+      ><a name="3213"
+      > PathOver
+</a
+      ><a name="3223" class="Keyword"
+      >syntax</a
+      ><a name="3229"
+      > PathOver B p u v </a
+      ><a name="3247" class="Symbol"
+      >=</a
+      ><a name="3248"
+      >
+  u == v [ B &#8595; p ]
+
+</a
+      ><a name="3269" class="Comment"
+      >{- Ap, coe and transport
+
+Given two fibrations over a type [A], a fiberwise map between the two fibrations
+can be applied to any dependent path in the first fibration ([ap&#8595;]).
+As a special case, when [A] is [Unit], we find the familiar [ap] ([ap] is
+defined in terms of [ap&#8595;] because it shouldn&#8217;t change anything for the user
+and this is helpful in some rare cases)
+-}</a
+      ><a name="3637"
+      >
+
+</a
+      ><a name="3639" href="lib.Base.html#3639" class="Function"
+      >ap</a
+      ><a name="3641"
+      > </a
+      ><a name="3642" class="Symbol"
+      >:</a
+      ><a name="3643"
+      > </a
+      ><a name="3644" class="Symbol"
+      >&#8704;</a
+      ><a name="3645"
+      > </a
+      ><a name="3646" class="Symbol"
+      >{</a
+      ><a name="3647" href="lib.Base.html#3647" class="Bound"
+      >i</a
+      ><a name="3648"
+      > </a
+      ><a name="3649" href="lib.Base.html#3649" class="Bound"
+      >j</a
+      ><a name="3650" class="Symbol"
+      >}</a
+      ><a name="3651"
+      > </a
+      ><a name="3652" class="Symbol"
+      >{</a
+      ><a name="3653" href="lib.Base.html#3653" class="Bound"
+      >A</a
+      ><a name="3654"
+      > </a
+      ><a name="3655" class="Symbol"
+      >:</a
+      ><a name="3656"
+      > </a
+      ><a name="3657" href="lib.Base.html#1132" class="Function"
+      >Type</a
+      ><a name="3661"
+      > </a
+      ><a name="3662" href="lib.Base.html#3647" class="Bound"
+      >i</a
+      ><a name="3663" class="Symbol"
+      >}</a
+      ><a name="3664"
+      > </a
+      ><a name="3665" class="Symbol"
+      >{</a
+      ><a name="3666" href="lib.Base.html#3666" class="Bound"
+      >B</a
+      ><a name="3667"
+      > </a
+      ><a name="3668" class="Symbol"
+      >:</a
+      ><a name="3669"
+      > </a
+      ><a name="3670" href="lib.Base.html#1132" class="Function"
+      >Type</a
+      ><a name="3674"
+      > </a
+      ><a name="3675" href="lib.Base.html#3649" class="Bound"
+      >j</a
+      ><a name="3676" class="Symbol"
+      >}</a
+      ><a name="3677"
+      > </a
+      ><a name="3678" class="Symbol"
+      >(</a
+      ><a name="3679" href="lib.Base.html#3679" class="Bound"
+      >f</a
+      ><a name="3680"
+      > </a
+      ><a name="3681" class="Symbol"
+      >:</a
+      ><a name="3682"
+      > </a
+      ><a name="3683" href="lib.Base.html#3653" class="Bound"
+      >A</a
+      ><a name="3684"
+      > </a
+      ><a name="3685" class="Symbol"
+      >&#8594;</a
+      ><a name="3686"
+      > </a
+      ><a name="3687" href="lib.Base.html#3666" class="Bound"
+      >B</a
+      ><a name="3688" class="Symbol"
+      >)</a
+      ><a name="3689"
+      > </a
+      ><a name="3690" class="Symbol"
+      >{</a
+      ><a name="3691" href="lib.Base.html#3691" class="Bound"
+      >x</a
+      ><a name="3692"
+      > </a
+      ><a name="3693" href="lib.Base.html#3693" class="Bound"
+      >y</a
+      ><a name="3694"
+      > </a
+      ><a name="3695" class="Symbol"
+      >:</a
+      ><a name="3696"
+      > </a
+      ><a name="3697" href="lib.Base.html#3653" class="Bound"
+      >A</a
+      ><a name="3698" class="Symbol"
+      >}</a
+      ><a name="3699"
+      >
+  </a
+      ><a name="3702" class="Symbol"
+      >&#8594;</a
+      ><a name="3703"
+      > </a
+      ><a name="3704" class="Symbol"
+      >(</a
+      ><a name="3705" href="lib.Base.html#3691" class="Bound"
+      >x</a
+      ><a name="3706"
+      > </a
+      ><a name="3707" href="lib.Base.html#1866" class="Datatype Operator"
+      >==</a
+      ><a name="3709"
+      > </a
+      ><a name="3710" href="lib.Base.html#3693" class="Bound"
+      >y</a
+      ><a name="3711"
+      > </a
+      ><a name="3712" class="Symbol"
+      >&#8594;</a
+      ><a name="3713"
+      > </a
+      ><a name="3714" href="lib.Base.html#3679" class="Bound"
+      >f</a
+      ><a name="3715"
+      > </a
+      ><a name="3716" href="lib.Base.html#3691" class="Bound"
+      >x</a
+      ><a name="3717"
+      > </a
+      ><a name="3718" href="lib.Base.html#1866" class="Datatype Operator"
+      >==</a
+      ><a name="3720"
+      > </a
+      ><a name="3721" href="lib.Base.html#3679" class="Bound"
+      >f</a
+      ><a name="3722"
+      > </a
+      ><a name="3723" href="lib.Base.html#3693" class="Bound"
+      >y</a
+      ><a name="3724" class="Symbol"
+      >)</a
+      ><a name="3725"
+      >
+</a
+      ><a name="3726" href="lib.Base.html#3639" class="Function"
+      >ap</a
+      ><a name="3728"
+      > </a
+      ><a name="3729" href="lib.Base.html#3729" class="Bound"
+      >f</a
+      ><a name="3730"
+      > </a
+      ><a name="3731" href="lib.Base.html#1917" class="InductiveConstructor"
+      >idp</a
+      ><a name="3734"
+      > </a
+      ><a name="3735" class="Symbol"
+      >=</a
+      ><a name="3736"
+      > </a
+      ><a name="3737" href="lib.Base.html#1917" class="InductiveConstructor"
+      >idp</a
+      ><a name="3740"
+      >
+
+</a
+      ><a name="3742" href="lib.Base.html#3742" class="Function"
+      >ap&#8595;</a
+      ><a name="3745"
+      > </a
+      ><a name="3746" class="Symbol"
+      >:</a
+      ><a name="3747"
+      > </a
+      ><a name="3748" class="Symbol"
+      >&#8704;</a
+      ><a name="3749"
+      > </a
+      ><a name="3750" class="Symbol"
+      >{</a
+      ><a name="3751" href="lib.Base.html#3751" class="Bound"
+      >i</a
+      ><a name="3752"
+      > </a
+      ><a name="3753" href="lib.Base.html#3753" class="Bound"
+      >j</a
+      ><a name="3754"
+      > </a
+      ><a name="3755" href="lib.Base.html#3755" class="Bound"
+      >k</a
+      ><a name="3756" class="Symbol"
+      >}</a
+      ><a name="3757"
+      > </a
+      ><a name="3758" class="Symbol"
+      >{</a
+      ><a name="3759" href="lib.Base.html#3759" class="Bound"
+      >A</a
+      ><a name="3760"
+      > </a
+      ><a name="3761" class="Symbol"
+      >:</a
+      ><a name="3762"
+      > </a
+      ><a name="3763" href="lib.Base.html#1132" class="Function"
+      >Type</a
+      ><a name="3767"
+      > </a
+      ><a name="3768" href="lib.Base.html#3751" class="Bound"
+      >i</a
+      ><a name="3769" class="Symbol"
+      >}</a
+      ><a name="3770"
+      > </a
+      ><a name="3771" class="Symbol"
+      >{</a
+      ><a name="3772" href="lib.Base.html#3772" class="Bound"
+      >B</a
+      ><a name="3773"
+      > </a
+      ><a name="3774" class="Symbol"
+      >:</a
+      ><a name="3775"
+      > </a
+      ><a name="3776" href="lib.Base.html#3759" class="Bound"
+      >A</a
+      ><a name="3777"
+      > </a
+      ><a name="3778" class="Symbol"
+      >&#8594;</a
+      ><a name="3779"
+      > </a
+      ><a name="3780" href="lib.Base.html#1132" class="Function"
+      >Type</a
+      ><a name="3784"
+      > </a
+      ><a name="3785" href="lib.Base.html#3753" class="Bound"
+      >j</a
+      ><a name="3786" class="Symbol"
+      >}</a
+      ><a name="3787"
+      > </a
+      ><a name="3788" class="Symbol"
+      >{</a
+      ><a name="3789" href="lib.Base.html#3789" class="Bound"
+      >C</a
+      ><a name="3790"
+      > </a
+      ><a name="3791" class="Symbol"
+      >:</a
+      ><a name="3792"
+      > </a
+      ><a name="3793" href="lib.Base.html#3759" class="Bound"
+      >A</a
+      ><a name="3794"
+      > </a
+      ><a name="3795" class="Symbol"
+      >&#8594;</a
+      ><a name="3796"
+      > </a
+      ><a name="3797" href="lib.Base.html#1132" class="Function"
+      >Type</a
+      ><a name="3801"
+      > </a
+      ><a name="3802" href="lib.Base.html#3755" class="Bound"
+      >k</a
+      ><a name="3803" class="Symbol"
+      >}</a
+      ><a name="3804"
+      >
+  </a
+      ><a name="3807" class="Symbol"
+      >(</a
+      ><a name="3808" href="lib.Base.html#3808" class="Bound"
+      >g</a
+      ><a name="3809"
+      > </a
+      ><a name="3810" class="Symbol"
+      >:</a
+      ><a name="3811"
+      > </a
+      ><a name="3812" class="Symbol"
+      >{</a
+      ><a name="3813" href="lib.Base.html#3813" class="Bound"
+      >a</a
+      ><a name="3814"
+      > </a
+      ><a name="3815" class="Symbol"
+      >:</a
+      ><a name="3816"
+      > </a
+      ><a name="3817" href="lib.Base.html#3759" class="Bound"
+      >A</a
+      ><a name="3818" class="Symbol"
+      >}</a
+      ><a name="3819"
+      > </a
+      ><a name="3820" class="Symbol"
+      >&#8594;</a
+      ><a name="3821"
+      > </a
+      ><a name="3822" href="lib.Base.html#3772" class="Bound"
+      >B</a
+      ><a name="3823"
+      > </a
+      ><a name="3824" href="lib.Base.html#3813" class="Bound"
+      >a</a
+      ><a name="3825"
+      > </a
+      ><a name="3826" class="Symbol"
+      >&#8594;</a
+      ><a name="3827"
+      > </a
+      ><a name="3828" href="lib.Base.html#3789" class="Bound"
+      >C</a
+      ><a name="3829"
+      > </a
+      ><a name="3830" href="lib.Base.html#3813" class="Bound"
+      >a</a
+      ><a name="3831" class="Symbol"
+      >)</a
+      ><a name="3832"
+      > </a
+      ><a name="3833" class="Symbol"
+      >{</a
+      ><a name="3834" href="lib.Base.html#3834" class="Bound"
+      >x</a
+      ><a name="3835"
+      > </a
+      ><a name="3836" href="lib.Base.html#3836" class="Bound"
+      >y</a
+      ><a name="3837"
+      > </a
+      ><a name="3838" class="Symbol"
+      >:</a
+      ><a name="3839"
+      > </a
+      ><a name="3840" href="lib.Base.html#3759" class="Bound"
+      >A</a
+      ><a name="3841" class="Symbol"
+      >}</a
+      ><a name="3842"
+      > </a
+      ><a name="3843" class="Symbol"
+      >{</a
+      ><a name="3844" href="lib.Base.html#3844" class="Bound"
+      >p</a
+      ><a name="3845"
+      > </a
+      ><a name="3846" class="Symbol"
+      >:</a
+      ><a name="3847"
+      > </a
+      ><a name="3848" href="lib.Base.html#3834" class="Bound"
+      >x</a
+      ><a name="3849"
+      > </a
+      ><a name="3850" href="lib.Base.html#1866" class="Datatype Operator"
+      >==</a
+      ><a name="3852"
+      > </a
+      ><a name="3853" href="lib.Base.html#3836" class="Bound"
+      >y</a
+      ><a name="3854" class="Symbol"
+      >}</a
+      ><a name="3855"
+      >
+  </a
+      ><a name="3858" class="Symbol"
+      >{</a
+      ><a name="3859" href="lib.Base.html#3859" class="Bound"
+      >u</a
+      ><a name="3860"
+      > </a
+      ><a name="3861" class="Symbol"
+      >:</a
+      ><a name="3862"
+      > </a
+      ><a name="3863" href="lib.Base.html#3772" class="Bound"
+      >B</a
+      ><a name="3864"
+      > </a
+      ><a name="3865" href="lib.Base.html#3834" class="Bound"
+      >x</a
+      ><a name="3866" class="Symbol"
+      >}</a
+      ><a name="3867"
+      > </a
+      ><a name="3868" class="Symbol"
+      >{</a
+      ><a name="3869" href="lib.Base.html#3869" class="Bound"
+      >v</a
+      ><a name="3870"
+      > </a
+      ><a name="3871" class="Symbol"
+      >:</a
+      ><a name="3872"
+      > </a
+      ><a name="3873" href="lib.Base.html#3772" class="Bound"
+      >B</a
+      ><a name="3874"
+      > </a
+      ><a name="3875" href="lib.Base.html#3836" class="Bound"
+      >y</a
+      ><a name="3876" class="Symbol"
+      >}</a
+      ><a name="3877"
+      >
+  </a
+      ><a name="3880" class="Symbol"
+      >&#8594;</a
+      ><a name="3881"
+      > </a
+      ><a name="3882" class="Symbol"
+      >(</a
+      ><a name="3883" href="lib.Base.html#3859" class="Bound"
+      >u</a
+      ><a name="3884"
+      > </a
+      ><a name="3885" href="lib.Base.html#3071" class="Function"
+      >==</a
+      ><a name="3887"
+      > </a
+      ><a name="3888" href="lib.Base.html#3869" class="Bound"
+      >v</a
+      ><a name="3889"
+      > </a
+      ><a name="3890" href="lib.Base.html#3071" class="Function"
+      >[</a
+      ><a name="3891"
+      > </a
+      ><a name="3892" href="lib.Base.html#3772" class="Bound"
+      >B</a
+      ><a name="3893"
+      > </a
+      ><a name="3894" href="lib.Base.html#3071" class="Function"
+      >&#8595;</a
+      ><a name="3895"
+      > </a
+      ><a name="3896" href="lib.Base.html#3844" class="Bound"
+      >p</a
+      ><a name="3897"
+      > </a
+      ><a name="3898" href="lib.Base.html#3071" class="Function"
+      >]</a
+      ><a name="3899"
+      > </a
+      ><a name="3900" class="Symbol"
+      >&#8594;</a
+      ><a name="3901"
+      > </a
+      ><a name="3902" href="lib.Base.html#3808" class="Bound"
+      >g</a
+      ><a name="3903"
+      > </a
+      ><a name="3904" href="lib.Base.html#3859" class="Bound"
+      >u</a
+      ><a name="3905"
+      > </a
+      ><a name="3906" href="lib.Base.html#3071" class="Function"
+      >==</a
+      ><a name="3908"
+      > </a
+      ><a name="3909" href="lib.Base.html#3808" class="Bound"
+      >g</a
+      ><a name="3910"
+      > </a
+      ><a name="3911" href="lib.Base.html#3869" class="Bound"
+      >v</a
+      ><a name="3912"
+      > </a
+      ><a name="3913" href="lib.Base.html#3071" class="Function"
+      >[</a
+      ><a name="3914"
+      > </a
+      ><a name="3915" href="lib.Base.html#3789" class="Bound"
+      >C</a
+      ><a name="3916"
+      > </a
+      ><a name="3917" href="lib.Base.html#3071" class="Function"
+      >&#8595;</a
+      ><a name="3918"
+      > </a
+      ><a name="3919" href="lib.Base.html#3844" class="Bound"
+      >p</a
+      ><a name="3920"
+      > </a
+      ><a name="3921" href="lib.Base.html#3071" class="Function"
+      >]</a
+      ><a name="3922" class="Symbol"
+      >)</a
+      ><a name="3923"
+      >
+</a
+      ><a name="3924" href="lib.Base.html#3742" class="Function"
+      >ap&#8595;</a
+      ><a name="3927"
+      > </a
+      ><a name="3928" href="lib.Base.html#3928" class="Bound"
+      >g</a
+      ><a name="3929"
+      > </a
+      ><a name="3930" class="Symbol"
+      >{</a
+      ><a name="3931" class="Argument"
+      >p</a
+      ><a name="3932"
+      > </a
+      ><a name="3933" class="Symbol"
+      >=</a
+      ><a name="3934"
+      > </a
+      ><a name="3935" href="lib.Base.html#1917" class="InductiveConstructor"
+      >idp</a
+      ><a name="3938" class="Symbol"
+      >}</a
+      ><a name="3939"
+      > </a
+      ><a name="3940" href="lib.Base.html#3940" class="Bound"
+      >p</a
+      ><a name="3941"
+      > </a
+      ><a name="3942" class="Symbol"
+      >=</a
+      ><a name="3943"
+      > </a
+      ><a name="3944" href="lib.Base.html#3639" class="Function"
+      >ap</a
+      ><a name="3946"
+      > </a
+      ><a name="3947" href="lib.Base.html#3928" class="Bound"
+      >g</a
+      ><a name="3948"
+      > </a
+      ><a name="3949" href="lib.Base.html#3940" class="Bound"
+      >p</a
+      ><a name="3950"
+      >
+
+</a
+      ><a name="3952" class="Comment"
+      >{-
+[apd&#8595;] is defined in lib.PathOver. Unlike [ap&#8595;] and [ap], [apd] is not
+definitionally a special case of [apd&#8595;]
+-}</a
+      ><a name="4068"
+      >
+
+</a
+      ><a name="4070" href="lib.Base.html#4070" class="Function"
+      >apd</a
+      ><a name="4073"
+      > </a
+      ><a name="4074" class="Symbol"
+      >:</a
+      ><a name="4075"
+      > </a
+      ><a name="4076" class="Symbol"
+      >&#8704;</a
+      ><a name="4077"
+      > </a
+      ><a name="4078" class="Symbol"
+      >{</a
+      ><a name="4079" href="lib.Base.html#4079" class="Bound"
+      >i</a
+      ><a name="4080"
+      > </a
+      ><a name="4081" href="lib.Base.html#4081" class="Bound"
+      >j</a
+      ><a name="4082" class="Symbol"
+      >}</a
+      ><a name="4083"
+      > </a
+      ><a name="4084" class="Symbol"
+      >{</a
+      ><a name="4085" href="lib.Base.html#4085" class="Bound"
+      >A</a
+      ><a name="4086"
+      > </a
+      ><a name="4087" class="Symbol"
+      >:</a
+      ><a name="4088"
+      > </a
+      ><a name="4089" href="lib.Base.html#1132" class="Function"
+      >Type</a
+      ><a name="4093"
+      > </a
+      ><a name="4094" href="lib.Base.html#4079" class="Bound"
+      >i</a
+      ><a name="4095" class="Symbol"
+      >}</a
+      ><a name="4096"
+      > </a
+      ><a name="4097" class="Symbol"
+      >{</a
+      ><a name="4098" href="lib.Base.html#4098" class="Bound"
+      >B</a
+      ><a name="4099"
+      > </a
+      ><a name="4100" class="Symbol"
+      >:</a
+      ><a name="4101"
+      > </a
+      ><a name="4102" href="lib.Base.html#4085" class="Bound"
+      >A</a
+      ><a name="4103"
+      > </a
+      ><a name="4104" class="Symbol"
+      >&#8594;</a
+      ><a name="4105"
+      > </a
+      ><a name="4106" href="lib.Base.html#1132" class="Function"
+      >Type</a
+      ><a name="4110"
+      > </a
+      ><a name="4111" href="lib.Base.html#4081" class="Bound"
+      >j</a
+      ><a name="4112" class="Symbol"
+      >}</a
+      ><a name="4113"
+      > </a
+      ><a name="4114" class="Symbol"
+      >(</a
+      ><a name="4115" href="lib.Base.html#4115" class="Bound"
+      >f</a
+      ><a name="4116"
+      > </a
+      ><a name="4117" class="Symbol"
+      >:</a
+      ><a name="4118"
+      > </a
+      ><a name="4119" class="Symbol"
+      >(</a
+      ><a name="4120" href="lib.Base.html#4120" class="Bound"
+      >a</a
+      ><a name="4121"
+      > </a
+      ><a name="4122" class="Symbol"
+      >:</a
+      ><a name="4123"
+      > </a
+      ><a name="4124" href="lib.Base.html#4085" class="Bound"
+      >A</a
+      ><a name="4125" class="Symbol"
+      >)</a
+      ><a name="4126"
+      > </a
+      ><a name="4127" class="Symbol"
+      >&#8594;</a
+      ><a name="4128"
+      > </a
+      ><a name="4129" href="lib.Base.html#4098" class="Bound"
+      >B</a
+      ><a name="4130"
+      > </a
+      ><a name="4131" href="lib.Base.html#4120" class="Bound"
+      >a</a
+      ><a name="4132" class="Symbol"
+      >)</a
+      ><a name="4133"
+      > </a
+      ><a name="4134" class="Symbol"
+      >{</a
+      ><a name="4135" href="lib.Base.html#4135" class="Bound"
+      >x</a
+      ><a name="4136"
+      > </a
+      ><a name="4137" href="lib.Base.html#4137" class="Bound"
+      >y</a
+      ><a name="4138"
+      > </a
+      ><a name="4139" class="Symbol"
+      >:</a
+      ><a name="4140"
+      > </a
+      ><a name="4141" href="lib.Base.html#4085" class="Bound"
+      >A</a
+      ><a name="4142" class="Symbol"
+      >}</a
+      ><a name="4143"
+      >
+  </a
+      ><a name="4146" class="Symbol"
+      >&#8594;</a
+      ><a name="4147"
+      > </a
+      ><a name="4148" class="Symbol"
+      >(</a
+      ><a name="4149" href="lib.Base.html#4149" class="Bound"
+      >p</a
+      ><a name="4150"
+      > </a
+      ><a name="4151" class="Symbol"
+      >:</a
+      ><a name="4152"
+      > </a
+      ><a name="4153" href="lib.Base.html#4135" class="Bound"
+      >x</a
+      ><a name="4154"
+      > </a
+      ><a name="4155" href="lib.Base.html#1866" class="Datatype Operator"
+      >==</a
+      ><a name="4157"
+      > </a
+      ><a name="4158" href="lib.Base.html#4137" class="Bound"
+      >y</a
+      ><a name="4159" class="Symbol"
+      >)</a
+      ><a name="4160"
+      > </a
+      ><a name="4161" class="Symbol"
+      >&#8594;</a
+      ><a name="4162"
+      > </a
+      ><a name="4163" href="lib.Base.html#4115" class="Bound"
+      >f</a
+      ><a name="4164"
+      > </a
+      ><a name="4165" href="lib.Base.html#4135" class="Bound"
+      >x</a
+      ><a name="4166"
+      > </a
+      ><a name="4167" href="lib.Base.html#3071" class="Function"
+      >==</a
+      ><a name="4169"
+      > </a
+      ><a name="4170" href="lib.Base.html#4115" class="Bound"
+      >f</a
+      ><a name="4171"
+      > </a
+      ><a name="4172" href="lib.Base.html#4137" class="Bound"
+      >y</a
+      ><a name="4173"
+      > </a
+      ><a name="4174" href="lib.Base.html#3071" class="Function"
+      >[</a
+      ><a name="4175"
+      > </a
+      ><a name="4176" href="lib.Base.html#4098" class="Bound"
+      >B</a
+      ><a name="4177"
+      > </a
+      ><a name="4178" href="lib.Base.html#3071" class="Function"
+      >&#8595;</a
+      ><a name="4179"
+      > </a
+      ><a name="4180" href="lib.Base.html#4149" class="Bound"
+      >p</a
+      ><a name="4181"
+      > </a
+      ><a name="4182" href="lib.Base.html#3071" class="Function"
+      >]</a
+      ><a name="4183"
+      >
+</a
+      ><a name="4184" href="lib.Base.html#4070" class="Function"
+      >apd</a
+      ><a name="4187"
+      > </a
+      ><a name="4188" href="lib.Base.html#4188" class="Bound"
+      >f</a
+      ><a name="4189"
+      > </a
+      ><a name="4190" href="lib.Base.html#1917" class="InductiveConstructor"
+      >idp</a
+      ><a name="4193"
+      > </a
+      ><a name="4194" class="Symbol"
+      >=</a
+      ><a name="4195"
+      > </a
+      ><a name="4196" href="lib.Base.html#1917" class="InductiveConstructor"
+      >idp</a
+      ><a name="4199"
+      >
+
+</a
+      ><a name="4201" class="Comment"
+      >{-
+An equality between types gives two maps back and forth
+-}</a
+      ><a name="4262"
+      >
+
+</a
+      ><a name="4264" href="lib.Base.html#4264" class="Function"
+      >coe</a
+      ><a name="4267"
+      > </a
+      ><a name="4268" class="Symbol"
+      >:</a
+      ><a name="4269"
+      > </a
+      ><a name="4270" class="Symbol"
+      >&#8704;</a
+      ><a name="4271"
+      > </a
+      ><a name="4272" class="Symbol"
+      >{</a
+      ><a name="4273" href="lib.Base.html#4273" class="Bound"
+      >i</a
+      ><a name="4274" class="Symbol"
+      >}</a
+      ><a name="4275"
+      > </a
+      ><a name="4276" class="Symbol"
+      >{</a
+      ><a name="4277" href="lib.Base.html#4277" class="Bound"
+      >A</a
+      ><a name="4278"
+      > </a
+      ><a name="4279" href="lib.Base.html#4279" class="Bound"
+      >B</a
+      ><a name="4280"
+      > </a
+      ><a name="4281" class="Symbol"
+      >:</a
+      ><a name="4282"
+      > </a
+      ><a name="4283" href="lib.Base.html#1132" class="Function"
+      >Type</a
+      ><a name="4287"
+      > </a
+      ><a name="4288" href="lib.Base.html#4273" class="Bound"
+      >i</a
+      ><a name="4289" class="Symbol"
+      >}</a
+      ><a name="4290"
+      > </a
+      ><a name="4291" class="Symbol"
+      >(</a
+      ><a name="4292" href="lib.Base.html#4292" class="Bound"
+      >p</a
+      ><a name="4293"
+      > </a
+      ><a name="4294" class="Symbol"
+      >:</a
+      ><a name="4295"
+      > </a
+      ><a name="4296" href="lib.Base.html#4277" class="Bound"
+      >A</a
+      ><a name="4297"
+      > </a
+      ><a name="4298" href="lib.Base.html#1866" class="Datatype Operator"
+      >==</a
+      ><a name="4300"
+      > </a
+      ><a name="4301" href="lib.Base.html#4279" class="Bound"
+      >B</a
+      ><a name="4302" class="Symbol"
+      >)</a
+      ><a name="4303"
+      > </a
+      ><a name="4304" class="Symbol"
+      >&#8594;</a
+      ><a name="4305"
+      > </a
+      ><a name="4306" href="lib.Base.html#4277" class="Bound"
+      >A</a
+      ><a name="4307"
+      > </a
+      ><a name="4308" class="Symbol"
+      >&#8594;</a
+      ><a name="4309"
+      > </a
+      ><a name="4310" href="lib.Base.html#4279" class="Bound"
+      >B</a
+      ><a name="4311"
+      >
+</a
+      ><a name="4312" href="lib.Base.html#4264" class="Function"
+      >coe</a
+      ><a name="4315"
+      > </a
+      ><a name="4316" href="lib.Base.html#1917" class="InductiveConstructor"
+      >idp</a
+      ><a name="4319"
+      > </a
+      ><a name="4320" href="lib.Base.html#4320" class="Bound"
+      >x</a
+      ><a name="4321"
+      > </a
+      ><a name="4322" class="Symbol"
+      >=</a
+      ><a name="4323"
+      > </a
+      ><a name="4324" href="lib.Base.html#4320" class="Bound"
+      >x</a
+      ><a name="4325"
+      >
+
+</a
+      ><a name="4327" href="lib.Base.html#4327" class="Function"
+      >coe!</a
+      ><a name="4331"
+      > </a
+      ><a name="4332" class="Symbol"
+      >:</a
+      ><a name="4333"
+      > </a
+      ><a name="4334" class="Symbol"
+      >&#8704;</a
+      ><a name="4335"
+      > </a
+      ><a name="4336" class="Symbol"
+      >{</a
+      ><a name="4337" href="lib.Base.html#4337" class="Bound"
+      >i</a
+      ><a name="4338" class="Symbol"
+      >}</a
+      ><a name="4339"
+      > </a
+      ><a name="4340" class="Symbol"
+      >{</a
+      ><a name="4341" href="lib.Base.html#4341" class="Bound"
+      >A</a
+      ><a name="4342"
+      > </a
+      ><a name="4343" href="lib.Base.html#4343" class="Bound"
+      >B</a
+      ><a name="4344"
+      > </a
+      ><a name="4345" class="Symbol"
+      >:</a
+      ><a name="4346"
+      > </a
+      ><a name="4347" href="lib.Base.html#1132" class="Function"
+      >Type</a
+      ><a name="4351"
+      > </a
+      ><a name="4352" href="lib.Base.html#4337" class="Bound"
+      >i</a
+      ><a name="4353" class="Symbol"
+      >}</a
+      ><a name="4354"
+      > </a
+      ><a name="4355" class="Symbol"
+      >(</a
+      ><a name="4356" href="lib.Base.html#4356" class="Bound"
+      >p</a
+      ><a name="4357"
+      > </a
+      ><a name="4358" class="Symbol"
+      >:</a
+      ><a name="4359"
+      > </a
+      ><a name="4360" href="lib.Base.html#4341" class="Bound"
+      >A</a
+      ><a name="4361"
+      > </a
+      ><a name="4362" href="lib.Base.html#1866" class="Datatype Operator"
+      >==</a
+      ><a name="4364"
+      > </a
+      ><a name="4365" href="lib.Base.html#4343" class="Bound"
+      >B</a
+      ><a name="4366" class="Symbol"
+      >)</a
+      ><a name="4367"
+      > </a
+      ><a name="4368" class="Symbol"
+      >&#8594;</a
+      ><a name="4369"
+      > </a
+      ><a name="4370" href="lib.Base.html#4343" class="Bound"
+      >B</a
+      ><a name="4371"
+      > </a
+      ><a name="4372" class="Symbol"
+      >&#8594;</a
+      ><a name="4373"
+      > </a
+      ><a name="4374" href="lib.Base.html#4341" class="Bound"
+      >A</a
+      ><a name="4375"
+      >
+</a
+      ><a name="4376" href="lib.Base.html#4327" class="Function"
+      >coe!</a
+      ><a name="4380"
+      > </a
+      ><a name="4381" href="lib.Base.html#1917" class="InductiveConstructor"
+      >idp</a
+      ><a name="4384"
+      > </a
+      ><a name="4385" href="lib.Base.html#4385" class="Bound"
+      >x</a
+      ><a name="4386"
+      > </a
+      ><a name="4387" class="Symbol"
+      >=</a
+      ><a name="4388"
+      > </a
+      ><a name="4389" href="lib.Base.html#4385" class="Bound"
+      >x</a
+      ><a name="4390"
+      >
+
+</a
+      ><a name="4392" class="Comment"
+      >{-
+The operations of transport forward and backward are defined in terms of [ap]
+and [coe], because this is more convenient in practice.
+-}</a
+      ><a name="4531"
+      >
+
+</a
+      ><a name="4533" href="lib.Base.html#4533" class="Function"
+      >transport</a
+      ><a name="4542"
+      > </a
+      ><a name="4543" class="Symbol"
+      >:</a
+      ><a name="4544"
+      > </a
+      ><a name="4545" class="Symbol"
+      >&#8704;</a
+      ><a name="4546"
+      > </a
+      ><a name="4547" class="Symbol"
+      >{</a
+      ><a name="4548" href="lib.Base.html#4548" class="Bound"
+      >i</a
+      ><a name="4549"
+      > </a
+      ><a name="4550" href="lib.Base.html#4550" class="Bound"
+      >j</a
+      ><a name="4551" class="Symbol"
+      >}</a
+      ><a name="4552"
+      > </a
+      ><a name="4553" class="Symbol"
+      >{</a
+      ><a name="4554" href="lib.Base.html#4554" class="Bound"
+      >A</a
+      ><a name="4555"
+      > </a
+      ><a name="4556" class="Symbol"
+      >:</a
+      ><a name="4557"
+      > </a
+      ><a name="4558" href="lib.Base.html#1132" class="Function"
+      >Type</a
+      ><a name="4562"
+      > </a
+      ><a name="4563" href="lib.Base.html#4548" class="Bound"
+      >i</a
+      ><a name="4564" class="Symbol"
+      >}</a
+      ><a name="4565"
+      > </a
+      ><a name="4566" class="Symbol"
+      >(</a
+      ><a name="4567" href="lib.Base.html#4567" class="Bound"
+      >B</a
+      ><a name="4568"
+      > </a
+      ><a name="4569" class="Symbol"
+      >:</a
+      ><a name="4570"
+      > </a
+      ><a name="4571" href="lib.Base.html#4554" class="Bound"
+      >A</a
+      ><a name="4572"
+      > </a
+      ><a name="4573" class="Symbol"
+      >&#8594;</a
+      ><a name="4574"
+      > </a
+      ><a name="4575" href="lib.Base.html#1132" class="Function"
+      >Type</a
+      ><a name="4579"
+      > </a
+      ><a name="4580" href="lib.Base.html#4550" class="Bound"
+      >j</a
+      ><a name="4581" class="Symbol"
+      >)</a
+      ><a name="4582"
+      > </a
+      ><a name="4583" class="Symbol"
+      >{</a
+      ><a name="4584" href="lib.Base.html#4584" class="Bound"
+      >x</a
+      ><a name="4585"
+      > </a
+      ><a name="4586" href="lib.Base.html#4586" class="Bound"
+      >y</a
+      ><a name="4587"
+      > </a
+      ><a name="4588" class="Symbol"
+      >:</a
+      ><a name="4589"
+      > </a
+      ><a name="4590" href="lib.Base.html#4554" class="Bound"
+      >A</a
+      ><a name="4591" class="Symbol"
+      >}</a
+      ><a name="4592"
+      > </a
+      ><a name="4593" class="Symbol"
+      >(</a
+      ><a name="4594" href="lib.Base.html#4594" class="Bound"
+      >p</a
+      ><a name="4595"
+      > </a
+      ><a name="4596" class="Symbol"
+      >:</a
+      ><a name="4597"
+      > </a
+      ><a name="4598" href="lib.Base.html#4584" class="Bound"
+      >x</a
+      ><a name="4599"
+      > </a
+      ><a name="4600" href="lib.Base.html#1866" class="Datatype Operator"
+      >==</a
+      ><a name="4602"
+      > </a
+      ><a name="4603" href="lib.Base.html#4586" class="Bound"
+      >y</a
+      ><a name="4604" class="Symbol"
+      >)</a
+      ><a name="4605"
+      >
+  </a
+      ><a name="4608" class="Symbol"
+      >&#8594;</a
+      ><a name="4609"
+      > </a
+      ><a name="4610" class="Symbol"
+      >(</a
+      ><a name="4611" href="lib.Base.html#4567" class="Bound"
+      >B</a
+      ><a name="4612"
+      > </a
+      ><a name="4613" href="lib.Base.html#4584" class="Bound"
+      >x</a
+      ><a name="4614"
+      > </a
+      ><a name="4615" class="Symbol"
+      >&#8594;</a
+      ><a name="4616"
+      > </a
+      ><a name="4617" href="lib.Base.html#4567" class="Bound"
+      >B</a
+      ><a name="4618"
+      > </a
+      ><a name="4619" href="lib.Base.html#4586" class="Bound"
+      >y</a
+      ><a name="4620" class="Symbol"
+      >)</a
+      ><a name="4621"
+      >
+</a
+      ><a name="4622" href="lib.Base.html#4533" class="Function"
+      >transport</a
+      ><a name="4631"
+      > </a
+      ><a name="4632" href="lib.Base.html#4632" class="Bound"
+      >B</a
+      ><a name="4633"
+      > </a
+      ><a name="4634" href="lib.Base.html#4634" class="Bound"
+      >p</a
+      ><a name="4635"
+      > </a
+      ><a name="4636" class="Symbol"
+      >=</a
+      ><a name="4637"
+      > </a
+      ><a name="4638" href="lib.Base.html#4264" class="Function"
+      >coe</a
+      ><a name="4641"
+      > </a
+      ><a name="4642" class="Symbol"
+      >(</a
+      ><a name="4643" href="lib.Base.html#3639" class="Function"
+      >ap</a
+      ><a name="4645"
+      > </a
+      ><a name="4646" href="lib.Base.html#4632" class="Bound"
+      >B</a
+      ><a name="4647"
+      > </a
+      ><a name="4648" href="lib.Base.html#4634" class="Bound"
+      >p</a
+      ><a name="4649" class="Symbol"
+      >)</a
+      ><a name="4650"
+      >
+
+</a
+      ><a name="4652" href="lib.Base.html#4652" class="Function"
+      >transport!</a
+      ><a name="4662"
+      > </a
+      ><a name="4663" class="Symbol"
+      >:</a
+      ><a name="4664"
+      > </a
+      ><a name="4665" class="Symbol"
+      >&#8704;</a
+      ><a name="4666"
+      > </a
+      ><a name="4667" class="Symbol"
+      >{</a
+      ><a name="4668" href="lib.Base.html#4668" class="Bound"
+      >i</a
+      ><a name="4669"
+      > </a
+      ><a name="4670" href="lib.Base.html#4670" class="Bound"
+      >j</a
+      ><a name="4671" class="Symbol"
+      >}</a
+      ><a name="4672"
+      > </a
+      ><a name="4673" class="Symbol"
+      >{</a
+      ><a name="4674" href="lib.Base.html#4674" class="Bound"
+      >A</a
+      ><a name="4675"
+      > </a
+      ><a name="4676" class="Symbol"
+      >:</a
+      ><a name="4677"
+      > </a
+      ><a name="4678" href="lib.Base.html#1132" class="Function"
+      >Type</a
+      ><a name="4682"
+      > </a
+      ><a name="4683" href="lib.Base.html#4668" class="Bound"
+      >i</a
+      ><a name="4684" class="Symbol"
+      >}</a
+      ><a name="4685"
+      > </a
+      ><a name="4686" class="Symbol"
+      >(</a
+      ><a name="4687" href="lib.Base.html#4687" class="Bound"
+      >B</a
+      ><a name="4688"
+      > </a
+      ><a name="4689" class="Symbol"
+      >:</a
+      ><a name="4690"
+      > </a
+      ><a name="4691" href="lib.Base.html#4674" class="Bound"
+      >A</a
+      ><a name="4692"
+      > </a
+      ><a name="4693" class="Symbol"
+      >&#8594;</a
+      ><a name="4694"
+      > </a
+      ><a name="4695" href="lib.Base.html#1132" class="Function"
+      >Type</a
+      ><a name="4699"
+      > </a
+      ><a name="4700" href="lib.Base.html#4670" class="Bound"
+      >j</a
+      ><a name="4701" class="Symbol"
+      >)</a
+      ><a name="4702"
+      > </a
+      ><a name="4703" class="Symbol"
+      >{</a
+      ><a name="4704" href="lib.Base.html#4704" class="Bound"
+      >x</a
+      ><a name="4705"
+      > </a
+      ><a name="4706" href="lib.Base.html#4706" class="Bound"
+      >y</a
+      ><a name="4707"
+      > </a
+      ><a name="4708" class="Symbol"
+      >:</a
+      ><a name="4709"
+      > </a
+      ><a name="4710" href="lib.Base.html#4674" class="Bound"
+      >A</a
+      ><a name="4711" class="Symbol"
+      >}</a
+      ><a name="4712"
+      > </a
+      ><a name="4713" class="Symbol"
+      >(</a
+      ><a name="4714" href="lib.Base.html#4714" class="Bound"
+      >p</a
+      ><a name="4715"
+      > </a
+      ><a name="4716" class="Symbol"
+      >:</a
+      ><a name="4717"
+      > </a
+      ><a name="4718" href="lib.Base.html#4704" class="Bound"
+      >x</a
+      ><a name="4719"
+      > </a
+      ><a name="4720" href="lib.Base.html#1866" class="Datatype Operator"
+      >==</a
+      ><a name="4722"
+      > </a
+      ><a name="4723" href="lib.Base.html#4706" class="Bound"
+      >y</a
+      ><a name="4724" class="Symbol"
+      >)</a
+      ><a name="4725"
+      >
+  </a
+      ><a name="4728" class="Symbol"
+      >&#8594;</a
+      ><a name="4729"
+      > </a
+      ><a name="4730" class="Symbol"
+      >(</a
+      ><a name="4731" href="lib.Base.html#4687" class="Bound"
+      >B</a
+      ><a name="4732"
+      > </a
+      ><a name="4733" href="lib.Base.html#4706" class="Bound"
+      >y</a
+      ><a name="4734"
+      > </a
+      ><a name="4735" class="Symbol"
+      >&#8594;</a
+      ><a name="4736"
+      > </a
+      ><a name="4737" href="lib.Base.html#4687" class="Bound"
+      >B</a
+      ><a name="4738"
+      > </a
+      ><a name="4739" href="lib.Base.html#4704" class="Bound"
+      >x</a
+      ><a name="4740" class="Symbol"
+      >)</a
+      ><a name="4741"
+      >
+</a
+      ><a name="4742" href="lib.Base.html#4652" class="Function"
+      >transport!</a
+      ><a name="4752"
+      > </a
+      ><a name="4753" href="lib.Base.html#4753" class="Bound"
+      >B</a
+      ><a name="4754"
+      > </a
+      ><a name="4755" href="lib.Base.html#4755" class="Bound"
+      >p</a
+      ><a name="4756"
+      > </a
+      ><a name="4757" class="Symbol"
+      >=</a
+      ><a name="4758"
+      > </a
+      ><a name="4759" href="lib.Base.html#4327" class="Function"
+      >coe!</a
+      ><a name="4763"
+      > </a
+      ><a name="4764" class="Symbol"
+      >(</a
+      ><a name="4765" href="lib.Base.html#3639" class="Function"
+      >ap</a
+      ><a name="4767"
+      > </a
+      ><a name="4768" href="lib.Base.html#4753" class="Bound"
+      >B</a
+      ><a name="4769"
+      > </a
+      ><a name="4770" href="lib.Base.html#4755" class="Bound"
+      >p</a
+      ><a name="4771" class="Symbol"
+      >)</a
+      ><a name="4772"
+      >
+
+</a
+      ><a name="4774" class="Comment"
+      >{- &#928;-types
+
+Shorter notation for &#928;-types.
+-}</a
+      ><a name="4818"
+      >
+
+</a
+      ><a name="4820" href="lib.Base.html#4820" class="Function"
+      >&#928;</a
+      ><a name="4821"
+      > </a
+      ><a name="4822" class="Symbol"
+      >:</a
+      ><a name="4823"
+      > </a
+      ><a name="4824" class="Symbol"
+      >&#8704;</a
+      ><a name="4825"
+      > </a
+      ><a name="4826" class="Symbol"
+      >{</a
+      ><a name="4827" href="lib.Base.html#4827" class="Bound"
+      >i</a
+      ><a name="4828"
+      > </a
+      ><a name="4829" href="lib.Base.html#4829" class="Bound"
+      >j</a
+      ><a name="4830" class="Symbol"
+      >}</a
+      ><a name="4831"
+      > </a
+      ><a name="4832" class="Symbol"
+      >(</a
+      ><a name="4833" href="lib.Base.html#4833" class="Bound"
+      >A</a
+      ><a name="4834"
+      > </a
+      ><a name="4835" class="Symbol"
+      >:</a
+      ><a name="4836"
+      > </a
+      ><a name="4837" href="lib.Base.html#1132" class="Function"
+      >Type</a
+      ><a name="4841"
+      > </a
+      ><a name="4842" href="lib.Base.html#4827" class="Bound"
+      >i</a
+      ><a name="4843" class="Symbol"
+      >)</a
+      ><a name="4844"
+      > </a
+      ><a name="4845" class="Symbol"
+      >(</a
+      ><a name="4846" href="lib.Base.html#4846" class="Bound"
+      >P</a
+      ><a name="4847"
+      > </a
+      ><a name="4848" class="Symbol"
+      >:</a
+      ><a name="4849"
+      > </a
+      ><a name="4850" href="lib.Base.html#4833" class="Bound"
+      >A</a
+      ><a name="4851"
+      > </a
+      ><a name="4852" class="Symbol"
+      >&#8594;</a
+      ><a name="4853"
+      > </a
+      ><a name="4854" href="lib.Base.html#1132" class="Function"
+      >Type</a
+      ><a name="4858"
+      > </a
+      ><a name="4859" href="lib.Base.html#4829" class="Bound"
+      >j</a
+      ><a name="4860" class="Symbol"
+      >)</a
+      ><a name="4861"
+      > </a
+      ><a name="4862" class="Symbol"
+      >&#8594;</a
+      ><a name="4863"
+      > </a
+      ><a name="4864" href="lib.Base.html#1132" class="Function"
+      >Type</a
+      ><a name="4868"
+      > </a
+      ><a name="4869" class="Symbol"
+      >(</a
+      ><a name="4870" href="Agda.Primitive.html#626" class="Primitive"
+      >lmax</a
+      ><a name="4874"
+      > </a
+      ><a name="4875" href="lib.Base.html#4827" class="Bound"
+      >i</a
+      ><a name="4876"
+      > </a
+      ><a name="4877" href="lib.Base.html#4829" class="Bound"
+      >j</a
+      ><a name="4878" class="Symbol"
+      >)</a
+      ><a name="4879"
+      >
+</a
+      ><a name="4880" href="lib.Base.html#4820" class="Function"
+      >&#928;</a
+      ><a name="4881"
+      > </a
+      ><a name="4882" href="lib.Base.html#4882" class="Bound"
+      >A</a
+      ><a name="4883"
+      > </a
+      ><a name="4884" href="lib.Base.html#4884" class="Bound"
+      >P</a
+      ><a name="4885"
+      > </a
+      ><a name="4886" class="Symbol"
+      >=</a
+      ><a name="4887"
+      > </a
+      ><a name="4888" class="Symbol"
+      >(</a
+      ><a name="4889" href="lib.Base.html#4889" class="Bound"
+      >x</a
+      ><a name="4890"
+      > </a
+      ><a name="4891" class="Symbol"
+      >:</a
+      ><a name="4892"
+      > </a
+      ><a name="4893" href="lib.Base.html#4882" class="Bound"
+      >A</a
+      ><a name="4894" class="Symbol"
+      >)</a
+      ><a name="4895"
+      > </a
+      ><a name="4896" class="Symbol"
+      >&#8594;</a
+      ><a name="4897"
+      > </a
+      ><a name="4898" href="lib.Base.html#4884" class="Bound"
+      >P</a
+      ><a name="4899"
+      > </a
+      ><a name="4900" href="lib.Base.html#4889" class="Bound"
+      >x</a
+      ><a name="4901"
+      >
+
+
+</a
+      ><a name="4904" class="Comment"
+      >{- &#931;-types
+
+&#931;-types are defined as a record so that we have definitional &#951;.
+-}</a
+      ><a name="4982"
+      >
+
+</a
+      ><a name="4984" class="Keyword"
+      >infixr</a
+      ><a name="4990"
+      > </a
+      ><a name="4991" class="Number"
+      >60</a
+      ><a name="4993"
+      > _,_
+
+</a
+      ><a name="4999" class="Keyword"
+      >record</a
+      ><a name="5005"
+      > </a
+      ><a name="5006" href="lib.Base.html#5006" class="Record"
+      >&#931;</a
+      ><a name="5007"
+      > </a
+      ><a name="5008" class="Symbol"
+      >{</a
+      ><a name="5009" href="lib.Base.html#5009" class="Bound"
+      >i</a
+      ><a name="5010"
+      > </a
+      ><a name="5011" href="lib.Base.html#5011" class="Bound"
+      >j</a
+      ><a name="5012" class="Symbol"
+      >}</a
+      ><a name="5013"
+      > </a
+      ><a name="5014" class="Symbol"
+      >(</a
+      ><a name="5015" href="lib.Base.html#5015" class="Bound"
+      >A</a
+      ><a name="5016"
+      > </a
+      ><a name="5017" class="Symbol"
+      >:</a
+      ><a name="5018"
+      > </a
+      ><a name="5019" href="lib.Base.html#1132" class="Function"
+      >Type</a
+      ><a name="5023"
+      > </a
+      ><a name="5024" href="lib.Base.html#5009" class="Bound"
+      >i</a
+      ><a name="5025" class="Symbol"
+      >)</a
+      ><a name="5026"
+      > </a
+      ><a name="5027" class="Symbol"
+      >(</a
+      ><a name="5028" href="lib.Base.html#5028" class="Bound"
+      >B</a
+      ><a name="5029"
+      > </a
+      ><a name="5030" class="Symbol"
+      >:</a
+      ><a name="5031"
+      > </a
+      ><a name="5032" href="lib.Base.html#5015" class="Bound"
+      >A</a
+      ><a name="5033"
+      > </a
+      ><a name="5034" class="Symbol"
+      >&#8594;</a
+      ><a name="5035"
+      > </a
+      ><a name="5036" href="lib.Base.html#1132" class="Function"
+      >Type</a
+      ><a name="5040"
+      > </a
+      ><a name="5041" href="lib.Base.html#5011" class="Bound"
+      >j</a
+      ><a name="5042" class="Symbol"
+      >)</a
+      ><a name="5043"
+      > </a
+      ><a name="5044" class="Symbol"
+      >:</a
+      ><a name="5045"
+      > </a
+      ><a name="5046" href="lib.Base.html#1132" class="Function"
+      >Type</a
+      ><a name="5050"
+      > </a
+      ><a name="5051" class="Symbol"
+      >(</a
+      ><a name="5052" href="Agda.Primitive.html#626" class="Primitive"
+      >lmax</a
+      ><a name="5056"
+      > </a
+      ><a name="5057" href="lib.Base.html#5009" class="Bound"
+      >i</a
+      ><a name="5058"
+      > </a
+      ><a name="5059" href="lib.Base.html#5011" class="Bound"
+      >j</a
+      ><a name="5060" class="Symbol"
+      >)</a
+      ><a name="5061"
+      > </a
+      ><a name="5062" class="Keyword"
+      >where</a
+      ><a name="5067"
+      >
+  </a
+      ><a name="5070" class="Keyword"
+      >constructor</a
+      ><a name="5081"
+      > </a
+      ><a name="5082" href="lib.Base.html#5082" class="InductiveConstructor Operator"
+      >_,_</a
+      ><a name="5085"
+      >
+  </a
+      ><a name="5088" class="Keyword"
+      >field</a
+      ><a name="5093"
+      >
+    </a
+      ><a name="5098" href="lib.Base.html#5098" class="Field"
+      >fst</a
+      ><a name="5101"
+      > </a
+      ><a name="5102" class="Symbol"
+      >:</a
+      ><a name="5103"
+      > </a
+      ><a name="5104" href="lib.Base.html#5015" class="Bound"
+      >A</a
+      ><a name="5105"
+      >
+    </a
+      ><a name="5110" href="lib.Base.html#5110" class="Field"
+      >snd</a
+      ><a name="5113"
+      > </a
+      ><a name="5114" class="Symbol"
+      >:</a
+      ><a name="5115"
+      > </a
+      ><a name="5116" href="lib.Base.html#5028" class="Bound"
+      >B</a
+      ><a name="5117"
+      > </a
+      ><a name="5118" href="lib.Base.html#5098" class="Bound"
+      >fst</a
+      ><a name="5121"
+      >
+</a
+      ><a name="5122" class="Keyword"
+      >open</a
+      ><a name="5126"
+      > </a
+      ><a name="5127" href="lib.Base.html#5006" class="Module"
+      >&#931;</a
+      ><a name="5128"
+      > </a
+      ><a name="5129" class="Keyword"
+      >public</a
+      ><a name="5135"
+      >
+
+</a
+      ><a name="5137" href="lib.Base.html#5137" class="Function"
+      >pair=</a
+      ><a name="5142"
+      > </a
+      ><a name="5143" class="Symbol"
+      >:</a
+      ><a name="5144"
+      > </a
+      ><a name="5145" class="Symbol"
+      >&#8704;</a
+      ><a name="5146"
+      > </a
+      ><a name="5147" class="Symbol"
+      >{</a
+      ><a name="5148" href="lib.Base.html#5148" class="Bound"
+      >i</a
+      ><a name="5149"
+      > </a
+      ><a name="5150" href="lib.Base.html#5150" class="Bound"
+      >j</a
+      ><a name="5151" class="Symbol"
+      >}</a
+      ><a name="5152"
+      > </a
+      ><a name="5153" class="Symbol"
+      >{</a
+      ><a name="5154" href="lib.Base.html#5154" class="Bound"
+      >A</a
+      ><a name="5155"
+      > </a
+      ><a name="5156" class="Symbol"
+      >:</a
+      ><a name="5157"
+      > </a
+      ><a name="5158" href="lib.Base.html#1132" class="Function"
+      >Type</a
+      ><a name="5162"
+      > </a
+      ><a name="5163" href="lib.Base.html#5148" class="Bound"
+      >i</a
+      ><a name="5164" class="Symbol"
+      >}</a
+      ><a name="5165"
+      > </a
+      ><a name="5166" class="Symbol"
+      >{</a
+      ><a name="5167" href="lib.Base.html#5167" class="Bound"
+      >B</a
+      ><a name="5168"
+      > </a
+      ><a name="5169" class="Symbol"
+      >:</a
+      ><a name="5170"
+      > </a
+      ><a name="5171" href="lib.Base.html#5154" class="Bound"
+      >A</a
+      ><a name="5172"
+      > </a
+      ><a name="5173" class="Symbol"
+      >&#8594;</a
+      ><a name="5174"
+      > </a
+      ><a name="5175" href="lib.Base.html#1132" class="Function"
+      >Type</a
+      ><a name="5179"
+      > </a
+      ><a name="5180" href="lib.Base.html#5150" class="Bound"
+      >j</a
+      ><a name="5181" class="Symbol"
+      >}</a
+      ><a name="5182"
+      >
+  </a
+      ><a name="5185" class="Symbol"
+      >{</a
+      ><a name="5186" href="lib.Base.html#5186" class="Bound"
+      >a</a
+      ><a name="5187"
+      > </a
+      ><a name="5188" href="lib.Base.html#5188" class="Bound"
+      >a'</a
+      ><a name="5190"
+      > </a
+      ><a name="5191" class="Symbol"
+      >:</a
+      ><a name="5192"
+      > </a
+      ><a name="5193" href="lib.Base.html#5154" class="Bound"
+      >A</a
+      ><a name="5194" class="Symbol"
+      >}</a
+      ><a name="5195"
+      > </a
+      ><a name="5196" class="Symbol"
+      >(</a
+      ><a name="5197" href="lib.Base.html#5197" class="Bound"
+      >p</a
+      ><a name="5198"
+      > </a
+      ><a name="5199" class="Symbol"
+      >:</a
+      ><a name="5200"
+      > </a
+      ><a name="5201" href="lib.Base.html#5186" class="Bound"
+      >a</a
+      ><a name="5202"
+      > </a
+      ><a name="5203" href="lib.Base.html#1866" class="Datatype Operator"
+      >==</a
+      ><a name="5205"
+      > </a
+      ><a name="5206" href="lib.Base.html#5188" class="Bound"
+      >a'</a
+      ><a name="5208" class="Symbol"
+      >)</a
+      ><a name="5209"
+      > </a
+      ><a name="5210" class="Symbol"
+      >{</a
+      ><a name="5211" href="lib.Base.html#5211" class="Bound"
+      >b</a
+      ><a name="5212"
+      > </a
+      ><a name="5213" class="Symbol"
+      >:</a
+      ><a name="5214"
+      > </a
+      ><a name="5215" href="lib.Base.html#5167" class="Bound"
+      >B</a
+      ><a name="5216"
+      > </a
+      ><a name="5217" href="lib.Base.html#5186" class="Bound"
+      >a</a
+      ><a name="5218" class="Symbol"
+      >}</a
+      ><a name="5219"
+      > </a
+      ><a name="5220" class="Symbol"
+      >{</a
+      ><a name="5221" href="lib.Base.html#5221" class="Bound"
+      >b'</a
+      ><a name="5223"
+      > </a
+      ><a name="5224" class="Symbol"
+      >:</a
+      ><a name="5225"
+      > </a
+      ><a name="5226" href="lib.Base.html#5167" class="Bound"
+      >B</a
+      ><a name="5227"
+      > </a
+      ><a name="5228" href="lib.Base.html#5188" class="Bound"
+      >a'</a
+      ><a name="5230" class="Symbol"
+      >}</a
+      ><a name="5231"
+      >
+  </a
+      ><a name="5234" class="Symbol"
+      >(</a
+      ><a name="5235" href="lib.Base.html#5235" class="Bound"
+      >q</a
+      ><a name="5236"
+      > </a
+      ><a name="5237" class="Symbol"
+      >:</a
+      ><a name="5238"
+      > </a
+      ><a name="5239" href="lib.Base.html#5211" class="Bound"
+      >b</a
+      ><a name="5240"
+      > </a
+      ><a name="5241" href="lib.Base.html#3071" class="Function"
+      >==</a
+      ><a name="5243"
+      > </a
+      ><a name="5244" href="lib.Base.html#5221" class="Bound"
+      >b'</a
+      ><a name="5246"
+      > </a
+      ><a name="5247" href="lib.Base.html#3071" class="Function"
+      >[</a
+      ><a name="5248"
+      > </a
+      ><a name="5249" href="lib.Base.html#5167" class="Bound"
+      >B</a
+      ><a name="5250"
+      > </a
+      ><a name="5251" href="lib.Base.html#3071" class="Function"
+      >&#8595;</a
+      ><a name="5252"
+      > </a
+      ><a name="5253" href="lib.Base.html#5197" class="Bound"
+      >p</a
+      ><a name="5254"
+      > </a
+      ><a name="5255" href="lib.Base.html#3071" class="Function"
+      >]</a
+      ><a name="5256" class="Symbol"
+      >)</a
+      ><a name="5257"
+      >
+  </a
+      ><a name="5260" class="Symbol"
+      >&#8594;</a
+      ><a name="5261"
+      > </a
+      ><a name="5262" class="Symbol"
+      >(</a
+      ><a name="5263" href="lib.Base.html#5186" class="Bound"
+      >a</a
+      ><a name="5264"
+      > </a
+      ><a name="5265" href="lib.Base.html#5082" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="5266"
+      > </a
+      ><a name="5267" href="lib.Base.html#5211" class="Bound"
+      >b</a
+      ><a name="5268" class="Symbol"
+      >)</a
+      ><a name="5269"
+      > </a
+      ><a name="5270" href="lib.Base.html#1866" class="Datatype Operator"
+      >==</a
+      ><a name="5272"
+      > </a
+      ><a name="5273" class="Symbol"
+      >(</a
+      ><a name="5274" href="lib.Base.html#5188" class="Bound"
+      >a'</a
+      ><a name="5276"
+      > </a
+      ><a name="5277" href="lib.Base.html#5082" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="5278"
+      > </a
+      ><a name="5279" href="lib.Base.html#5221" class="Bound"
+      >b'</a
+      ><a name="5281" class="Symbol"
+      >)</a
+      ><a name="5282"
+      >
+</a
+      ><a name="5283" href="lib.Base.html#5137" class="Function"
+      >pair=</a
+      ><a name="5288"
+      > </a
+      ><a name="5289" href="lib.Base.html#1917" class="InductiveConstructor"
+      >idp</a
+      ><a name="5292"
+      > </a
+      ><a name="5293" href="lib.Base.html#5293" class="Bound"
+      >q</a
+      ><a name="5294"
+      > </a
+      ><a name="5295" class="Symbol"
+      >=</a
+      ><a name="5296"
+      > </a
+      ><a name="5297" href="lib.Base.html#3639" class="Function"
+      >ap</a
+      ><a name="5299"
+      > </a
+      ><a name="5300" class="Symbol"
+      >(</a
+      ><a name="5301" href="lib.Base.html#5082" class="InductiveConstructor Operator"
+      >_,_</a
+      ><a name="5304"
+      > </a
+      ><a name="5305" class="Symbol"
+      >_)</a
+      ><a name="5307"
+      > </a
+      ><a name="5308" href="lib.Base.html#5293" class="Bound"
+      >q</a
+      ><a name="5309"
+      >
+
+</a
+      ><a name="5311" href="lib.Base.html#5311" class="Function"
+      >pair&#215;=</a
+      ><a name="5317"
+      > </a
+      ><a name="5318" class="Symbol"
+      >:</a
+      ><a name="5319"
+      > </a
+      ><a name="5320" class="Symbol"
+      >&#8704;</a
+      ><a name="5321"
+      > </a
+      ><a name="5322" class="Symbol"
+      >{</a
+      ><a name="5323" href="lib.Base.html#5323" class="Bound"
+      >i</a
+      ><a name="5324"
+      > </a
+      ><a name="5325" href="lib.Base.html#5325" class="Bound"
+      >j</a
+      ><a name="5326" class="Symbol"
+      >}</a
+      ><a name="5327"
+      > </a
+      ><a name="5328" class="Symbol"
+      >{</a
+      ><a name="5329" href="lib.Base.html#5329" class="Bound"
+      >A</a
+      ><a name="5330"
+      > </a
+      ><a name="5331" class="Symbol"
+      >:</a
+      ><a name="5332"
+      > </a
+      ><a name="5333" href="lib.Base.html#1132" class="Function"
+      >Type</a
+      ><a name="5337"
+      > </a
+      ><a name="5338" href="lib.Base.html#5323" class="Bound"
+      >i</a
+      ><a name="5339" class="Symbol"
+      >}</a
+      ><a name="5340"
+      > </a
+      ><a name="5341" class="Symbol"
+      >{</a
+      ><a name="5342" href="lib.Base.html#5342" class="Bound"
+      >B</a
+      ><a name="5343"
+      > </a
+      ><a name="5344" class="Symbol"
+      >:</a
+      ><a name="5345"
+      > </a
+      ><a name="5346" href="lib.Base.html#1132" class="Function"
+      >Type</a
+      ><a name="5350"
+      > </a
+      ><a name="5351" href="lib.Base.html#5325" class="Bound"
+      >j</a
+      ><a name="5352" class="Symbol"
+      >}</a
+      ><a name="5353"
+      >
+  </a
+      ><a name="5356" class="Symbol"
+      >{</a
+      ><a name="5357" href="lib.Base.html#5357" class="Bound"
+      >a</a
+      ><a name="5358"
+      > </a
+      ><a name="5359" href="lib.Base.html#5359" class="Bound"
+      >a'</a
+      ><a name="5361"
+      > </a
+      ><a name="5362" class="Symbol"
+      >:</a
+      ><a name="5363"
+      > </a
+      ><a name="5364" href="lib.Base.html#5329" class="Bound"
+      >A</a
+      ><a name="5365" class="Symbol"
+      >}</a
+      ><a name="5366"
+      > </a
+      ><a name="5367" class="Symbol"
+      >(</a
+      ><a name="5368" href="lib.Base.html#5368" class="Bound"
+      >p</a
+      ><a name="5369"
+      > </a
+      ><a name="5370" class="Symbol"
+      >:</a
+      ><a name="5371"
+      > </a
+      ><a name="5372" href="lib.Base.html#5357" class="Bound"
+      >a</a
+      ><a name="5373"
+      > </a
+      ><a name="5374" href="lib.Base.html#1866" class="Datatype Operator"
+      >==</a
+      ><a name="5376"
+      > </a
+      ><a name="5377" href="lib.Base.html#5359" class="Bound"
+      >a'</a
+      ><a name="5379" class="Symbol"
+      >)</a
+      ><a name="5380"
+      > </a
+      ><a name="5381" class="Symbol"
+      >{</a
+      ><a name="5382" href="lib.Base.html#5382" class="Bound"
+      >b</a
+      ><a name="5383"
+      > </a
+      ><a name="5384" href="lib.Base.html#5384" class="Bound"
+      >b'</a
+      ><a name="5386"
+      > </a
+      ><a name="5387" class="Symbol"
+      >:</a
+      ><a name="5388"
+      > </a
+      ><a name="5389" href="lib.Base.html#5342" class="Bound"
+      >B</a
+      ><a name="5390" class="Symbol"
+      >}</a
+      ><a name="5391"
+      > </a
+      ><a name="5392" class="Symbol"
+      >(</a
+      ><a name="5393" href="lib.Base.html#5393" class="Bound"
+      >q</a
+      ><a name="5394"
+      > </a
+      ><a name="5395" class="Symbol"
+      >:</a
+      ><a name="5396"
+      > </a
+      ><a name="5397" href="lib.Base.html#5382" class="Bound"
+      >b</a
+      ><a name="5398"
+      > </a
+      ><a name="5399" href="lib.Base.html#1866" class="Datatype Operator"
+      >==</a
+      ><a name="5401"
+      > </a
+      ><a name="5402" href="lib.Base.html#5384" class="Bound"
+      >b'</a
+      ><a name="5404" class="Symbol"
+      >)</a
+      ><a name="5405"
+      >
+  </a
+      ><a name="5408" class="Symbol"
+      >&#8594;</a
+      ><a name="5409"
+      > </a
+      ><a name="5410" class="Symbol"
+      >(</a
+      ><a name="5411" href="lib.Base.html#5357" class="Bound"
+      >a</a
+      ><a name="5412"
+      > </a
+      ><a name="5413" href="lib.Base.html#5082" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="5414"
+      > </a
+      ><a name="5415" href="lib.Base.html#5382" class="Bound"
+      >b</a
+      ><a name="5416" class="Symbol"
+      >)</a
+      ><a name="5417"
+      > </a
+      ><a name="5418" href="lib.Base.html#1866" class="Datatype Operator"
+      >==</a
+      ><a name="5420"
+      > </a
+      ><a name="5421" class="Symbol"
+      >(</a
+      ><a name="5422" href="lib.Base.html#5359" class="Bound"
+      >a'</a
+      ><a name="5424"
+      > </a
+      ><a name="5425" href="lib.Base.html#5082" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="5426"
+      > </a
+      ><a name="5427" href="lib.Base.html#5384" class="Bound"
+      >b'</a
+      ><a name="5429" class="Symbol"
+      >)</a
+      ><a name="5430"
+      >
+</a
+      ><a name="5431" href="lib.Base.html#5311" class="Function"
+      >pair&#215;=</a
+      ><a name="5437"
+      > </a
+      ><a name="5438" href="lib.Base.html#1917" class="InductiveConstructor"
+      >idp</a
+      ><a name="5441"
+      > </a
+      ><a name="5442" href="lib.Base.html#5442" class="Bound"
+      >q</a
+      ><a name="5443"
+      > </a
+      ><a name="5444" class="Symbol"
+      >=</a
+      ><a name="5445"
+      > </a
+      ><a name="5446" href="lib.Base.html#5137" class="Function"
+      >pair=</a
+      ><a name="5451"
+      > </a
+      ><a name="5452" href="lib.Base.html#1917" class="InductiveConstructor"
+      >idp</a
+      ><a name="5455"
+      > </a
+      ><a name="5456" href="lib.Base.html#5442" class="Bound"
+      >q</a
+      ><a name="5457"
+      >
+
+
+</a
+      ><a name="5460" class="Comment"
+      >{- Empty type
+
+We define the eliminator of the empty type using an absurd pattern. Given that
+absurd patterns are not consistent with HIT, we will not use empty patterns
+anymore after that.
+-}</a
+      ><a name="5652"
+      >
+
+</a
+      ><a name="5654" class="Keyword"
+      >data</a
+      ><a name="5658"
+      > </a
+      ><a name="5659" href="lib.Base.html#5659" class="Datatype"
+      >Empty</a
+      ><a name="5664"
+      > </a
+      ><a name="5665" class="Symbol"
+      >:</a
+      ><a name="5666"
+      > </a
+      ><a name="5667" href="lib.Base.html#1184" class="Function"
+      >Type&#8320;</a
+      ><a name="5672"
+      > </a
+      ><a name="5673" class="Keyword"
+      >where</a
+      ><a name="5678"
+      >
+
+</a
+      ><a name="5680" href="lib.Base.html#5680" class="Function"
+      >Empty-elim</a
+      ><a name="5690"
+      > </a
+      ><a name="5691" class="Symbol"
+      >:</a
+      ><a name="5692"
+      > </a
+      ><a name="5693" class="Symbol"
+      >&#8704;</a
+      ><a name="5694"
+      > </a
+      ><a name="5695" class="Symbol"
+      >{</a
+      ><a name="5696" href="lib.Base.html#5696" class="Bound"
+      >i</a
+      ><a name="5697" class="Symbol"
+      >}</a
+      ><a name="5698"
+      > </a
+      ><a name="5699" class="Symbol"
+      >{</a
+      ><a name="5700" href="lib.Base.html#5700" class="Bound"
+      >P</a
+      ><a name="5701"
+      > </a
+      ><a name="5702" class="Symbol"
+      >:</a
+      ><a name="5703"
+      > </a
+      ><a name="5704" href="lib.Base.html#5659" class="Datatype"
+      >Empty</a
+      ><a name="5709"
+      > </a
+      ><a name="5710" class="Symbol"
+      >&#8594;</a
+      ><a name="5711"
+      > </a
+      ><a name="5712" href="lib.Base.html#1132" class="Function"
+      >Type</a
+      ><a name="5716"
+      > </a
+      ><a name="5717" href="lib.Base.html#5696" class="Bound"
+      >i</a
+      ><a name="5718" class="Symbol"
+      >}</a
+      ><a name="5719"
+      > </a
+      ><a name="5720" class="Symbol"
+      >&#8594;</a
+      ><a name="5721"
+      > </a
+      ><a name="5722" class="Symbol"
+      >((</a
+      ><a name="5724" href="lib.Base.html#5724" class="Bound"
+      >x</a
+      ><a name="5725"
+      > </a
+      ><a name="5726" class="Symbol"
+      >:</a
+      ><a name="5727"
+      > </a
+      ><a name="5728" href="lib.Base.html#5659" class="Datatype"
+      >Empty</a
+      ><a name="5733" class="Symbol"
+      >)</a
+      ><a name="5734"
+      > </a
+      ><a name="5735" class="Symbol"
+      >&#8594;</a
+      ><a name="5736"
+      > </a
+      ><a name="5737" href="lib.Base.html#5700" class="Bound"
+      >P</a
+      ><a name="5738"
+      > </a
+      ><a name="5739" href="lib.Base.html#5724" class="Bound"
+      >x</a
+      ><a name="5740" class="Symbol"
+      >)</a
+      ><a name="5741"
+      >
+</a
+      ><a name="5742" href="lib.Base.html#5680" class="Function"
+      >Empty-elim</a
+      ><a name="5752"
+      > </a
+      ><a name="5753" class="Symbol"
+      >()</a
+      ><a name="5755"
+      >
+
+
+</a
+      ><a name="5758" class="Comment"
+      >{- Negation and disequality -}</a
+      ><a name="5788"
+      >
+
+</a
+      ><a name="5790" href="lib.Base.html#5790" class="Function"
+      >&#172;</a
+      ><a name="5791"
+      > </a
+      ><a name="5792" class="Symbol"
+      >:</a
+      ><a name="5793"
+      > </a
+      ><a name="5794" class="Symbol"
+      >&#8704;</a
+      ><a name="5795"
+      > </a
+      ><a name="5796" class="Symbol"
+      >{</a
+      ><a name="5797" href="lib.Base.html#5797" class="Bound"
+      >i</a
+      ><a name="5798" class="Symbol"
+      >}</a
+      ><a name="5799"
+      > </a
+      ><a name="5800" class="Symbol"
+      >(</a
+      ><a name="5801" href="lib.Base.html#5801" class="Bound"
+      >A</a
+      ><a name="5802"
+      > </a
+      ><a name="5803" class="Symbol"
+      >:</a
+      ><a name="5804"
+      > </a
+      ><a name="5805" href="lib.Base.html#1132" class="Function"
+      >Type</a
+      ><a name="5809"
+      > </a
+      ><a name="5810" href="lib.Base.html#5797" class="Bound"
+      >i</a
+      ><a name="5811" class="Symbol"
+      >)</a
+      ><a name="5812"
+      > </a
+      ><a name="5813" class="Symbol"
+      >&#8594;</a
+      ><a name="5814"
+      > </a
+      ><a name="5815" href="lib.Base.html#1132" class="Function"
+      >Type</a
+      ><a name="5819"
+      > </a
+      ><a name="5820" href="lib.Base.html#5797" class="Bound"
+      >i</a
+      ><a name="5821"
+      >
+</a
+      ><a name="5822" href="lib.Base.html#5790" class="Function"
+      >&#172;</a
+      ><a name="5823"
+      > </a
+      ><a name="5824" href="lib.Base.html#5824" class="Bound"
+      >A</a
+      ><a name="5825"
+      > </a
+      ><a name="5826" class="Symbol"
+      >=</a
+      ><a name="5827"
+      > </a
+      ><a name="5828" href="lib.Base.html#5824" class="Bound"
+      >A</a
+      ><a name="5829"
+      > </a
+      ><a name="5830" class="Symbol"
+      >&#8594;</a
+      ><a name="5831"
+      > </a
+      ><a name="5832" href="lib.Base.html#5659" class="Datatype"
+      >Empty</a
+      ><a name="5837"
+      >
+
+</a
+      ><a name="5839" href="lib.Base.html#5839" class="Function Operator"
+      >_&#8800;_</a
+      ><a name="5842"
+      > </a
+      ><a name="5843" class="Symbol"
+      >:</a
+      ><a name="5844"
+      > </a
+      ><a name="5845" class="Symbol"
+      >&#8704;</a
+      ><a name="5846"
+      > </a
+      ><a name="5847" class="Symbol"
+      >{</a
+      ><a name="5848" href="lib.Base.html#5848" class="Bound"
+      >i</a
+      ><a name="5849" class="Symbol"
+      >}</a
+      ><a name="5850"
+      > </a
+      ><a name="5851" class="Symbol"
+      >{</a
+      ><a name="5852" href="lib.Base.html#5852" class="Bound"
+      >A</a
+      ><a name="5853"
+      > </a
+      ><a name="5854" class="Symbol"
+      >:</a
+      ><a name="5855"
+      > </a
+      ><a name="5856" href="lib.Base.html#1132" class="Function"
+      >Type</a
+      ><a name="5860"
+      > </a
+      ><a name="5861" href="lib.Base.html#5848" class="Bound"
+      >i</a
+      ><a name="5862" class="Symbol"
+      >}</a
+      ><a name="5863"
+      > </a
+      ><a name="5864" class="Symbol"
+      >&#8594;</a
+      ><a name="5865"
+      > </a
+      ><a name="5866" class="Symbol"
+      >(</a
+      ><a name="5867" href="lib.Base.html#5852" class="Bound"
+      >A</a
+      ><a name="5868"
+      > </a
+      ><a name="5869" class="Symbol"
+      >&#8594;</a
+      ><a name="5870"
+      > </a
+      ><a name="5871" href="lib.Base.html#5852" class="Bound"
+      >A</a
+      ><a name="5872"
+      > </a
+      ><a name="5873" class="Symbol"
+      >&#8594;</a
+      ><a name="5874"
+      > </a
+      ><a name="5875" href="lib.Base.html#1132" class="Function"
+      >Type</a
+      ><a name="5879"
+      > </a
+      ><a name="5880" href="lib.Base.html#5848" class="Bound"
+      >i</a
+      ><a name="5881" class="Symbol"
+      >)</a
+      ><a name="5882"
+      >
+</a
+      ><a name="5883" href="lib.Base.html#5883" class="Bound"
+      >x</a
+      ><a name="5884"
+      > </a
+      ><a name="5885" href="lib.Base.html#5839" class="Function Operator"
+      >&#8800;</a
+      ><a name="5886"
+      > </a
+      ><a name="5887" href="lib.Base.html#5887" class="Bound"
+      >y</a
+      ><a name="5888"
+      > </a
+      ><a name="5889" class="Symbol"
+      >=</a
+      ><a name="5890"
+      > </a
+      ><a name="5891" href="lib.Base.html#5790" class="Function"
+      >&#172;</a
+      ><a name="5892"
+      > </a
+      ><a name="5893" class="Symbol"
+      >(</a
+      ><a name="5894" href="lib.Base.html#5883" class="Bound"
+      >x</a
+      ><a name="5895"
+      > </a
+      ><a name="5896" href="lib.Base.html#1866" class="Datatype Operator"
+      >==</a
+      ><a name="5898"
+      > </a
+      ><a name="5899" href="lib.Base.html#5887" class="Bound"
+      >y</a
+      ><a name="5900" class="Symbol"
+      >)</a
+      ><a name="5901"
+      >
+
+
+</a
+      ><a name="5904" class="Comment"
+      >{- Lifting to a higher universe level
+
+The operation of lifting enjoys both &#946; and &#951; definitionally.
+It&#8217;s a bit annoying to use, but it&#8217;s not used much (for now).
+-}</a
+      ><a name="6068"
+      >
+
+</a
+      ><a name="6070" class="Keyword"
+      >record</a
+      ><a name="6076"
+      > </a
+      ><a name="6077" href="lib.Base.html#6077" class="Record"
+      >Lift</a
+      ><a name="6081"
+      > </a
+      ><a name="6082" class="Symbol"
+      >{</a
+      ><a name="6083" href="lib.Base.html#6083" class="Bound"
+      >i</a
+      ><a name="6084"
+      > </a
+      ><a name="6085" href="lib.Base.html#6085" class="Bound"
+      >j</a
+      ><a name="6086" class="Symbol"
+      >}</a
+      ><a name="6087"
+      > </a
+      ><a name="6088" class="Symbol"
+      >(</a
+      ><a name="6089" href="lib.Base.html#6089" class="Bound"
+      >A</a
+      ><a name="6090"
+      > </a
+      ><a name="6091" class="Symbol"
+      >:</a
+      ><a name="6092"
+      > </a
+      ><a name="6093" href="lib.Base.html#1132" class="Function"
+      >Type</a
+      ><a name="6097"
+      > </a
+      ><a name="6098" href="lib.Base.html#6083" class="Bound"
+      >i</a
+      ><a name="6099" class="Symbol"
+      >)</a
+      ><a name="6100"
+      > </a
+      ><a name="6101" class="Symbol"
+      >:</a
+      ><a name="6102"
+      > </a
+      ><a name="6103" href="lib.Base.html#1132" class="Function"
+      >Type</a
+      ><a name="6107"
+      > </a
+      ><a name="6108" class="Symbol"
+      >(</a
+      ><a name="6109" href="Agda.Primitive.html#626" class="Primitive"
+      >lmax</a
+      ><a name="6113"
+      > </a
+      ><a name="6114" href="lib.Base.html#6083" class="Bound"
+      >i</a
+      ><a name="6115"
+      > </a
+      ><a name="6116" href="lib.Base.html#6085" class="Bound"
+      >j</a
+      ><a name="6117" class="Symbol"
+      >)</a
+      ><a name="6118"
+      > </a
+      ><a name="6119" class="Keyword"
+      >where</a
+      ><a name="6124"
+      >
+  </a
+      ><a name="6127" class="Keyword"
+      >constructor</a
+      ><a name="6138"
+      > </a
+      ><a name="6139" href="lib.Base.html#6139" class="InductiveConstructor"
+      >lift</a
+      ><a name="6143"
+      >
+  </a
+      ><a name="6146" class="Keyword"
+      >field</a
+      ><a name="6151"
+      >
+    </a
+      ><a name="6156" href="lib.Base.html#6156" class="Field"
+      >lower</a
+      ><a name="6161"
+      > </a
+      ><a name="6162" class="Symbol"
+      >:</a
+      ><a name="6163"
+      > </a
+      ><a name="6164" href="lib.Base.html#6089" class="Bound"
+      >A</a
+      ><a name="6165"
+      >
+</a
+      ><a name="6166" class="Keyword"
+      >open</a
+      ><a name="6170"
+      > </a
+      ><a name="6171" href="lib.Base.html#6077" class="Module"
+      >Lift</a
+      ><a name="6175"
+      > </a
+      ><a name="6176" class="Keyword"
+      >public</a
+      ><a name="6182"
+      >
+
+
+</a
+      ><a name="6185" class="Comment"
+      >{- Equational reasoning
+
+Equational reasoning is a way to write readable chains of equalities.
+The idea is that you can write the following:
+
+  t : a == e
+  t = a =&#10216; p &#10217;
+      b =&#10216; q &#10217;
+      c =&#10216; r &#10217;
+      d =&#10216; s &#10217;
+      e &#8718;
+
+where [p] is a path from [a] to [b], [q] is a path from [b] to [c], and so on.
+
+You often have to apply some equality in some context, for instance [p] could be
+[ap ctx thm] where [thm] is the interesting theorem used to prove that [a] is
+equal to [b], and [ctx] is the context.
+In such cases, you can use instead [thm |in-ctx ctx]. The advantage is that
+[ctx] is usually boring whereas the first word of [thm] is the most interesting
+part.
+
+_=&#10216;_&#10217; is not definitionally the same thing as concatenation of paths _&#8729;_ because
+we haven&#8217;t defined concatenation of paths yet, and also you probably shouldn&#8217;t
+reason on paths constructed with equational reasoning.
+If you do want to reason on paths constructed with equational reasoning, check
+out lib.types.PathSeq instead.
+-}</a
+      ><a name="7180"
+      >
+
+</a
+      ><a name="7182" class="Keyword"
+      >infix</a
+      ><a name="7187"
+      >  </a
+      ><a name="7189" class="Number"
+      >15</a
+      ><a name="7191"
+      > _&#8718;
+</a
+      ><a name="7195" class="Keyword"
+      >infixr</a
+      ><a name="7201"
+      > </a
+      ><a name="7202" class="Number"
+      >10</a
+      ><a name="7204"
+      > _=&#10216;_&#10217;_
+
+</a
+      ><a name="7213" href="lib.Base.html#7213" class="Function Operator"
+      >_=&#10216;_&#10217;_</a
+      ><a name="7219"
+      > </a
+      ><a name="7220" class="Symbol"
+      >:</a
+      ><a name="7221"
+      > </a
+      ><a name="7222" class="Symbol"
+      >&#8704;</a
+      ><a name="7223"
+      > </a
+      ><a name="7224" class="Symbol"
+      >{</a
+      ><a name="7225" href="lib.Base.html#7225" class="Bound"
+      >i</a
+      ><a name="7226" class="Symbol"
+      >}</a
+      ><a name="7227"
+      > </a
+      ><a name="7228" class="Symbol"
+      >{</a
+      ><a name="7229" href="lib.Base.html#7229" class="Bound"
+      >A</a
+      ><a name="7230"
+      > </a
+      ><a name="7231" class="Symbol"
+      >:</a
+      ><a name="7232"
+      > </a
+      ><a name="7233" href="lib.Base.html#1132" class="Function"
+      >Type</a
+      ><a name="7237"
+      > </a
+      ><a name="7238" href="lib.Base.html#7225" class="Bound"
+      >i</a
+      ><a name="7239" class="Symbol"
+      >}</a
+      ><a name="7240"
+      > </a
+      ><a name="7241" class="Symbol"
+      >(</a
+      ><a name="7242" href="lib.Base.html#7242" class="Bound"
+      >x</a
+      ><a name="7243"
+      > </a
+      ><a name="7244" class="Symbol"
+      >:</a
+      ><a name="7245"
+      > </a
+      ><a name="7246" href="lib.Base.html#7229" class="Bound"
+      >A</a
+      ><a name="7247" class="Symbol"
+      >)</a
+      ><a name="7248"
+      > </a
+      ><a name="7249" class="Symbol"
+      >{</a
+      ><a name="7250" href="lib.Base.html#7250" class="Bound"
+      >y</a
+      ><a name="7251"
+      > </a
+      ><a name="7252" href="lib.Base.html#7252" class="Bound"
+      >z</a
+      ><a name="7253"
+      > </a
+      ><a name="7254" class="Symbol"
+      >:</a
+      ><a name="7255"
+      > </a
+      ><a name="7256" href="lib.Base.html#7229" class="Bound"
+      >A</a
+      ><a name="7257" class="Symbol"
+      >}</a
+      ><a name="7258"
+      > </a
+      ><a name="7259" class="Symbol"
+      >&#8594;</a
+      ><a name="7260"
+      > </a
+      ><a name="7261" href="lib.Base.html#7242" class="Bound"
+      >x</a
+      ><a name="7262"
+      > </a
+      ><a name="7263" href="lib.Base.html#1866" class="Datatype Operator"
+      >==</a
+      ><a name="7265"
+      > </a
+      ><a name="7266" href="lib.Base.html#7250" class="Bound"
+      >y</a
+      ><a name="7267"
+      > </a
+      ><a name="7268" class="Symbol"
+      >&#8594;</a
+      ><a name="7269"
+      > </a
+      ><a name="7270" href="lib.Base.html#7250" class="Bound"
+      >y</a
+      ><a name="7271"
+      > </a
+      ><a name="7272" href="lib.Base.html#1866" class="Datatype Operator"
+      >==</a
+      ><a name="7274"
+      > </a
+      ><a name="7275" href="lib.Base.html#7252" class="Bound"
+      >z</a
+      ><a name="7276"
+      > </a
+      ><a name="7277" class="Symbol"
+      >&#8594;</a
+      ><a name="7278"
+      > </a
+      ><a name="7279" href="lib.Base.html#7242" class="Bound"
+      >x</a
+      ><a name="7280"
+      > </a
+      ><a name="7281" href="lib.Base.html#1866" class="Datatype Operator"
+      >==</a
+      ><a name="7283"
+      > </a
+      ><a name="7284" href="lib.Base.html#7252" class="Bound"
+      >z</a
+      ><a name="7285"
+      >
+</a
+      ><a name="7286" class="Symbol"
+      >_</a
+      ><a name="7287"
+      > </a
+      ><a name="7288" href="lib.Base.html#7213" class="Function Operator"
+      >=&#10216;</a
+      ><a name="7290"
+      > </a
+      ><a name="7291" href="lib.Base.html#1917" class="InductiveConstructor"
+      >idp</a
+      ><a name="7294"
+      > </a
+      ><a name="7295" href="lib.Base.html#7213" class="Function Operator"
+      >&#10217;</a
+      ><a name="7296"
+      > </a
+      ><a name="7297" href="lib.Base.html#1917" class="InductiveConstructor"
+      >idp</a
+      ><a name="7300"
+      > </a
+      ><a name="7301" class="Symbol"
+      >=</a
+      ><a name="7302"
+      > </a
+      ><a name="7303" href="lib.Base.html#1917" class="InductiveConstructor"
+      >idp</a
+      ><a name="7306"
+      >
+
+</a
+      ><a name="7308" href="lib.Base.html#7308" class="Function Operator"
+      >_&#8718;</a
+      ><a name="7310"
+      > </a
+      ><a name="7311" class="Symbol"
+      >:</a
+      ><a name="7312"
+      > </a
+      ><a name="7313" class="Symbol"
+      >&#8704;</a
+      ><a name="7314"
+      > </a
+      ><a name="7315" class="Symbol"
+      >{</a
+      ><a name="7316" href="lib.Base.html#7316" class="Bound"
+      >i</a
+      ><a name="7317" class="Symbol"
+      >}</a
+      ><a name="7318"
+      > </a
+      ><a name="7319" class="Symbol"
+      >{</a
+      ><a name="7320" href="lib.Base.html#7320" class="Bound"
+      >A</a
+      ><a name="7321"
+      > </a
+      ><a name="7322" class="Symbol"
+      >:</a
+      ><a name="7323"
+      > </a
+      ><a name="7324" href="lib.Base.html#1132" class="Function"
+      >Type</a
+      ><a name="7328"
+      > </a
+      ><a name="7329" href="lib.Base.html#7316" class="Bound"
+      >i</a
+      ><a name="7330" class="Symbol"
+      >}</a
+      ><a name="7331"
+      > </a
+      ><a name="7332" class="Symbol"
+      >(</a
+      ><a name="7333" href="lib.Base.html#7333" class="Bound"
+      >x</a
+      ><a name="7334"
+      > </a
+      ><a name="7335" class="Symbol"
+      >:</a
+      ><a name="7336"
+      > </a
+      ><a name="7337" href="lib.Base.html#7320" class="Bound"
+      >A</a
+      ><a name="7338" class="Symbol"
+      >)</a
+      ><a name="7339"
+      > </a
+      ><a name="7340" class="Symbol"
+      >&#8594;</a
+      ><a name="7341"
+      > </a
+      ><a name="7342" href="lib.Base.html#7333" class="Bound"
+      >x</a
+      ><a name="7343"
+      > </a
+      ><a name="7344" href="lib.Base.html#1866" class="Datatype Operator"
+      >==</a
+      ><a name="7346"
+      > </a
+      ><a name="7347" href="lib.Base.html#7333" class="Bound"
+      >x</a
+      ><a name="7348"
+      >
+</a
+      ><a name="7349" class="Symbol"
+      >_</a
+      ><a name="7350"
+      > </a
+      ><a name="7351" href="lib.Base.html#7308" class="Function Operator"
+      >&#8718;</a
+      ><a name="7352"
+      > </a
+      ><a name="7353" class="Symbol"
+      >=</a
+      ><a name="7354"
+      > </a
+      ><a name="7355" href="lib.Base.html#1917" class="InductiveConstructor"
+      >idp</a
+      ><a name="7358"
+      >
+
+</a
+      ><a name="7360" class="Keyword"
+      >infixr</a
+      ><a name="7366"
+      > </a
+      ><a name="7367" class="Number"
+      >40</a
+      ><a name="7369"
+      > ap
+</a
+      ><a name="7373" class="Keyword"
+      >syntax</a
+      ><a name="7379"
+      > ap f p </a
+      ><a name="7387" class="Symbol"
+      >=</a
+      ><a name="7388"
+      > p |in-ctx f
+
+</a
+      ><a name="7402" class="Comment"
+      >{- Various basic functions and function operations
+
+The identity function on a type [A] is [idf A] and the constant function at some
+point [b] is [cst b].
+
+Composition of functions ([_&#8728;_]) can handle dependent functions.
+-}</a
+      ><a name="7625"
+      >
+
+</a
+      ><a name="7627" href="lib.Base.html#7627" class="Function"
+      >idf</a
+      ><a name="7630"
+      > </a
+      ><a name="7631" class="Symbol"
+      >:</a
+      ><a name="7632"
+      > </a
+      ><a name="7633" class="Symbol"
+      >&#8704;</a
+      ><a name="7634"
+      > </a
+      ><a name="7635" class="Symbol"
+      >{</a
+      ><a name="7636" href="lib.Base.html#7636" class="Bound"
+      >i</a
+      ><a name="7637" class="Symbol"
+      >}</a
+      ><a name="7638"
+      > </a
+      ><a name="7639" class="Symbol"
+      >(</a
+      ><a name="7640" href="lib.Base.html#7640" class="Bound"
+      >A</a
+      ><a name="7641"
+      > </a
+      ><a name="7642" class="Symbol"
+      >:</a
+      ><a name="7643"
+      > </a
+      ><a name="7644" href="lib.Base.html#1132" class="Function"
+      >Type</a
+      ><a name="7648"
+      > </a
+      ><a name="7649" href="lib.Base.html#7636" class="Bound"
+      >i</a
+      ><a name="7650" class="Symbol"
+      >)</a
+      ><a name="7651"
+      > </a
+      ><a name="7652" class="Symbol"
+      >&#8594;</a
+      ><a name="7653"
+      > </a
+      ><a name="7654" class="Symbol"
+      >(</a
+      ><a name="7655" href="lib.Base.html#7640" class="Bound"
+      >A</a
+      ><a name="7656"
+      > </a
+      ><a name="7657" class="Symbol"
+      >&#8594;</a
+      ><a name="7658"
+      > </a
+      ><a name="7659" href="lib.Base.html#7640" class="Bound"
+      >A</a
+      ><a name="7660" class="Symbol"
+      >)</a
+      ><a name="7661"
+      >
+</a
+      ><a name="7662" href="lib.Base.html#7627" class="Function"
+      >idf</a
+      ><a name="7665"
+      > </a
+      ><a name="7666" href="lib.Base.html#7666" class="Bound"
+      >A</a
+      ><a name="7667"
+      > </a
+      ><a name="7668" class="Symbol"
+      >=</a
+      ><a name="7669"
+      > </a
+      ><a name="7670" class="Symbol"
+      >&#955;</a
+      ><a name="7671"
+      > </a
+      ><a name="7672" href="lib.Base.html#7672" class="Bound"
+      >x</a
+      ><a name="7673"
+      > </a
+      ><a name="7674" class="Symbol"
+      >&#8594;</a
+      ><a name="7675"
+      > </a
+      ><a name="7676" href="lib.Base.html#7672" class="Bound"
+      >x</a
+      ><a name="7677"
+      >
+
+</a
+      ><a name="7679" href="lib.Base.html#7679" class="Function"
+      >cst</a
+      ><a name="7682"
+      > </a
+      ><a name="7683" class="Symbol"
+      >:</a
+      ><a name="7684"
+      > </a
+      ><a name="7685" class="Symbol"
+      >&#8704;</a
+      ><a name="7686"
+      > </a
+      ><a name="7687" class="Symbol"
+      >{</a
+      ><a name="7688" href="lib.Base.html#7688" class="Bound"
+      >i</a
+      ><a name="7689"
+      > </a
+      ><a name="7690" href="lib.Base.html#7690" class="Bound"
+      >j</a
+      ><a name="7691" class="Symbol"
+      >}</a
+      ><a name="7692"
+      > </a
+      ><a name="7693" class="Symbol"
+      >{</a
+      ><a name="7694" href="lib.Base.html#7694" class="Bound"
+      >A</a
+      ><a name="7695"
+      > </a
+      ><a name="7696" class="Symbol"
+      >:</a
+      ><a name="7697"
+      > </a
+      ><a name="7698" href="lib.Base.html#1132" class="Function"
+      >Type</a
+      ><a name="7702"
+      > </a
+      ><a name="7703" href="lib.Base.html#7688" class="Bound"
+      >i</a
+      ><a name="7704" class="Symbol"
+      >}</a
+      ><a name="7705"
+      > </a
+      ><a name="7706" class="Symbol"
+      >{</a
+      ><a name="7707" href="lib.Base.html#7707" class="Bound"
+      >B</a
+      ><a name="7708"
+      > </a
+      ><a name="7709" class="Symbol"
+      >:</a
+      ><a name="7710"
+      > </a
+      ><a name="7711" href="lib.Base.html#1132" class="Function"
+      >Type</a
+      ><a name="7715"
+      > </a
+      ><a name="7716" href="lib.Base.html#7690" class="Bound"
+      >j</a
+      ><a name="7717" class="Symbol"
+      >}</a
+      ><a name="7718"
+      > </a
+      ><a name="7719" class="Symbol"
+      >(</a
+      ><a name="7720" href="lib.Base.html#7720" class="Bound"
+      >b</a
+      ><a name="7721"
+      > </a
+      ><a name="7722" class="Symbol"
+      >:</a
+      ><a name="7723"
+      > </a
+      ><a name="7724" href="lib.Base.html#7707" class="Bound"
+      >B</a
+      ><a name="7725" class="Symbol"
+      >)</a
+      ><a name="7726"
+      > </a
+      ><a name="7727" class="Symbol"
+      >&#8594;</a
+      ><a name="7728"
+      > </a
+      ><a name="7729" class="Symbol"
+      >(</a
+      ><a name="7730" href="lib.Base.html#7694" class="Bound"
+      >A</a
+      ><a name="7731"
+      > </a
+      ><a name="7732" class="Symbol"
+      >&#8594;</a
+      ><a name="7733"
+      > </a
+      ><a name="7734" href="lib.Base.html#7707" class="Bound"
+      >B</a
+      ><a name="7735" class="Symbol"
+      >)</a
+      ><a name="7736"
+      >
+</a
+      ><a name="7737" href="lib.Base.html#7679" class="Function"
+      >cst</a
+      ><a name="7740"
+      > </a
+      ><a name="7741" href="lib.Base.html#7741" class="Bound"
+      >b</a
+      ><a name="7742"
+      > </a
+      ><a name="7743" class="Symbol"
+      >=</a
+      ><a name="7744"
+      > </a
+      ><a name="7745" class="Symbol"
+      >&#955;</a
+      ><a name="7746"
+      > </a
+      ><a name="7747" href="lib.Base.html#7747" class="Bound"
+      >_</a
+      ><a name="7748"
+      > </a
+      ><a name="7749" class="Symbol"
+      >&#8594;</a
+      ><a name="7750"
+      > </a
+      ><a name="7751" href="lib.Base.html#7741" class="Bound"
+      >b</a
+      ><a name="7752"
+      >
+
+</a
+      ><a name="7754" class="Keyword"
+      >infixr</a
+      ><a name="7760"
+      > </a
+      ><a name="7761" class="Number"
+      >80</a
+      ><a name="7763"
+      > _&#8728;_
+
+</a
+      ><a name="7769" href="lib.Base.html#7769" class="Function Operator"
+      >_&#8728;_</a
+      ><a name="7772"
+      > </a
+      ><a name="7773" class="Symbol"
+      >:</a
+      ><a name="7774"
+      > </a
+      ><a name="7775" class="Symbol"
+      >&#8704;</a
+      ><a name="7776"
+      > </a
+      ><a name="7777" class="Symbol"
+      >{</a
+      ><a name="7778" href="lib.Base.html#7778" class="Bound"
+      >i</a
+      ><a name="7779"
+      > </a
+      ><a name="7780" href="lib.Base.html#7780" class="Bound"
+      >j</a
+      ><a name="7781"
+      > </a
+      ><a name="7782" href="lib.Base.html#7782" class="Bound"
+      >k</a
+      ><a name="7783" class="Symbol"
+      >}</a
+      ><a name="7784"
+      > </a
+      ><a name="7785" class="Symbol"
+      >{</a
+      ><a name="7786" href="lib.Base.html#7786" class="Bound"
+      >A</a
+      ><a name="7787"
+      > </a
+      ><a name="7788" class="Symbol"
+      >:</a
+      ><a name="7789"
+      > </a
+      ><a name="7790" href="lib.Base.html#1132" class="Function"
+      >Type</a
+      ><a name="7794"
+      > </a
+      ><a name="7795" href="lib.Base.html#7778" class="Bound"
+      >i</a
+      ><a name="7796" class="Symbol"
+      >}</a
+      ><a name="7797"
+      > </a
+      ><a name="7798" class="Symbol"
+      >{</a
+      ><a name="7799" href="lib.Base.html#7799" class="Bound"
+      >B</a
+      ><a name="7800"
+      > </a
+      ><a name="7801" class="Symbol"
+      >:</a
+      ><a name="7802"
+      > </a
+      ><a name="7803" href="lib.Base.html#7786" class="Bound"
+      >A</a
+      ><a name="7804"
+      > </a
+      ><a name="7805" class="Symbol"
+      >&#8594;</a
+      ><a name="7806"
+      > </a
+      ><a name="7807" href="lib.Base.html#1132" class="Function"
+      >Type</a
+      ><a name="7811"
+      > </a
+      ><a name="7812" href="lib.Base.html#7780" class="Bound"
+      >j</a
+      ><a name="7813" class="Symbol"
+      >}</a
+      ><a name="7814"
+      > </a
+      ><a name="7815" class="Symbol"
+      >{</a
+      ><a name="7816" href="lib.Base.html#7816" class="Bound"
+      >C</a
+      ><a name="7817"
+      > </a
+      ><a name="7818" class="Symbol"
+      >:</a
+      ><a name="7819"
+      > </a
+      ><a name="7820" class="Symbol"
+      >(</a
+      ><a name="7821" href="lib.Base.html#7821" class="Bound"
+      >a</a
+      ><a name="7822"
+      > </a
+      ><a name="7823" class="Symbol"
+      >:</a
+      ><a name="7824"
+      > </a
+      ><a name="7825" href="lib.Base.html#7786" class="Bound"
+      >A</a
+      ><a name="7826" class="Symbol"
+      >)</a
+      ><a name="7827"
+      > </a
+      ><a name="7828" class="Symbol"
+      >&#8594;</a
+      ><a name="7829"
+      > </a
+      ><a name="7830" class="Symbol"
+      >(</a
+      ><a name="7831" href="lib.Base.html#7799" class="Bound"
+      >B</a
+      ><a name="7832"
+      > </a
+      ><a name="7833" href="lib.Base.html#7821" class="Bound"
+      >a</a
+      ><a name="7834"
+      > </a
+      ><a name="7835" class="Symbol"
+      >&#8594;</a
+      ><a name="7836"
+      > </a
+      ><a name="7837" href="lib.Base.html#1132" class="Function"
+      >Type</a
+      ><a name="7841"
+      > </a
+      ><a name="7842" href="lib.Base.html#7782" class="Bound"
+      >k</a
+      ><a name="7843" class="Symbol"
+      >)}</a
+      ><a name="7845"
+      >
+  </a
+      ><a name="7848" class="Symbol"
+      >&#8594;</a
+      ><a name="7849"
+      > </a
+      ><a name="7850" class="Symbol"
+      >(</a
+      ><a name="7851" href="lib.Base.html#7851" class="Bound"
+      >g</a
+      ><a name="7852"
+      > </a
+      ><a name="7853" class="Symbol"
+      >:</a
+      ><a name="7854"
+      > </a
+      ><a name="7855" class="Symbol"
+      >{</a
+      ><a name="7856" href="lib.Base.html#7856" class="Bound"
+      >a</a
+      ><a name="7857"
+      > </a
+      ><a name="7858" class="Symbol"
+      >:</a
+      ><a name="7859"
+      > </a
+      ><a name="7860" href="lib.Base.html#7786" class="Bound"
+      >A</a
+      ><a name="7861" class="Symbol"
+      >}</a
+      ><a name="7862"
+      > </a
+      ><a name="7863" class="Symbol"
+      >&#8594;</a
+      ><a name="7864"
+      > </a
+      ><a name="7865" href="lib.Base.html#4820" class="Function"
+      >&#928;</a
+      ><a name="7866"
+      > </a
+      ><a name="7867" class="Symbol"
+      >(</a
+      ><a name="7868" href="lib.Base.html#7799" class="Bound"
+      >B</a
+      ><a name="7869"
+      > </a
+      ><a name="7870" href="lib.Base.html#7856" class="Bound"
+      >a</a
+      ><a name="7871" class="Symbol"
+      >)</a
+      ><a name="7872"
+      > </a
+      ><a name="7873" class="Symbol"
+      >(</a
+      ><a name="7874" href="lib.Base.html#7816" class="Bound"
+      >C</a
+      ><a name="7875"
+      > </a
+      ><a name="7876" href="lib.Base.html#7856" class="Bound"
+      >a</a
+      ><a name="7877" class="Symbol"
+      >))</a
+      ><a name="7879"
+      > </a
+      ><a name="7880" class="Symbol"
+      >&#8594;</a
+      ><a name="7881"
+      > </a
+      ><a name="7882" class="Symbol"
+      >(</a
+      ><a name="7883" href="lib.Base.html#7883" class="Bound"
+      >f</a
+      ><a name="7884"
+      > </a
+      ><a name="7885" class="Symbol"
+      >:</a
+      ><a name="7886"
+      > </a
+      ><a name="7887" href="lib.Base.html#4820" class="Function"
+      >&#928;</a
+      ><a name="7888"
+      > </a
+      ><a name="7889" href="lib.Base.html#7786" class="Bound"
+      >A</a
+      ><a name="7890"
+      > </a
+      ><a name="7891" href="lib.Base.html#7799" class="Bound"
+      >B</a
+      ><a name="7892" class="Symbol"
+      >)</a
+      ><a name="7893"
+      > </a
+      ><a name="7894" class="Symbol"
+      >&#8594;</a
+      ><a name="7895"
+      > </a
+      ><a name="7896" href="lib.Base.html#4820" class="Function"
+      >&#928;</a
+      ><a name="7897"
+      > </a
+      ><a name="7898" href="lib.Base.html#7786" class="Bound"
+      >A</a
+      ><a name="7899"
+      > </a
+      ><a name="7900" class="Symbol"
+      >(&#955;</a
+      ><a name="7902"
+      > </a
+      ><a name="7903" href="lib.Base.html#7903" class="Bound"
+      >a</a
+      ><a name="7904"
+      > </a
+      ><a name="7905" class="Symbol"
+      >&#8594;</a
+      ><a name="7906"
+      > </a
+      ><a name="7907" href="lib.Base.html#7816" class="Bound"
+      >C</a
+      ><a name="7908"
+      > </a
+      ><a name="7909" href="lib.Base.html#7903" class="Bound"
+      >a</a
+      ><a name="7910"
+      > </a
+      ><a name="7911" class="Symbol"
+      >(</a
+      ><a name="7912" href="lib.Base.html#7883" class="Bound"
+      >f</a
+      ><a name="7913"
+      > </a
+      ><a name="7914" href="lib.Base.html#7903" class="Bound"
+      >a</a
+      ><a name="7915" class="Symbol"
+      >))</a
+      ><a name="7917"
+      >
+</a
+      ><a name="7918" href="lib.Base.html#7918" class="Bound"
+      >g</a
+      ><a name="7919"
+      > </a
+      ><a name="7920" href="lib.Base.html#7769" class="Function Operator"
+      >&#8728;</a
+      ><a name="7921"
+      > </a
+      ><a name="7922" href="lib.Base.html#7922" class="Bound"
+      >f</a
+      ><a name="7923"
+      > </a
+      ><a name="7924" class="Symbol"
+      >=</a
+      ><a name="7925"
+      > </a
+      ><a name="7926" class="Symbol"
+      >&#955;</a
+      ><a name="7927"
+      > </a
+      ><a name="7928" href="lib.Base.html#7928" class="Bound"
+      >x</a
+      ><a name="7929"
+      > </a
+      ><a name="7930" class="Symbol"
+      >&#8594;</a
+      ><a name="7931"
+      > </a
+      ><a name="7932" href="lib.Base.html#7918" class="Bound"
+      >g</a
+      ><a name="7933"
+      > </a
+      ><a name="7934" class="Symbol"
+      >(</a
+      ><a name="7935" href="lib.Base.html#7922" class="Bound"
+      >f</a
+      ><a name="7936"
+      > </a
+      ><a name="7937" href="lib.Base.html#7928" class="Bound"
+      >x</a
+      ><a name="7938" class="Symbol"
+      >)</a
+      ><a name="7939"
+      >
+
+</a
+      ><a name="7941" class="Comment"
+      >-- Application</a
+      ><a name="7955"
+      >
+</a
+      ><a name="7956" class="Keyword"
+      >infixr</a
+      ><a name="7962"
+      > </a
+      ><a name="7963" class="Number"
+      >0</a
+      ><a name="7964"
+      > _$_
+</a
+      ><a name="7969" href="lib.Base.html#7969" class="Function Operator"
+      >_$_</a
+      ><a name="7972"
+      > </a
+      ><a name="7973" class="Symbol"
+      >:</a
+      ><a name="7974"
+      > </a
+      ><a name="7975" class="Symbol"
+      >&#8704;</a
+      ><a name="7976"
+      > </a
+      ><a name="7977" class="Symbol"
+      >{</a
+      ><a name="7978" href="lib.Base.html#7978" class="Bound"
+      >i</a
+      ><a name="7979"
+      > </a
+      ><a name="7980" href="lib.Base.html#7980" class="Bound"
+      >j</a
+      ><a name="7981" class="Symbol"
+      >}</a
+      ><a name="7982"
+      > </a
+      ><a name="7983" class="Symbol"
+      >{</a
+      ><a name="7984" href="lib.Base.html#7984" class="Bound"
+      >A</a
+      ><a name="7985"
+      > </a
+      ><a name="7986" class="Symbol"
+      >:</a
+      ><a name="7987"
+      > </a
+      ><a name="7988" href="lib.Base.html#1132" class="Function"
+      >Type</a
+      ><a name="7992"
+      > </a
+      ><a name="7993" href="lib.Base.html#7978" class="Bound"
+      >i</a
+      ><a name="7994" class="Symbol"
+      >}</a
+      ><a name="7995"
+      > </a
+      ><a name="7996" class="Symbol"
+      >{</a
+      ><a name="7997" href="lib.Base.html#7997" class="Bound"
+      >B</a
+      ><a name="7998"
+      > </a
+      ><a name="7999" class="Symbol"
+      >:</a
+      ><a name="8000"
+      > </a
+      ><a name="8001" href="lib.Base.html#7984" class="Bound"
+      >A</a
+      ><a name="8002"
+      > </a
+      ><a name="8003" class="Symbol"
+      >&#8594;</a
+      ><a name="8004"
+      > </a
+      ><a name="8005" href="lib.Base.html#1132" class="Function"
+      >Type</a
+      ><a name="8009"
+      > </a
+      ><a name="8010" href="lib.Base.html#7980" class="Bound"
+      >j</a
+      ><a name="8011" class="Symbol"
+      >}</a
+      ><a name="8012"
+      > </a
+      ><a name="8013" class="Symbol"
+      >&#8594;</a
+      ><a name="8014"
+      > </a
+      ><a name="8015" class="Symbol"
+      >(&#8704;</a
+      ><a name="8017"
+      > </a
+      ><a name="8018" href="lib.Base.html#8018" class="Bound"
+      >x</a
+      ><a name="8019"
+      > </a
+      ><a name="8020" class="Symbol"
+      >&#8594;</a
+      ><a name="8021"
+      > </a
+      ><a name="8022" href="lib.Base.html#7997" class="Bound"
+      >B</a
+      ><a name="8023"
+      > </a
+      ><a name="8024" href="lib.Base.html#8018" class="Bound"
+      >x</a
+      ><a name="8025" class="Symbol"
+      >)</a
+      ><a name="8026"
+      > </a
+      ><a name="8027" class="Symbol"
+      >&#8594;</a
+      ><a name="8028"
+      > </a
+      ><a name="8029" class="Symbol"
+      >(&#8704;</a
+      ><a name="8031"
+      > </a
+      ><a name="8032" href="lib.Base.html#8032" class="Bound"
+      >x</a
+      ><a name="8033"
+      > </a
+      ><a name="8034" class="Symbol"
+      >&#8594;</a
+      ><a name="8035"
+      > </a
+      ><a name="8036" href="lib.Base.html#7997" class="Bound"
+      >B</a
+      ><a name="8037"
+      > </a
+      ><a name="8038" href="lib.Base.html#8032" class="Bound"
+      >x</a
+      ><a name="8039" class="Symbol"
+      >)</a
+      ><a name="8040"
+      >
+</a
+      ><a name="8041" href="lib.Base.html#8041" class="Bound"
+      >f</a
+      ><a name="8042"
+      > </a
+      ><a name="8043" href="lib.Base.html#7969" class="Function Operator"
+      >$</a
+      ><a name="8044"
+      > </a
+      ><a name="8045" href="lib.Base.html#8045" class="Bound"
+      >x</a
+      ><a name="8046"
+      > </a
+      ><a name="8047" class="Symbol"
+      >=</a
+      ><a name="8048"
+      > </a
+      ><a name="8049" href="lib.Base.html#8041" class="Bound"
+      >f</a
+      ><a name="8050"
+      > </a
+      ><a name="8051" href="lib.Base.html#8045" class="Bound"
+      >x</a
+      ><a name="8052"
+      >
+
+</a
+      ><a name="8054" class="Comment"
+      >-- (Un)curryfication</a
+      ><a name="8074"
+      >
+</a
+      ><a name="8075" href="lib.Base.html#8075" class="Function"
+      >curry</a
+      ><a name="8080"
+      > </a
+      ><a name="8081" class="Symbol"
+      >:</a
+      ><a name="8082"
+      > </a
+      ><a name="8083" class="Symbol"
+      >&#8704;</a
+      ><a name="8084"
+      > </a
+      ><a name="8085" class="Symbol"
+      >{</a
+      ><a name="8086" href="lib.Base.html#8086" class="Bound"
+      >i</a
+      ><a name="8087"
+      > </a
+      ><a name="8088" href="lib.Base.html#8088" class="Bound"
+      >j</a
+      ><a name="8089"
+      > </a
+      ><a name="8090" href="lib.Base.html#8090" class="Bound"
+      >k</a
+      ><a name="8091" class="Symbol"
+      >}</a
+      ><a name="8092"
+      > </a
+      ><a name="8093" class="Symbol"
+      >{</a
+      ><a name="8094" href="lib.Base.html#8094" class="Bound"
+      >A</a
+      ><a name="8095"
+      > </a
+      ><a name="8096" class="Symbol"
+      >:</a
+      ><a name="8097"
+      > </a
+      ><a name="8098" href="lib.Base.html#1132" class="Function"
+      >Type</a
+      ><a name="8102"
+      > </a
+      ><a name="8103" href="lib.Base.html#8086" class="Bound"
+      >i</a
+      ><a name="8104" class="Symbol"
+      >}</a
+      ><a name="8105"
+      > </a
+      ><a name="8106" class="Symbol"
+      >{</a
+      ><a name="8107" href="lib.Base.html#8107" class="Bound"
+      >B</a
+      ><a name="8108"
+      > </a
+      ><a name="8109" class="Symbol"
+      >:</a
+      ><a name="8110"
+      > </a
+      ><a name="8111" href="lib.Base.html#8094" class="Bound"
+      >A</a
+      ><a name="8112"
+      > </a
+      ><a name="8113" class="Symbol"
+      >&#8594;</a
+      ><a name="8114"
+      > </a
+      ><a name="8115" href="lib.Base.html#1132" class="Function"
+      >Type</a
+      ><a name="8119"
+      > </a
+      ><a name="8120" href="lib.Base.html#8088" class="Bound"
+      >j</a
+      ><a name="8121" class="Symbol"
+      >}</a
+      ><a name="8122"
+      > </a
+      ><a name="8123" class="Symbol"
+      >{</a
+      ><a name="8124" href="lib.Base.html#8124" class="Bound"
+      >C</a
+      ><a name="8125"
+      > </a
+      ><a name="8126" class="Symbol"
+      >:</a
+      ><a name="8127"
+      > </a
+      ><a name="8128" href="lib.Base.html#5006" class="Record"
+      >&#931;</a
+      ><a name="8129"
+      > </a
+      ><a name="8130" href="lib.Base.html#8094" class="Bound"
+      >A</a
+      ><a name="8131"
+      > </a
+      ><a name="8132" href="lib.Base.html#8107" class="Bound"
+      >B</a
+      ><a name="8133"
+      > </a
+      ><a name="8134" class="Symbol"
+      >&#8594;</a
+      ><a name="8135"
+      > </a
+      ><a name="8136" href="lib.Base.html#1132" class="Function"
+      >Type</a
+      ><a name="8140"
+      > </a
+      ><a name="8141" href="lib.Base.html#8090" class="Bound"
+      >k</a
+      ><a name="8142" class="Symbol"
+      >}</a
+      ><a name="8143"
+      >
+  </a
+      ><a name="8146" class="Symbol"
+      >&#8594;</a
+      ><a name="8147"
+      > </a
+      ><a name="8148" class="Symbol"
+      >(&#8704;</a
+      ><a name="8150"
+      > </a
+      ><a name="8151" href="lib.Base.html#8151" class="Bound"
+      >s</a
+      ><a name="8152"
+      > </a
+      ><a name="8153" class="Symbol"
+      >&#8594;</a
+      ><a name="8154"
+      > </a
+      ><a name="8155" href="lib.Base.html#8124" class="Bound"
+      >C</a
+      ><a name="8156"
+      > </a
+      ><a name="8157" href="lib.Base.html#8151" class="Bound"
+      >s</a
+      ><a name="8158" class="Symbol"
+      >)</a
+      ><a name="8159"
+      > </a
+      ><a name="8160" class="Symbol"
+      >&#8594;</a
+      ><a name="8161"
+      > </a
+      ><a name="8162" class="Symbol"
+      >(&#8704;</a
+      ><a name="8164"
+      > </a
+      ><a name="8165" href="lib.Base.html#8165" class="Bound"
+      >x</a
+      ><a name="8166"
+      > </a
+      ><a name="8167" href="lib.Base.html#8167" class="Bound"
+      >y</a
+      ><a name="8168"
+      > </a
+      ><a name="8169" class="Symbol"
+      >&#8594;</a
+      ><a name="8170"
+      > </a
+      ><a name="8171" href="lib.Base.html#8124" class="Bound"
+      >C</a
+      ><a name="8172"
+      > </a
+      ><a name="8173" class="Symbol"
+      >(</a
+      ><a name="8174" href="lib.Base.html#8165" class="Bound"
+      >x</a
+      ><a name="8175"
+      > </a
+      ><a name="8176" href="lib.Base.html#5082" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="8177"
+      > </a
+      ><a name="8178" href="lib.Base.html#8167" class="Bound"
+      >y</a
+      ><a name="8179" class="Symbol"
+      >))</a
+      ><a name="8181"
+      >
+</a
+      ><a name="8182" href="lib.Base.html#8075" class="Function"
+      >curry</a
+      ><a name="8187"
+      > </a
+      ><a name="8188" href="lib.Base.html#8188" class="Bound"
+      >f</a
+      ><a name="8189"
+      > </a
+      ><a name="8190" href="lib.Base.html#8190" class="Bound"
+      >x</a
+      ><a name="8191"
+      > </a
+      ><a name="8192" href="lib.Base.html#8192" class="Bound"
+      >y</a
+      ><a name="8193"
+      > </a
+      ><a name="8194" class="Symbol"
+      >=</a
+      ><a name="8195"
+      > </a
+      ><a name="8196" href="lib.Base.html#8188" class="Bound"
+      >f</a
+      ><a name="8197"
+      > </a
+      ><a name="8198" class="Symbol"
+      >(</a
+      ><a name="8199" href="lib.Base.html#8190" class="Bound"
+      >x</a
+      ><a name="8200"
+      > </a
+      ><a name="8201" href="lib.Base.html#5082" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="8202"
+      > </a
+      ><a name="8203" href="lib.Base.html#8192" class="Bound"
+      >y</a
+      ><a name="8204" class="Symbol"
+      >)</a
+      ><a name="8205"
+      >
+
+</a
+      ><a name="8207" href="lib.Base.html#8207" class="Function"
+      >uncurry</a
+      ><a name="8214"
+      > </a
+      ><a name="8215" class="Symbol"
+      >:</a
+      ><a name="8216"
+      > </a
+      ><a name="8217" class="Symbol"
+      >&#8704;</a
+      ><a name="8218"
+      > </a
+      ><a name="8219" class="Symbol"
+      >{</a
+      ><a name="8220" href="lib.Base.html#8220" class="Bound"
+      >i</a
+      ><a name="8221"
+      > </a
+      ><a name="8222" href="lib.Base.html#8222" class="Bound"
+      >j</a
+      ><a name="8223"
+      > </a
+      ><a name="8224" href="lib.Base.html#8224" class="Bound"
+      >k</a
+      ><a name="8225" class="Symbol"
+      >}</a
+      ><a name="8226"
+      > </a
+      ><a name="8227" class="Symbol"
+      >{</a
+      ><a name="8228" href="lib.Base.html#8228" class="Bound"
+      >A</a
+      ><a name="8229"
+      > </a
+      ><a name="8230" class="Symbol"
+      >:</a
+      ><a name="8231"
+      > </a
+      ><a name="8232" href="lib.Base.html#1132" class="Function"
+      >Type</a
+      ><a name="8236"
+      > </a
+      ><a name="8237" href="lib.Base.html#8220" class="Bound"
+      >i</a
+      ><a name="8238" class="Symbol"
+      >}</a
+      ><a name="8239"
+      > </a
+      ><a name="8240" class="Symbol"
+      >{</a
+      ><a name="8241" href="lib.Base.html#8241" class="Bound"
+      >B</a
+      ><a name="8242"
+      > </a
+      ><a name="8243" class="Symbol"
+      >:</a
+      ><a name="8244"
+      > </a
+      ><a name="8245" href="lib.Base.html#8228" class="Bound"
+      >A</a
+      ><a name="8246"
+      > </a
+      ><a name="8247" class="Symbol"
+      >&#8594;</a
+      ><a name="8248"
+      > </a
+      ><a name="8249" href="lib.Base.html#1132" class="Function"
+      >Type</a
+      ><a name="8253"
+      > </a
+      ><a name="8254" href="lib.Base.html#8222" class="Bound"
+      >j</a
+      ><a name="8255" class="Symbol"
+      >}</a
+      ><a name="8256"
+      > </a
+      ><a name="8257" class="Symbol"
+      >{</a
+      ><a name="8258" href="lib.Base.html#8258" class="Bound"
+      >C</a
+      ><a name="8259"
+      > </a
+      ><a name="8260" class="Symbol"
+      >:</a
+      ><a name="8261"
+      > </a
+      ><a name="8262" class="Symbol"
+      >&#8704;</a
+      ><a name="8263"
+      > </a
+      ><a name="8264" href="lib.Base.html#8264" class="Bound"
+      >x</a
+      ><a name="8265"
+      > </a
+      ><a name="8266" class="Symbol"
+      >&#8594;</a
+      ><a name="8267"
+      > </a
+      ><a name="8268" href="lib.Base.html#8241" class="Bound"
+      >B</a
+      ><a name="8269"
+      > </a
+      ><a name="8270" href="lib.Base.html#8264" class="Bound"
+      >x</a
+      ><a name="8271"
+      > </a
+      ><a name="8272" class="Symbol"
+      >&#8594;</a
+      ><a name="8273"
+      > </a
+      ><a name="8274" href="lib.Base.html#1132" class="Function"
+      >Type</a
+      ><a name="8278"
+      > </a
+      ><a name="8279" href="lib.Base.html#8224" class="Bound"
+      >k</a
+      ><a name="8280" class="Symbol"
+      >}</a
+      ><a name="8281"
+      >
+  </a
+      ><a name="8284" class="Symbol"
+      >&#8594;</a
+      ><a name="8285"
+      > </a
+      ><a name="8286" class="Symbol"
+      >(&#8704;</a
+      ><a name="8288"
+      > </a
+      ><a name="8289" href="lib.Base.html#8289" class="Bound"
+      >x</a
+      ><a name="8290"
+      > </a
+      ><a name="8291" href="lib.Base.html#8291" class="Bound"
+      >y</a
+      ><a name="8292"
+      > </a
+      ><a name="8293" class="Symbol"
+      >&#8594;</a
+      ><a name="8294"
+      > </a
+      ><a name="8295" href="lib.Base.html#8258" class="Bound"
+      >C</a
+      ><a name="8296"
+      > </a
+      ><a name="8297" href="lib.Base.html#8289" class="Bound"
+      >x</a
+      ><a name="8298"
+      > </a
+      ><a name="8299" href="lib.Base.html#8291" class="Bound"
+      >y</a
+      ><a name="8300" class="Symbol"
+      >)</a
+      ><a name="8301"
+      > </a
+      ><a name="8302" class="Symbol"
+      >&#8594;</a
+      ><a name="8303"
+      > </a
+      ><a name="8304" class="Symbol"
+      >(&#8704;</a
+      ><a name="8306"
+      > </a
+      ><a name="8307" href="lib.Base.html#8307" class="Bound"
+      >s</a
+      ><a name="8308"
+      > </a
+      ><a name="8309" class="Symbol"
+      >&#8594;</a
+      ><a name="8310"
+      > </a
+      ><a name="8311" href="lib.Base.html#8258" class="Bound"
+      >C</a
+      ><a name="8312"
+      > </a
+      ><a name="8313" class="Symbol"
+      >(</a
+      ><a name="8314" href="lib.Base.html#5098" class="Field"
+      >fst</a
+      ><a name="8317"
+      > </a
+      ><a name="8318" href="lib.Base.html#8307" class="Bound"
+      >s</a
+      ><a name="8319" class="Symbol"
+      >)</a
+      ><a name="8320"
+      > </a
+      ><a name="8321" class="Symbol"
+      >(</a
+      ><a name="8322" href="lib.Base.html#5110" class="Field"
+      >snd</a
+      ><a name="8325"
+      > </a
+      ><a name="8326" href="lib.Base.html#8307" class="Bound"
+      >s</a
+      ><a name="8327" class="Symbol"
+      >))</a
+      ><a name="8329"
+      >
+</a
+      ><a name="8330" href="lib.Base.html#8207" class="Function"
+      >uncurry</a
+      ><a name="8337"
+      > </a
+      ><a name="8338" href="lib.Base.html#8338" class="Bound"
+      >f</a
+      ><a name="8339"
+      > </a
+      ><a name="8340" class="Symbol"
+      >(</a
+      ><a name="8341" href="lib.Base.html#8341" class="Bound"
+      >x</a
+      ><a name="8342"
+      > </a
+      ><a name="8343" href="lib.Base.html#5082" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="8344"
+      > </a
+      ><a name="8345" href="lib.Base.html#8345" class="Bound"
+      >y</a
+      ><a name="8346" class="Symbol"
+      >)</a
+      ><a name="8347"
+      > </a
+      ><a name="8348" class="Symbol"
+      >=</a
+      ><a name="8349"
+      > </a
+      ><a name="8350" href="lib.Base.html#8338" class="Bound"
+      >f</a
+      ><a name="8351"
+      > </a
+      ><a name="8352" href="lib.Base.html#8341" class="Bound"
+      >x</a
+      ><a name="8353"
+      > </a
+      ><a name="8354" href="lib.Base.html#8345" class="Bound"
+      >y</a
+      ><a name="8355"
+      >
+
+</a
+      ><a name="8357" class="Comment"
+      >-- (Un)curryfication with the first argument made implicit</a
+      ><a name="8415"
+      >
+</a
+      ><a name="8416" href="lib.Base.html#8416" class="Function"
+      >curryi</a
+      ><a name="8422"
+      > </a
+      ><a name="8423" class="Symbol"
+      >:</a
+      ><a name="8424"
+      > </a
+      ><a name="8425" class="Symbol"
+      >&#8704;</a
+      ><a name="8426"
+      > </a
+      ><a name="8427" class="Symbol"
+      >{</a
+      ><a name="8428" href="lib.Base.html#8428" class="Bound"
+      >i</a
+      ><a name="8429"
+      > </a
+      ><a name="8430" href="lib.Base.html#8430" class="Bound"
+      >j</a
+      ><a name="8431"
+      > </a
+      ><a name="8432" href="lib.Base.html#8432" class="Bound"
+      >k</a
+      ><a name="8433" class="Symbol"
+      >}</a
+      ><a name="8434"
+      > </a
+      ><a name="8435" class="Symbol"
+      >{</a
+      ><a name="8436" href="lib.Base.html#8436" class="Bound"
+      >A</a
+      ><a name="8437"
+      > </a
+      ><a name="8438" class="Symbol"
+      >:</a
+      ><a name="8439"
+      > </a
+      ><a name="8440" href="lib.Base.html#1132" class="Function"
+      >Type</a
+      ><a name="8444"
+      > </a
+      ><a name="8445" href="lib.Base.html#8428" class="Bound"
+      >i</a
+      ><a name="8446" class="Symbol"
+      >}</a
+      ><a name="8447"
+      > </a
+      ><a name="8448" class="Symbol"
+      >{</a
+      ><a name="8449" href="lib.Base.html#8449" class="Bound"
+      >B</a
+      ><a name="8450"
+      > </a
+      ><a name="8451" class="Symbol"
+      >:</a
+      ><a name="8452"
+      > </a
+      ><a name="8453" href="lib.Base.html#8436" class="Bound"
+      >A</a
+      ><a name="8454"
+      > </a
+      ><a name="8455" class="Symbol"
+      >&#8594;</a
+      ><a name="8456"
+      > </a
+      ><a name="8457" href="lib.Base.html#1132" class="Function"
+      >Type</a
+      ><a name="8461"
+      > </a
+      ><a name="8462" href="lib.Base.html#8430" class="Bound"
+      >j</a
+      ><a name="8463" class="Symbol"
+      >}</a
+      ><a name="8464"
+      > </a
+      ><a name="8465" class="Symbol"
+      >{</a
+      ><a name="8466" href="lib.Base.html#8466" class="Bound"
+      >C</a
+      ><a name="8467"
+      > </a
+      ><a name="8468" class="Symbol"
+      >:</a
+      ><a name="8469"
+      > </a
+      ><a name="8470" href="lib.Base.html#5006" class="Record"
+      >&#931;</a
+      ><a name="8471"
+      > </a
+      ><a name="8472" href="lib.Base.html#8436" class="Bound"
+      >A</a
+      ><a name="8473"
+      > </a
+      ><a name="8474" href="lib.Base.html#8449" class="Bound"
+      >B</a
+      ><a name="8475"
+      > </a
+      ><a name="8476" class="Symbol"
+      >&#8594;</a
+      ><a name="8477"
+      > </a
+      ><a name="8478" href="lib.Base.html#1132" class="Function"
+      >Type</a
+      ><a name="8482"
+      > </a
+      ><a name="8483" href="lib.Base.html#8432" class="Bound"
+      >k</a
+      ><a name="8484" class="Symbol"
+      >}</a
+      ><a name="8485"
+      >
+  </a
+      ><a name="8488" class="Symbol"
+      >&#8594;</a
+      ><a name="8489"
+      > </a
+      ><a name="8490" class="Symbol"
+      >(&#8704;</a
+      ><a name="8492"
+      > </a
+      ><a name="8493" href="lib.Base.html#8493" class="Bound"
+      >s</a
+      ><a name="8494"
+      > </a
+      ><a name="8495" class="Symbol"
+      >&#8594;</a
+      ><a name="8496"
+      > </a
+      ><a name="8497" href="lib.Base.html#8466" class="Bound"
+      >C</a
+      ><a name="8498"
+      > </a
+      ><a name="8499" href="lib.Base.html#8493" class="Bound"
+      >s</a
+      ><a name="8500" class="Symbol"
+      >)</a
+      ><a name="8501"
+      > </a
+      ><a name="8502" class="Symbol"
+      >&#8594;</a
+      ><a name="8503"
+      > </a
+      ><a name="8504" class="Symbol"
+      >(&#8704;</a
+      ><a name="8506"
+      > </a
+      ><a name="8507" class="Symbol"
+      >{</a
+      ><a name="8508" href="lib.Base.html#8508" class="Bound"
+      >x</a
+      ><a name="8509" class="Symbol"
+      >}</a
+      ><a name="8510"
+      > </a
+      ><a name="8511" href="lib.Base.html#8511" class="Bound"
+      >y</a
+      ><a name="8512"
+      > </a
+      ><a name="8513" class="Symbol"
+      >&#8594;</a
+      ><a name="8514"
+      > </a
+      ><a name="8515" href="lib.Base.html#8466" class="Bound"
+      >C</a
+      ><a name="8516"
+      > </a
+      ><a name="8517" class="Symbol"
+      >(</a
+      ><a name="8518" href="lib.Base.html#8508" class="Bound"
+      >x</a
+      ><a name="8519"
+      > </a
+      ><a name="8520" href="lib.Base.html#5082" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="8521"
+      > </a
+      ><a name="8522" href="lib.Base.html#8511" class="Bound"
+      >y</a
+      ><a name="8523" class="Symbol"
+      >))</a
+      ><a name="8525"
+      >
+</a
+      ><a name="8526" href="lib.Base.html#8416" class="Function"
+      >curryi</a
+      ><a name="8532"
+      > </a
+      ><a name="8533" href="lib.Base.html#8533" class="Bound"
+      >f</a
+      ><a name="8534"
+      > </a
+      ><a name="8535" href="lib.Base.html#8535" class="Bound"
+      >y</a
+      ><a name="8536"
+      > </a
+      ><a name="8537" class="Symbol"
+      >=</a
+      ><a name="8538"
+      > </a
+      ><a name="8539" href="lib.Base.html#8533" class="Bound"
+      >f</a
+      ><a name="8540"
+      > </a
+      ><a name="8541" class="Symbol"
+      >(_</a
+      ><a name="8543"
+      > </a
+      ><a name="8544" href="lib.Base.html#5082" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="8545"
+      > </a
+      ><a name="8546" href="lib.Base.html#8535" class="Bound"
+      >y</a
+      ><a name="8547" class="Symbol"
+      >)</a
+      ><a name="8548"
+      >
+
+</a
+      ><a name="8550" href="lib.Base.html#8550" class="Function"
+      >uncurryi</a
+      ><a name="8558"
+      > </a
+      ><a name="8559" class="Symbol"
+      >:</a
+      ><a name="8560"
+      > </a
+      ><a name="8561" class="Symbol"
+      >&#8704;</a
+      ><a name="8562"
+      > </a
+      ><a name="8563" class="Symbol"
+      >{</a
+      ><a name="8564" href="lib.Base.html#8564" class="Bound"
+      >i</a
+      ><a name="8565"
+      > </a
+      ><a name="8566" href="lib.Base.html#8566" class="Bound"
+      >j</a
+      ><a name="8567"
+      > </a
+      ><a name="8568" href="lib.Base.html#8568" class="Bound"
+      >k</a
+      ><a name="8569" class="Symbol"
+      >}</a
+      ><a name="8570"
+      > </a
+      ><a name="8571" class="Symbol"
+      >{</a
+      ><a name="8572" href="lib.Base.html#8572" class="Bound"
+      >A</a
+      ><a name="8573"
+      > </a
+      ><a name="8574" class="Symbol"
+      >:</a
+      ><a name="8575"
+      > </a
+      ><a name="8576" href="lib.Base.html#1132" class="Function"
+      >Type</a
+      ><a name="8580"
+      > </a
+      ><a name="8581" href="lib.Base.html#8564" class="Bound"
+      >i</a
+      ><a name="8582" class="Symbol"
+      >}</a
+      ><a name="8583"
+      > </a
+      ><a name="8584" class="Symbol"
+      >{</a
+      ><a name="8585" href="lib.Base.html#8585" class="Bound"
+      >B</a
+      ><a name="8586"
+      > </a
+      ><a name="8587" class="Symbol"
+      >:</a
+      ><a name="8588"
+      > </a
+      ><a name="8589" href="lib.Base.html#8572" class="Bound"
+      >A</a
+      ><a name="8590"
+      > </a
+      ><a name="8591" class="Symbol"
+      >&#8594;</a
+      ><a name="8592"
+      > </a
+      ><a name="8593" href="lib.Base.html#1132" class="Function"
+      >Type</a
+      ><a name="8597"
+      > </a
+      ><a name="8598" href="lib.Base.html#8566" class="Bound"
+      >j</a
+      ><a name="8599" class="Symbol"
+      >}</a
+      ><a name="8600"
+      > </a
+      ><a name="8601" class="Symbol"
+      >{</a
+      ><a name="8602" href="lib.Base.html#8602" class="Bound"
+      >C</a
+      ><a name="8603"
+      > </a
+      ><a name="8604" class="Symbol"
+      >:</a
+      ><a name="8605"
+      > </a
+      ><a name="8606" class="Symbol"
+      >&#8704;</a
+      ><a name="8607"
+      > </a
+      ><a name="8608" href="lib.Base.html#8608" class="Bound"
+      >x</a
+      ><a name="8609"
+      > </a
+      ><a name="8610" class="Symbol"
+      >&#8594;</a
+      ><a name="8611"
+      > </a
+      ><a name="8612" href="lib.Base.html#8585" class="Bound"
+      >B</a
+      ><a name="8613"
+      > </a
+      ><a name="8614" href="lib.Base.html#8608" class="Bound"
+      >x</a
+      ><a name="8615"
+      > </a
+      ><a name="8616" class="Symbol"
+      >&#8594;</a
+      ><a name="8617"
+      > </a
+      ><a name="8618" href="lib.Base.html#1132" class="Function"
+      >Type</a
+      ><a name="8622"
+      > </a
+      ><a name="8623" href="lib.Base.html#8568" class="Bound"
+      >k</a
+      ><a name="8624" class="Symbol"
+      >}</a
+      ><a name="8625"
+      >
+  </a
+      ><a name="8628" class="Symbol"
+      >&#8594;</a
+      ><a name="8629"
+      > </a
+      ><a name="8630" class="Symbol"
+      >(&#8704;</a
+      ><a name="8632"
+      > </a
+      ><a name="8633" class="Symbol"
+      >{</a
+      ><a name="8634" href="lib.Base.html#8634" class="Bound"
+      >x</a
+      ><a name="8635" class="Symbol"
+      >}</a
+      ><a name="8636"
+      > </a
+      ><a name="8637" href="lib.Base.html#8637" class="Bound"
+      >y</a
+      ><a name="8638"
+      > </a
+      ><a name="8639" class="Symbol"
+      >&#8594;</a
+      ><a name="8640"
+      > </a
+      ><a name="8641" href="lib.Base.html#8602" class="Bound"
+      >C</a
+      ><a name="8642"
+      > </a
+      ><a name="8643" href="lib.Base.html#8634" class="Bound"
+      >x</a
+      ><a name="8644"
+      > </a
+      ><a name="8645" href="lib.Base.html#8637" class="Bound"
+      >y</a
+      ><a name="8646" class="Symbol"
+      >)</a
+      ><a name="8647"
+      > </a
+      ><a name="8648" class="Symbol"
+      >&#8594;</a
+      ><a name="8649"
+      > </a
+      ><a name="8650" class="Symbol"
+      >(&#8704;</a
+      ><a name="8652"
+      > </a
+      ><a name="8653" href="lib.Base.html#8653" class="Bound"
+      >s</a
+      ><a name="8654"
+      > </a
+      ><a name="8655" class="Symbol"
+      >&#8594;</a
+      ><a name="8656"
+      > </a
+      ><a name="8657" href="lib.Base.html#8602" class="Bound"
+      >C</a
+      ><a name="8658"
+      > </a
+      ><a name="8659" class="Symbol"
+      >(</a
+      ><a name="8660" href="lib.Base.html#5098" class="Field"
+      >fst</a
+      ><a name="8663"
+      > </a
+      ><a name="8664" href="lib.Base.html#8653" class="Bound"
+      >s</a
+      ><a name="8665" class="Symbol"
+      >)</a
+      ><a name="8666"
+      > </a
+      ><a name="8667" class="Symbol"
+      >(</a
+      ><a name="8668" href="lib.Base.html#5110" class="Field"
+      >snd</a
+      ><a name="8671"
+      > </a
+      ><a name="8672" href="lib.Base.html#8653" class="Bound"
+      >s</a
+      ><a name="8673" class="Symbol"
+      >))</a
+      ><a name="8675"
+      >
+</a
+      ><a name="8676" href="lib.Base.html#8550" class="Function"
+      >uncurryi</a
+      ><a name="8684"
+      > </a
+      ><a name="8685" href="lib.Base.html#8685" class="Bound"
+      >f</a
+      ><a name="8686"
+      > </a
+      ><a name="8687" class="Symbol"
+      >(</a
+      ><a name="8688" href="lib.Base.html#8688" class="Bound"
+      >x</a
+      ><a name="8689"
+      > </a
+      ><a name="8690" href="lib.Base.html#5082" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="8691"
+      > </a
+      ><a name="8692" href="lib.Base.html#8692" class="Bound"
+      >y</a
+      ><a name="8693" class="Symbol"
+      >)</a
+      ><a name="8694"
+      > </a
+      ><a name="8695" class="Symbol"
+      >=</a
+      ><a name="8696"
+      > </a
+      ><a name="8697" href="lib.Base.html#8685" class="Bound"
+      >f</a
+      ><a name="8698"
+      > </a
+      ><a name="8699" href="lib.Base.html#8692" class="Bound"
+      >y</a
+      ><a name="8700"
+      >
+
+</a
+      ><a name="8702" class="Comment"
+      >{- Truncation levels
+
+The type of truncation levels is isomorphic to the type of natural numbers but
+&quot;starts at -2&quot;.
+-}</a
+      ><a name="8821"
+      >
+
+</a
+      ><a name="8823" class="Keyword"
+      >data</a
+      ><a name="8827"
+      > </a
+      ><a name="8828" href="lib.Base.html#8828" class="Datatype"
+      >TLevel</a
+      ><a name="8834"
+      > </a
+      ><a name="8835" class="Symbol"
+      >:</a
+      ><a name="8836"
+      > </a
+      ><a name="8837" href="lib.Base.html#1184" class="Function"
+      >Type&#8320;</a
+      ><a name="8842"
+      > </a
+      ><a name="8843" class="Keyword"
+      >where</a
+      ><a name="8848"
+      >
+  </a
+      ><a name="8851" href="lib.Base.html#8851" class="InductiveConstructor"
+      >&#10216;-2&#10217;</a
+      ><a name="8855"
+      > </a
+      ><a name="8856" class="Symbol"
+      >:</a
+      ><a name="8857"
+      > </a
+      ><a name="8858" href="lib.Base.html#8828" class="Datatype"
+      >TLevel</a
+      ><a name="8864"
+      >
+  </a
+      ><a name="8867" href="lib.Base.html#8867" class="InductiveConstructor"
+      >S</a
+      ><a name="8868"
+      > </a
+      ><a name="8869" class="Symbol"
+      >:</a
+      ><a name="8870"
+      > </a
+      ><a name="8871" class="Symbol"
+      >(</a
+      ><a name="8872" href="lib.Base.html#8872" class="Bound"
+      >n</a
+      ><a name="8873"
+      > </a
+      ><a name="8874" class="Symbol"
+      >:</a
+      ><a name="8875"
+      > </a
+      ><a name="8876" href="lib.Base.html#8828" class="Datatype"
+      >TLevel</a
+      ><a name="8882" class="Symbol"
+      >)</a
+      ><a name="8883"
+      > </a
+      ><a name="8884" class="Symbol"
+      >&#8594;</a
+      ><a name="8885"
+      > </a
+      ><a name="8886" href="lib.Base.html#8828" class="Datatype"
+      >TLevel</a
+      ><a name="8892"
+      >
+
+</a
+      ><a name="8894" href="lib.Base.html#8894" class="Function"
+      >&#8469;&#8331;&#8322;</a
+      ><a name="8897"
+      > </a
+      ><a name="8898" class="Symbol"
+      >=</a
+      ><a name="8899"
+      > </a
+      ><a name="8900" href="lib.Base.html#8828" class="Datatype"
+      >TLevel</a
+      ><a name="8906"
+      >
+
+</a
+      ><a name="8908" href="lib.Base.html#8908" class="Function"
+      >&#10216;-1&#10217;</a
+      ><a name="8912"
+      > </a
+      ><a name="8913" class="Symbol"
+      >:</a
+      ><a name="8914"
+      > </a
+      ><a name="8915" href="lib.Base.html#8828" class="Datatype"
+      >TLevel</a
+      ><a name="8921"
+      >
+</a
+      ><a name="8922" href="lib.Base.html#8908" class="Function"
+      >&#10216;-1&#10217;</a
+      ><a name="8926"
+      > </a
+      ><a name="8927" class="Symbol"
+      >=</a
+      ><a name="8928"
+      > </a
+      ><a name="8929" href="lib.Base.html#8867" class="InductiveConstructor"
+      >S</a
+      ><a name="8930"
+      > </a
+      ><a name="8931" href="lib.Base.html#8851" class="InductiveConstructor"
+      >&#10216;-2&#10217;</a
+      ><a name="8935"
+      >
+
+</a
+      ><a name="8937" href="lib.Base.html#8937" class="Function"
+      >&#10216;0&#10217;</a
+      ><a name="8940"
+      > </a
+      ><a name="8941" class="Symbol"
+      >:</a
+      ><a name="8942"
+      > </a
+      ><a name="8943" href="lib.Base.html#8828" class="Datatype"
+      >TLevel</a
+      ><a name="8949"
+      >
+</a
+      ><a name="8950" href="lib.Base.html#8937" class="Function"
+      >&#10216;0&#10217;</a
+      ><a name="8953"
+      > </a
+      ><a name="8954" class="Symbol"
+      >=</a
+      ><a name="8955"
+      > </a
+      ><a name="8956" href="lib.Base.html#8867" class="InductiveConstructor"
+      >S</a
+      ><a name="8957"
+      > </a
+      ><a name="8958" href="lib.Base.html#8908" class="Function"
+      >&#10216;-1&#10217;</a
+      ><a name="8962"
+      >
+
+</a
+      ><a name="8964" class="Comment"
+      >{- Coproducts and case analysis -}</a
+      ><a name="8998"
+      >
+
+</a
+      ><a name="9000" class="Keyword"
+      >data</a
+      ><a name="9004"
+      > </a
+      ><a name="9005" href="lib.Base.html#9005" class="Datatype"
+      >Coprod</a
+      ><a name="9011"
+      > </a
+      ><a name="9012" class="Symbol"
+      >{</a
+      ><a name="9013" href="lib.Base.html#9013" class="Bound"
+      >i</a
+      ><a name="9014"
+      > </a
+      ><a name="9015" href="lib.Base.html#9015" class="Bound"
+      >j</a
+      ><a name="9016" class="Symbol"
+      >}</a
+      ><a name="9017"
+      > </a
+      ><a name="9018" class="Symbol"
+      >(</a
+      ><a name="9019" href="lib.Base.html#9019" class="Bound"
+      >A</a
+      ><a name="9020"
+      > </a
+      ><a name="9021" class="Symbol"
+      >:</a
+      ><a name="9022"
+      > </a
+      ><a name="9023" href="lib.Base.html#1132" class="Function"
+      >Type</a
+      ><a name="9027"
+      > </a
+      ><a name="9028" href="lib.Base.html#9013" class="Bound"
+      >i</a
+      ><a name="9029" class="Symbol"
+      >)</a
+      ><a name="9030"
+      > </a
+      ><a name="9031" class="Symbol"
+      >(</a
+      ><a name="9032" href="lib.Base.html#9032" class="Bound"
+      >B</a
+      ><a name="9033"
+      > </a
+      ><a name="9034" class="Symbol"
+      >:</a
+      ><a name="9035"
+      > </a
+      ><a name="9036" href="lib.Base.html#1132" class="Function"
+      >Type</a
+      ><a name="9040"
+      > </a
+      ><a name="9041" href="lib.Base.html#9015" class="Bound"
+      >j</a
+      ><a name="9042" class="Symbol"
+      >)</a
+      ><a name="9043"
+      > </a
+      ><a name="9044" class="Symbol"
+      >:</a
+      ><a name="9045"
+      > </a
+      ><a name="9046" href="lib.Base.html#1132" class="Function"
+      >Type</a
+      ><a name="9050"
+      > </a
+      ><a name="9051" class="Symbol"
+      >(</a
+      ><a name="9052" href="Agda.Primitive.html#626" class="Primitive"
+      >lmax</a
+      ><a name="9056"
+      > </a
+      ><a name="9057" href="lib.Base.html#9013" class="Bound"
+      >i</a
+      ><a name="9058"
+      > </a
+      ><a name="9059" href="lib.Base.html#9015" class="Bound"
+      >j</a
+      ><a name="9060" class="Symbol"
+      >)</a
+      ><a name="9061"
+      > </a
+      ><a name="9062" class="Keyword"
+      >where</a
+      ><a name="9067"
+      >
+  </a
+      ><a name="9070" href="lib.Base.html#9070" class="InductiveConstructor"
+      >inl</a
+      ><a name="9073"
+      > </a
+      ><a name="9074" class="Symbol"
+      >:</a
+      ><a name="9075"
+      > </a
+      ><a name="9076" href="lib.Base.html#9019" class="Bound"
+      >A</a
+      ><a name="9077"
+      > </a
+      ><a name="9078" class="Symbol"
+      >&#8594;</a
+      ><a name="9079"
+      > </a
+      ><a name="9080" href="lib.Base.html#9005" class="Datatype"
+      >Coprod</a
+      ><a name="9086"
+      > </a
+      ><a name="9087" href="lib.Base.html#9019" class="Bound"
+      >A</a
+      ><a name="9088"
+      > </a
+      ><a name="9089" href="lib.Base.html#9032" class="Bound"
+      >B</a
+      ><a name="9090"
+      >
+  </a
+      ><a name="9093" href="lib.Base.html#9093" class="InductiveConstructor"
+      >inr</a
+      ><a name="9096"
+      > </a
+      ><a name="9097" class="Symbol"
+      >:</a
+      ><a name="9098"
+      > </a
+      ><a name="9099" href="lib.Base.html#9032" class="Bound"
+      >B</a
+      ><a name="9100"
+      > </a
+      ><a name="9101" class="Symbol"
+      >&#8594;</a
+      ><a name="9102"
+      > </a
+      ><a name="9103" href="lib.Base.html#9005" class="Datatype"
+      >Coprod</a
+      ><a name="9109"
+      > </a
+      ><a name="9110" href="lib.Base.html#9019" class="Bound"
+      >A</a
+      ><a name="9111"
+      > </a
+      ><a name="9112" href="lib.Base.html#9032" class="Bound"
+      >B</a
+      ><a name="9113"
+      >
+
+</a
+      ><a name="9115" href="lib.Base.html#9115" class="Function Operator"
+      >_&#8852;_</a
+      ><a name="9118"
+      > </a
+      ><a name="9119" class="Symbol"
+      >=</a
+      ><a name="9120"
+      > </a
+      ><a name="9121" href="lib.Base.html#9005" class="Datatype"
+      >Coprod</a
+      ><a name="9127"
+      >
+
+</a
+      ><a name="9129" href="lib.Base.html#9129" class="Function Operator"
+      >match_withl_withr_</a
+      ><a name="9147"
+      > </a
+      ><a name="9148" class="Symbol"
+      >:</a
+      ><a name="9149"
+      > </a
+      ><a name="9150" class="Symbol"
+      >&#8704;</a
+      ><a name="9151"
+      > </a
+      ><a name="9152" class="Symbol"
+      >{</a
+      ><a name="9153" href="lib.Base.html#9153" class="Bound"
+      >i</a
+      ><a name="9154"
+      > </a
+      ><a name="9155" href="lib.Base.html#9155" class="Bound"
+      >j</a
+      ><a name="9156"
+      > </a
+      ><a name="9157" href="lib.Base.html#9157" class="Bound"
+      >k</a
+      ><a name="9158" class="Symbol"
+      >}</a
+      ><a name="9159"
+      > </a
+      ><a name="9160" class="Symbol"
+      >{</a
+      ><a name="9161" href="lib.Base.html#9161" class="Bound"
+      >A</a
+      ><a name="9162"
+      > </a
+      ><a name="9163" class="Symbol"
+      >:</a
+      ><a name="9164"
+      > </a
+      ><a name="9165" href="lib.Base.html#1132" class="Function"
+      >Type</a
+      ><a name="9169"
+      > </a
+      ><a name="9170" href="lib.Base.html#9153" class="Bound"
+      >i</a
+      ><a name="9171" class="Symbol"
+      >}</a
+      ><a name="9172"
+      > </a
+      ><a name="9173" class="Symbol"
+      >{</a
+      ><a name="9174" href="lib.Base.html#9174" class="Bound"
+      >B</a
+      ><a name="9175"
+      > </a
+      ><a name="9176" class="Symbol"
+      >:</a
+      ><a name="9177"
+      > </a
+      ><a name="9178" href="lib.Base.html#1132" class="Function"
+      >Type</a
+      ><a name="9182"
+      > </a
+      ><a name="9183" href="lib.Base.html#9155" class="Bound"
+      >j</a
+      ><a name="9184" class="Symbol"
+      >}</a
+      ><a name="9185"
+      >
+  </a
+      ><a name="9188" class="Symbol"
+      >{</a
+      ><a name="9189" href="lib.Base.html#9189" class="Bound"
+      >C</a
+      ><a name="9190"
+      > </a
+      ><a name="9191" class="Symbol"
+      >:</a
+      ><a name="9192"
+      > </a
+      ><a name="9193" href="lib.Base.html#9005" class="Datatype"
+      >Coprod</a
+      ><a name="9199"
+      > </a
+      ><a name="9200" href="lib.Base.html#9161" class="Bound"
+      >A</a
+      ><a name="9201"
+      > </a
+      ><a name="9202" href="lib.Base.html#9174" class="Bound"
+      >B</a
+      ><a name="9203"
+      > </a
+      ><a name="9204" class="Symbol"
+      >&#8594;</a
+      ><a name="9205"
+      > </a
+      ><a name="9206" href="lib.Base.html#1132" class="Function"
+      >Type</a
+      ><a name="9210"
+      > </a
+      ><a name="9211" href="lib.Base.html#9157" class="Bound"
+      >k</a
+      ><a name="9212" class="Symbol"
+      >}</a
+      ><a name="9213"
+      >
+  </a
+      ><a name="9216" class="Symbol"
+      >(</a
+      ><a name="9217" href="lib.Base.html#9217" class="Bound"
+      >x</a
+      ><a name="9218"
+      > </a
+      ><a name="9219" class="Symbol"
+      >:</a
+      ><a name="9220"
+      > </a
+      ><a name="9221" href="lib.Base.html#9005" class="Datatype"
+      >Coprod</a
+      ><a name="9227"
+      > </a
+      ><a name="9228" href="lib.Base.html#9161" class="Bound"
+      >A</a
+      ><a name="9229"
+      > </a
+      ><a name="9230" href="lib.Base.html#9174" class="Bound"
+      >B</a
+      ><a name="9231" class="Symbol"
+      >)</a
+      ><a name="9232"
+      > </a
+      ><a name="9233" class="Symbol"
+      >(</a
+      ><a name="9234" href="lib.Base.html#9234" class="Bound"
+      >l</a
+      ><a name="9235"
+      > </a
+      ><a name="9236" class="Symbol"
+      >:</a
+      ><a name="9237"
+      > </a
+      ><a name="9238" class="Symbol"
+      >(</a
+      ><a name="9239" href="lib.Base.html#9239" class="Bound"
+      >a</a
+      ><a name="9240"
+      > </a
+      ><a name="9241" class="Symbol"
+      >:</a
+      ><a name="9242"
+      > </a
+      ><a name="9243" href="lib.Base.html#9161" class="Bound"
+      >A</a
+      ><a name="9244" class="Symbol"
+      >)</a
+      ><a name="9245"
+      > </a
+      ><a name="9246" class="Symbol"
+      >&#8594;</a
+      ><a name="9247"
+      > </a
+      ><a name="9248" href="lib.Base.html#9189" class="Bound"
+      >C</a
+      ><a name="9249"
+      > </a
+      ><a name="9250" class="Symbol"
+      >(</a
+      ><a name="9251" href="lib.Base.html#9070" class="InductiveConstructor"
+      >inl</a
+      ><a name="9254"
+      > </a
+      ><a name="9255" href="lib.Base.html#9239" class="Bound"
+      >a</a
+      ><a name="9256" class="Symbol"
+      >))</a
+      ><a name="9258"
+      > </a
+      ><a name="9259" class="Symbol"
+      >(</a
+      ><a name="9260" href="lib.Base.html#9260" class="Bound"
+      >r</a
+      ><a name="9261"
+      > </a
+      ><a name="9262" class="Symbol"
+      >:</a
+      ><a name="9263"
+      > </a
+      ><a name="9264" class="Symbol"
+      >(</a
+      ><a name="9265" href="lib.Base.html#9265" class="Bound"
+      >b</a
+      ><a name="9266"
+      > </a
+      ><a name="9267" class="Symbol"
+      >:</a
+      ><a name="9268"
+      > </a
+      ><a name="9269" href="lib.Base.html#9174" class="Bound"
+      >B</a
+      ><a name="9270" class="Symbol"
+      >)</a
+      ><a name="9271"
+      > </a
+      ><a name="9272" class="Symbol"
+      >&#8594;</a
+      ><a name="9273"
+      > </a
+      ><a name="9274" href="lib.Base.html#9189" class="Bound"
+      >C</a
+      ><a name="9275"
+      > </a
+      ><a name="9276" class="Symbol"
+      >(</a
+      ><a name="9277" href="lib.Base.html#9093" class="InductiveConstructor"
+      >inr</a
+      ><a name="9280"
+      > </a
+      ><a name="9281" href="lib.Base.html#9265" class="Bound"
+      >b</a
+      ><a name="9282" class="Symbol"
+      >))</a
+      ><a name="9284"
+      > </a
+      ><a name="9285" class="Symbol"
+      >&#8594;</a
+      ><a name="9286"
+      > </a
+      ><a name="9287" href="lib.Base.html#9189" class="Bound"
+      >C</a
+      ><a name="9288"
+      > </a
+      ><a name="9289" href="lib.Base.html#9217" class="Bound"
+      >x</a
+      ><a name="9290"
+      >
+</a
+      ><a name="9291" href="lib.Base.html#9129" class="Function Operator"
+      >match</a
+      ><a name="9296"
+      > </a
+      ><a name="9297" class="Symbol"
+      >(</a
+      ><a name="9298" href="lib.Base.html#9070" class="InductiveConstructor"
+      >inl</a
+      ><a name="9301"
+      > </a
+      ><a name="9302" href="lib.Base.html#9302" class="Bound"
+      >a</a
+      ><a name="9303" class="Symbol"
+      >)</a
+      ><a name="9304"
+      > </a
+      ><a name="9305" href="lib.Base.html#9129" class="Function Operator"
+      >withl</a
+      ><a name="9310"
+      > </a
+      ><a name="9311" href="lib.Base.html#9311" class="Bound"
+      >l</a
+      ><a name="9312"
+      > </a
+      ><a name="9313" href="lib.Base.html#9129" class="Function Operator"
+      >withr</a
+      ><a name="9318"
+      > </a
+      ><a name="9319" href="lib.Base.html#9319" class="Bound"
+      >r</a
+      ><a name="9320"
+      > </a
+      ><a name="9321" class="Symbol"
+      >=</a
+      ><a name="9322"
+      > </a
+      ><a name="9323" href="lib.Base.html#9311" class="Bound"
+      >l</a
+      ><a name="9324"
+      > </a
+      ><a name="9325" href="lib.Base.html#9302" class="Bound"
+      >a</a
+      ><a name="9326"
+      >
+</a
+      ><a name="9327" href="lib.Base.html#9129" class="Function Operator"
+      >match</a
+      ><a name="9332"
+      > </a
+      ><a name="9333" class="Symbol"
+      >(</a
+      ><a name="9334" href="lib.Base.html#9093" class="InductiveConstructor"
+      >inr</a
+      ><a name="9337"
+      > </a
+      ><a name="9338" href="lib.Base.html#9338" class="Bound"
+      >b</a
+      ><a name="9339" class="Symbol"
+      >)</a
+      ><a name="9340"
+      > </a
+      ><a name="9341" href="lib.Base.html#9129" class="Function Operator"
+      >withl</a
+      ><a name="9346"
+      > </a
+      ><a name="9347" href="lib.Base.html#9347" class="Bound"
+      >l</a
+      ><a name="9348"
+      > </a
+      ><a name="9349" href="lib.Base.html#9129" class="Function Operator"
+      >withr</a
+      ><a name="9354"
+      > </a
+      ><a name="9355" href="lib.Base.html#9355" class="Bound"
+      >r</a
+      ><a name="9356"
+      > </a
+      ><a name="9357" class="Symbol"
+      >=</a
+      ><a name="9358"
+      > </a
+      ><a name="9359" href="lib.Base.html#9355" class="Bound"
+      >r</a
+      ><a name="9360"
+      > </a
+      ><a name="9361" href="lib.Base.html#9338" class="Bound"
+      >b</a
+      ><a name="9362"
+      >
+
+</a
+      ><a name="9364" class="Comment"
+      >{-
+Used in a hack to make HITs maybe consistent. This is just a parametrized unit
+type (positively)
+-}</a
+      ><a name="9466"
+      >
+
+</a
+      ><a name="9468" class="Keyword"
+      >data</a
+      ><a name="9472"
+      > </a
+      ><a name="9473" href="lib.Base.html#9473" class="Datatype"
+      >Phantom</a
+      ><a name="9480"
+      > </a
+      ><a name="9481" class="Symbol"
+      >{</a
+      ><a name="9482" href="lib.Base.html#9482" class="Bound"
+      >i</a
+      ><a name="9483" class="Symbol"
+      >}</a
+      ><a name="9484"
+      > </a
+      ><a name="9485" class="Symbol"
+      >{</a
+      ><a name="9486" href="lib.Base.html#9486" class="Bound"
+      >A</a
+      ><a name="9487"
+      > </a
+      ><a name="9488" class="Symbol"
+      >:</a
+      ><a name="9489"
+      > </a
+      ><a name="9490" href="lib.Base.html#1132" class="Function"
+      >Type</a
+      ><a name="9494"
+      > </a
+      ><a name="9495" href="lib.Base.html#9482" class="Bound"
+      >i</a
+      ><a name="9496" class="Symbol"
+      >}</a
+      ><a name="9497"
+      > </a
+      ><a name="9498" class="Symbol"
+      >(</a
+      ><a name="9499" href="lib.Base.html#9499" class="Bound"
+      >a</a
+      ><a name="9500"
+      > </a
+      ><a name="9501" class="Symbol"
+      >:</a
+      ><a name="9502"
+      > </a
+      ><a name="9503" href="lib.Base.html#9486" class="Bound"
+      >A</a
+      ><a name="9504" class="Symbol"
+      >)</a
+      ><a name="9505"
+      > </a
+      ><a name="9506" class="Symbol"
+      >:</a
+      ><a name="9507"
+      > </a
+      ><a name="9508" href="lib.Base.html#1184" class="Function"
+      >Type&#8320;</a
+      ><a name="9513"
+      > </a
+      ><a name="9514" class="Keyword"
+      >where</a
+      ><a name="9519"
+      >
+  </a
+      ><a name="9522" href="lib.Base.html#9522" class="InductiveConstructor"
+      >phantom</a
+      ><a name="9529"
+      > </a
+      ><a name="9530" class="Symbol"
+      >:</a
+      ><a name="9531"
+      > </a
+      ><a name="9532" href="lib.Base.html#9473" class="Datatype"
+      >Phantom</a
+      ><a name="9539"
+      > </a
+      ><a name="9540" href="lib.Base.html#9499" class="Bound"
+      >a</a
+      ><a name="9541"
+      >
+
+</a
+      ><a name="9543" class="Comment"
+      >{-
+-- When you want to cheat
+
+module ADMIT where
+  postulate
+    ADMIT : &#8704; {i} {A : Type i} &#8594; A
+-}</a
+      ><a name="9641"
+      >
+</a
+      ></pre
+    ></body
+  ></html
+>

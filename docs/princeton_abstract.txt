@@ -1,0 +1,10 @@
+Universe n is not an n-Type
+
+In basic MLTT with a sequence of univalent universes, 
+the first universe is not a set (i.e. not a 0-type). 
+This is one of the most basic consequences of univalence, 
+but already the next step is surprisingly difficult. 
+Several people have shown, in different ways, that the 
+second universe is not a 1-type, and the third is not 
+a 2-type.
+In this talk, a proof for the general case is constructed. 

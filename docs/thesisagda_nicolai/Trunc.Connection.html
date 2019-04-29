@@ -1,0 +1,3082 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+><head
+  ><title
+    >Trunc.Connection</title
+    ><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"
+     /><meta http-equiv="Content-Style-Type" content="text/css"
+     /><link href="Agda.css" rel="stylesheet" type="text/css"
+     /></head
+  ><body
+  ><pre
+    ><a name="1" class="Symbol"
+      >{-#</a
+      ><a name="4"
+      > </a
+      ><a name="5" class="Keyword"
+      >OPTIONS</a
+      ><a name="12"
+      > --without-K </a
+      ><a name="25" class="Symbol"
+      >#-}</a
+      ><a name="28"
+      >
+
+</a
+      ><a name="30" class="Comment"
+      >{- This module defines our notion of connectedness not requiring HITs.
+   We define the generic n-connected version of a type, show that it is
+   n-connected, and that it behaves like the original type above level n.
+   We conclude by shoing this notion coincides with the usual notion.
+   of connectedness in the presence of HITs. -}</a
+      ><a name="364"
+      >
+</a
+      ><a name="365" class="Keyword"
+      >module</a
+      ><a name="371"
+      > </a
+      ><a name="372" href="Trunc.Connection.html#1" class="Module"
+      >Trunc.Connection</a
+      ><a name="388"
+      > </a
+      ><a name="389" class="Keyword"
+      >where</a
+      ><a name="394"
+      >
+
+</a
+      ><a name="396" class="Keyword"
+      >open</a
+      ><a name="400"
+      > </a
+      ><a name="401" class="Keyword"
+      >import</a
+      ><a name="407"
+      > </a
+      ><a name="408" href="lib.Basics.html#1" class="Module"
+      >lib.Basics</a
+      ><a name="418"
+      >
+</a
+      ><a name="419" class="Keyword"
+      >open</a
+      ><a name="423"
+      > </a
+      ><a name="424" class="Keyword"
+      >import</a
+      ><a name="430"
+      > </a
+      ><a name="431" href="lib.NType2.html#1" class="Module"
+      >lib.NType2</a
+      ><a name="441"
+      >
+</a
+      ><a name="442" class="Keyword"
+      >open</a
+      ><a name="446"
+      > </a
+      ><a name="447" class="Keyword"
+      >import</a
+      ><a name="453"
+      > </a
+      ><a name="454" href="lib.Equivalences2.html#1" class="Module"
+      >lib.Equivalences2</a
+      ><a name="471"
+      >
+</a
+      ><a name="472" class="Keyword"
+      >open</a
+      ><a name="476"
+      > </a
+      ><a name="477" class="Keyword"
+      >import</a
+      ><a name="483"
+      > </a
+      ><a name="484" href="lib.types.Unit.html#1" class="Module"
+      >lib.types.Unit</a
+      ><a name="498"
+      >
+</a
+      ><a name="499" class="Keyword"
+      >open</a
+      ><a name="503"
+      > </a
+      ><a name="504" class="Keyword"
+      >import</a
+      ><a name="510"
+      > </a
+      ><a name="511" href="lib.types.Nat.html#1" class="Module"
+      >lib.types.Nat</a
+      ><a name="524"
+      > </a
+      ><a name="525" class="Keyword"
+      >hiding</a
+      ><a name="531"
+      > </a
+      ><a name="532" class="Symbol"
+      >(</a
+      ><a name="533"
+      >_+_</a
+      ><a name="536" class="Symbol"
+      >)</a
+      ><a name="537"
+      >
+</a
+      ><a name="538" class="Keyword"
+      >open</a
+      ><a name="542"
+      > </a
+      ><a name="543" class="Keyword"
+      >import</a
+      ><a name="549"
+      > </a
+      ><a name="550" href="lib.types.Pi.html#1" class="Module"
+      >lib.types.Pi</a
+      ><a name="562"
+      >
+</a
+      ><a name="563" class="Keyword"
+      >open</a
+      ><a name="567"
+      > </a
+      ><a name="568" class="Keyword"
+      >import</a
+      ><a name="574"
+      > </a
+      ><a name="575" href="lib.types.Sigma.html#1" class="Module"
+      >lib.types.Sigma</a
+      ><a name="590"
+      >
+</a
+      ><a name="591" class="Keyword"
+      >open</a
+      ><a name="595"
+      > </a
+      ><a name="596" class="Keyword"
+      >import</a
+      ><a name="602"
+      > </a
+      ><a name="603" href="lib.types.Paths.html#1" class="Module"
+      >lib.types.Paths</a
+      ><a name="618"
+      >
+</a
+      ><a name="619" class="Keyword"
+      >open</a
+      ><a name="623"
+      > </a
+      ><a name="624" class="Keyword"
+      >import</a
+      ><a name="630"
+      > </a
+      ><a name="631" href="lib.types.TLevel.html#1" class="Module"
+      >lib.types.TLevel</a
+      ><a name="647"
+      >
+
+</a
+      ><a name="649" class="Keyword"
+      >open</a
+      ><a name="653"
+      > </a
+      ><a name="654" class="Keyword"
+      >import</a
+      ><a name="660"
+      > </a
+      ><a name="661" href="Preliminaries.html#1" class="Module"
+      >Preliminaries</a
+      ><a name="674"
+      >
+</a
+      ><a name="675" class="Keyword"
+      >open</a
+      ><a name="679"
+      > </a
+      ><a name="680" class="Keyword"
+      >import</a
+      ><a name="686"
+      > </a
+      ><a name="687" href="Pointed.html#1" class="Module"
+      >Pointed</a
+      ><a name="694"
+      >
+</a
+      ><a name="695" class="Keyword"
+      >open</a
+      ><a name="699"
+      > </a
+      ><a name="700" class="Keyword"
+      >import</a
+      ><a name="706"
+      > </a
+      ><a name="707" href="UniverseOfNTypes.html#1" class="Module"
+      >UniverseOfNTypes</a
+      ><a name="723"
+      >
+
+</a
+      ><a name="725" class="Keyword"
+      >open</a
+      ><a name="729"
+      > </a
+      ><a name="730" class="Keyword"
+      >import</a
+      ><a name="736"
+      > </a
+      ><a name="737" href="Trunc.Universal.html#1" class="Module"
+      >Trunc.Universal</a
+      ><a name="752"
+      >
+</a
+      ><a name="753" class="Keyword"
+      >open</a
+      ><a name="757"
+      > </a
+      ><a name="758" class="Keyword"
+      >import</a
+      ><a name="764"
+      > </a
+      ><a name="765" href="Trunc.Basics.html#1" class="Module"
+      >Trunc.Basics</a
+      ><a name="777"
+      >
+</a
+      ><a name="778" class="Keyword"
+      >open</a
+      ><a name="782"
+      > </a
+      ><a name="783" class="Keyword"
+      >import</a
+      ><a name="789"
+      > </a
+      ><a name="790" href="Trunc.TypeConstructors.html#1" class="Module"
+      >Trunc.TypeConstructors</a
+      ><a name="812"
+      >
+
+</a
+      ><a name="814" class="Keyword"
+      >open</a
+      ><a name="818"
+      > </a
+      ><a name="819" class="Keyword"
+      >import</a
+      ><a name="825"
+      > </a
+      ><a name="826" href="HHHUU-ComplicatedTypes.html#1" class="Module"
+      >HHHUU-ComplicatedTypes</a
+      ><a name="848"
+      >
+
+</a
+      ><a name="850" class="Comment"
+      >-- Definition 7.6.1 is in the library:</a
+      ><a name="888"
+      >
+</a
+      ><a name="889" class="Comment"
+      >-- lib.NConnected.is-connected</a
+      ><a name="919"
+      >
+
+</a
+      ><a name="921" class="Comment"
+      >-- In this file, our own notion of connectedness is discussed.</a
+      ><a name="983"
+      >
+
+</a
+      ><a name="985" class="Keyword"
+      >open</a
+      ><a name="989"
+      > </a
+      ><a name="990" href="Trunc.Basics.html#944" class="Module"
+      >trunc-ty</a
+      ><a name="998"
+      >
+</a
+      ><a name="999" class="Keyword"
+      >open</a
+      ><a name="1003"
+      > </a
+      ><a name="1004" href="Trunc.Basics.html#1747" class="Module"
+      >trunc-props</a
+      ><a name="1015"
+      >
+
+</a
+      ><a name="1017" class="Comment"
+      >-- Definition 7.6.13</a
+      ><a name="1037"
+      >
+</a
+      ><a name="1038" class="Comment"
+      >{- Our plain MLTT connectedness predicate.
+   Because of predicativity issues, it has to live in one universe higher
+   than its argument type C. Internally, we really want to quantify over
+   truncation operators not only at the level of C, but also at levels below C.
+   This would be the same in a theory with cumulative universes, but we are
+   working in Agda. Since we are only going to actually use the truncation
+   operator at one level lower than C, we restrict ourselves to this specific
+   assumption in this particular development for no particular reason other
+   than brevity of presentation. The reason for this difference of one level
+   will become apparent in the definition of 'connection'. -}</a
+      ><a name="1751"
+      >
+</a
+      ><a name="1752" class="Keyword"
+      >module</a
+      ><a name="1758"
+      > </a
+      ><a name="1759" href="Trunc.Connection.html#1759" class="Module"
+      >_</a
+      ><a name="1760"
+      > </a
+      ><a name="1761" class="Symbol"
+      >{</a
+      ><a name="1762" href="Trunc.Connection.html#1762" class="Bound"
+      >i</a
+      ><a name="1763" class="Symbol"
+      >}</a
+      ><a name="1764"
+      > </a
+      ><a name="1765" class="Symbol"
+      >(</a
+      ><a name="1766" href="Trunc.Connection.html#1766" class="Bound"
+      >n</a
+      ><a name="1767"
+      > </a
+      ><a name="1768" class="Symbol"
+      >:</a
+      ><a name="1769"
+      > </a
+      ><a name="1770" href="lib.Base.html#8715" class="Function"
+      >&#8469;&#8331;&#8322;</a
+      ><a name="1773" class="Symbol"
+      >)</a
+      ><a name="1774"
+      > </a
+      ><a name="1775" class="Symbol"
+      >(</a
+      ><a name="1776" href="Trunc.Connection.html#1776" class="Bound"
+      >C</a
+      ><a name="1777"
+      > </a
+      ><a name="1778" class="Symbol"
+      >:</a
+      ><a name="1779"
+      > </a
+      ><a name="1780" href="lib.Base.html#1123" class="Function"
+      >Type</a
+      ><a name="1784"
+      > </a
+      ><a name="1785" class="Symbol"
+      >(</a
+      ><a name="1786" href="Agda.Primitive.html#596" class="Primitive"
+      >lsucc</a
+      ><a name="1791"
+      > </a
+      ><a name="1792" href="Trunc.Connection.html#1762" class="Bound"
+      >i</a
+      ><a name="1793" class="Symbol"
+      >))</a
+      ><a name="1795"
+      > </a
+      ><a name="1796" class="Keyword"
+      >where</a
+      ><a name="1801"
+      >
+  </a
+      ><a name="1804" href="Trunc.Connection.html#1804" class="Function"
+      >is-connected&#8902;</a
+      ><a name="1817"
+      > </a
+      ><a name="1818" class="Symbol"
+      >:</a
+      ><a name="1819"
+      > </a
+      ><a name="1820" href="lib.Base.html#1123" class="Function"
+      >Type</a
+      ><a name="1824"
+      > </a
+      ><a name="1825" class="Symbol"
+      >(</a
+      ><a name="1826" href="Agda.Primitive.html#596" class="Primitive"
+      >lsucc</a
+      ><a name="1831"
+      > </a
+      ><a name="1832" class="Symbol"
+      >(</a
+      ><a name="1833" href="Agda.Primitive.html#596" class="Primitive"
+      >lsucc</a
+      ><a name="1838"
+      > </a
+      ><a name="1839" href="Trunc.Connection.html#1762" class="Bound"
+      >i</a
+      ><a name="1840" class="Symbol"
+      >))</a
+      ><a name="1842"
+      >
+  </a
+      ><a name="1845" href="Trunc.Connection.html#1804" class="Function"
+      >is-connected&#8902;</a
+      ><a name="1858"
+      > </a
+      ><a name="1859" class="Symbol"
+      >=</a
+      ><a name="1860"
+      > </a
+      ><a name="1861" class="Symbol"
+      >(</a
+      ><a name="1862" href="Trunc.Connection.html#1862" class="Bound"
+      >Tr</a
+      ><a name="1864"
+      > </a
+      ><a name="1865" class="Symbol"
+      >:</a
+      ><a name="1866"
+      > </a
+      ><a name="1867" class="Symbol"
+      >(</a
+      ><a name="1868" href="Trunc.Connection.html#1868" class="Bound"
+      >X</a
+      ><a name="1869"
+      > </a
+      ><a name="1870" class="Symbol"
+      >:</a
+      ><a name="1871"
+      > </a
+      ><a name="1872" href="lib.Base.html#1123" class="Function"
+      >Type</a
+      ><a name="1876"
+      > </a
+      ><a name="1877" href="Trunc.Connection.html#1762" class="Bound"
+      >i</a
+      ><a name="1878" class="Symbol"
+      >)</a
+      ><a name="1879"
+      > </a
+      ><a name="1880" class="Symbol"
+      >&#8594;</a
+      ><a name="1881"
+      > </a
+      ><a name="1882" href="Trunc.Basics.html#944" class="Record"
+      >trunc-ty</a
+      ><a name="1890"
+      > </a
+      ><a name="1891" href="Trunc.Connection.html#1766" class="Bound"
+      >n</a
+      ><a name="1892"
+      > </a
+      ><a name="1893" href="Trunc.Connection.html#1868" class="Bound"
+      >X</a
+      ><a name="1894"
+      > </a
+      ><a name="1895" class="Symbol"
+      >(</a
+      ><a name="1896" href="Agda.Primitive.html#596" class="Primitive"
+      >lsucc</a
+      ><a name="1901"
+      > </a
+      ><a name="1902" href="Trunc.Connection.html#1762" class="Bound"
+      >i</a
+      ><a name="1903" class="Symbol"
+      >))</a
+      ><a name="1905"
+      >
+                  </a
+      ><a name="1924" class="Symbol"
+      >(</a
+      ><a name="1925" href="Trunc.Connection.html#1925" class="Bound"
+      >TrC</a
+      ><a name="1928"
+      > </a
+      ><a name="1929" class="Symbol"
+      >:</a
+      ><a name="1930"
+      > </a
+      ><a name="1931" href="Trunc.Basics.html#944" class="Record"
+      >trunc-ty</a
+      ><a name="1939"
+      > </a
+      ><a name="1940" href="Trunc.Connection.html#1766" class="Bound"
+      >n</a
+      ><a name="1941"
+      > </a
+      ><a name="1942" href="Trunc.Connection.html#1776" class="Bound"
+      >C</a
+      ><a name="1943"
+      > </a
+      ><a name="1944" class="Symbol"
+      >(</a
+      ><a name="1945" href="Agda.Primitive.html#596" class="Primitive"
+      >lsucc</a
+      ><a name="1950"
+      > </a
+      ><a name="1951" href="Trunc.Connection.html#1762" class="Bound"
+      >i</a
+      ><a name="1952" class="Symbol"
+      >))</a
+      ><a name="1954"
+      >
+                </a
+      ><a name="1971" class="Symbol"
+      >&#8594;</a
+      ><a name="1972"
+      > </a
+      ><a name="1973" href="lib.NType.html#171" class="Function"
+      >is-contr</a
+      ><a name="1981"
+      > </a
+      ><a name="1982" href="UniverseOfNTypes.html#557" class="Function Operator"
+      >&#10214;</a
+      ><a name="1983"
+      > </a
+      ><a name="1984" href="Trunc.Basics.html#1072" class="Field"
+      >type</a
+      ><a name="1988"
+      > </a
+      ><a name="1989" href="Trunc.Connection.html#1925" class="Bound"
+      >TrC</a
+      ><a name="1992"
+      > </a
+      ><a name="1993" href="UniverseOfNTypes.html#557" class="Function Operator"
+      >&#10215;</a
+      ><a name="1994"
+      >
+
+</a
+      ><a name="1996" class="Comment"
+      >{- The (n+1)-connected version, or n-connection of some pointed type A.
+   Since we internally quantify over the type of truncations of a path space
+   from a before being able to require an element in the truncation,
+   predicativity issues force 'connection' to live in a universe one level
+   higher than A.
+   
+   Take particular care in noting that the parameter n is in fact one-off,
+   for example, The type 'connection (-2)' denotes the (-1)-connection. -}</a
+      ><a name="2460"
+      >
+</a
+      ><a name="2461" class="Keyword"
+      >module</a
+      ><a name="2467"
+      > </a
+      ><a name="2468" href="Trunc.Connection.html#2468" class="Module"
+      >_</a
+      ><a name="2469"
+      > </a
+      ><a name="2470" class="Symbol"
+      >{</a
+      ><a name="2471" href="Trunc.Connection.html#2471" class="Bound"
+      >i</a
+      ><a name="2472" class="Symbol"
+      >}</a
+      ><a name="2473"
+      > </a
+      ><a name="2474" class="Symbol"
+      >(</a
+      ><a name="2475" href="Trunc.Connection.html#2475" class="Bound"
+      >A</a
+      ><a name="2476"
+      > </a
+      ><a name="2477" class="Symbol"
+      >:</a
+      ><a name="2478"
+      > </a
+      ><a name="2479" href="Pointed.html#1178" class="Function"
+      >Type&#8226;</a
+      ><a name="2484"
+      > </a
+      ><a name="2485" href="Trunc.Connection.html#2471" class="Bound"
+      >i</a
+      ><a name="2486" class="Symbol"
+      >)</a
+      ><a name="2487"
+      > </a
+      ><a name="2488" class="Keyword"
+      >where</a
+      ><a name="2493"
+      >
+  </a
+      ><a name="2496" class="Keyword"
+      >module</a
+      ><a name="2502"
+      > </a
+      ><a name="2503" href="Trunc.Connection.html#2503" class="Module"
+      >con</a
+      ><a name="2506"
+      > </a
+      ><a name="2507" class="Symbol"
+      >(</a
+      ><a name="2508" href="Trunc.Connection.html#2508" class="Bound"
+      >n</a
+      ><a name="2509"
+      > </a
+      ><a name="2510" class="Symbol"
+      >:</a
+      ><a name="2511"
+      > </a
+      ><a name="2512" href="lib.Base.html#8715" class="Function"
+      >&#8469;&#8331;&#8322;</a
+      ><a name="2515" class="Symbol"
+      >)</a
+      ><a name="2516"
+      > </a
+      ><a name="2517" class="Keyword"
+      >where</a
+      ><a name="2522"
+      >
+    </a
+      ><a name="2527" class="Comment"
+      >-- Definition 7.6.11</a
+      ><a name="2547"
+      >
+    </a
+      ><a name="2552" href="Trunc.Connection.html#2552" class="Function"
+      >connection&#8226;</a
+      ><a name="2563"
+      > </a
+      ><a name="2564" class="Symbol"
+      >:</a
+      ><a name="2565"
+      > </a
+      ><a name="2566" href="Pointed.html#1178" class="Function"
+      >Type&#8226;</a
+      ><a name="2571"
+      > </a
+      ><a name="2572" class="Symbol"
+      >(</a
+      ><a name="2573" href="Agda.Primitive.html#596" class="Primitive"
+      >lsucc</a
+      ><a name="2578"
+      > </a
+      ><a name="2579" href="Trunc.Connection.html#2471" class="Bound"
+      >i</a
+      ><a name="2580" class="Symbol"
+      >)</a
+      ><a name="2581"
+      >
+    </a
+      ><a name="2586" href="Trunc.Connection.html#2552" class="Function"
+      >connection&#8226;</a
+      ><a name="2597"
+      > </a
+      ><a name="2598" class="Symbol"
+      >=</a
+      ><a name="2599"
+      >
+      </a
+      ><a name="2606" href="HHHUU-ComplicatedTypes.html#2665" class="Function"
+      >&#931;&#8226;</a
+      ><a name="2608"
+      > </a
+      ><a name="2609" class="Symbol"
+      >(</a
+      ><a name="2610" href="Trunc.Connection.html#2475" class="Bound"
+      >A</a
+      ><a name="2611"
+      >
+        </a
+      ><a name="2620" href="lib.Base.html#4919" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="2621"
+      > </a
+      ><a name="2622" class="Symbol"
+      >((&#955;</a
+      ><a name="2625"
+      > </a
+      ><a name="2626" href="Trunc.Connection.html#2626" class="Bound"
+      >b</a
+      ><a name="2627"
+      > </a
+      ><a name="2628" class="Symbol"
+      >&#8594;</a
+      ><a name="2629"
+      > </a
+      ><a name="2630" class="Symbol"
+      >(</a
+      ><a name="2631" href="Trunc.Connection.html#2631" class="Bound"
+      >TrP</a
+      ><a name="2634"
+      > </a
+      ><a name="2635" class="Symbol"
+      >:</a
+      ><a name="2636"
+      > </a
+      ><a name="2637" href="Trunc.Basics.html#944" class="Record"
+      >trunc-ty</a
+      ><a name="2645"
+      > </a
+      ><a name="2646" href="Trunc.Connection.html#2508" class="Bound"
+      >n</a
+      ><a name="2647"
+      > </a
+      ><a name="2648" class="Symbol"
+      >(</a
+      ><a name="2649" href="Pointed.html#1296" class="Function"
+      >pt</a
+      ><a name="2651"
+      > </a
+      ><a name="2652" href="Trunc.Connection.html#2475" class="Bound"
+      >A</a
+      ><a name="2653"
+      > </a
+      ><a name="2654" href="lib.Base.html#1858" class="Datatype Operator"
+      >==</a
+      ><a name="2656"
+      > </a
+      ><a name="2657" href="Trunc.Connection.html#2626" class="Bound"
+      >b</a
+      ><a name="2658" class="Symbol"
+      >)</a
+      ><a name="2659"
+      > </a
+      ><a name="2660" href="Trunc.Connection.html#2471" class="Bound"
+      >i</a
+      ><a name="2661" class="Symbol"
+      >)</a
+      ><a name="2662"
+      > </a
+      ><a name="2663" class="Symbol"
+      >&#8594;</a
+      ><a name="2664"
+      > </a
+      ><a name="2665" href="UniverseOfNTypes.html#557" class="Function Operator"
+      >&#10214;</a
+      ><a name="2666"
+      > </a
+      ><a name="2667" href="Trunc.Basics.html#1072" class="Field"
+      >type</a
+      ><a name="2671"
+      > </a
+      ><a name="2672" href="Trunc.Connection.html#2631" class="Bound"
+      >TrP</a
+      ><a name="2675"
+      > </a
+      ><a name="2676" href="UniverseOfNTypes.html#557" class="Function Operator"
+      >&#10215;</a
+      ><a name="2677" class="Symbol"
+      >)</a
+      ><a name="2678"
+      >
+         </a
+      ><a name="2688" href="lib.Base.html#4919" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="2689"
+      > </a
+      ><a name="2690" class="Symbol"
+      >(&#955;</a
+      ><a name="2692"
+      > </a
+      ><a name="2693" href="Trunc.Connection.html#2693" class="Bound"
+      >TrP</a
+      ><a name="2696"
+      > </a
+      ><a name="2697" class="Symbol"
+      >&#8594;</a
+      ><a name="2698"
+      > </a
+      ><a name="2699" href="Trunc.Basics.html#1093" class="Field"
+      >cons</a
+      ><a name="2703"
+      > </a
+      ><a name="2704" href="Trunc.Connection.html#2693" class="Bound"
+      >TrP</a
+      ><a name="2707"
+      > </a
+      ><a name="2708" href="lib.Base.html#1909" class="InductiveConstructor"
+      >idp</a
+      ><a name="2711" class="Symbol"
+      >)))</a
+      ><a name="2714"
+      >
+
+    </a
+      ><a name="2720" class="Comment"
+      >{- The base type of the (n+1)-connection:
+      &#931; A (&#955; b &#8594; (TrP : trunc-ty n (a == b) i) &#8594; &#10214; type TrP &#10215;. -}</a
+      ><a name="2827"
+      >
+    </a
+      ><a name="2832" href="Trunc.Connection.html#2832" class="Function"
+      >connection</a
+      ><a name="2842"
+      > </a
+      ><a name="2843" class="Symbol"
+      >:</a
+      ><a name="2844"
+      > </a
+      ><a name="2845" href="lib.Base.html#1123" class="Function"
+      >Type</a
+      ><a name="2849"
+      > </a
+      ><a name="2850" class="Symbol"
+      >(</a
+      ><a name="2851" href="Agda.Primitive.html#596" class="Primitive"
+      >lsucc</a
+      ><a name="2856"
+      > </a
+      ><a name="2857" href="Trunc.Connection.html#2471" class="Bound"
+      >i</a
+      ><a name="2858" class="Symbol"
+      >)</a
+      ><a name="2859"
+      >
+    </a
+      ><a name="2864" href="Trunc.Connection.html#2832" class="Function"
+      >connection</a
+      ><a name="2874"
+      > </a
+      ><a name="2875" class="Symbol"
+      >=</a
+      ><a name="2876"
+      > </a
+      ><a name="2877" href="Pointed.html#1281" class="Function"
+      >base</a
+      ><a name="2881"
+      > </a
+      ><a name="2882" href="Trunc.Connection.html#2552" class="Function"
+      >connection&#8226;</a
+      ><a name="2893"
+      >
+
+    </a
+      ><a name="2899" class="Comment"
+      >-- Lemma 7.6.14</a
+      ><a name="2914"
+      >
+    </a
+      ><a name="2919" href="Trunc.Connection.html#2919" class="Function"
+      >connection-is-connected</a
+      ><a name="2942"
+      > </a
+      ><a name="2943" class="Symbol"
+      >:</a
+      ><a name="2944"
+      > </a
+      ><a name="2945" href="Trunc.Connection.html#1804" class="Function"
+      >is-connected&#8902;</a
+      ><a name="2958"
+      > </a
+      ><a name="2959" class="Symbol"
+      >(</a
+      ><a name="2960" href="lib.Base.html#8688" class="InductiveConstructor"
+      >S</a
+      ><a name="2961"
+      > </a
+      ><a name="2962" href="Trunc.Connection.html#2508" class="Bound"
+      >n</a
+      ><a name="2963" class="Symbol"
+      >)</a
+      ><a name="2964"
+      > </a
+      ><a name="2965" href="Trunc.Connection.html#2832" class="Function"
+      >connection</a
+      ><a name="2975"
+      >
+    </a
+      ><a name="2980" href="Trunc.Connection.html#2919" class="Function"
+      >connection-is-connected</a
+      ><a name="3003"
+      > </a
+      ><a name="3004" href="Trunc.Connection.html#3004" class="Bound"
+      >Tr</a
+      ><a name="3006"
+      > </a
+      ><a name="3007" href="Trunc.Connection.html#3007" class="Bound"
+      >TrC</a
+      ><a name="3010"
+      > </a
+      ><a name="3011" class="Symbol"
+      >=</a
+      ><a name="3012"
+      > </a
+      ><a name="3013" href="lib.Equivalences.html#7216" class="Function"
+      >equiv-preserves-level</a
+      ><a name="3034"
+      > </a
+      ><a name="3035" class="Symbol"
+      >(</a
+      ><a name="3036" href="Trunc.Connection.html#3903" class="Function"
+      >e</a
+      ><a name="3037"
+      > </a
+      ><a name="3038" href="lib.Equivalences.html#4644" class="Function Operator"
+      >&#8315;&#185;</a
+      ><a name="3040" class="Symbol"
+      >)</a
+      ><a name="3041"
+      > </a
+      ><a name="3042" href="Trunc.Connection.html#4140" class="Function"
+      >h</a
+      ><a name="3043"
+      > </a
+      ><a name="3044" class="Keyword"
+      >where</a
+      ><a name="3049"
+      >
+
+      </a
+      ><a name="3057" class="Comment"
+      >-- The supplied generic truncation operator is used only to truncate A.</a
+      ><a name="3128"
+      >
+      </a
+      ><a name="3135" href="Trunc.Connection.html#3135" class="Function"
+      >TrA</a
+      ><a name="3138"
+      > </a
+      ><a name="3139" class="Symbol"
+      >:</a
+      ><a name="3140"
+      > </a
+      ><a name="3141" href="Trunc.Basics.html#944" class="Record"
+      >trunc-ty</a
+      ><a name="3149"
+      > </a
+      ><a name="3150" class="Symbol"
+      >(</a
+      ><a name="3151" href="lib.Base.html#8688" class="InductiveConstructor"
+      >S</a
+      ><a name="3152"
+      > </a
+      ><a name="3153" href="Trunc.Connection.html#2508" class="Bound"
+      >n</a
+      ><a name="3154" class="Symbol"
+      >)</a
+      ><a name="3155"
+      > </a
+      ><a name="3156" class="Symbol"
+      >(</a
+      ><a name="3157" href="Pointed.html#1281" class="Function"
+      >base</a
+      ><a name="3161"
+      > </a
+      ><a name="3162" href="Trunc.Connection.html#2475" class="Bound"
+      >A</a
+      ><a name="3163" class="Symbol"
+      >)</a
+      ><a name="3164"
+      > </a
+      ><a name="3165" class="Symbol"
+      >(</a
+      ><a name="3166" href="Agda.Primitive.html#596" class="Primitive"
+      >lsucc</a
+      ><a name="3171"
+      > </a
+      ><a name="3172" href="Trunc.Connection.html#2471" class="Bound"
+      >i</a
+      ><a name="3173" class="Symbol"
+      >)</a
+      ><a name="3174"
+      >
+      </a
+      ><a name="3181" href="Trunc.Connection.html#3135" class="Function"
+      >TrA</a
+      ><a name="3184"
+      > </a
+      ><a name="3185" class="Symbol"
+      >=</a
+      ><a name="3186"
+      > </a
+      ><a name="3187" href="Trunc.Connection.html#3004" class="Bound"
+      >Tr</a
+      ><a name="3189"
+      > </a
+      ><a name="3190" class="Symbol"
+      >(</a
+      ><a name="3191" href="Pointed.html#1281" class="Function"
+      >base</a
+      ><a name="3195"
+      > </a
+      ><a name="3196" href="Trunc.Connection.html#2475" class="Bound"
+      >A</a
+      ><a name="3197" class="Symbol"
+      >)</a
+      ><a name="3198"
+      >
+
+      </a
+      ><a name="3206" href="Trunc.Connection.html#3206" class="Function"
+      >TrP</a
+      ><a name="3209"
+      > </a
+      ><a name="3210" class="Symbol"
+      >:</a
+      ><a name="3211"
+      > </a
+      ><a name="3212" class="Symbol"
+      >(</a
+      ><a name="3213" href="Trunc.Connection.html#3213" class="Bound"
+      >b</a
+      ><a name="3214"
+      > </a
+      ><a name="3215" class="Symbol"
+      >:</a
+      ><a name="3216"
+      > </a
+      ><a name="3217" href="Pointed.html#1281" class="Function"
+      >base</a
+      ><a name="3221"
+      > </a
+      ><a name="3222" href="Trunc.Connection.html#2475" class="Bound"
+      >A</a
+      ><a name="3223" class="Symbol"
+      >)</a
+      ><a name="3224"
+      > </a
+      ><a name="3225" class="Symbol"
+      >&#8594;</a
+      ><a name="3226"
+      > </a
+      ><a name="3227" href="Trunc.Basics.html#944" class="Record"
+      >trunc-ty</a
+      ><a name="3235"
+      > </a
+      ><a name="3236" href="Trunc.Connection.html#2508" class="Bound"
+      >n</a
+      ><a name="3237"
+      > </a
+      ><a name="3238" class="Symbol"
+      >(</a
+      ><a name="3239" href="Pointed.html#1296" class="Function"
+      >pt</a
+      ><a name="3241"
+      > </a
+      ><a name="3242" href="Trunc.Connection.html#2475" class="Bound"
+      >A</a
+      ><a name="3243"
+      > </a
+      ><a name="3244" href="lib.Base.html#1858" class="Datatype Operator"
+      >==</a
+      ><a name="3246"
+      > </a
+      ><a name="3247" href="Trunc.Connection.html#3213" class="Bound"
+      >b</a
+      ><a name="3248" class="Symbol"
+      >)</a
+      ><a name="3249"
+      > </a
+      ><a name="3250" href="Trunc.Connection.html#2471" class="Bound"
+      >i</a
+      ><a name="3251"
+      >
+      </a
+      ><a name="3258" href="Trunc.Connection.html#3206" class="Function"
+      >TrP</a
+      ><a name="3261"
+      > </a
+      ><a name="3262" class="Symbol"
+      >=</a
+      ><a name="3263"
+      > </a
+      ><a name="3264" href="Trunc.TypeConstructors.html#6101" class="Function"
+      >trunc-path.trunc</a
+      ><a name="3280"
+      > </a
+      ><a name="3281" class="Symbol"
+      >{</a
+      ><a name="3282" class="Argument"
+      >j</a
+      ><a name="3283"
+      > </a
+      ><a name="3284" class="Symbol"
+      >=</a
+      ><a name="3285"
+      > </a
+      ><a name="3286" href="Trunc.Connection.html#2471" class="Bound"
+      >i</a
+      ><a name="3287" class="Symbol"
+      >}</a
+      ><a name="3288"
+      > </a
+      ><a name="3289" href="Trunc.Connection.html#3135" class="Function"
+      >TrA</a
+      ><a name="3292"
+      > </a
+      ><a name="3293" class="Symbol"
+      >(</a
+      ><a name="3294" href="Pointed.html#1296" class="Function"
+      >pt</a
+      ><a name="3296"
+      > </a
+      ><a name="3297" href="Trunc.Connection.html#2475" class="Bound"
+      >A</a
+      ><a name="3298" class="Symbol"
+      >)</a
+      ><a name="3299"
+      >
+
+      </a
+      ><a name="3307" class="Comment"
+      >{- This definition typechecks since
+              &#931; A (&#955; b &#8594; &#10214; type (TrP b) &#10215;
+           &#8801;  &#931; A (&#955; a &#8594; cons TrA (pt A) == cons TrA b)
+         by construction of trunc-path.trunc. -}</a
+      ><a name="3489"
+      >
+      </a
+      ><a name="3496" href="Trunc.Connection.html#3496" class="Function"
+      >TrD</a
+      ><a name="3499"
+      > </a
+      ><a name="3500" class="Symbol"
+      >:</a
+      ><a name="3501"
+      > </a
+      ><a name="3502" href="Trunc.Basics.html#944" class="Record"
+      >trunc-ty</a
+      ><a name="3510"
+      > </a
+      ><a name="3511" class="Symbol"
+      >(</a
+      ><a name="3512" href="lib.Base.html#8688" class="InductiveConstructor"
+      >S</a
+      ><a name="3513"
+      > </a
+      ><a name="3514" href="Trunc.Connection.html#2508" class="Bound"
+      >n</a
+      ><a name="3515" class="Symbol"
+      >)</a
+      ><a name="3516"
+      > </a
+      ><a name="3517" class="Symbol"
+      >(</a
+      ><a name="3518" href="lib.Base.html#4843" class="Record"
+      >&#931;</a
+      ><a name="3519"
+      > </a
+      ><a name="3520" class="Symbol"
+      >(</a
+      ><a name="3521" href="Pointed.html#1281" class="Function"
+      >base</a
+      ><a name="3525"
+      > </a
+      ><a name="3526" href="Trunc.Connection.html#2475" class="Bound"
+      >A</a
+      ><a name="3527" class="Symbol"
+      >)</a
+      ><a name="3528"
+      > </a
+      ><a name="3529" class="Symbol"
+      >(&#955;</a
+      ><a name="3531"
+      > </a
+      ><a name="3532" href="Trunc.Connection.html#3532" class="Bound"
+      >b</a
+      ><a name="3533"
+      > </a
+      ><a name="3534" class="Symbol"
+      >&#8594;</a
+      ><a name="3535"
+      > </a
+      ><a name="3536" href="UniverseOfNTypes.html#557" class="Function Operator"
+      >&#10214;</a
+      ><a name="3537"
+      > </a
+      ><a name="3538" href="Trunc.Basics.html#1072" class="Field"
+      >type</a
+      ><a name="3542"
+      > </a
+      ><a name="3543" class="Symbol"
+      >(</a
+      ><a name="3544" href="Trunc.Connection.html#3206" class="Function"
+      >TrP</a
+      ><a name="3547"
+      > </a
+      ><a name="3548" href="Trunc.Connection.html#3532" class="Bound"
+      >b</a
+      ><a name="3549" class="Symbol"
+      >)</a
+      ><a name="3550"
+      > </a
+      ><a name="3551" href="UniverseOfNTypes.html#557" class="Function Operator"
+      >&#10215;</a
+      ><a name="3552" class="Symbol"
+      >))</a
+      ><a name="3554"
+      > </a
+      ><a name="3555" class="Symbol"
+      >(</a
+      ><a name="3556" href="Agda.Primitive.html#596" class="Primitive"
+      >lsucc</a
+      ><a name="3561"
+      > </a
+      ><a name="3562" href="Trunc.Connection.html#2471" class="Bound"
+      >i</a
+      ><a name="3563" class="Symbol"
+      >)</a
+      ><a name="3564"
+      >
+      </a
+      ><a name="3571" href="Trunc.Connection.html#3496" class="Function"
+      >TrD</a
+      ><a name="3574"
+      > </a
+      ><a name="3575" class="Symbol"
+      >=</a
+      ><a name="3576"
+      > </a
+      ><a name="3577" href="Trunc.TypeConstructors.html#1905" class="Function"
+      >trunc-&#931;.trunc</a
+      ><a name="3590"
+      > </a
+      ><a name="3591" class="Symbol"
+      >{</a
+      ><a name="3592" class="Argument"
+      >j</a
+      ><a name="3593"
+      > </a
+      ><a name="3594" class="Symbol"
+      >=</a
+      ><a name="3595"
+      > </a
+      ><a name="3596" href="Agda.Primitive.html#596" class="Primitive"
+      >lsucc</a
+      ><a name="3601"
+      > </a
+      ><a name="3602" href="Trunc.Connection.html#2471" class="Bound"
+      >i</a
+      ><a name="3603" class="Symbol"
+      >}</a
+      ><a name="3604"
+      > </a
+      ><a name="3605" href="Trunc.Connection.html#3135" class="Function"
+      >TrA</a
+      ><a name="3608"
+      >
+              </a
+      ><a name="3623" class="Symbol"
+      >(&#955;</a
+      ><a name="3625"
+      > </a
+      ><a name="3626" href="Trunc.Connection.html#3626" class="Bound"
+      >b</a
+      ><a name="3627"
+      > </a
+      ><a name="3628" class="Symbol"
+      >&#8594;</a
+      ><a name="3629"
+      > </a
+      ><a name="3630" href="Trunc.TypeConstructors.html#1323" class="Function"
+      >trunc-self.trunc</a
+      ><a name="3646"
+      > </a
+      ><a name="3647" class="Symbol"
+      >(</a
+      ><a name="3648" href="UniverseOfNTypes.html#1607" class="Function"
+      >Path-&#8804;</a
+      ><a name="3654"
+      > </a
+      ><a name="3655" class="Symbol"
+      >(</a
+      ><a name="3656" href="Trunc.Basics.html#1072" class="Field"
+      >type</a
+      ><a name="3660"
+      > </a
+      ><a name="3661" href="Trunc.Connection.html#3135" class="Function"
+      >TrA</a
+      ><a name="3664" class="Symbol"
+      >)</a
+      ><a name="3665"
+      > </a
+      ><a name="3666" class="Symbol"
+      >(</a
+      ><a name="3667" href="Trunc.Basics.html#1093" class="Field"
+      >cons</a
+      ><a name="3671"
+      > </a
+      ><a name="3672" href="Trunc.Connection.html#3135" class="Function"
+      >TrA</a
+      ><a name="3675"
+      > </a
+      ><a name="3676" class="Symbol"
+      >(</a
+      ><a name="3677" href="Pointed.html#1296" class="Function"
+      >pt</a
+      ><a name="3679"
+      > </a
+      ><a name="3680" href="Trunc.Connection.html#2475" class="Bound"
+      >A</a
+      ><a name="3681" class="Symbol"
+      >))</a
+      ><a name="3683"
+      > </a
+      ><a name="3684" href="Trunc.Connection.html#3626" class="Bound"
+      >b</a
+      ><a name="3685" class="Symbol"
+      >))</a
+      ><a name="3687"
+      >
+
+      </a
+      ><a name="3695" href="Trunc.Connection.html#3695" class="Function"
+      >u</a
+      ><a name="3696"
+      > </a
+      ><a name="3697" class="Symbol"
+      >:</a
+      ><a name="3698"
+      > </a
+      ><a name="3699" href="Trunc.Connection.html#2832" class="Function"
+      >connection</a
+      ><a name="3709"
+      > </a
+      ><a name="3710" href="lib.Equivalences.html#2994" class="Function Operator"
+      >&#8771;</a
+      ><a name="3711"
+      > </a
+      ><a name="3712" href="lib.Base.html#4843" class="Record"
+      >&#931;</a
+      ><a name="3713"
+      > </a
+      ><a name="3714" class="Symbol"
+      >(</a
+      ><a name="3715" href="Pointed.html#1281" class="Function"
+      >base</a
+      ><a name="3719"
+      > </a
+      ><a name="3720" href="Trunc.Connection.html#2475" class="Bound"
+      >A</a
+      ><a name="3721" class="Symbol"
+      >)</a
+      ><a name="3722"
+      > </a
+      ><a name="3723" class="Symbol"
+      >(&#955;</a
+      ><a name="3725"
+      > </a
+      ><a name="3726" href="Trunc.Connection.html#3726" class="Bound"
+      >b</a
+      ><a name="3727"
+      > </a
+      ><a name="3728" class="Symbol"
+      >&#8594;</a
+      ><a name="3729"
+      > </a
+      ><a name="3730" href="UniverseOfNTypes.html#557" class="Function Operator"
+      >&#10214;</a
+      ><a name="3731"
+      > </a
+      ><a name="3732" href="Trunc.Basics.html#1072" class="Field"
+      >type</a
+      ><a name="3736"
+      > </a
+      ><a name="3737" class="Symbol"
+      >(</a
+      ><a name="3738" href="Trunc.Connection.html#3206" class="Function"
+      >TrP</a
+      ><a name="3741"
+      > </a
+      ><a name="3742" href="Trunc.Connection.html#3726" class="Bound"
+      >b</a
+      ><a name="3743" class="Symbol"
+      >)</a
+      ><a name="3744"
+      > </a
+      ><a name="3745" href="UniverseOfNTypes.html#557" class="Function Operator"
+      >&#10215;</a
+      ><a name="3746" class="Symbol"
+      >)</a
+      ><a name="3747"
+      >
+      </a
+      ><a name="3754" href="Trunc.Connection.html#3695" class="Function"
+      >u</a
+      ><a name="3755"
+      > </a
+      ><a name="3756" class="Symbol"
+      >=</a
+      ><a name="3757"
+      > </a
+      ><a name="3758" href="lib.types.Sigma.html#3737" class="Function"
+      >equiv-&#931;-snd</a
+      ><a name="3769"
+      > </a
+      ><a name="3770" class="Symbol"
+      >{</a
+      ><a name="3771" class="Argument"
+      >B</a
+      ><a name="3772"
+      > </a
+      ><a name="3773" class="Symbol"
+      >=</a
+      ><a name="3774"
+      > </a
+      ><a name="3775" class="Symbol"
+      >&#955;</a
+      ><a name="3776"
+      > </a
+      ><a name="3777" href="Trunc.Connection.html#3777" class="Bound"
+      >_</a
+      ><a name="3778"
+      > </a
+      ><a name="3779" class="Symbol"
+      >&#8594;</a
+      ><a name="3780"
+      > </a
+      ><a name="3781" href="lib.Base.html#4658" class="Function"
+      >&#928;</a
+      ><a name="3782"
+      > </a
+      ><a name="3783" class="Symbol"
+      >_</a
+      ><a name="3784"
+      > </a
+      ><a name="3785" class="Symbol"
+      >_}</a
+      ><a name="3787"
+      >  </a
+      ><a name="3789" class="Comment"
+      >-- No idea why Agda wants this.</a
+      ><a name="3820"
+      >
+                      </a
+      ><a name="3843" class="Symbol"
+      >(&#955;</a
+      ><a name="3845"
+      > </a
+      ><a name="3846" href="Trunc.Connection.html#3846" class="Bound"
+      >b</a
+      ><a name="3847"
+      > </a
+      ><a name="3848" class="Symbol"
+      >&#8594;</a
+      ><a name="3849"
+      > </a
+      ><a name="3850" href="Preliminaries.html#1768" class="Function"
+      >&#928;&#8321;-contr</a
+      ><a name="3858"
+      > </a
+      ><a name="3859" class="Symbol"
+      >(</a
+      ><a name="3860" href="Trunc.Basics.html#9234" class="Function"
+      >trunc-inhab-contr</a
+      ><a name="3877"
+      > </a
+      ><a name="3878" class="Symbol"
+      >{</a
+      ><a name="3879" class="Argument"
+      >j</a
+      ><a name="3880"
+      > </a
+      ><a name="3881" class="Symbol"
+      >=</a
+      ><a name="3882"
+      > </a
+      ><a name="3883" href="Trunc.Connection.html#2471" class="Bound"
+      >i</a
+      ><a name="3884" class="Symbol"
+      >}</a
+      ><a name="3885"
+      > </a
+      ><a name="3886" class="Symbol"
+      >(</a
+      ><a name="3887" href="Trunc.Connection.html#3206" class="Function"
+      >TrP</a
+      ><a name="3890"
+      > </a
+      ><a name="3891" href="Trunc.Connection.html#3846" class="Bound"
+      >b</a
+      ><a name="3892" class="Symbol"
+      >)))</a
+      ><a name="3895"
+      >
+
+      </a
+      ><a name="3903" href="Trunc.Connection.html#3903" class="Function"
+      >e</a
+      ><a name="3904"
+      > </a
+      ><a name="3905" class="Symbol"
+      >:</a
+      ><a name="3906"
+      > </a
+      ><a name="3907" href="UniverseOfNTypes.html#557" class="Function Operator"
+      >&#10214;</a
+      ><a name="3908"
+      > </a
+      ><a name="3909" href="Trunc.Basics.html#1072" class="Field"
+      >type</a
+      ><a name="3913"
+      > </a
+      ><a name="3914" href="Trunc.Connection.html#3007" class="Bound"
+      >TrC</a
+      ><a name="3917"
+      > </a
+      ><a name="3918" href="UniverseOfNTypes.html#557" class="Function Operator"
+      >&#10215;</a
+      ><a name="3919"
+      > </a
+      ><a name="3920" href="lib.Equivalences.html#2994" class="Function Operator"
+      >&#8771;</a
+      ><a name="3921"
+      > </a
+      ><a name="3922" href="UniverseOfNTypes.html#557" class="Function Operator"
+      >&#10214;</a
+      ><a name="3923"
+      > </a
+      ><a name="3924" href="Trunc.Basics.html#1072" class="Field"
+      >type</a
+      ><a name="3928"
+      > </a
+      ><a name="3929" href="Trunc.Connection.html#3496" class="Function"
+      >TrD</a
+      ><a name="3932"
+      > </a
+      ><a name="3933" href="UniverseOfNTypes.html#557" class="Function Operator"
+      >&#10215;</a
+      ><a name="3934"
+      >
+      </a
+      ><a name="3941" href="Trunc.Connection.html#3903" class="Function"
+      >e</a
+      ><a name="3942"
+      > </a
+      ><a name="3943" class="Symbol"
+      >=</a
+      ><a name="3944"
+      > </a
+      ><a name="3945" href="Trunc.Basics.html#6198" class="Function"
+      >trunc-functor.fmap-equiv</a
+      ><a name="3969"
+      > </a
+      ><a name="3970" class="Symbol"
+      >{</a
+      ><a name="3971" class="Argument"
+      >j</a
+      ><a name="3972"
+      > </a
+      ><a name="3973" class="Symbol"
+      >=</a
+      ><a name="3974"
+      > </a
+      ><a name="3975" href="Agda.Primitive.html#596" class="Primitive"
+      >lsucc</a
+      ><a name="3980"
+      > </a
+      ><a name="3981" href="Trunc.Connection.html#2471" class="Bound"
+      >i</a
+      ><a name="3982" class="Symbol"
+      >}</a
+      ><a name="3983"
+      > </a
+      ><a name="3984" href="Trunc.Connection.html#3007" class="Bound"
+      >TrC</a
+      ><a name="3987"
+      > </a
+      ><a name="3988" href="Trunc.Connection.html#3496" class="Function"
+      >TrD</a
+      ><a name="3991"
+      > </a
+      ><a name="3992" href="Trunc.Connection.html#3695" class="Function"
+      >u</a
+      ><a name="3993"
+      >
+
+      </a
+      ><a name="4001" class="Comment"
+      >{- Note that
+           &#10214; type TrD &#10215;  &#8801;  &#931; &#10214; type TrA &#10215; (&#955; tb &#8594; cons TrA (pt A) == tb)
+         by construction of trunc-&#931;.trunc. -}</a
+      ><a name="4133"
+      >
+      </a
+      ><a name="4140" href="Trunc.Connection.html#4140" class="Function"
+      >h</a
+      ><a name="4141"
+      > </a
+      ><a name="4142" class="Symbol"
+      >:</a
+      ><a name="4143"
+      > </a
+      ><a name="4144" href="lib.NType.html#171" class="Function"
+      >is-contr</a
+      ><a name="4152"
+      > </a
+      ><a name="4153" href="UniverseOfNTypes.html#557" class="Function Operator"
+      >&#10214;</a
+      ><a name="4154"
+      > </a
+      ><a name="4155" href="Trunc.Basics.html#1072" class="Field"
+      >type</a
+      ><a name="4159"
+      > </a
+      ><a name="4160" href="Trunc.Connection.html#3496" class="Function"
+      >TrD</a
+      ><a name="4163"
+      > </a
+      ><a name="4164" href="UniverseOfNTypes.html#557" class="Function Operator"
+      >&#10215;</a
+      ><a name="4165"
+      >
+      </a
+      ><a name="4172" href="Trunc.Connection.html#4140" class="Function"
+      >h</a
+      ><a name="4173"
+      > </a
+      ><a name="4174" class="Symbol"
+      >=</a
+      ><a name="4175"
+      > </a
+      ><a name="4176" href="lib.NType.html#4130" class="Function"
+      >pathfrom-is-contr</a
+      ><a name="4193"
+      > </a
+      ><a name="4194" class="Symbol"
+      >(</a
+      ><a name="4195" href="Trunc.Basics.html#1093" class="Field"
+      >cons</a
+      ><a name="4199"
+      > </a
+      ><a name="4200" href="Trunc.Connection.html#3135" class="Function"
+      >TrA</a
+      ><a name="4203"
+      > </a
+      ><a name="4204" class="Symbol"
+      >(</a
+      ><a name="4205" href="Pointed.html#1296" class="Function"
+      >pt</a
+      ><a name="4207"
+      > </a
+      ><a name="4208" href="Trunc.Connection.html#2475" class="Bound"
+      >A</a
+      ><a name="4209" class="Symbol"
+      >))</a
+      ><a name="4211"
+      >
+
+  </a
+      ><a name="4215" class="Keyword"
+      >module</a
+      ><a name="4221"
+      > </a
+      ><a name="4222" href="Trunc.Connection.html#4222" class="Module"
+      >con2</a
+      ><a name="4226"
+      > </a
+      ><a name="4227" class="Symbol"
+      >(</a
+      ><a name="4228" href="Trunc.Connection.html#4228" class="Bound"
+      >n</a
+      ><a name="4229"
+      > </a
+      ><a name="4230" class="Symbol"
+      >:</a
+      ><a name="4231"
+      > </a
+      ><a name="4232" href="lib.types.Nat.html#136" class="Datatype"
+      >&#8469;</a
+      ><a name="4233" class="Symbol"
+      >)</a
+      ><a name="4234"
+      > </a
+      ><a name="4235" class="Keyword"
+      >where</a
+      ><a name="4240"
+      >
+    </a
+      ><a name="4245" class="Keyword"
+      >open</a
+      ><a name="4249"
+      > </a
+      ><a name="4250" href="Trunc.Connection.html#2503" class="Module"
+      >con</a
+      ><a name="4253"
+      > </a
+      ><a name="4254" class="Symbol"
+      >(</a
+      ><a name="4255" href="Trunc.Connection.html#4228" class="Bound"
+      >n</a
+      ><a name="4256"
+      > </a
+      ><a name="4257" href="lib.types.TLevel.html#191" class="Function Operator"
+      >-2</a
+      ><a name="4259" class="Symbol"
+      >)</a
+      ><a name="4260"
+      >
+
+    </a
+      ><a name="4266" class="Comment"
+      >-- Lemma 7.6.12</a
+      ><a name="4281"
+      >
+    </a
+      ><a name="4286" class="Comment"
+      >-- The (n+1)-connection of A coincides with A on dimension n+2 and above.</a
+      ><a name="4359"
+      >
+    </a
+      ><a name="4364" href="Trunc.Connection.html#4364" class="Function"
+      >connection-higher-dim</a
+      ><a name="4385"
+      > </a
+      ><a name="4386" class="Symbol"
+      >:</a
+      ><a name="4387"
+      > </a
+      ><a name="4388" class="Symbol"
+      >(</a
+      ><a name="4389" href="Pointed.html#2934" class="Function"
+      >&#937;</a
+      ><a name="4390"
+      > </a
+      ><a name="4391" href="Preliminaries.html#3324" class="Function Operator"
+      >^</a
+      ><a name="4392"
+      > </a
+      ><a name="4393" href="Trunc.Connection.html#4228" class="Bound"
+      >n</a
+      ><a name="4394" class="Symbol"
+      >)</a
+      ><a name="4395"
+      > </a
+      ><a name="4396" href="Trunc.Connection.html#2552" class="Function"
+      >connection&#8226;</a
+      ><a name="4407"
+      > </a
+      ><a name="4408" href="Pointed.html#2222" class="Function Operator"
+      >&#8771;&#8226;</a
+      ><a name="4410"
+      > </a
+      ><a name="4411" class="Symbol"
+      >(</a
+      ><a name="4412" href="Pointed.html#2934" class="Function"
+      >&#937;</a
+      ><a name="4413"
+      > </a
+      ><a name="4414" href="Preliminaries.html#3324" class="Function Operator"
+      >^</a
+      ><a name="4415"
+      > </a
+      ><a name="4416" href="Trunc.Connection.html#4228" class="Bound"
+      >n</a
+      ><a name="4417" class="Symbol"
+      >)</a
+      ><a name="4418"
+      > </a
+      ><a name="4419" href="Trunc.Connection.html#2475" class="Bound"
+      >A</a
+      ><a name="4420"
+      >
+    </a
+      ><a name="4425" href="Trunc.Connection.html#4364" class="Function"
+      >connection-higher-dim</a
+      ><a name="4446"
+      > </a
+      ><a name="4447" class="Symbol"
+      >=</a
+      ><a name="4448"
+      >
+      </a
+      ><a name="4455" href="HHHUU-ComplicatedTypes.html#4379" class="Function"
+      >forget-&#937;^-&#931;&#8226;&#8322;</a
+      ><a name="4468"
+      > </a
+      ><a name="4469" class="Symbol"
+      >_</a
+      ><a name="4470"
+      > </a
+      ><a name="4471" href="Trunc.Connection.html#4228" class="Bound"
+      >n</a
+      ><a name="4472"
+      > </a
+      ><a name="4473" class="Symbol"
+      >(&#955;</a
+      ><a name="4475"
+      > </a
+      ><a name="4476" href="Trunc.Connection.html#4476" class="Bound"
+      >_</a
+      ><a name="4477"
+      > </a
+      ><a name="4478" class="Symbol"
+      >&#8594;</a
+      ><a name="4479"
+      > </a
+      ><a name="4480" href="lib.types.Pi.html#109" class="Function"
+      >&#928;-level</a
+      ><a name="4487"
+      > </a
+      ><a name="4488" class="Symbol"
+      >(&#955;</a
+      ><a name="4490"
+      > </a
+      ><a name="4491" href="Trunc.Connection.html#4491" class="Bound"
+      >Tr</a
+      ><a name="4493"
+      > </a
+      ><a name="4494" class="Symbol"
+      >&#8594;</a
+      ><a name="4495"
+      > </a
+      ><a name="4496" href="lib.Base.html#4947" class="Field"
+      >snd</a
+      ><a name="4499"
+      > </a
+      ><a name="4500" class="Symbol"
+      >(</a
+      ><a name="4501" href="Trunc.Basics.html#1072" class="Field"
+      >type</a
+      ><a name="4505"
+      > </a
+      ><a name="4506" href="Trunc.Connection.html#4491" class="Bound"
+      >Tr</a
+      ><a name="4508" class="Symbol"
+      >)))</a
+      ><a name="4511"
+      >
+
+  </a
+      ><a name="4515" class="Keyword"
+      >open</a
+      ><a name="4519"
+      > </a
+      ><a name="4520" href="Trunc.Connection.html#2503" class="Module"
+      >con</a
+      ><a name="4523"
+      > </a
+      ><a name="4524" class="Keyword"
+      >public</a
+      ><a name="4530"
+      >
+  </a
+      ><a name="4533" class="Keyword"
+      >open</a
+      ><a name="4537"
+      > </a
+      ><a name="4538" href="Trunc.Connection.html#4222" class="Module"
+      >con2</a
+      ><a name="4542"
+      > </a
+      ><a name="4543" class="Keyword"
+      >public</a
+      ><a name="4549"
+      >
+
+</a
+      ><a name="4551" class="Comment"
+      >-- For the first time in the dependency chain, we assume HITs.</a
+      ><a name="4613"
+      >
+</a
+      ><a name="4614" class="Keyword"
+      >module</a
+      ><a name="4620"
+      > </a
+      ><a name="4621" href="Trunc.Connection.html#4621" class="Module"
+      >with-hits</a
+      ><a name="4630"
+      > </a
+      ><a name="4631" class="Keyword"
+      >where</a
+      ><a name="4636"
+      >
+  </a
+      ><a name="4639" class="Keyword"
+      >open</a
+      ><a name="4643"
+      > </a
+      ><a name="4644" class="Keyword"
+      >import</a
+      ><a name="4650"
+      > </a
+      ><a name="4651" href="lib.types.Truncation.html#1" class="Module"
+      >lib.types.Truncation</a
+      ><a name="4671"
+      >
+  </a
+      ><a name="4674" class="Keyword"
+      >open</a
+      ><a name="4678"
+      > </a
+      ><a name="4679" class="Keyword"
+      >import</a
+      ><a name="4685"
+      > </a
+      ><a name="4686" href="lib.NConnected.html#1" class="Module"
+      >lib.NConnected</a
+      ><a name="4700"
+      >
+  
+  </a
+      ><a name="4706" class="Comment"
+      >{- With the truncations of the HoTT community's library,
+     our truncation types are always inhabited, and hence contractible. -}</a
+      ><a name="4837"
+      >
+  </a
+      ><a name="4840" class="Keyword"
+      >module</a
+      ><a name="4846"
+      > </a
+      ><a name="4847" href="Trunc.Connection.html#4847" class="Module"
+      >_</a
+      ><a name="4848"
+      > </a
+      ><a name="4849" class="Symbol"
+      >{</a
+      ><a name="4850" href="Trunc.Connection.html#4850" class="Bound"
+      >i</a
+      ><a name="4851"
+      > </a
+      ><a name="4852" href="Trunc.Connection.html#4852" class="Bound"
+      >j</a
+      ><a name="4853" class="Symbol"
+      >}</a
+      ><a name="4854"
+      > </a
+      ><a name="4855" class="Keyword"
+      >where</a
+      ><a name="4860"
+      >
+    </a
+      ><a name="4865" href="Trunc.Connection.html#4865" class="Function"
+      >trunc</a
+      ><a name="4870"
+      > </a
+      ><a name="4871" class="Symbol"
+      >:</a
+      ><a name="4872"
+      > </a
+      ><a name="4873" class="Symbol"
+      >(</a
+      ><a name="4874" href="Trunc.Connection.html#4874" class="Bound"
+      >n</a
+      ><a name="4875"
+      > </a
+      ><a name="4876" class="Symbol"
+      >:</a
+      ><a name="4877"
+      > </a
+      ><a name="4878" href="lib.Base.html#8715" class="Function"
+      >&#8469;&#8331;&#8322;</a
+      ><a name="4881" class="Symbol"
+      >)</a
+      ><a name="4882"
+      > </a
+      ><a name="4883" class="Symbol"
+      >(</a
+      ><a name="4884" href="Trunc.Connection.html#4884" class="Bound"
+      >A</a
+      ><a name="4885"
+      > </a
+      ><a name="4886" class="Symbol"
+      >:</a
+      ><a name="4887"
+      > </a
+      ><a name="4888" href="lib.Base.html#1123" class="Function"
+      >Type</a
+      ><a name="4892"
+      > </a
+      ><a name="4893" href="Trunc.Connection.html#4850" class="Bound"
+      >i</a
+      ><a name="4894" class="Symbol"
+      >)</a
+      ><a name="4895"
+      > </a
+      ><a name="4896" class="Symbol"
+      >&#8594;</a
+      ><a name="4897"
+      > </a
+      ><a name="4898" href="Trunc.Basics.html#944" class="Record"
+      >trunc-ty</a
+      ><a name="4906"
+      > </a
+      ><a name="4907" href="Trunc.Connection.html#4874" class="Bound"
+      >n</a
+      ><a name="4908"
+      > </a
+      ><a name="4909" href="Trunc.Connection.html#4884" class="Bound"
+      >A</a
+      ><a name="4910"
+      > </a
+      ><a name="4911" class="Symbol"
+      >(</a
+      ><a name="4912" href="Trunc.Connection.html#4850" class="Bound"
+      >i</a
+      ><a name="4913"
+      > </a
+      ><a name="4914" href="Preliminaries.html#483" class="Function Operator"
+      >&#8852;</a
+      ><a name="4915"
+      > </a
+      ><a name="4916" href="Trunc.Connection.html#4852" class="Bound"
+      >j</a
+      ><a name="4917" class="Symbol"
+      >)</a
+      ><a name="4918"
+      >
+    </a
+      ><a name="4923" href="Trunc.Connection.html#4865" class="Function"
+      >trunc</a
+      ><a name="4928"
+      > </a
+      ><a name="4929" href="Trunc.Connection.html#4929" class="Bound"
+      >n</a
+      ><a name="4930"
+      > </a
+      ><a name="4931" href="Trunc.Connection.html#4931" class="Bound"
+      >A</a
+      ><a name="4932"
+      > </a
+      ><a name="4933" class="Symbol"
+      >=</a
+      ><a name="4934"
+      > </a
+      ><a name="4935" class="Keyword"
+      >record</a
+      ><a name="4941"
+      >
+      </a
+      ><a name="4948" class="Symbol"
+      >{</a
+      ><a name="4949"
+      > </a
+      ><a name="4950" class="Field"
+      >type</a
+      ><a name="4954"
+      > </a
+      ><a name="4955" class="Symbol"
+      >=</a
+      ><a name="4956"
+      > </a
+      ><a name="4957" class="Symbol"
+      >(</a
+      ><a name="4958" href="lib.types.Truncation.html#431" class="Function"
+      >Trunc</a
+      ><a name="4963"
+      > </a
+      ><a name="4964" href="Trunc.Connection.html#4929" class="Bound"
+      >n</a
+      ><a name="4965"
+      > </a
+      ><a name="4966" href="Trunc.Connection.html#4931" class="Bound"
+      >A</a
+      ><a name="4967"
+      > </a
+      ><a name="4968" href="lib.Base.html#4919" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="4969"
+      > </a
+      ><a name="4970" href="lib.types.Truncation.html#579" class="Postulate"
+      >Trunc-level</a
+      ><a name="4981" class="Symbol"
+      >)</a
+      ><a name="4982"
+      >
+      </a
+      ><a name="4989" class="Symbol"
+      >;</a
+      ><a name="4990"
+      > </a
+      ><a name="4991" class="Field"
+      >cons</a
+      ><a name="4995"
+      > </a
+      ><a name="4996" class="Symbol"
+      >=</a
+      ><a name="4997"
+      > </a
+      ><a name="4998" href="lib.types.Truncation.html#491" class="Function Operator"
+      >[_]</a
+      ><a name="5001"
+      >
+      </a
+      ><a name="5008" class="Symbol"
+      >;</a
+      ><a name="5009"
+      > </a
+      ><a name="5010" class="Field"
+      >univ</a
+      ><a name="5014"
+      > </a
+      ><a name="5015" class="Symbol"
+      >=</a
+      ><a name="5016"
+      > </a
+      ><a name="5017" class="Symbol"
+      >&#955;</a
+      ><a name="5018"
+      > </a
+      ><a name="5019" href="Trunc.Connection.html#5019" class="Bound"
+      >U</a
+      ><a name="5020"
+      > </a
+      ><a name="5021" class="Symbol"
+      >&#8594;</a
+      ><a name="5022"
+      > </a
+      ><a name="5023" href="lib.Equivalences.html#1376" class="Function"
+      >is-eq</a
+      ><a name="5028"
+      >
+        </a
+      ><a name="5037" class="Symbol"
+      >(&#955;</a
+      ><a name="5039"
+      > </a
+      ><a name="5040" href="Trunc.Connection.html#5040" class="Bound"
+      >f</a
+      ><a name="5041"
+      > </a
+      ><a name="5042" class="Symbol"
+      >&#8594;</a
+      ><a name="5043"
+      > </a
+      ><a name="5044" href="Trunc.Connection.html#5040" class="Bound"
+      >f</a
+      ><a name="5045"
+      > </a
+      ><a name="5046" href="lib.Base.html#7590" class="Function Operator"
+      >&#8728;</a
+      ><a name="5047"
+      > </a
+      ><a name="5048" href="lib.types.Truncation.html#491" class="Function Operator"
+      >[_]</a
+      ><a name="5051" class="Symbol"
+      >)</a
+      ><a name="5052"
+      > </a
+      ><a name="5053" class="Symbol"
+      >(</a
+      ><a name="5054" href="lib.types.Truncation.html#1131" class="Function"
+      >Trunc-rec</a
+      ><a name="5063"
+      > </a
+      ><a name="5064" class="Symbol"
+      >(</a
+      ><a name="5065" href="lib.Base.html#4947" class="Field"
+      >snd</a
+      ><a name="5068"
+      > </a
+      ><a name="5069" href="Trunc.Connection.html#5019" class="Bound"
+      >U</a
+      ><a name="5070" class="Symbol"
+      >))</a
+      ><a name="5072"
+      > </a
+      ><a name="5073" class="Symbol"
+      >(&#955;</a
+      ><a name="5075"
+      > </a
+      ><a name="5076" href="Trunc.Connection.html#5076" class="Bound"
+      >f</a
+      ><a name="5077"
+      > </a
+      ><a name="5078" class="Symbol"
+      >&#8594;</a
+      ><a name="5079"
+      > </a
+      ><a name="5080" href="lib.Base.html#1909" class="InductiveConstructor"
+      >idp</a
+      ><a name="5083" class="Symbol"
+      >)</a
+      ><a name="5084"
+      >
+        </a
+      ><a name="5093" class="Symbol"
+      >(&#955;</a
+      ><a name="5095"
+      > </a
+      ><a name="5096" href="Trunc.Connection.html#5096" class="Bound"
+      >f</a
+      ><a name="5097"
+      > </a
+      ><a name="5098" class="Symbol"
+      >&#8594;</a
+      ><a name="5099"
+      > </a
+      ><a name="5100" href="lib.Funext.html#3978" class="Function"
+      >&#955;=</a
+      ><a name="5102"
+      > </a
+      ><a name="5103" class="Symbol"
+      >(</a
+      ><a name="5104" href="lib.types.Truncation.html#795" class="Function"
+      >Trunc-elim</a
+      ><a name="5114"
+      > </a
+      ><a name="5115" class="Symbol"
+      >(&#955;</a
+      ><a name="5117"
+      > </a
+      ><a name="5118" href="Trunc.Connection.html#5118" class="Bound"
+      >_</a
+      ><a name="5119"
+      > </a
+      ><a name="5120" class="Symbol"
+      >&#8594;</a
+      ><a name="5121"
+      > </a
+      ><a name="5122" href="lib.NType.html#3491" class="Function"
+      >=-preserves-level</a
+      ><a name="5139"
+      > </a
+      ><a name="5140" class="Symbol"
+      >_</a
+      ><a name="5141"
+      > </a
+      ><a name="5142" class="Symbol"
+      >(</a
+      ><a name="5143" href="lib.Base.html#4947" class="Field"
+      >snd</a
+      ><a name="5146"
+      > </a
+      ><a name="5147" href="Trunc.Connection.html#5019" class="Bound"
+      >U</a
+      ><a name="5148" class="Symbol"
+      >))</a
+      ><a name="5150"
+      >
+                              </a
+      ><a name="5181" class="Symbol"
+      >(&#955;</a
+      ><a name="5183"
+      > </a
+      ><a name="5184" href="Trunc.Connection.html#5184" class="Bound"
+      >a</a
+      ><a name="5185"
+      > </a
+      ><a name="5186" class="Symbol"
+      >&#8594;</a
+      ><a name="5187"
+      > </a
+      ><a name="5188" href="lib.Base.html#1909" class="InductiveConstructor"
+      >idp</a
+      ><a name="5191" class="Symbol"
+      >)))}</a
+      ><a name="5195"
+      >
+      
+    </a
+      ><a name="5207" href="Trunc.Connection.html#5207" class="Function"
+      >trunc-contr</a
+      ><a name="5218"
+      > </a
+      ><a name="5219" class="Symbol"
+      >:</a
+      ><a name="5220"
+      > </a
+      ><a name="5221" class="Symbol"
+      >{</a
+      ><a name="5222" href="Trunc.Connection.html#5222" class="Bound"
+      >n</a
+      ><a name="5223"
+      > </a
+      ><a name="5224" class="Symbol"
+      >:</a
+      ><a name="5225"
+      > </a
+      ><a name="5226" href="lib.Base.html#8715" class="Function"
+      >&#8469;&#8331;&#8322;</a
+      ><a name="5229" class="Symbol"
+      >}</a
+      ><a name="5230"
+      > </a
+      ><a name="5231" class="Symbol"
+      >{</a
+      ><a name="5232" href="Trunc.Connection.html#5232" class="Bound"
+      >A</a
+      ><a name="5233"
+      > </a
+      ><a name="5234" class="Symbol"
+      >:</a
+      ><a name="5235"
+      > </a
+      ><a name="5236" href="lib.Base.html#1123" class="Function"
+      >Type</a
+      ><a name="5240"
+      > </a
+      ><a name="5241" href="Trunc.Connection.html#4850" class="Bound"
+      >i</a
+      ><a name="5242" class="Symbol"
+      >}</a
+      ><a name="5243"
+      > </a
+      ><a name="5244" class="Symbol"
+      >&#8594;</a
+      ><a name="5245"
+      > </a
+      ><a name="5246" href="lib.NType.html#171" class="Function"
+      >is-contr</a
+      ><a name="5254"
+      > </a
+      ><a name="5255" class="Symbol"
+      >(</a
+      ><a name="5256" href="Trunc.Basics.html#944" class="Record"
+      >trunc-ty</a
+      ><a name="5264"
+      > </a
+      ><a name="5265" href="Trunc.Connection.html#5222" class="Bound"
+      >n</a
+      ><a name="5266"
+      > </a
+      ><a name="5267" href="Trunc.Connection.html#5232" class="Bound"
+      >A</a
+      ><a name="5268"
+      > </a
+      ><a name="5269" class="Symbol"
+      >(</a
+      ><a name="5270" href="Trunc.Connection.html#4850" class="Bound"
+      >i</a
+      ><a name="5271"
+      > </a
+      ><a name="5272" href="Preliminaries.html#483" class="Function Operator"
+      >&#8852;</a
+      ><a name="5273"
+      > </a
+      ><a name="5274" href="Trunc.Connection.html#4852" class="Bound"
+      >j</a
+      ><a name="5275" class="Symbol"
+      >))</a
+      ><a name="5277"
+      >
+    </a
+      ><a name="5282" href="Trunc.Connection.html#5207" class="Function"
+      >trunc-contr</a
+      ><a name="5293"
+      > </a
+      ><a name="5294" class="Symbol"
+      >=</a
+      ><a name="5295"
+      > </a
+      ><a name="5296" href="Trunc.Basics.html#9234" class="Function"
+      >trunc-inhab-contr</a
+      ><a name="5313"
+      > </a
+      ><a name="5314" class="Symbol"
+      >{</a
+      ><a name="5315" class="Argument"
+      >j</a
+      ><a name="5316"
+      > </a
+      ><a name="5317" class="Symbol"
+      >=</a
+      ><a name="5318"
+      > </a
+      ><a name="5319" href="Trunc.Connection.html#4852" class="Bound"
+      >j</a
+      ><a name="5320" class="Symbol"
+      >}</a
+      ><a name="5321"
+      > </a
+      ><a name="5322" class="Symbol"
+      >(</a
+      ><a name="5323" href="Trunc.Connection.html#4865" class="Function"
+      >trunc</a
+      ><a name="5328"
+      > </a
+      ><a name="5329" class="Symbol"
+      >_</a
+      ><a name="5330"
+      > </a
+      ><a name="5331" class="Symbol"
+      >_)</a
+      ><a name="5333"
+      >
+
+  </a
+      ><a name="5337" class="Comment"
+      >-- Lemma 7.6.15</a
+      ><a name="5352"
+      >
+  </a
+      ><a name="5355" class="Comment"
+      >-- Our connectedness&#8902; is equivalent to HIT connectedness.</a
+      ><a name="5412"
+      >
+  </a
+      ><a name="5415" class="Keyword"
+      >module</a
+      ><a name="5421"
+      > </a
+      ><a name="5422" href="Trunc.Connection.html#5422" class="Module"
+      >_</a
+      ><a name="5423"
+      > </a
+      ><a name="5424" class="Symbol"
+      >{</a
+      ><a name="5425" href="Trunc.Connection.html#5425" class="Bound"
+      >i</a
+      ><a name="5426" class="Symbol"
+      >}</a
+      ><a name="5427"
+      > </a
+      ><a name="5428" class="Symbol"
+      >{</a
+      ><a name="5429" href="Trunc.Connection.html#5429" class="Bound"
+      >n</a
+      ><a name="5430"
+      > </a
+      ><a name="5431" class="Symbol"
+      >:</a
+      ><a name="5432"
+      > </a
+      ><a name="5433" href="lib.Base.html#8715" class="Function"
+      >&#8469;&#8331;&#8322;</a
+      ><a name="5436" class="Symbol"
+      >}</a
+      ><a name="5437"
+      > </a
+      ><a name="5438" class="Symbol"
+      >{</a
+      ><a name="5439" href="Trunc.Connection.html#5439" class="Bound"
+      >A</a
+      ><a name="5440"
+      > </a
+      ><a name="5441" class="Symbol"
+      >:</a
+      ><a name="5442"
+      > </a
+      ><a name="5443" href="lib.Base.html#1123" class="Function"
+      >Type</a
+      ><a name="5447"
+      > </a
+      ><a name="5448" class="Symbol"
+      >(</a
+      ><a name="5449" href="Agda.Primitive.html#596" class="Primitive"
+      >lsucc</a
+      ><a name="5454"
+      > </a
+      ><a name="5455" href="Trunc.Connection.html#5425" class="Bound"
+      >i</a
+      ><a name="5456" class="Symbol"
+      >)}</a
+      ><a name="5458"
+      > </a
+      ><a name="5459" class="Keyword"
+      >where</a
+      ><a name="5464"
+      >
+    </a
+      ><a name="5469" href="Trunc.Connection.html#5469" class="Function"
+      >conn&#8902;-conn</a
+      ><a name="5479"
+      > </a
+      ><a name="5480" class="Symbol"
+      >:</a
+      ><a name="5481"
+      > </a
+      ><a name="5482" href="Trunc.Connection.html#1804" class="Function"
+      >is-connected&#8902;</a
+      ><a name="5495"
+      > </a
+      ><a name="5496" href="Trunc.Connection.html#5429" class="Bound"
+      >n</a
+      ><a name="5497"
+      > </a
+      ><a name="5498" href="Trunc.Connection.html#5439" class="Bound"
+      >A</a
+      ><a name="5499"
+      > </a
+      ><a name="5500" href="lib.Equivalences.html#2994" class="Function Operator"
+      >&#8771;</a
+      ><a name="5501"
+      > </a
+      ><a name="5502" href="lib.NConnected.html#367" class="Function"
+      >is-connected</a
+      ><a name="5514"
+      > </a
+      ><a name="5515" href="Trunc.Connection.html#5429" class="Bound"
+      >n</a
+      ><a name="5516"
+      > </a
+      ><a name="5517" href="Trunc.Connection.html#5439" class="Bound"
+      >A</a
+      ><a name="5518"
+      >
+    </a
+      ><a name="5523" href="Trunc.Connection.html#5469" class="Function"
+      >conn&#8902;-conn</a
+      ><a name="5533"
+      > </a
+      ><a name="5534" class="Symbol"
+      >=</a
+      ><a name="5535"
+      > </a
+      ><a name="5536" href="Preliminaries.html#1768" class="Function"
+      >&#928;&#8321;-contr</a
+      ><a name="5544"
+      > </a
+      ><a name="5545" class="Symbol"
+      >(</a
+      ><a name="5546" href="Trunc.Connection.html#5207" class="Function"
+      >trunc-contr</a
+      ><a name="5557"
+      > </a
+      ><a name="5558" class="Symbol"
+      >{</a
+      ><a name="5559" class="Argument"
+      >j</a
+      ><a name="5560"
+      > </a
+      ><a name="5561" class="Symbol"
+      >=</a
+      ><a name="5562"
+      > </a
+      ><a name="5563" href="Agda.Primitive.html#596" class="Primitive"
+      >lsucc</a
+      ><a name="5568"
+      > </a
+      ><a name="5569" href="Trunc.Connection.html#5425" class="Bound"
+      >i</a
+      ><a name="5570" class="Symbol"
+      >})</a
+      ><a name="5572"
+      >
+              </a
+      ><a name="5587" href="lib.Equivalences.html#4016" class="Function Operator"
+      >&#8728;e</a
+      ><a name="5589"
+      > </a
+      ><a name="5590" href="Preliminaries.html#1768" class="Function"
+      >&#928;&#8321;-contr</a
+      ><a name="5598"
+      > </a
+      ><a name="5599" class="Symbol"
+      >(</a
+      ><a name="5600" href="lib.types.Pi.html#109" class="Function"
+      >&#928;-level</a
+      ><a name="5607"
+      > </a
+      ><a name="5608" class="Symbol"
+      >(&#955;</a
+      ><a name="5610"
+      > </a
+      ><a name="5611" href="Trunc.Connection.html#5611" class="Bound"
+      >_</a
+      ><a name="5612"
+      > </a
+      ><a name="5613" class="Symbol"
+      >&#8594;</a
+      ><a name="5614"
+      > </a
+      ><a name="5615" href="Trunc.Connection.html#5207" class="Function"
+      >trunc-contr</a
+      ><a name="5626"
+      > </a
+      ><a name="5627" class="Symbol"
+      >{</a
+      ><a name="5628" class="Argument"
+      >j</a
+      ><a name="5629"
+      > </a
+      ><a name="5630" class="Symbol"
+      >=</a
+      ><a name="5631"
+      > </a
+      ><a name="5632" href="Agda.Primitive.html#596" class="Primitive"
+      >lsucc</a
+      ><a name="5637"
+      > </a
+      ><a name="5638" href="Trunc.Connection.html#5425" class="Bound"
+      >i</a
+      ><a name="5639" class="Symbol"
+      >}))</a
+      ><a name="5642"
+      >
+
+
+</a
+      ><a name="5645" class="Comment"
+      >-- Theorem 7.7.1</a
+      ><a name="5661"
+      >
+</a
+      ><a name="5662" class="Keyword"
+      >module</a
+      ><a name="5668"
+      > </a
+      ><a name="5669" href="Trunc.Connection.html#5669" class="Module"
+      >_</a
+      ><a name="5670"
+      > </a
+      ><a name="5671" class="Symbol"
+      >(</a
+      ><a name="5672" href="Trunc.Connection.html#5672" class="Bound"
+      >n</a
+      ><a name="5673"
+      > </a
+      ><a name="5674" class="Symbol"
+      >:</a
+      ><a name="5675"
+      > </a
+      ><a name="5676" href="lib.types.Nat.html#136" class="Datatype"
+      >&#8469;</a
+      ><a name="5677" class="Symbol"
+      >)</a
+      ><a name="5678"
+      > </a
+      ><a name="5679" class="Keyword"
+      >where</a
+      ><a name="5684"
+      >
+  </a
+      ><a name="5687" href="Trunc.Connection.html#5687" class="Function"
+      >M&#8226;</a
+      ><a name="5689"
+      > </a
+      ><a name="5690" class="Symbol"
+      >:</a
+      ><a name="5691"
+      > </a
+      ><a name="5692" href="Pointed.html#1178" class="Function"
+      >Type&#8226;</a
+      ><a name="5697"
+      > </a
+      ><a name="5698" href="Preliminaries.html#5872" class="Function Operator"
+      >&#65378;</a
+      ><a name="5699"
+      > </a
+      ><a name="5700" href="Trunc.Connection.html#5672" class="Bound"
+      >n</a
+      ><a name="5701"
+      > </a
+      ><a name="5702" href="Preliminaries.html#559" class="Function Operator"
+      >+</a
+      ><a name="5703"
+      > </a
+      ><a name="5704" class="Number"
+      >2</a
+      ><a name="5705"
+      > </a
+      ><a name="5706" href="Preliminaries.html#5872" class="Function Operator"
+      >&#65379;</a
+      ><a name="5707"
+      >
+  </a
+      ><a name="5710" href="Trunc.Connection.html#5687" class="Function"
+      >M&#8226;</a
+      ><a name="5712"
+      > </a
+      ><a name="5713" class="Symbol"
+      >=</a
+      ><a name="5714"
+      > </a
+      ><a name="5715" href="Trunc.Connection.html#2552" class="Function"
+      >connection&#8226;</a
+      ><a name="5726"
+      > </a
+      ><a name="5727" class="Symbol"
+      >(_</a
+      ><a name="5729"
+      > </a
+      ><a name="5730" href="lib.Base.html#4919" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="5731"
+      > </a
+      ><a name="5732" href="HHHUU-ComplicatedTypes.html#7927" class="Function"
+      >Loop</a
+      ><a name="5736"
+      > </a
+      ><a name="5737" href="Trunc.Connection.html#5672" class="Bound"
+      >n</a
+      ><a name="5738" class="Symbol"
+      >)</a
+      ><a name="5739"
+      > </a
+      ><a name="5740" class="Symbol"
+      >(</a
+      ><a name="5741" href="Trunc.Connection.html#5672" class="Bound"
+      >n</a
+      ><a name="5742"
+      > </a
+      ><a name="5743" href="lib.types.TLevel.html#238" class="Function Operator"
+      >-1</a
+      ><a name="5745" class="Symbol"
+      >)</a
+      ><a name="5746"
+      >
+
+  </a
+      ><a name="5750" href="Trunc.Connection.html#5750" class="Function"
+      >assertion-0</a
+      ><a name="5761"
+      > </a
+      ><a name="5762" class="Symbol"
+      >:</a
+      ><a name="5763"
+      > </a
+      ><a name="5764" href="lib.NType.html#243" class="Function"
+      >has-level</a
+      ><a name="5773"
+      > </a
+      ><a name="5774" href="lib.types.TLevel.html#269" class="Function Operator"
+      >&#10216;</a
+      ><a name="5775"
+      > </a
+      ><a name="5776" href="Trunc.Connection.html#5672" class="Bound"
+      >n</a
+      ><a name="5777"
+      > </a
+      ><a name="5778" href="Preliminaries.html#559" class="Function Operator"
+      >+</a
+      ><a name="5779"
+      > </a
+      ><a name="5780" class="Number"
+      >1</a
+      ><a name="5781"
+      > </a
+      ><a name="5782" href="lib.types.TLevel.html#269" class="Function Operator"
+      >&#10217;</a
+      ><a name="5783"
+      > </a
+      ><a name="5784" class="Symbol"
+      >(</a
+      ><a name="5785" href="Pointed.html#1281" class="Function"
+      >base</a
+      ><a name="5789"
+      > </a
+      ><a name="5790" href="Trunc.Connection.html#5687" class="Function"
+      >M&#8226;</a
+      ><a name="5792" class="Symbol"
+      >)</a
+      ><a name="5793"
+      >
+  </a
+      ><a name="5796" href="Trunc.Connection.html#5750" class="Function"
+      >assertion-0</a
+      ><a name="5807"
+      > </a
+      ><a name="5808" class="Symbol"
+      >=</a
+      ><a name="5809"
+      > </a
+      ><a name="5810" href="lib.Base.html#4947" class="Field"
+      >snd</a
+      ><a name="5813"
+      > </a
+      ><a name="5814" class="Symbol"
+      >(</a
+      ><a name="5815" href="UniverseOfNTypes.html#1261" class="Function"
+      >&#931;-&#8804;</a
+      ><a name="5818"
+      > </a
+      ><a name="5819" class="Symbol"
+      >(</a
+      ><a name="5820" href="lib.types.TLevel.html#269" class="Function Operator"
+      >&#10216;</a
+      ><a name="5821"
+      > </a
+      ><a name="5822" href="Trunc.Connection.html#5672" class="Bound"
+      >n</a
+      ><a name="5823"
+      > </a
+      ><a name="5824" href="lib.types.TLevel.html#269" class="Function Operator"
+      >&#10217;</a
+      ><a name="5825"
+      > </a
+      ><a name="5826" href="UniverseOfNTypes.html#1826" class="Function Operator"
+      >-Type-&#8804;</a
+      ><a name="5833"
+      > </a
+      ><a name="5834" href="Preliminaries.html#5872" class="Function Operator"
+      >&#65378;</a
+      ><a name="5835"
+      > </a
+      ><a name="5836" href="Trunc.Connection.html#5672" class="Bound"
+      >n</a
+      ><a name="5837"
+      > </a
+      ><a name="5838" href="Preliminaries.html#5872" class="Function Operator"
+      >&#65379;</a
+      ><a name="5839" class="Symbol"
+      >)</a
+      ><a name="5840"
+      >
+                    </a
+      ><a name="5861" class="Symbol"
+      >(&#955;</a
+      ><a name="5863"
+      > </a
+      ><a name="5864" href="Trunc.Connection.html#5864" class="Bound"
+      >b</a
+      ><a name="5865"
+      > </a
+      ><a name="5866" class="Symbol"
+      >&#8594;</a
+      ><a name="5867"
+      > </a
+      ><a name="5868" href="UniverseOfNTypes.html#1043" class="Function"
+      >&#928;-&#8804;</a
+      ><a name="5871"
+      > </a
+      ><a name="5872" class="Symbol"
+      >(</a
+      ><a name="5873" href="Trunc.Basics.html#944" class="Record"
+      >trunc-ty</a
+      ><a name="5881"
+      > </a
+      ><a name="5882" class="Symbol"
+      >_</a
+      ><a name="5883"
+      > </a
+      ><a name="5884" class="Symbol"
+      >(_</a
+      ><a name="5886"
+      > </a
+      ><a name="5887" href="lib.Base.html#1858" class="Datatype Operator"
+      >==</a
+      ><a name="5889"
+      > </a
+      ><a name="5890" href="Trunc.Connection.html#5864" class="Bound"
+      >b</a
+      ><a name="5891" class="Symbol"
+      >)</a
+      ><a name="5892"
+      > </a
+      ><a name="5893" class="Symbol"
+      >_)</a
+      ><a name="5895"
+      >
+                               </a
+      ><a name="5927" class="Symbol"
+      >(&#955;</a
+      ><a name="5929"
+      > </a
+      ><a name="5930" href="Trunc.Connection.html#5930" class="Bound"
+      >tr</a
+      ><a name="5932"
+      > </a
+      ><a name="5933" class="Symbol"
+      >&#8594;</a
+      ><a name="5934"
+      > </a
+      ><a name="5935" href="UniverseOfNTypes.html#772" class="Function"
+      >raise</a
+      ><a name="5940"
+      > </a
+      ><a name="5941" class="Symbol"
+      >(</a
+      ><a name="5942" href="UniverseOfNTypes.html#772" class="Function"
+      >raise</a
+      ><a name="5947"
+      > </a
+      ><a name="5948" class="Symbol"
+      >(</a
+      ><a name="5949" href="Trunc.Basics.html#1072" class="Field"
+      >type</a
+      ><a name="5953"
+      > </a
+      ><a name="5954" href="Trunc.Connection.html#5930" class="Bound"
+      >tr</a
+      ><a name="5956" class="Symbol"
+      >)))))</a
+      ><a name="5961"
+      >
+
+  </a
+      ><a name="5965" href="Trunc.Connection.html#5965" class="Function"
+      >assertion-1</a
+      ><a name="5976"
+      > </a
+      ><a name="5977" class="Symbol"
+      >:</a
+      ><a name="5978"
+      > </a
+      ><a name="5979" href="lib.Base.html#5627" class="Function"
+      >&#172;</a
+      ><a name="5980"
+      > </a
+      ><a name="5981" class="Symbol"
+      >(</a
+      ><a name="5982" href="lib.NType.html#243" class="Function"
+      >has-level</a
+      ><a name="5991"
+      > </a
+      ><a name="5992" href="lib.types.TLevel.html#269" class="Function Operator"
+      >&#10216;</a
+      ><a name="5993"
+      > </a
+      ><a name="5994" href="Trunc.Connection.html#5672" class="Bound"
+      >n</a
+      ><a name="5995"
+      > </a
+      ><a name="5996" href="lib.types.TLevel.html#269" class="Function Operator"
+      >&#10217;</a
+      ><a name="5997"
+      > </a
+      ><a name="5998" class="Symbol"
+      >(</a
+      ><a name="5999" href="Pointed.html#1281" class="Function"
+      >base</a
+      ><a name="6003"
+      > </a
+      ><a name="6004" href="Trunc.Connection.html#5687" class="Function"
+      >M&#8226;</a
+      ><a name="6006" class="Symbol"
+      >))</a
+      ><a name="6008"
+      >
+  </a
+      ><a name="6011" href="Trunc.Connection.html#5965" class="Function"
+      >assertion-1</a
+      ><a name="6022"
+      > </a
+      ><a name="6023" class="Symbol"
+      >=</a
+      ><a name="6024"
+      >
+      </a
+      ><a name="6031" href="HHHUU-ComplicatedTypes.html#11866" class="Function"
+      >main'</a
+      ><a name="6036"
+      > </a
+      ><a name="6037" href="Trunc.Connection.html#5672" class="Bound"
+      >n</a
+      ><a name="6038"
+      >
+    </a
+      ><a name="6043" href="lib.Base.html#7590" class="Function Operator"
+      >&#8728;</a
+      ><a name="6044"
+      > </a
+      ><a name="6045" href="lib.Equivalences.html#3306" class="Function"
+      >&#8211;&gt;</a
+      ><a name="6047"
+      > </a
+      ><a name="6048" class="Symbol"
+      >(</a
+      ><a name="6049" href="Pointed.html#5719" class="Function"
+      >equiv-is-contr&#8226;</a
+      ><a name="6064"
+      > </a
+      ><a name="6065" class="Symbol"
+      >(</a
+      ><a name="6066" href="Trunc.Connection.html#4364" class="Function"
+      >connection-higher-dim</a
+      ><a name="6087"
+      > </a
+      ><a name="6088" class="Symbol"
+      >_</a
+      ><a name="6089"
+      > </a
+      ><a name="6090" class="Symbol"
+      >(</a
+      ><a name="6091" href="Trunc.Connection.html#5672" class="Bound"
+      >n</a
+      ><a name="6092"
+      > </a
+      ><a name="6093" href="Preliminaries.html#559" class="Function Operator"
+      >+</a
+      ><a name="6094"
+      > </a
+      ><a name="6095" class="Number"
+      >1</a
+      ><a name="6096" class="Symbol"
+      >)))</a
+      ><a name="6099"
+      >
+    </a
+      ><a name="6104" href="lib.Base.html#7590" class="Function Operator"
+      >&#8728;</a
+      ><a name="6105"
+      > </a
+      ><a name="6106" class="Symbol"
+      >(&#955;</a
+      ><a name="6108"
+      > </a
+      ><a name="6109" href="Trunc.Connection.html#6109" class="Bound"
+      >z</a
+      ><a name="6110"
+      > </a
+      ><a name="6111" class="Symbol"
+      >&#8594;</a
+      ><a name="6112"
+      > </a
+      ><a name="6113" href="Trunc.Connection.html#6109" class="Bound"
+      >z</a
+      ><a name="6114"
+      > </a
+      ><a name="6115" class="Symbol"
+      >(</a
+      ><a name="6116" href="Pointed.html#1296" class="Function"
+      >pt</a
+      ><a name="6118"
+      > </a
+      ><a name="6119" href="Trunc.Connection.html#5687" class="Function"
+      >M&#8226;</a
+      ><a name="6121" class="Symbol"
+      >))</a
+      ><a name="6123"
+      >
+    </a
+      ><a name="6128" href="lib.Base.html#7590" class="Function Operator"
+      >&#8728;</a
+      ><a name="6129"
+      > </a
+      ><a name="6130" href="lib.Equivalences.html#3306" class="Function"
+      >&#8211;&gt;</a
+      ><a name="6132"
+      > </a
+      ><a name="6133" href="Pointed.html#7187" class="Function"
+      >has-level-equiv-contr-loops</a
+      ><a name="6160"
+      >
+
+  </a
+      ><a name="6164" href="Trunc.Connection.html#6164" class="Function"
+      >assertion-2</a
+      ><a name="6175"
+      > </a
+      ><a name="6176" class="Symbol"
+      >:</a
+      ><a name="6177"
+      > </a
+      ><a name="6178" href="Trunc.Connection.html#1804" class="Function"
+      >is-connected&#8902;</a
+      ><a name="6191"
+      > </a
+      ><a name="6192" href="lib.types.TLevel.html#269" class="Function Operator"
+      >&#10216;</a
+      ><a name="6193"
+      > </a
+      ><a name="6194" href="Trunc.Connection.html#5672" class="Bound"
+      >n</a
+      ><a name="6195"
+      > </a
+      ><a name="6196" href="lib.types.TLevel.html#269" class="Function Operator"
+      >&#10217;</a
+      ><a name="6197"
+      > </a
+      ><a name="6198" class="Symbol"
+      >(</a
+      ><a name="6199" href="Pointed.html#1281" class="Function"
+      >base</a
+      ><a name="6203"
+      > </a
+      ><a name="6204" href="Trunc.Connection.html#5687" class="Function"
+      >M&#8226;</a
+      ><a name="6206" class="Symbol"
+      >)</a
+      ><a name="6207"
+      >
+  </a
+      ><a name="6210" href="Trunc.Connection.html#6164" class="Function"
+      >assertion-2</a
+      ><a name="6221"
+      > </a
+      ><a name="6222" class="Symbol"
+      >=</a
+      ><a name="6223"
+      > </a
+      ><a name="6224" href="Trunc.Connection.html#2919" class="Function"
+      >connection-is-connected</a
+      ><a name="6247"
+      > </a
+      ><a name="6248" class="Symbol"
+      >_</a
+      ><a name="6249"
+      > </a
+      ><a name="6250" class="Symbol"
+      >_</a
+      ><a name="6251"
+      >
+</a
+      ></pre
+    ></body
+  ></html
+>
