@@ -1,0 +1,60 @@
+NOTES AND EXERCISES FOR LECTURE ONE
+30 August 2019
+
+Chapter 1: What is dependent type theory?
+
+ * (the basis for) a programming language
+ * (the basis for) a proof assistant
+ * a foundation of maths
+ * a language for higher categories (more precisely: infinity-groupoids)
+
+Chapter 2: Basic components of dependent type theory
+
+(see also 1.4-1.7 of the book)
+
+ * products, A*B
+ * coproducts, A+B
+ * Sigma types, Sigma(x:A).B(x)
+ * Pi types, Pi(x:A).B(x)
+
+Chapter 3: Equality types
+
+(see also 1.12 of the book)
+
+Notation:
+  Pi(x y z:A). ...
+means the same as 
+  Pi(x:A). Pi(y:A). Pi(z:A). ...
+
+The rules are as follows:
+
+formation: If x:A and y:A, then x=y is a type
+
+introduction: If x:A, then refl : x=x
+
+elimination: given
+  P : Pi(x y:A). (x=y) -> Type
+  d : Pi(x:A) P x x refl
+then we get
+  J(P,d) : Pi(x y:A). Pi(q:x=y). P x y q
+
+computation: given P,d as above,
+  J(P,d) x x refl
+computes to
+  d x
+
+EXERCISES:
+
+Using the rules above, construct a term
+  trans : Pi(x y z:A). x=y -> y=z -> x=z
+
+Show associativity, i.e. construct a term
+  assoc : Pi(x y z w:A). Pi(p:x=y). Pi(q:y=z). Pi(s:z=w). trans x y w p (trans y z w q s) = trans x z w (trans x y z p q) s
+
+Construct a term
+  sym : Pi(x y:A). x=y -> y=x
+
+Show:
+  selfinv : Pi(x y:A). Pi(p:x=y). sym y x (sym x y p) = p
+
+
