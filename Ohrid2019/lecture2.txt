@@ -1,0 +1,58 @@
+INTRODUCTION TO HOMOTOPY TYPE THEORY
+
+EUTypes School, Ohrid 2019 
+
+NOTES AND EXERCISES FOR LECTURE TWO
+2 September 2019
+
+Chapter 4: Homotopical intuition
+
+Hofmann-Streicher:
+dependent type theory has a model in groupoids
+Voevodsky (see the paper by Kapulkin-Lumsdaine):
+dependent type theory has a model in infinity-groupoids (Kan simplicial sets)
+
+Showing the whole technical construction would be too much for this course, but the intuition is as follows:
+
+* Infinity-groupoids are essentially topological spaces.
+* A type (in the empty context) is interpreted as a space.
+* An element of a type is interpreted as a point in the space.
+* An equality is interpreted as a path between the points.
+* (Less important: a dependent type is interpreted as a fibration; see the first exercise below.)
+* (All other components can also be interpreted, but they are not so important for this course.)
+
+If something does not work in this model, it will not work in HoTT. (If it works in the model, it might still fail in HoTT, but the model still gives us a pretty good idea of what works.)
+
+Examples:
+* reflexivity is given by constant paths
+* transitivity of equality becomes composition of paths
+* symmetry of equality becomes reversal of paths
+
+What about the following principle UIP (uniqueness of identity proofs, where 'identity' is synonymous with 'equality')?
+
+UIP: Pi(x y : A). Pi(p q : x=y). p=q
+
+In the model, this would mean that we can continuously transform the path p into the path q without moving x and y; this is not always possible. It depends on the space A.
+
+
+Chapter 5: Equivalences
+
+(depending on how we are doing timewise)
+
+
+Chapter 6: Describing path spaces (i.e. equality types)
+
+(depending on how we are doing timewise)
+
+
+EXERCISES:
+
+(1) given a type A. Show the correspondance between 'families' and 'fibrations', where a family is a 'P : A -> Type', a fibration is a type B together with a function B->A.
+Concretely: construct functions
+  f : (A -> Type) -> (Sigma (B: Type). B->A)
+  g : (Sigma (B: Type). B->A) -> (A -> Type)
+What can you say about the compositions f.g and g.f? (Revisit this question after we discuss univalence.)
+
+SOLUTIONS:
+
+not available yet

@@ -23,14 +23,14 @@ Chapter 2: Basic components of dependent type theory
 
 Chapter 3: Equality types
 
-(see also 1.12 of the book)
+(see also 1.12 of the HoTT book)
 
 Notation:
   Pi(x y z:A). ...
 means the same as 
   Pi(x:A). Pi(y:A). Pi(z:A). ...
 
-The rules are as follows:
+The rules for the equality type are as follows:
 
 formation: If x:A and y:A, then x=y is a type
 
