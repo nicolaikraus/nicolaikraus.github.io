@@ -5,6 +5,12 @@ EUTypes School, Ohrid 2019
 NOTES AND EXERCISES FOR LECTURE TWO
 2 September 2019
 
+[Recall Chapters 2,3. Note: 
+  Pi(x:A). B x
+is in Jesper's course (Agda) written as
+  (x:A) -> B x
+]
+
 Chapter 4: Homotopical intuition
 
 Hofmann-Streicher:
@@ -18,7 +24,7 @@ Showing the whole technical construction would be too much for this course, but 
 * A type (in the empty context) is interpreted as a space.
 * An element of a type is interpreted as a point in the space.
 * An equality is interpreted as a path between the points.
-* (Less important: a dependent type is interpreted as a fibration; see the first exercise below.)
+* (Less important: a dependent type is interpreted as a fibration; see the second exercise below.)
 * (All other components can also be interpreted, but they are not so important for this course.)
 
 If something does not work in this model, it will not work in HoTT. (If it works in the model, it might still fail in HoTT, but the model still gives us a pretty good idea of what works.)
@@ -47,11 +53,24 @@ Chapter 6: Describing path spaces (i.e. equality types)
 
 EXERCISES:
 
-(1) given a type A. Show the correspondance between 'families' and 'fibrations', where a family is a 'P : A -> Type', a fibration is a type B together with a function B->A.
+(1) Repetition for Chapter 2:
+given
+  A : Type
+  B : A -> Type
+  C : Pi(x:A). B x -> Type,
+what can you say about the two types
+  T1 := Pi(x:A). Sigma(y : B x). C x y
+  T2 := Sigma(k: Pi(x:A).B x). Pi(x:A). C x (k x)
+?
+Can you construct functions in both directions?
+Revisit this exercise after we discuss univalence. What can you say about the compositions of the functions?
+
+(2) given a type A. Show the correspondance between 'families' and 'fibrations', where a family is a 'P : A -> Type', a fibration is a type B together with a function B->A.
 Concretely: construct functions
   f : (A -> Type) -> (Sigma (B: Type). B->A)
   g : (Sigma (B: Type). B->A) -> (A -> Type)
 What can you say about the compositions f.g and g.f? (Revisit this question after we discuss univalence.)
+
 
 SOLUTIONS:
 
