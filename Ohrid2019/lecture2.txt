@@ -9,6 +9,8 @@ NOTES AND EXERCISES FOR LECTURE TWO
   Pi(x:A). B x
 is in Jesper's course (Agda) written as
   (x:A) -> B x
+
+'Type' is a (the smallest) universe, the 'type of small types'. It is also called 'U' (HoTT book) or 'Set' (Agda).
 ]
 
 Chapter 4: Homotopical intuition
@@ -34,6 +36,13 @@ Examples:
 * transitivity of equality becomes composition of paths
 * symmetry of equality becomes reversal of paths
 
+From now on, "equality proof" and "path" are used synonymously.
+"Element" and "point" are also used synonymously.
+
+Another example:
+* if f : A -> B is a function, it maps points but also paths. This gives us
+  ap_f : Pi(x y : A). (x = y) -> (f x = f y)
+
 What about the following principle UIP (uniqueness of identity proofs, where 'identity' is synonymous with 'equality')?
 
 UIP: Pi(x y : A). Pi(p q : x=y). p=q
@@ -43,12 +52,21 @@ In the model, this would mean that we can continuously transform the path p into
 
 Chapter 5: Equivalences
 
-(depending on how we are doing timewise)
+How to say that a function f: A -> B is an equivalence?
+
+define:
+  isequiv(f) :=
+    Sigma g: B -> A.
+    Sigma alpha: Pi(x:A). g(f x) = x.
+    Sigma beta:  Pi(y:B). f(g y) = y.
+            Pi(x:A). ap_f(alpha x) = beta(f x)
+
+Without the last component, this would not be well-behaved.
 
 
 Chapter 6: Describing path spaces (i.e. equality types)
 
-(depending on how we are doing timewise)
+See exercise (3).
 
 
 EXERCISES:
@@ -71,6 +89,10 @@ Concretely: construct functions
   g : (Sigma (B: Type). B->A) -> (A -> Type)
 What can you say about the compositions f.g and g.f? (Revisit this question after we discuss univalence.)
 
+(3) Given types A and B; given pairs (x,y) : A*B and (x',y') : A*B. Construct a function
+  k : ((x,y) = (x',y')) -> ((x=x')*(y=y'))
+and show that it is an equivalence.
+Can you do the same if B depends on A (i.e. you use Sigma(x:A).B x instead of A*B)?
 
 SOLUTIONS:
 
