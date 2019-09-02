@@ -1,7 +1,11 @@
+INTRODUCTION TO HOMOTOPY TYPE THEORY
+
+EUTypes School, Ohrid 2019 
+
 NOTES AND EXERCISES FOR LECTURE ONE
 30 August 2019
 
-Chapter 1: What is dependent type theory?
+Chapter 1: What is (a) dependent type theory?
 
  * (the basis for) a programming language
  * (the basis for) a proof assistant
@@ -10,7 +14,7 @@ Chapter 1: What is dependent type theory?
 
 Chapter 2: Basic components of dependent type theory
 
-(see also 1.4-1.7 of the book)
+(see also 1.4-1.7 of the HoTT book)
 
  * products, A*B
  * coproducts, A+B
@@ -45,16 +49,45 @@ computes to
 
 EXERCISES:
 
-Using the rules above, construct a term
+(1) Using the rules above, construct a term
   trans : Pi(x y z:A). x=y -> y=z -> x=z
 
-Show associativity, i.e. construct a term
+(2) Show associativity, i.e. construct a term
   assoc : Pi(x y z w:A). Pi(p:x=y). Pi(q:y=z). Pi(s:z=w). trans x y w p (trans y z w q s) = trans x z w (trans x y z p q) s
 
-Construct a term
+(3) Construct a term
   sym : Pi(x y:A). x=y -> y=x
 
-Show:
+(4) Show:
   selfinv : Pi(x y:A). Pi(p:x=y). sym y x (sym x y p) = p
 
+SOLUTIONS:
 
+(1) choose
+  P x y p := Pi(z:A). y=z -> x=z
+  d x := \z.\q.q     --- \ is lambda
+then define
+  trans x y z p q := J(P,d) x y p z q
+
+(2) We use the names P2, d2 instead of P, d to avoid confusion with the P, d of (1).
+We choose
+  P2 x y p := Pi(z w:A). Pi(q:y=z). Pi(s:z=w). trans x y w p (trans x z w q s) = trans x z w (trans x y z p q) s
+Let us check what the type of 
+  d2 : Pi(x:A). P x x refl
+is, by unfolding P2. We get:
+  d2 : Pi(x:A). Pi(z w:A). Pi(q:x=z). Pi(s:z=w). trans x x w refl (trans x z w q s) = trans x z w (trans x x z refl q) s
+-- (note how we have simply replaced (y,p) by (x,refl)!)
+Since the term trans is defined using J, the expression 'trans x x ... refl ...' computes to 'd x ...', which gives:
+  d2 : Pi(x:A). Pi(z w:A). Pi(q:x=z). Pi(s:z=w). trans x z w q s = trans x z w q s
+This is easy:
+  d2 x := \z. \w. \q. \s. refl
+Thus, we can define:
+  assoc x y z w p q s := J(P2,d2) x y p z w q s
+
+(3) choose
+  P3 x y p := y=x
+  d3 x := refl
+
+(4) choose
+  P4 x y p := sym y x (sym x y p) = p
+  d4 x := refl
