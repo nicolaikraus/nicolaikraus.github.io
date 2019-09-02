@@ -3,7 +3,7 @@ INTRODUCTION TO HOMOTOPY TYPE THEORY
 EUTypes School, Ohrid 2019 
 
 NOTES AND EXERCISES FOR LECTURE ONE
-30 August 2019
+31 August 2019
 
 Chapter 1: What is (a) dependent type theory?
 
