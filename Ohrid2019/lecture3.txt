@@ -1,0 +1,82 @@
+INTRODUCTION TO HOMOTOPY TYPE THEORY
+
+EUTypes School, Ohrid 2019 
+
+NOTES AND EXERCISES FOR LECTURE THREE
+3 September 2019
+
+[Recall Chapter 6: 
+  k : ((x,y) = (x',y')) -> ((x=x')*(y=y'))
+is an equivalence.
+This allows us to construct equalities in a pair type. Today: Can we do this for other types?]
+
+Chapter 7: Function extensionality and univalence
+
+given functions f,g: A -> B, when are they equal? Possible axiom:
+  funext(f,g) : (Pi(x:A). f x = g x) -> (f = g)
+Note: this does not tell us what (f = g) is; it only tells us how to construct an equality. Can we formulate it in the same way as 'k' above?
+We can define:
+  happly(f,g) : (f = g) -> (Pi(x:A). f x = g x)
+(f,g can be dependent functions, i.e. f,g: Pi(x:A).B x)
+possible axiom:
+  strongfunext(f,g) : isequiv(happly(f,g))
+
+Theorem (Voevodsky): funext -> strongfunext
+
+What about the universe 'Type'?
+
+[Note: A ~ B means "equivalences", i.e. A ~ B is the type of tuples (f,g,alpha,beta,gamma).]
+
+possible axiom:
+  ua(A,B) : (A ~ B) -> (A = B)
+
+Can we do it like above? Define
+  id2equiv(A,B) : (A = B) -> (A ~ B)
+by path induction (J).
+
+axiom (Voevodsky):
+  UA : Pi(A,B: Type). isequiv(id2equiv(A,B))
+
+We have seen some intuition in lecture 2 for why uip is not provable. We can now show the negation of uip at the type 'Type':
+if
+  uip(Type) : Pi(A,B: Type). (p,q: A = B). p = q
+then we have
+  uip(Type) Bool Bool ua(id,_) ua(neg,_) : ua(id,_) = ua(neg,_)
+thus
+  id = neg
+thus
+  true = false
+qed.
+
+
+Chapter 8: truncation levels, a.k.a. n-types, a.k.a. h-levels (Voevodsky's hierarchy)
+
+contractible types, propositional types, and sets (a.k.a. h-sets, a.k.a. types satisfying uip) 
+isContr, isProp, uip (a.k.a. isSet): Type -> Type
+
+isContr A := Sigma(x:A). Pi(y:A). y = x
+isProp A  := Pi(x y : A). x = y
+uip A     := Pi(x y : A). Pi(p q : x = y). p = q
+
+examples: 'Unit' is the only example for a contractibe type.
+'Unit' and 'Empty' are propositional types
+Why is the donut not contractible or propositional (picture)? Because we cannot choose paths in a continuous way.
+
+more uniformly:
+is-(-2)-type A  := isContr A
+is-(n+1)-type A := Pi(x y : A). is-n-type (x = y)
+
+Theorem: for all A and n (n >= -2):
+(1) isProp(is-n-type A)
+(2) (isProp A) ~ (is-(-1)-type A)
+    (uip A)    ~ (is-0-type A)
+(3) (is-n-type A) -> (is-(n+1)-type A)
+(4) A -> isProp A -> isContr A
+
+EXERCISES:
+
+Show (1) - (4) of the above theorem.
+
+SOLUTIONS:
+
+See the HoTT book, Chapter 7.

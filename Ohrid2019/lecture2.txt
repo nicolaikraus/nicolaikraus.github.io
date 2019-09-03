@@ -96,4 +96,14 @@ Can you do the same if B depends on A (i.e. you use Sigma(x:A).B x instead of A*
 
 SOLUTIONS:
 
-not available yet
+(1) the equivalence between these types is sometimes called the "type-theoretic axiom of choice", although we should be careful since the "axiom of choice" is something else in HoTT; better to call it "Sigma-Pi-distributivity". See Theorem 2.15.7 in the HoTT book.
+
+(2) the 'inverse image' of a function f : A -> B at a point y : B is defined as
+  f^(-1) y := Sigma(x:A). f x = y
+The function g should be defined like this:
+  g (B,f) x := f^(-1) x
+f should be defined like this:
+  f P := (Sigma(x:A).P x , proj1)
+f and g are inverses (using univalence; see next lecture).
+
+(3) see the HoTT book Theorem 2.7.2
