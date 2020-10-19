@@ -1,0 +1,161 @@
+<!DOCTYPE HTML>
+<html><head><meta charset="utf-8"><title>overloading.core</title><link rel="stylesheet" href="Agda.css"></head><body><pre><a id="1" class="Symbol">{-#</a> <a id="5" class="Keyword">OPTIONS</a> <a id="13" class="Option">--without-K</a> <a id="25" class="Symbol">#-}</a>
+<a id="29" class="Keyword">module</a> <a id="36" href="overloading.core.html" class="Module">overloading.core</a> <a id="53" class="Keyword">where</a>
+
+<a id="60" class="Comment">-- ## Coercions</a>
+<a id="76" class="Comment">--</a>
+<a id="79" class="Comment">-- The overloading system implemented in this module is based on</a>
+<a id="144" class="Comment">-- **coercions**. A coercion is simply a function converting a type into</a>
+<a id="217" class="Comment">-- another. In object-oriented parliance, a coercion embodies an *is-a*</a>
+<a id="289" class="Comment">-- relationship.  The two types involved in a coercions are called `Source` and</a>
+<a id="369" class="Comment">-- `Target` respectively, and the coercion itself is a function `Source →</a>
+<a id="443" class="Comment">-- Target`.</a>
+<a id="455" class="Comment">--</a>
+<a id="458" class="Comment">-- Coercions are implemented as terms of type `Coercion`, which is a record</a>
+<a id="534" class="Comment">-- parameterized over the `Source` and `Target` types, with a single field for</a>
+<a id="613" class="Comment">-- the actual coercion function.  Of course, the type `Coercion X Y` is</a>
+<a id="685" class="Comment">-- isomorphic to `X → Y`, but using a record prevents possible ambiguities when</a>
+<a id="765" class="Comment">-- using coercions as implicit parameters, and potentially makes instance</a>
+<a id="839" class="Comment">-- resolution faster.</a>
+<a id="861" class="Comment">--</a>
+<a id="864" class="Comment">-- The typical scenario where coercions are used is when defining a subtype</a>
+<a id="940" class="Comment">-- relationships between types.  Although Agda has no built-in support for</a>
+<a id="1015" class="Comment">-- subtypes, it is possible to achieve a reasonable level of syntactical</a>
+<a id="1088" class="Comment">-- convenience with the help of some boilerplace code that specifies the</a>
+<a id="1161" class="Comment">-- subtyping relation explicitly.  See `category.graph.core` for a detailed</a>
+<a id="1237" class="Comment">-- example.</a>
+<a id="1249" class="Comment">--</a>
+<a id="1252" class="Comment">-- This module also contains some functions to help reduce the amount of</a>
+<a id="1325" class="Comment">-- boilerplate needed for defining all the coercions necessary for a given type.</a>
+<a id="1406" class="Comment">-- See `coerce-self` and `coerce-parent` below.</a>
+<a id="1454" class="Comment">--</a>
+<a id="1457" class="Comment">-- ## Methods</a>
+<a id="1471" class="Comment">--</a>
+<a id="1474" class="Comment">-- The strategy employed by this library to implement overloading goes as</a>
+<a id="1548" class="Comment">-- follows.  Every type (denoted by `Target` in the following) defines a set of</a>
+<a id="1628" class="Comment">-- &quot;methods&quot; that constitute its interface, and are inherited by every subtype</a>
+<a id="1707" class="Comment">-- of `Target`.  Methods are divided into 2 groups:</a>
+<a id="1759" class="Comment">--</a>
+<a id="1762" class="Comment">-- - **static methods** are functions that take an argument `X` of a type</a>
+<a id="1836" class="Comment">-- convertible to `Target`. The typical example of a static method is an</a>
+<a id="1909" class="Comment">-- explicit coercion function, like `∣_∣` below, which returns the &quot;underlying</a>
+<a id="1988" class="Comment">-- set&quot; of `X`.  Another example of static method is the `total` function for</a>
+<a id="2066" class="Comment">-- graphs (see `category.graph.core`).</a>
+<a id="2105" class="Comment">--</a>
+<a id="2108" class="Comment">-- - **instance methods** are functions that work without requiring an explicit</a>
+<a id="2188" class="Comment">-- parameter of type `Target`.  A typical example of instance method is</a>
+<a id="2260" class="Comment">-- composition in a category (`_∘_`): there&#39;s no need to pass the category</a>
+<a id="2335" class="Comment">-- itself when composing two morphisms.  In order to use instance methods, they</a>
+<a id="2415" class="Comment">-- have to be enabled explicitly for each instance for which they are used.</a>
+<a id="2491" class="Comment">-- Every type defines a special module (whose name is by convention always</a>
+<a id="2566" class="Comment">-- `as-target`, where `target` is replaced with the actual lowercase name of</a>
+<a id="2643" class="Comment">-- type) which allows instance methods to be enabled.  For example, to use the</a>
+<a id="2722" class="Comment">-- composition operator for morphisms of a category `C`, one can write:</a>
+<a id="2794" class="Comment">--</a>
+<a id="2797" class="Comment">--    open as-category C</a>
+<a id="2822" class="Comment">--</a>
+<a id="2825" class="Comment">-- The `as-target` module itself behaves like a *static* method, so it can be</a>
+<a id="2903" class="Comment">-- used to enable instance methods for any superclass of a given instance.</a>
+<a id="2978" class="Comment">-- Furthermore, enabling instance methods for `Target` enables instance methods</a>
+<a id="3058" class="Comment">-- for all superclasses of it in its principal inheritance path (see</a>
+<a id="3127" class="Comment">-- &quot;Inheritance Model&quot; below).</a>
+<a id="3158" class="Comment">--</a>
+<a id="3161" class="Comment">-- ## Implementation</a>
+<a id="3182" class="Comment">--</a>
+<a id="3185" class="Comment">-- The implementation of static methods is relatively straightforward.  A static</a>
+<a id="3266" class="Comment">-- method is defined as a function taking a coercion to `Target` as an instance</a>
+<a id="3346" class="Comment">-- argument, and uses the coercion to convert its argument to the correct type.</a>
+<a id="3426" class="Comment">--</a>
+<a id="3429" class="Comment">-- As for instance methods, they are implemented as functions that take a record</a>
+<a id="3510" class="Comment">-- with the full interface of `Target` (called **instance record** below) as an</a>
+<a id="3590" class="Comment">-- implicit argument (see &quot;Alternative Notations&quot; below for details), and just</a>
+<a id="3669" class="Comment">-- return the appropriate field.  This can be accomplished very easily using</a>
+<a id="3746" class="Comment">-- Agda&#39;s module system.</a>
+<a id="3771" class="Comment">--</a>
+<a id="3774" class="Comment">-- The `as-target` module, used to enable instance methods, is defined as a</a>
+<a id="3850" class="Comment">-- static method, and works simply by putting the record above into scope.</a>
+<a id="3925" class="Comment">--</a>
+<a id="3928" class="Comment">-- ## Alternative Notations</a>
+<a id="3956" class="Comment">--</a>
+<a id="3959" class="Comment">-- Some types have an interface which supports alternative notations.  For</a>
+<a id="4034" class="Comment">-- example, monoids have a &quot;default&quot; notation (`unit` and `_*_`), and an</a>
+<a id="4107" class="Comment">-- additive notation (`zero` and `_+_`).</a>
+<a id="4148" class="Comment">--</a>
+<a id="4151" class="Comment">-- To implement multiple notations, a `Styled` record is used as the implicit</a>
+<a id="4229" class="Comment">-- parameter for instance methods.  The `Styled` record is parameterized over a</a>
+<a id="4309" class="Comment">-- `style` parameter (normally `default`), and contains the interface record as</a>
+<a id="4389" class="Comment">-- its only field.</a>
+<a id="4408" class="Comment">--</a>
+<a id="4411" class="Comment">-- The `Styled` record thus serves two purposes:</a>
+<a id="4460" class="Comment">--</a>
+<a id="4463" class="Comment">-- - It prevents ambiguities in the resolution of instance arguments: if an</a>
+<a id="4539" class="Comment">-- interface record is in scope for reasons unrelated to the overloading system,</a>
+<a id="4620" class="Comment">-- then it will not be accidentally used as the argument of an instance methods,</a>
+<a id="4701" class="Comment">-- as it&#39;s not wrapped in a `Styled` record.</a>
+<a id="4746" class="Comment">--</a>
+<a id="4749" class="Comment">-- - It allows instance methods to specify an alternative style parameter for</a>
+<a id="4827" class="Comment">-- the record in which the interface record is wrapped.  Thus, multiple</a>
+<a id="4899" class="Comment">-- `as-target` module can be defined, one per supported style, that put the</a>
+<a id="4975" class="Comment">-- interface record in scope wrapped in the appropriate `Styled` record.  The</a>
+<a id="5053" class="Comment">-- `styled` function can be used to wrap an interface record using a given</a>
+<a id="5128" class="Comment">-- style.</a>
+<a id="5138" class="Comment">--</a>
+<a id="5141" class="Comment">-- ## Inheritance Model</a>
+<a id="5165" class="Comment">--</a>
+<a id="5168" class="Comment">-- Subtyping relations can form an arbitrary directed graph, with a</a>
+<a id="5236" class="Comment">-- distinguished spanning forest, whose edges we call *principal*.</a>
+<a id="5303" class="Comment">--</a>
+<a id="5306" class="Comment">-- Coercions are defined for every pair of connected nodes in the full graph.</a>
+<a id="5384" class="Comment">-- Exactly one coercion per pair should be defined, regardless of the number of</a>
+<a id="5464" class="Comment">-- paths that connect it.  Static methods are inherited automatically through</a>
+<a id="5542" class="Comment">-- paths in the full DAG, since the existence of a coercion is enough for static</a>
+<a id="5623" class="Comment">-- methods to propagate.</a>
+<a id="5648" class="Comment">--</a>
+<a id="5651" class="Comment">-- The principal subgraph is used for inheritance of instance methods.  Namely,</a>
+<a id="5731" class="Comment">-- the `as-target` record enables all instance methods for the ancestors of</a>
+<a id="5807" class="Comment">-- `Target` in the principal subgraph.  This is accomplished by simply</a>
+<a id="5878" class="Comment">-- re-exporting the `as-target` module for the immediate parent of</a>
+<a id="5945" class="Comment">-- `Target`. Extra edges coming out of `Target` can optionally be added as well</a>
+<a id="6025" class="Comment">-- for convenience.</a>
+
+<a id="6046" class="Keyword">open</a> <a id="6051" class="Keyword">import</a> <a id="6058" href="level.html" class="Module">level</a>
+<a id="6064" class="Keyword">open</a> <a id="6069" class="Keyword">import</a> <a id="6076" href="overloading.bundle.html" class="Module">overloading.bundle</a>
+
+<a id="6096" class="Keyword">record</a> <a id="Coercion" href="overloading.core.html#Coercion" class="Record">Coercion</a> <a id="6112" class="Symbol">{</a><a id="6113" href="overloading.core.html#6113" class="Bound">i</a><a id="6114" class="Symbol">}{</a><a id="6116" href="overloading.core.html#6116" class="Bound">j</a><a id="6117" class="Symbol">}(</a><a id="6119" href="overloading.core.html#6119" class="Bound">Source</a> <a id="6126" class="Symbol">:</a> <a id="6128" class="PrimitiveType">Set</a> <a id="6132" href="overloading.core.html#6113" class="Bound">i</a><a id="6133" class="Symbol">)(</a><a id="6135" href="overloading.core.html#6135" class="Bound">Target</a> <a id="6142" class="Symbol">:</a> <a id="6144" class="PrimitiveType">Set</a> <a id="6148" href="overloading.core.html#6116" class="Bound">j</a><a id="6149" class="Symbol">)</a> <a id="6151" class="Symbol">:</a> <a id="6153" class="PrimitiveType">Set</a> <a id="6157" class="Symbol">(</a><a id="6158" href="overloading.core.html#6113" class="Bound">i</a> <a id="6160" href="Agda.Primitive.html#_%E2%8A%94_" class="Primitive Operator">⊔</a> <a id="6162" href="overloading.core.html#6116" class="Bound">j</a><a id="6163" class="Symbol">)</a> <a id="6165" class="Keyword">where</a>
+  <a id="6173" class="Keyword">constructor</a> <a id="Coercion.coercion" href="overloading.core.html#Coercion.coercion" class="InductiveConstructor">coercion</a>
+  <a id="6196" class="Keyword">field</a>
+    <a id="Coercion.coerce" href="overloading.core.html#Coercion.coerce" class="Field">coerce</a> <a id="6213" class="Symbol">:</a> <a id="6215" href="overloading.core.html#6119" class="Bound">Source</a> <a id="6222" class="Symbol">→</a> <a id="6224" href="overloading.core.html#6135" class="Bound">Target</a>
+<a id="6231" class="Keyword">open</a> <a id="6236" href="overloading.core.html#Coercion" class="Module">Coercion</a> <a id="6245" class="Keyword">public</a>
+
+<a id="6253" class="Keyword">data</a> <a id="Style" href="overloading.core.html#Style" class="Datatype">Style</a> <a id="6264" class="Symbol">:</a> <a id="6266" class="PrimitiveType">Set</a> <a id="6270" class="Keyword">where</a> <a id="Style.default" href="overloading.core.html#Style.default" class="InductiveConstructor">default</a> <a id="6284" class="Symbol">:</a> <a id="6286" href="overloading.core.html#Style" class="Datatype">Style</a>
+
+<a id="6293" class="Keyword">record</a> <a id="Styled" href="overloading.core.html#Styled" class="Record">Styled</a> <a id="6307" class="Symbol">{</a><a id="6308" href="overloading.core.html#6308" class="Bound">i</a><a id="6309" class="Symbol">}(</a><a id="6311" href="overloading.core.html#6311" class="Bound">style</a> <a id="6317" class="Symbol">:</a> <a id="6319" href="overloading.core.html#Style" class="Datatype">Style</a><a id="6324" class="Symbol">)(</a><a id="6326" href="overloading.core.html#6326" class="Bound">X</a> <a id="6328" class="Symbol">:</a> <a id="6330" class="PrimitiveType">Set</a> <a id="6334" href="overloading.core.html#6308" class="Bound">i</a><a id="6335" class="Symbol">)</a> <a id="6337" class="Symbol">:</a> <a id="6339" class="PrimitiveType">Set</a> <a id="6343" href="overloading.core.html#6308" class="Bound">i</a> <a id="6345" class="Keyword">where</a>
+  <a id="6353" class="Keyword">field</a> <a id="Styled.value" href="overloading.core.html#Styled.value" class="Field">value</a> <a id="6365" class="Symbol">:</a> <a id="6367" href="overloading.core.html#6326" class="Bound">X</a>
+
+<a id="styled" href="overloading.core.html#styled" class="Function">styled</a> <a id="6377" class="Symbol">:</a> <a id="6379" class="Symbol">∀</a> <a id="6381" class="Symbol">{</a><a id="6382" href="overloading.core.html#6382" class="Bound">i</a><a id="6383" class="Symbol">}{</a><a id="6385" href="overloading.core.html#6385" class="Bound">X</a> <a id="6387" class="Symbol">:</a> <a id="6389" class="PrimitiveType">Set</a> <a id="6393" href="overloading.core.html#6382" class="Bound">i</a><a id="6394" class="Symbol">}</a> <a id="6396" class="Symbol">→</a> <a id="6398" class="Symbol">(</a><a id="6399" href="overloading.core.html#6399" class="Bound">s</a> <a id="6401" class="Symbol">:</a> <a id="6403" href="overloading.core.html#Style" class="Datatype">Style</a><a id="6408" class="Symbol">)</a> <a id="6410" class="Symbol">→</a> <a id="6412" href="overloading.core.html#6385" class="Bound">X</a> <a id="6414" class="Symbol">→</a> <a id="6416" href="overloading.core.html#Styled" class="Record">Styled</a> <a id="6423" href="overloading.core.html#6399" class="Bound">s</a> <a id="6425" href="overloading.core.html#6385" class="Bound">X</a>
+<a id="6427" href="overloading.core.html#styled" class="Function">styled</a> <a id="6434" href="overloading.core.html#6434" class="Bound">s</a> <a id="6436" href="overloading.core.html#6436" class="Bound">x</a> <a id="6438" class="Symbol">=</a> <a id="6440" class="Keyword">record</a> <a id="6447" class="Symbol">{</a> <a id="6449" class="Field">value</a> <a id="6455" class="Symbol">=</a> <a id="6457" href="overloading.core.html#6436" class="Bound">x</a> <a id="6459" class="Symbol">}</a>
+
+<a id="6462" class="Comment">-- Trivial coercion: any type can be coerced into itself.</a>
+<a id="coerce-self" href="overloading.core.html#coerce-self" class="Function">coerce-self</a> <a id="6532" class="Symbol">:</a> <a id="6534" class="Symbol">∀</a> <a id="6536" class="Symbol">{</a><a id="6537" href="overloading.core.html#6537" class="Bound">i</a><a id="6538" class="Symbol">}</a> <a id="6540" class="Symbol">(</a><a id="6541" href="overloading.core.html#6541" class="Bound">X</a> <a id="6543" class="Symbol">:</a> <a id="6545" class="PrimitiveType">Set</a> <a id="6549" href="overloading.core.html#6537" class="Bound">i</a><a id="6550" class="Symbol">)</a> <a id="6552" class="Symbol">→</a> <a id="6554" href="overloading.core.html#Coercion" class="Record">Coercion</a> <a id="6563" href="overloading.core.html#6541" class="Bound">X</a> <a id="6565" href="overloading.core.html#6541" class="Bound">X</a>
+<a id="6567" href="overloading.core.html#coerce-self" class="Function">coerce-self</a> <a id="6579" class="Symbol">{</a><a id="6580" href="overloading.core.html#6580" class="Bound">i</a><a id="6581" class="Symbol">}</a> <a id="6583" class="Symbol">_</a> <a id="6585" class="Symbol">=</a> <a id="6587" class="Keyword">record</a>
+  <a id="6596" class="Symbol">{</a> <a id="6598" class="Field">coerce</a> <a id="6605" class="Symbol">=</a> <a id="6607" class="Symbol">λ</a> <a id="6609" href="overloading.core.html#6609" class="Bound">x</a> <a id="6611" class="Symbol">→</a> <a id="6613" href="overloading.core.html#6609" class="Bound">x</a> <a id="6615" class="Symbol">}</a>
+
+<a id="6618" class="Comment">-- Transport a coercion to a `Bundle` subtype.  See `overloading.bundle` for</a>
+<a id="6695" class="Comment">-- more details on bundles.</a>
+<a id="coerce-parent" href="overloading.core.html#coerce-parent" class="Function">coerce-parent</a> <a id="6737" class="Symbol">:</a> <a id="6739" class="Symbol">∀</a> <a id="6741" class="Symbol">{</a><a id="6742" href="overloading.core.html#6742" class="Bound">i</a> <a id="6744" href="overloading.core.html#6744" class="Bound">j</a> <a id="6746" href="overloading.core.html#6746" class="Bound">k</a><a id="6747" class="Symbol">}</a>
+                <a id="6765" class="Symbol">{</a><a id="6766" href="overloading.core.html#6766" class="Bound">X</a> <a id="6768" class="Symbol">:</a> <a id="6770" class="PrimitiveType">Set</a> <a id="6774" href="overloading.core.html#6742" class="Bound">i</a><a id="6775" class="Symbol">}</a>
+                <a id="6793" class="Symbol">{</a><a id="6794" href="overloading.core.html#6794" class="Bound">Y</a> <a id="6796" class="Symbol">:</a> <a id="6798" class="PrimitiveType">Set</a> <a id="6802" href="overloading.core.html#6744" class="Bound">j</a><a id="6803" class="Symbol">}</a>
+              <a id="6819" class="Symbol">→</a> <a id="6821" class="Symbol">⦃</a> <a id="6823" href="overloading.core.html#6823" class="Bound">c</a> <a id="6825" class="Symbol">:</a> <a id="6827" href="overloading.core.html#Coercion" class="Record">Coercion</a> <a id="6836" href="overloading.core.html#6766" class="Bound">X</a> <a id="6838" href="overloading.core.html#6794" class="Bound">Y</a> <a id="6840" class="Symbol">⦄</a>
+              <a id="6856" class="Symbol">→</a> <a id="6858" class="Symbol">{</a><a id="6859" href="overloading.core.html#6859" class="Bound">Struct</a> <a id="6866" class="Symbol">:</a> <a id="6868" href="overloading.core.html#6766" class="Bound">X</a> <a id="6870" class="Symbol">→</a> <a id="6872" class="PrimitiveType">Set</a> <a id="6876" href="overloading.core.html#6746" class="Bound">k</a><a id="6877" class="Symbol">}</a>
+              <a id="6893" class="Symbol">→</a> <a id="6895" href="overloading.core.html#Coercion" class="Record">Coercion</a> <a id="6904" class="Symbol">(</a><a id="6905" href="overloading.bundle.html#Bundle" class="Record">Bundle</a> <a id="6912" href="overloading.core.html#6859" class="Bound">Struct</a><a id="6918" class="Symbol">)</a> <a id="6920" href="overloading.core.html#6794" class="Bound">Y</a>
+<a id="6922" href="overloading.core.html#coerce-parent" class="Function">coerce-parent</a> <a id="6936" class="Symbol">⦃</a> <a id="6938" href="overloading.core.html#6938" class="Bound">c</a> <a id="6940" class="Symbol">⦄</a> <a id="6942" class="Symbol">=</a> <a id="6944" class="Keyword">record</a>
+  <a id="6953" class="Symbol">{</a> <a id="6955" class="Field">coerce</a> <a id="6962" class="Symbol">=</a> <a id="6964" class="Symbol">λ</a> <a id="6966" href="overloading.core.html#6966" class="Bound">x</a> <a id="6968" class="Symbol">→</a> <a id="6970" href="overloading.core.html#Coercion.coerce" class="Field">coerce</a> <a id="6977" href="overloading.core.html#6938" class="Bound">c</a> <a id="6979" class="Symbol">(</a><a id="6980" href="overloading.bundle.html#Bundle.parent" class="Field">Bundle.parent</a> <a id="6994" href="overloading.core.html#6966" class="Bound">x</a><a id="6995" class="Symbol">)</a> <a id="6997" class="Symbol">}</a>
+
+<a id="7000" class="Keyword">instance</a>
+  <a id="set-is-set" href="overloading.core.html#set-is-set" class="Function">set-is-set</a> <a id="7022" class="Symbol">:</a> <a id="7024" class="Symbol">∀</a> <a id="7026" class="Symbol">{</a><a id="7027" href="overloading.core.html#7027" class="Bound">i</a><a id="7028" class="Symbol">}</a> <a id="7030" class="Symbol">→</a> <a id="7032" href="overloading.core.html#Coercion" class="Record">Coercion</a> <a id="7041" class="Symbol">(</a><a id="7042" class="PrimitiveType">Set</a> <a id="7046" href="overloading.core.html#7027" class="Bound">i</a><a id="7047" class="Symbol">)</a> <a id="7049" class="Symbol">(</a><a id="7050" class="PrimitiveType">Set</a> <a id="7054" href="overloading.core.html#7027" class="Bound">i</a><a id="7055" class="Symbol">)</a>
+  <a id="7059" href="overloading.core.html#set-is-set" class="Function">set-is-set</a> <a id="7070" class="Symbol">{</a><a id="7071" href="overloading.core.html#7071" class="Bound">i</a><a id="7072" class="Symbol">}</a> <a id="7074" class="Symbol">=</a> <a id="7076" href="overloading.core.html#coerce-self" class="Function">coerce-self</a> <a id="7088" class="Symbol">_</a>
+
+<a id="∣_∣" href="overloading.core.html#%E2%88%A3_%E2%88%A3" class="Function Operator">∣_∣</a> <a id="7095" class="Symbol">:</a> <a id="7097" class="Symbol">∀</a> <a id="7099" class="Symbol">{</a><a id="7100" href="overloading.core.html#7100" class="Bound">i</a> <a id="7102" href="overloading.core.html#7102" class="Bound">j</a><a id="7103" class="Symbol">}{</a><a id="7105" href="overloading.core.html#7105" class="Bound">Source</a> <a id="7112" class="Symbol">:</a> <a id="7114" class="PrimitiveType">Set</a> <a id="7118" href="overloading.core.html#7100" class="Bound">i</a><a id="7119" class="Symbol">}</a> <a id="7121" class="Symbol">⦃</a> <a id="7123" href="overloading.core.html#7123" class="Bound">o</a> <a id="7125" class="Symbol">:</a> <a id="7127" href="overloading.core.html#Coercion" class="Record">Coercion</a> <a id="7136" href="overloading.core.html#7105" class="Bound">Source</a> <a id="7143" class="Symbol">(</a><a id="7144" class="PrimitiveType">Set</a> <a id="7148" href="overloading.core.html#7102" class="Bound">j</a><a id="7149" class="Symbol">)</a> <a id="7151" class="Symbol">⦄</a>
+    <a id="7157" class="Symbol">→</a> <a id="7159" href="overloading.core.html#7105" class="Bound">Source</a> <a id="7166" class="Symbol">→</a> <a id="7168" class="PrimitiveType">Set</a> <a id="7172" href="overloading.core.html#7102" class="Bound">j</a>
+<a id="7174" href="overloading.core.html#%E2%88%A3_%E2%88%A3" class="Function Operator">∣_∣</a> <a id="7178" class="Symbol">⦃</a> <a id="7180" href="overloading.core.html#7180" class="Bound">c</a> <a id="7182" class="Symbol">⦄</a> <a id="7184" class="Symbol">=</a> <a id="7186" href="overloading.core.html#Coercion.coerce" class="Field">coerce</a> <a id="7193" href="overloading.core.html#7180" class="Bound">c</a>
+</pre></body></html>

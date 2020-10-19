@@ -1,0 +1,16 @@
+<!DOCTYPE HTML>
+<html><head><meta charset="utf-8"><title>sets.empty</title><link rel="stylesheet" href="Agda.css"></head><body><pre><a id="1" class="Symbol">{-#</a> <a id="5" class="Keyword">OPTIONS</a> <a id="13" class="Option">--without-K</a>  <a id="26" class="Symbol">#-}</a>
+
+<a id="31" class="Keyword">module</a> <a id="38" href="sets.empty.html" class="Module">sets.empty</a> <a id="49" class="Keyword">where</a>
+
+<a id="56" class="Keyword">open</a> <a id="61" class="Keyword">import</a> <a id="68" href="level.html" class="Module">level</a>
+
+<a id="75" class="Keyword">data</a> <a id="⊥" href="sets.empty.html#%E2%8A%A5" class="Datatype">⊥</a> <a id="82" class="Symbol">{</a><a id="83" href="sets.empty.html#83" class="Bound">i</a><a id="84" class="Symbol">}</a> <a id="86" class="Symbol">:</a> <a id="88" class="PrimitiveType">Set</a> <a id="92" href="sets.empty.html#83" class="Bound">i</a> <a id="94" class="Keyword">where</a>
+
+<a id="⊥-elim" href="sets.empty.html#%E2%8A%A5-elim" class="Function">⊥-elim</a> <a id="108" class="Symbol">:</a> <a id="110" class="Symbol">∀</a> <a id="112" class="Symbol">{</a><a id="113" href="sets.empty.html#113" class="Bound">i</a> <a id="115" href="sets.empty.html#115" class="Bound">j</a><a id="116" class="Symbol">}{</a><a id="118" href="sets.empty.html#118" class="Bound">A</a> <a id="120" class="Symbol">:</a> <a id="122" class="PrimitiveType">Set</a> <a id="126" href="sets.empty.html#115" class="Bound">j</a><a id="127" class="Symbol">}</a> <a id="129" class="Symbol">→</a> <a id="131" href="sets.empty.html#%E2%8A%A5" class="Datatype">⊥</a> <a id="133" class="Symbol">{</a><a id="134" href="sets.empty.html#113" class="Bound">i</a><a id="135" class="Symbol">}</a> <a id="137" class="Symbol">→</a> <a id="139" href="sets.empty.html#118" class="Bound">A</a>
+<a id="141" href="sets.empty.html#%E2%8A%A5-elim" class="Function">⊥-elim</a> <a id="148" class="Symbol">()</a>
+
+<a id="¬_" href="sets.empty.html#%C2%AC_" class="Function Operator">¬_</a> <a id="155" class="Symbol">:</a> <a id="157" class="Symbol">∀</a> <a id="159" class="Symbol">{</a><a id="160" href="sets.empty.html#160" class="Bound">i</a><a id="161" class="Symbol">}</a> <a id="163" class="Symbol">→</a> <a id="165" class="PrimitiveType">Set</a> <a id="169" href="sets.empty.html#160" class="Bound">i</a> <a id="171" class="Symbol">→</a> <a id="173" class="PrimitiveType">Set</a> <a id="177" href="sets.empty.html#160" class="Bound">i</a>
+<a id="179" href="sets.empty.html#%C2%AC_" class="Function Operator">¬</a> <a id="181" href="sets.empty.html#181" class="Bound">X</a> <a id="183" class="Symbol">=</a> <a id="185" href="sets.empty.html#181" class="Bound">X</a> <a id="187" class="Symbol">→</a> <a id="189" href="sets.empty.html#%E2%8A%A5" class="Datatype">⊥</a> <a id="191" class="Symbol">{</a><a id="192" href="Agda.Primitive.html#lzero" class="Primitive">lzero</a><a id="197" class="Symbol">}</a>
+<a id="199" class="Keyword">infix</a> <a id="205" class="Number">3</a> <a id="207" href="sets.empty.html#%C2%AC_" class="Function Operator">¬_</a>
+</pre></body></html>
