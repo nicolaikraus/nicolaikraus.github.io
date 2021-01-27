@@ -1,0 +1,13 @@
+<!DOCTYPE HTML>
+<html><head><meta charset="utf-8"><title>Iff</title><link rel="stylesheet" href="Agda.css"></head><body><pre class="Agda"><a id="1" class="Symbol">{-#</a> <a id="5" class="Keyword">OPTIONS</a> <a id="13" class="Pragma">--without-K</a> <a id="25" class="Symbol">#-}</a>
+
+<a id="30" class="Keyword">module</a> <a id="37" href="Iff.html" class="Module">Iff</a> <a id="41" class="Keyword">where</a>
+
+<a id="48" class="Keyword">open</a> <a id="53" class="Keyword">import</a> <a id="60" href="lib.Base.html" class="Module">lib.Base</a> <a id="69" class="Keyword">public</a>
+<a id="76" class="Keyword">open</a> <a id="81" class="Keyword">import</a> <a id="88" href="lib.types.Sigma.html" class="Module">lib.types.Sigma</a> <a id="104" class="Keyword">public</a>
+
+<a id="112" class="Comment">{- Standard notation: if and only if. -}</a>
+
+<a id="_⇔_"></a><a id="154" href="Iff.html#154" class="Function Operator">_⇔_</a> <a id="158" class="Symbol">:</a> <a id="160" class="Symbol">∀</a> <a id="162" class="Symbol">{</a><a id="163" href="Iff.html#163" class="Bound">j₁</a> <a id="166" href="Iff.html#166" class="Bound">j₂</a><a id="168" class="Symbol">}</a> <a id="170" class="Symbol">→</a> <a id="172" href="Agda.Primitive.html#326" class="Primitive">Set</a> <a id="176" href="Iff.html#163" class="Bound">j₁</a> <a id="179" class="Symbol">→</a> <a id="181" href="Agda.Primitive.html#326" class="Primitive">Set</a> <a id="185" href="Iff.html#166" class="Bound">j₂</a> <a id="188" class="Symbol">→</a> <a id="190" href="Agda.Primitive.html#326" class="Primitive">Set</a> <a id="194" class="Symbol">(</a><a id="195" href="lib.Base.html#1137" class="Primitive">lmax</a> <a id="200" href="Iff.html#163" class="Bound">j₁</a> <a id="203" href="Iff.html#166" class="Bound">j₂</a><a id="205" class="Symbol">)</a>
+<a id="207" href="Iff.html#207" class="Bound">A</a> <a id="209" href="Iff.html#154" class="Function Operator">⇔</a> <a id="211" href="Iff.html#211" class="Bound">B</a> <a id="213" class="Symbol">=</a> <a id="215" class="Symbol">(</a><a id="216" href="Iff.html#207" class="Bound">A</a> <a id="218" class="Symbol">→</a> <a id="220" href="Iff.html#211" class="Bound">B</a><a id="221" class="Symbol">)</a> <a id="223" href="lib.types.Sigma.html#250" class="Function Operator">×</a> <a id="225" class="Symbol">(</a><a id="226" href="Iff.html#211" class="Bound">B</a> <a id="228" class="Symbol">→</a> <a id="230" href="Iff.html#207" class="Bound">A</a><a id="231" class="Symbol">)</a>
+</pre></body></html>
