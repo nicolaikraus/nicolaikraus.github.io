@@ -1,0 +1,97 @@
+All exercises can be done on paper or in Agda.
+Try to do the easy ones (1,2,3,4) if you are new to HoTT or the
+medium ones if you are experienced. (Or the difficult ones if
+you have done the medium ones already.)
+
+Caveat: Lecture 1 only covered enough to do exercises 1,2,3.
+
+
+Exercise 1 (easy)
+
+Recall that we can define transitivity of equality by path induction:
+  trans: {a b c : A} -> a = b -> b = c -> a = c
+  trans refl q = q
+[Note: {a : A} means that we can keep the argument implicit and don't
+have to name it.]
+We write `p.q` for `trans p q`.
+Prove associativity, i.e. prove
+  (p.q).s = p.(q.s)
+for all a,b,c,d:A and p:a=b, q:b=c, s:c=d.
+
+
+Exercise 2 (easy)
+
+Let us define trans2 with the same type as trans by path induction
+on the second path, i.e. by
+  trans2 p refl = p.
+Show:
+trans p q = trans2 p q
+
+
+Exercise 3 (easy)
+
+Similarly as above, we have defined symmetry of equality:
+  sym : {a b : A} -> a = b -> b = a
+  sym refl = refl
+Proof that sym is self-inverse, i.e. prove that, for all p: a=b, we
+have:
+  sym (sym p) = p.
+
+
+Exercise 4 (easy)
+
+Recall the function ap: If we have f : A -> B, we get
+  ap_f : a = b -> f a = f b.
+If we have g : B -> C, we write g o f for the composition of the
+functions. Show:
+  ap_(g o f) = ap_g o ap_f
+
+
+Exercise 5 (medium)
+
+Show that, if f is an equivalence, then ap_f is an equivalence.
+Does the other direction hold as well?
+
+
+Exercise 6 (medium)
+
+"A path between pairs is a pair of paths."
+Complete the proof that 
+  (a1,b1) = (a2,b2) is equivalent to (a1,b1) = (a2,b2).
+It is enough to show that they are isomorphic because of Exercise 6.
+
+
+Exercise 7 (difficult; for those already familiar with HoTT)
+
+Given f : A -> B, recall that isIso(f) is the type of triples
+  (g, alpha, beta)
+with
+  g : B -> A
+  alpha : (a : A) -> g (f a) = a
+  beta  : (b : B) -> f (g b) = b
+and recall that isEqv(f) is the type of quadruples
+  (g, alpha, beta, h)
+with g, alpha, beta as above and
+  h : ap_f (alpha a) = beta (f a).
+Construct a function
+  isIso(f) -> isEqv(f).
+
+
+Exercise 8 (difficult; for those already familiar with HoTT)
+
+In Exercise 7, we have repeated the definition of isIso(f).
+There is a canonical function id2iso which turns an equality of types
+into an isomorphism of types. What happens if one postulates that the
+function id2iso is an equivalence? (Note: The univalence axiom does
+the same for the function id2eqv, which turns an equality of types
+into an equivalence of types).
+
+
+Exercise 9 (difficult; a lot of work, has little to do with HoTT)
+
+Show that there are arbitrarily large primes by constructing the term
+`bigPrimes` from the lecture.
+
+
+
+
