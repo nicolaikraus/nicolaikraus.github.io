@@ -1,18 +1,21 @@
 All exercises can be done on paper or in Agda.
 Try to do the easy ones (1,2,3,4) if you are new to HoTT or the
-medium ones if you are experienced. (Or the difficult ones if
-you have done the medium ones already.)
+medium ones if you are experienced. (The difficult ones are are
+only for those who find the medium ones too easy.)
 
-Caveat: Lecture 1 only covered enough to do exercises 1,2,3.
+NOTE: If we write something like
+f : {a : A} -> B a -> C,
+this means that we can keep the argument a : A implicit and don't
+have to name it, i.e. if we have a : A and b : B a, we can just
+write `f b`.
+If we still want to write the argument, we write `f {a} b`.
 
 
 Exercise 1 (easy)
 
 Recall that we can define transitivity of equality by path induction:
-  trans: {a b c : A} -> a = b -> b = c -> a = c
+  trans : {a b c : A} -> a = b -> b = c -> a = c
   trans refl q = q
-[Note: {a : A} means that we can keep the argument implicit and don't
-have to name it.]
 We write `p.q` for `trans p q`.
 Prove associativity, i.e. prove
   (p.q).s = p.(q.s)
@@ -22,10 +25,11 @@ for all a,b,c,d:A and p:a=b, q:b=c, s:c=d.
 Exercise 2 (easy)
 
 Let us define trans2 with the same type as trans by path induction
-on the second path, i.e. by
+on the second path, i.e.:
+  trans2 : {a b c : A} -> a = b -> b = c -> a = c
   trans2 p refl = p.
 Show:
-trans p q = trans2 p q
+{a b c : A} -> (p : a = b) -> (q : b = c) -> trans p q = trans2 p q
 
 
 Exercise 3 (easy)
@@ -33,24 +37,41 @@ Exercise 3 (easy)
 Similarly as above, we have defined symmetry of equality:
   sym : {a b : A} -> a = b -> b = a
   sym refl = refl
-Proof that sym is self-inverse, i.e. prove that, for all p: a=b, we
-have:
+Proof that sym is self-inverse, i.e. prove that, for all a,b : A and 
+p: a=b, we have:
   sym (sym p) = p.
 
 
 Exercise 4 (easy)
 
-Recall the function ap: If we have f : A -> B, we get
-  ap_f : a = b -> f a = f b.
+Recall the construction of `ap`, which applies a function on paths:
+For a given function f : A -> B, we define
+  ap_f : {a b : A} -> a = b -> f a = f b
+  ap_f refl = refl.  
 If we have g : B -> C, we write g o f for the composition of the
 functions. Show:
-  ap_(g o f) = ap_g o ap_f
+  {a b : A} -> (p : a = b) -> ap_(g o f) p = (ap_g o ap_f) p
 
 
 Exercise 5 (medium)
 
-Show that, if f is an equivalence, then ap_f is an equivalence.
-Does the other direction hold as well?
+For a given function f : A -> B, a *pointwise left inverse* is a
+function g : B -> A such that (a : A) -> g (f a) = a.
+
+Recall that, again for f : A -> B, the function ap_f is defined as
+follows:
+  ap_f : {a b : A} -> a = b -> f a = f b
+  ap_f refl = refl.
+
+Show: If f has a pointwise left inverse then, for all a,b : A, the
+function ap_f {a} {b} has a pointwise left inverse. (Does the other
+direction hold as well?)
+
+Remark: The same statement is true with "left" replaced by "right",
+but this is more difficult to calculate. You can try to do it as a
+difficult exercise. This also implies that, if f is an equivalence,
+then ap_f {a} {b} is an equivalence as well. 
+See Theorem 2.11.1 in the HoTT book.
 
 
 Exercise 6 (medium)
@@ -58,10 +79,11 @@ Exercise 6 (medium)
 "A path between pairs is a pair of paths."
 Complete the proof that 
   (a1,b1) = (a2,b2) is equivalent to (a1,b1) = (a2,b2).
-It is enough to show that they are isomorphic because of Exercise 6.
+It is enough to show that they are isomorphic because of Exercise 7.
 
 
-Exercise 7 (difficult; for those already familiar with HoTT)
+Exercise 7 (difficult; only recommended if you are already familiar
+with HoTT and find all the other exercises easy.)
 
 Given f : A -> B, recall that isIso(f) is the type of triples
   (g, alpha, beta)
@@ -69,15 +91,20 @@ with
   g : B -> A
   alpha : (a : A) -> g (f a) = a
   beta  : (b : B) -> f (g b) = b
-and recall that isEqv(f) is the type of quadruples
+(note that the HoTT book writes `qinv(f)` for `isIso(f)`.)
+Recall that isEqv(f) is the type of quadruples
   (g, alpha, beta, h)
 with g, alpha, beta as above and
   h : ap_f (alpha a) = beta (f a).
-Construct a function
-  isIso(f) -> isEqv(f).
+Construct functions
+  isEqv(f) -> isIso(f)   [easy]
+and
+  isIso(f) -> isEqv(f)   [hard]
+
+Solution: See Theorem 4.2.3 in the HoTT book.
 
 
-Exercise 8 (difficult; for those already familiar with HoTT)
+Exercise 8 (difficult; only for experts of HoTT)
 
 In Exercise 7, we have repeated the definition of isIso(f).
 There is a canonical function id2iso which turns an equality of types
@@ -90,7 +117,7 @@ into an equivalence of types).
 Exercise 9 (difficult; a lot of work, has little to do with HoTT)
 
 Show that there are arbitrarily large primes by constructing the term
-`bigPrimes` from the lecture.
+`bigPrimes` from the "motivating example" of the lecture.
 
 
 

@@ -3,31 +3,127 @@
         Midlands Graduate School 2021
               Nicolai Kraus
 
-Exercises 1: You can use this file if you want to
-do the exercises in Agda. Below is some code to get
-you started.
+This is the Agda file which we looked at in the
+exercise session(s).
 -}
 
 {-# OPTIONS --without-K #-}
 
 open import Agda.Primitive
 
+{-
+Two inductive implementations of the
+  Martin-Löf identity type
+aka
+  equality type
+aka
+  identification type
+aka
+  path type.
+-}
+
 data _≡_ {A : Set} (a : A) : A → Set where
   refl : a ≡ a
 
+data _≡'_ {A : Set} : A → A → Set where
+  refl : (a : A) → a ≡' a
+
+-- variables can be used later and are understood as Pi-quantified.
 variable
   i j : Level
-  A B : Set
-  C : A → Set
+  A B C : Set
 
--- postulate
---  funext : (f g : (a : A) → C a) → ((a : A) → f a ≡ g a) → f ≡ g
+-- sym' for ≡'
+sym' : {a b : A} → a ≡' b → b ≡' a
+sym' {a = x} {.x} (refl .x) = refl x
 
+-- sym for ≡
 sym : {a b : A} → a ≡ b → b ≡ a
 sym refl = refl
 
 symsym : {a b : A} → (p : a ≡ b) → sym (sym p) ≡ p
 symsym refl = refl
+
+ap : (f : A → B) → {a b : A} → a ≡ b → f a ≡ f b
+ap f {a} {.a} refl = refl
+
+_∘_ : {A B C : Set} → (g : B → C) → (f : A → B) → A → C
+g ∘ f = λ x → g (f x)
+
+infixl 26 _∘_
+
+ap-g∘f : (f : A → B) (g : B → C) {a b : A} (p : a ≡ b)
+         → ap (g ∘ f) p ≡ (ap g ∘ ap f) p
+ap-g∘f f g refl = refl
+
+trans : {a b c : A} → a ≡ b → b ≡ c → a ≡ c
+trans refl q = q
+
+trans2 : {a b c : A} -> a ≡ b -> b ≡ c -> a ≡ c
+trans2 p refl = p
+
+trans-trans2 : {a b c : A} -> (p : a ≡ b) -> (q : b ≡ c)
+               -> trans p q ≡ trans2 p q
+trans-trans2 {a = x} {b = .x} {c = .x} refl refl = refl
+
+trans3 : {a b c : A} -> a ≡ b -> b ≡ c -> a ≡ c
+trans3 refl refl = refl
+
+trans-trans3 : {a b c : A} -> (p : a ≡ b) -> (q : b ≡ c)
+               -> trans p q ≡ trans3 p q
+trans-trans3 {a = x} {b = .x} {c = .x} refl refl = refl
+
+test : {a c : A} → (q : a ≡ c) → trans refl q ≡ q
+test q = refl
+
+test2 : {a c : A} → (q : a ≡ c) → trans2 q refl ≡ q
+test2 q = refl
+
+test3 : {a c : A} → (q : a ≡ c) → trans3 refl q ≡ q
+test3 refl = refl
+
+{- In test3 above, we have to pattern match (path induct) on q!
+   What if we cannot, as in
+
+  test4 : {a : A} → (q : a ≡ a) → trans3 refl q ≡ q
+
+  ?
+-}
+
+-- solution:
+test4 : {a : A} → (q : a ≡ a) → trans3 refl q ≡ q
+test4 q = test3 q
+
+
+-- We can only pattern match on q if we remove the --without-K option:
+uip : {a b : A} → (p q : a ≡ b) → p ≡ q
+uip {a = x} {b = .x} refl q = {!q!}
+
+-- implementation of the J eliminator (aka path induction)
+module _ (C : (a b : A) → a ≡ b → Set) where
+
+   J-elim : (d : (a : A) → C a a refl) → (a b : A) → (p : a ≡ b) → C a b p
+   J-elim d a .a refl = d a
+
+-- implementation of the Paulin-Mohring version of J (based bath induction)
+module _ (a₀ : A) (C : (b : A) → a₀ ≡ b → Set) where
+
+   J-elim-PM : (d : C a₀ refl) → (b : A) → (p : a₀ ≡ b) → C b p
+   J-elim-PM d b refl = d
+
+-- this is "Axiom K" (which is disabled in the options)
+module _ (a₀ : A) (C : a₀ ≡ a₀ → Set) where
+
+  K : (d : C refl) → (p : a₀ ≡ a₀) → C p
+  K d p = {!p!}
+
+-- Caveat:
+-- judgmental equality in Agda: = but on paper: ≡
+-- path type in Agda: ≡ but on paper: =
+
+
+
+-- for later:
 
 record Σ (A : Set) (B : A → Set) : Set where
   constructor _,_
@@ -44,7 +140,6 @@ A × B = Σ A (λ _ → B)
 split-equality : {x y : A × B} → x ≡ y → (fst x ≡ fst y) × (snd x ≡ snd y)
 split-equality = {!!}
 
-combine-equalities : {x y : A × B} → (fst x ≡ fst y) → (snd x ≡ snd y) → x ≡ y
+combine-equalities : {x y : A × B} → (fst x ≡ fst y) × (snd x ≡ snd y) → x ≡ y
 combine-equalities = {!!}
 
--- are the above functions inverse to each other?
