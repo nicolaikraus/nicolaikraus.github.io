@@ -25,12 +25,14 @@ aka
 data _≡_ {A : Set} (a : A) : A → Set where
   refl : a ≡ a
 
+infixr 10 _≡_
+
+-- explcit
 data _≡'_ {A : Set} : A → A → Set where
   refl : (a : A) → a ≡' a
 
 -- variables can be used later and are understood as Pi-quantified.
 variable
-  i j : Level
   A B C : Set
 
 -- sym' for ≡'
@@ -40,6 +42,8 @@ sym' {a = x} {.x} (refl .x) = refl x
 -- sym for ≡
 sym : {a b : A} → a ≡ b → b ≡ a
 sym refl = refl
+
+_⁻¹ = sym
 
 symsym : {a b : A} → (p : a ≡ b) → sym (sym p) ≡ p
 symsym refl = refl
@@ -58,6 +62,12 @@ ap-g∘f f g refl = refl
 
 trans : {a b c : A} → a ≡ b → b ≡ c → a ≡ c
 trans refl q = q
+
+_∙_ = trans
+infixr 30 _∙_
+
+sym-refl : {a b : A} → (p : a ≡ b) → (p ⁻¹) ∙ p ≡ refl
+sym-refl refl = refl
 
 trans2 : {a b c : A} -> a ≡ b -> b ≡ c -> a ≡ c
 trans2 p refl = p
@@ -121,10 +131,6 @@ module _ (a₀ : A) (C : a₀ ≡ a₀ → Set) where
 -- judgmental equality in Agda: = but on paper: ≡
 -- path type in Agda: ≡ but on paper: =
 
-
-
--- for later:
-
 record Σ (A : Set) (B : A → Set) : Set where
   constructor _,_
   field
@@ -133,6 +139,41 @@ record Σ (A : Set) (B : A → Set) : Set where
 
 open Σ public
 infixr 4 _,_
+
+{-
+Exercise 5
+For a given function f : A -> B, a *pointwise left inverse* is a
+function g : B -> A such that (a : A) -> g (f a) = a.
+
+Show: If f has a pointwise left inverse then, for all a,b : A, the
+function ap_f {a} {b} has a pointwise left inverse. (Does the other
+direction hold as well?)
+
+Solution of the easy part:
+-}
+
+has-ptw-left-inv : {A B : Set} → (f : A → B) → Set
+has-ptw-left-inv {A} {B} f = Σ (B → A) λ g → (a : A) → g (f a) ≡ a
+
+ptw-left-inv-ap : {A B : Set} → (f : A → B) →
+                  has-ptw-left-inv f →
+                  {a₁ a₂ : A} → has-ptw-left-inv (ap f {a₁} {a₂})
+ptw-left-inv-ap f (g , g∘f) {a₁} {a₂} =
+                (λ q → (g∘f a₁ ⁻¹) ∙ ap g {f a₁} {f a₂} q ∙ g∘f a₂) ,
+                λ {refl →  sym-refl (g∘f a₁) }
+
+
+
+{-
+  Exercise 6: a1 a2 : A, b1 b2 : B
+  (a1 , b1) ≡ (a2 , b2) is equivalent to (a1 = a2) × (b1 = b2).
+
+  Exercise 7:
+  eqv2iso :   isEqv(f) -> isIso(f)   [easy]
+  iso2eqv :  isIso(f) -> isEqv(f)   [hard]
+-}
+
+
 
 _×_ : (A B : Set) → Set
 A × B = Σ A (λ _ → B)
@@ -143,3 +184,10 @@ split-equality = {!!}
 combine-equalities : {x y : A × B} → (fst x ≡ fst y) × (snd x ≡ snd y) → x ≡ y
 combine-equalities = {!!}
 
+module _ (A B : Set) (g : B → A) (a b : B) where
+
+  lemma : (pair1 pair2 : Σ A λ x → x ≡ g a) → pair1 ≡ pair2
+  lemma (.(g a) , refl) (.(g a) , refl) = refl
+
+  wrong : (pair1 pair2 : Σ A λ x → g a ≡ g b) → pair1 ≡ pair2
+  wrong (x1 , p1) (x2 , p2) = {!p1!}

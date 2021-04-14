@@ -78,7 +78,7 @@ Exercise 6 (medium)
 
 "A path between pairs is a pair of paths."
 Complete the proof that 
-  (a1,b1) = (a2,b2) is equivalent to (a1,b1) = (a2,b2).
+  (a1,b1) = (a2,b2) is equivalent to (a1 = a2) * (b1 = b2).
 It is enough to show that they are isomorphic because of Exercise 7.
 
 
