@@ -104,7 +104,6 @@ test3 refl = refl
 test4 : {a : A} → (q : a ≡ a) → trans3 refl q ≡ q
 test4 q = test3 q
 
-
 -- We can only pattern match on q if we remove the --without-K option:
 uip : {a b : A} → (p q : a ≡ b) → p ≡ q
 uip {a = x} {b = .x} refl q = {!q!}
@@ -140,6 +139,9 @@ record Σ (A : Set) (B : A → Set) : Set where
 open Σ public
 infixr 4 _,_
 
+_×_ : (A B : Set) → Set
+A × B = Σ A (λ _ → B)
+
 {-
 Exercise 5
 For a given function f : A -> B, a *pointwise left inverse* is a
@@ -162,8 +164,6 @@ ptw-left-inv-ap f (g , g∘f) {a₁} {a₂} =
                 (λ q → (g∘f a₁ ⁻¹) ∙ ap g {f a₁} {f a₂} q ∙ g∘f a₂) ,
                 λ {refl →  sym-refl (g∘f a₁) }
 
-
-
 {-
   Exercise 6: a1 a2 : A, b1 b2 : B
   (a1 , b1) ≡ (a2 , b2) is equivalent to (a1 = a2) × (b1 = b2).
@@ -173,17 +173,6 @@ ptw-left-inv-ap f (g , g∘f) {a₁} {a₂} =
   iso2eqv :  isIso(f) -> isEqv(f)   [hard]
 -}
 
-
-
-_×_ : (A B : Set) → Set
-A × B = Σ A (λ _ → B)
-
-split-equality : {x y : A × B} → x ≡ y → (fst x ≡ fst y) × (snd x ≡ snd y)
-split-equality = {!!}
-
-combine-equalities : {x y : A × B} → (fst x ≡ fst y) × (snd x ≡ snd y) → x ≡ y
-combine-equalities = {!!}
-
 module _ (A B : Set) (g : B → A) (a b : B) where
 
   lemma : (pair1 pair2 : Σ A λ x → x ≡ g a) → pair1 ≡ pair2
@@ -191,3 +180,12 @@ module _ (A B : Set) (g : B → A) (a b : B) where
 
   wrong : (pair1 pair2 : Σ A λ x → g a ≡ g b) → pair1 ≡ pair2
   wrong (x1 , p1) (x2 , p2) = {!p1!}
+
+
+
+split-equality : {x y : A × B} → x ≡ y → (fst x ≡ fst y) × (snd x ≡ snd y)
+split-equality = {!!}
+
+combine-equalities : {x y : A × B} → (fst x ≡ fst y) × (snd x ≡ snd y) → x ≡ y
+combine-equalities = {!!}
+
