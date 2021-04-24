@@ -3,29 +3,77 @@
 <head>
 
 <style>
-#profilepicture {
-margin-left: 10px;
-margin-right: 20px;
-margin-bottom:20px;
-margin-top: 0%;
-max-width: 100%;
-height: auto;
-float: left;
+body {
+    font-family: sans-serif;
+    margin: auto;
+    width: 55em;
 }
 
+header {
+    text-align: center;
+}
+
+header p {
+    font-size: 95%;
+}
+
+a, a:visited {
+    color: #064f15;
+}
+
+h1 {
+    margin-bottom: 0px;
+}
+
+h3 {
+    border-left: 0.4em solid #888;
+    padding-left: 1em;
+    background: #eee;
+    padding-top: 0.2em;
+    padding-bottom: 0.2em;
+}
+
+header p {
+    margin-top: 0.2em;
+    margin-bottom: 0.2em;
+}
+
+.profile {
+    display: flex;
+    align-items: center;
+}
+
+.picture {
+    margin: 0.2em;
+    margin-right: 1em;
+}
+
+.info {
+    display: flex;
+    flex-direction: column;
+}
+
+.quick-links {
+    font-size: 90%;
+    text-align: center;
+}
+
+p.funding img {
+    margin-left: 2em;
+}
 
 ol > li {
- margin-bottom: 5px;
+    margin-bottom: 5px;
 }
 ul {
- margin-left: 0px;
+    margin-left: 0px;
 }
 ul > li {
- list-style-type: none;
+    list-style-type: none;
 }
 
 ol.nonumber {
- list-style-type: square;
+    list-style-type: square;
 }
 
 </style>
@@ -36,47 +84,59 @@ ol.nonumber {
 
 <body>
 
-<img id="profilepicture" width="200" title= "Nicolai Kraus" alt="Nicolai Kraus" src="pictures/nicolaikraus.jpg">
-<div style="text-align: center">
-<H1>Nicolai Kraus</H1>
-<p>
-University of Nottingham
-</p>
+<header>
+  <H1>Nicolai Kraus</H1>
+  <p>
+    University of Nottingham
+  </p>
+</header>
+
+<div class="profile">
+  <div class="picture">
+    <img width="200" title= "Nicolai Kraus" alt="Nicolai Kraus" src="pictures/nicolaikraus.jpg">
+  </div>
+  <div class="info">
+    <div>
+      <p>
+        I am a Royal Society University Research Fellow and Associate Professor at the <a href="http://www.nottingham.ac.uk/">University of Nottingham</a>, in the <a href="https://nottingham.ac.uk/research/groups/fp-lab/index.aspx">Functional Programming Lab</a>.
+        I was previously a member of the <a href="http://www.cs.bham.ac.uk/research/groupings/theory/">Birmingham Theory Group</a> and at <a href="http://www.elte.hu/en">Eötvös Loránd University</a>.
+        My interests include (homotopy) type theory, (higher) categories, constructive mathematics in general, and the vast area of related topics.
+      </p>
+    </div>
+
+    <div class="tcs4f">
+      <a href="https://tcs4f.org"
+         style="display: inline-block;
+                border: 2px solid #CCCCCC;
+                padding: 5px; margin: 10px; border-radius: 5px;">
+        <img src="https://tcs4f.org/themes/tcs4f/img/logo_TCS4F_initiative.svg"
+             alt="Theoretical Computer Scientists for Future" width="250">
+      </a>
+    </div>
+
+    <div>
+      <p>
+        Feel free to contact me:
+        <EM>firstname.lastname@nottingham.ac.uk</EM>.
+      </p>
+    </div>
+  </div>
 </div>
 
+<div class="quick-links">
 <p>
-I am a Royal Society University Research Fellow and Associate Professor at the <a href="http://www.nottingham.ac.uk/">University of Nottingham</a>, in the <a href="https://nottingham.ac.uk/research/groups/fp-lab/index.aspx">Functional Programming Lab</a>.
-I was previously a member of the <a href="http://www.cs.bham.ac.uk/research/groupings/theory/">Birmingham Theory Group</a> and at <a href="http://www.elte.hu/en">Eötvös Loránd University</a>.
-My interests include (homotopy) type theory, (higher) categories, constructive mathematics in general, and the vast area of related topics.
-</p>
-
-<p>
-<a href="https://tcs4f.org" 
-   style="display: inline-block;
-	border: 2px solid #CCCCCC;
-	padding: 5px; margin: 10px; border-radius: 5px;">
-	<img width="250" src="pictures/logo_TCS4F_initiative.svg" 
-	     alt="Theoretical Computer Scientists for Future">
-</a>
-</p>
-
-<p>
-Feel free to contact me: 
-<EM>firstname.lastname@nottingham.ac.uk</EM>. 
-</p>
-
-<p>
-Quick links:
-<A HREF="#people">People</A>;
-<A HREF="#papers">Papers</A>;
-<A HREF="#workshops">Workshop Contributions</A>;
-<A HREF="#talks">Talks</A>;
-<A HREF="#teaching">Teaching</A>;
-<A HREF="#notes">Notes</A>;
-<A HREF="#funding">Funding Acknowledgement</A>;
+<strong>Quick links:</strong>
+[<a href="#people">People</a>]
+[<a href="#papers">Papers</a>]
+[<a href="#workshops">Workshop Contributions</a>]
+[<a href="#talks">Talks</a>]
+[<a href="#teaching">Teaching</a>]
+[<a href="#notes">Notes</a>]
+[<a href="#funding">Funding Acknowledgement</a>]
 <br/>
 and a list of bibtex entries for my papers [<a href="bibliography/nicolaikraus_bib.html">html</a>].
 </p>
+</div>
 
  <!--
 <p>
