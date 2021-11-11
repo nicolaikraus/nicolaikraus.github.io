@@ -1,0 +1,179 @@
+<!DOCTYPE HTML>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+  <meta name="description"
+        content="G54FOP/FPP - Mathematical Foundations of Programming">
+  <meta name="keywords"
+        content="foundations,syntax,semantics,categories,types">
+
+<title>G54FOP/FPP Foundations of Programming</title>
+
+<style>
+.A ol {list-style: none; counter-reset: chapter 1;}
+.A ol li+li {counter-increment: chapter 1; list-style: none;}
+.A ol li:before {content: "A" counter(chapter) ". ";}
+
+
+.L ol {list-style: none; counter-reset: chapter 1;}
+.L ol li+li {counter-increment: chapter 1; list-style: none;}
+.L ol li:before {content: "L" counter(chapter) ". ";}
+</style>
+
+</head>
+
+<body>
+
+
+<div id="header" style="text-align: center">
+<H1>Mathematical Foundations of Programming (G54FOP and G54FPP), Spring 2018</H1>
+
+<h2><a href="http://www.cs.nott.ac.uk/~psznk/">Nicolai Kraus</a> (first part) / <a href="http://www.duplavis.com/venanzio/">Venanzio Capretta</a> (second part)</h2>
+</div>
+
+
+<h2>Basic Links</h2>
+
+<ul>
+<li><a href="http://modulecatalogue.nottingham.ac.uk/nottingham/asp/ModuleDetails.asp?crs_id=021251&year_id=000117">FOP in the module catalogue</a></li>
+<li><a href="http://modulecatalogue.nottingham.ac.uk/nottingham/asp/moduledetails.asp?crs_id=018385">FPP in the module catalogue</a></li>
+<li><a href="http://moodle.nottingham.ac.uk/mod/forum/view.php?id=2523816">Announcements on Moodle</a> (announcements will be emailed to you automatically; login required)</li>
+<li><a href="http://moodle.nottingham.ac.uk/mod/forum/view.php?id=2544424">Moodle discussion forum</a> (please ask questions here or in the lecture; login required)</li>
+<li><a href="http://www.cs.nott.ac.uk/~pszvc/g54fop/">Venanzio Capretta's website for this module (last year)</a></li>
+</ul>
+
+<h2>Lecture Notes and Lectures</h2>
+
+<ul>
+<li><a href="FOP_2018_nicolaikraus.pdf">Nicolai's lecture notes</a> (after each lecture, I will try to write up what we have done and make these notes available here)
+<li>Venanzio's lecture notes
+  <ul>
+    <li><a href="G54FOP_lambda_calculus.pdf">&lambda;-calculus</a>
+    <li><a href="G54FOP_lambda_recursion.pdf">recursion in &lambda;-calculus</a>
+    <li><a href="G54FOP_lambda_arrow.pdf">simply typed &lambda;-calculus</a>
+    <li><a href="G54FOP_systemT.pdf">System T</a>
+    <li><a href="G54FOP_recursive_types.pdf">Recursive Types</a>
+    <li><a href="G54FOP_systemF.pdf">System F</a>
+  </ul>
+</ul>
+<br/>
+<em>In any case, I strongly advise you to take your own notes during the lecture!</em>
+<br/>
+Log of the lecture:
+<ol>
+<li> Lecture 1 --- 31 Jan 2018 --- Nicolai --- discussed syntax and semantics; specified the syntax of a simple language of arithmetical expressions via a Backus-Naur form and via derivation rules; gave one possible denotational semantic</li>
+<li> Lecture 2 --- 01 Feb 2018 --- Nicolai --- continued with the simple language; gave an example of a possible operational semantic; proved confluence for our language and discussed that confluence can fail for other languages</li>
+<li> Lecture 3 --- 07 Feb 2018 --- Nicolai --- introduction to Agda; see the Agda file linked below (in section "Agda")</li>
+<li> Lecture 4 --- 08 Feb 2018 --- Nicolai --- discussed G54FPP projects; normal form theorem for our laguage of arithmeitcal epressions; part of proof of statement that "[[e]] is value => e reduces to value"</li>
+<li> Lecture 5 --- 14 Feb 2018 --- Nicolai --- induction principle for the language of arithmetical expressions, use it to prove the theorem ([[e]] = True => e ->* t) and ([[e]] = False => e ->* f) and ([[e]] = n => e -> s(s(...(s z)...)))
+<li> Lecture 6 --- 15 Feb 2018 --- Nicolai --- implemented operational semantics in Agda, see Agda file linked below
+<li> Lecture 7 --- 21 Feb 2018 --- Venanzio --- introduction to &lambda;-calculus
+<li> Lecture 8 --- 22 Feb 2018 --- Venanzio --- data structures in &lambda;-calculus: Church Numerals
+<li> Lecture 9 --- 28 Feb 2018 --- Venanzio --- abstract syntax trees, substitution, Booleas and pairs
+<li> Lecture 10 --- 1 Mar 2018 --- Venanzio --- recursion in &lambda;-calculus, Y combinator
+<li> Lecture 11 --- 7 Mar 2018 --- Venanzio --- simply typed &lambda;-calculus
+<li> Lecture 12 --- 8 Mar 2018 --- Venanzio --- System T
+<li> Lecture 13 --- 14 Mar 2018 --- Venanzio --- Recursive types - Inductive
+<li> Lecture 14 --- 15 Mar 2018 --- Venanzio --- CoInductive types
+<li> Lecture 15 --- 21 Mar 2018 --- Venanzio --- (Initial) Algebras and (Final) Coalgebras
+<li> Lecture 16 --- 22 Mar 2018 --- Venanzio --- System F
+<li> Lecture 17 --- 25 Apr 2018 --- Venanzio --- Review of Type Systems
+<li> Lecture 18 --- 2 May 2018 --- Nicolai --- Basics of System F
+<li> Lecture 19 --- 3 May 2018 --- Nicolai --- Revision of main topics, exam preparation; final lecture of the module
+</ol>
+
+
+<h2>Assessment and Coursework for G54FOP</h2>
+  <h3>On-line Tests</h3>
+    The coursework consists in three short tests on Moodle. 
+    Every week you will find a quiz on the Moodle page. 
+    The quiz consists of 10 short questions; you have 30 minutes to answer them all. 
+    Access to the quiz will be open for the whole specified day. 
+    You can choose at what time you want to do it, but once you start you have half hour to complete it.
+  <ul>
+    <li><a href="http://moodle.nottingham.ac.uk/mod/quiz/view.php?id=2544431">Test 1</a>, Wednesday 2 May 2018
+    <li>Test 2, Wednesday 9 May 2018 (cancelled)
+    <li>Test 3, Wednesday 16 May 2018 (cancelled)
+  </ul>
+  <h3>Previous Years Exam Papers</h3>
+  <ul>
+    <li><a href="exam_g54fop_2014.pdf">2014 Exam</a>
+    <li><a href="exam_g54fop_2015.pdf">2015 Exam</a>
+    <li><a href="exam_g54fop_2017.pdf">2017 Exam</a>
+  </ul>
+
+<h2>Agda</h2>
+Agda is a programming language and a proof assistant.
+Here are some links to help you install and learn Agda:
+<ul>
+<li><a href="http://wiki.portal.chalmers.se/agda/pmwiki.php">Agda wiki</a></li>
+<li><a href="http://agda.readthedocs.io/en/latest/getting-started/index.html">Agda documentation (installation and much more)</a></li>
+<li><a href="https://github.com/agda/agda">Agda on GitHub (install development version)</a></li>
+<li><a href="https://github.com/agda/agda-stdlib">Agda standard library on GitHub</a></li>
+</ul>
+  
+Agda file from the lecture:
+<ul>
+<li>Lecture 3: <a href="agda/html/lec3FOP.html">as html (view in browser)</a> and <a href="agda/lec3FOP.agda">as .agda (open in emacs)</a></li>
+<li>Lecture 6: <a href="agda/html/lec6FOP.html">as html (view in browser)</a> and <a href="agda/lec6FOP.agda">as .agda (open in emacs)</a></li>
+</ul>
+
+<h2>Recommended Sources</h2>
+<ul>
+<li>See <a href="http://www.cs.nott.ac.uk/~pszvc/g54fop/">Venanzio's recommendations and lecture notes</a></li>
+<li>For semantics: see <a href="http://www.cl.cam.ac.uk/teaching/2001/Semantics/">Andrew Pitt's website</a> (includes detailed notes)</li>
+<li>For Agda: see the links given above, and <a href="http://www.cs.nott.ac.uk/~psztxa/g53cfr/">Thorsten Altenkirch's course</a></li>
+<li>... (will be added later when we discuss other topics)</li>
+</ul>
+
+<h2>G54FPP mini project</h2>
+<p>
+This module can be taken in addition to G54FOP.
+It gives you the opportunity to learn more about a specific topic that is related to FOP.
+Your task is to: 
+<ul>
+<li>Choose a topic: this can be one that I suggest (see below), or one that you come up with yourself.</li>
+<li>Work on the topic: this can include an Agda formalisation and/or literature work, depending on what you have chosen.</li>
+<li>Write a report on what you have done or found out: it should be understandable for your FOP classmates.</li>
+<li>Give a presentation for the rest of the class.</li>
+</ul>
+Timewise, the plan is as follows. 
+You should choose a topic at the end of February. 
+You then will have March and April (plus early May) to work on it.
+The presentations will be in early May, and the reports should be handed in shortly after.
+
+Update: Please submit your report by 14 May. Presentations will take place on 18 May.
+
+<em>Agda projects</em> include a formalisation (you can also use Coq if you prefer).
+Some suggested topics are ("A" for "Agda"):
+
+<div class="A">
+<ol>
+<li>Formalise the confluence result for operational semantics (lecture 2).</li>
+<li>Formalise the connection between denotational and operational semantics (lecture 4; easier than lecture 2).</li>
+<li>Formalise the <a href="https://en.wikipedia.org/wiki/Pigeonhole_principle">pidgeonhole principle</a>.</li>
+<li>Formalise confluence for the lambda calculus (hard).</li>
+<li>Formalise different sorting algorithms.</li>
+<li>Formally prove that there are infinitely many primes.</li>
+<li>Suggest your own formalisation project (e.g. basic automaton theory, graph theory, ...).</li>
+</ol>
+</div>
+Some none-formalisation topics could be (where "L" stands for "literature").
+If you want to do any of these, we will discuss what exactly you would do.
+They may still include Haskell or Agda, depending on your preferences.
+<div class="L">
+<ol>
+<li>Primitive recursion and the Ackermann function.</li>
+<li>An introduction to Martin-Lof type theory.</li>
+<li>An introduction to automata theory.</li>
+<li>Any of the topics on <a href="http://www.cs.nott.ac.uk/~pszvc/g54fop/">Venanzio's website</a>.</li>
+<li>Suggest your own topic (e.g. cryptography, blockchain, ...).</li>
+</ol>
+</div>
+
+
+</body>
+
+</html>
+
