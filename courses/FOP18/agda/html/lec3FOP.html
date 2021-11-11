@@ -1,0 +1,118 @@
+<!DOCTYPE HTML>
+<html><head><meta charset="utf-8"><title>lec3FOP</title><link rel="stylesheet" href="Agda.css"></head><body><pre><a id="1" class="Comment">{- 
+  Mathematical Foundations of Programming (G54FOP)
+  Nicolai Kraus
+  Lecture 3, 7 Feb 2018
+
+  ====================
+  INTRODUCTION TO AGDA
+  ====================
+
+  Your G54FPP project could involve Agda. If you want.
+
+  Btw, text in {- -} is a comment. So is text after --.
+
+  links to help you install and learn Agda:
+  http://wiki.portal.chalmers.se/agda/pmwiki.php
+  http://agda.readthedocs.io/en/latest/getting-started/index.html
+  https://github.com/agda/agda
+
+  Agda standard library:
+  https://github.com/agda/agda-stdlib
+  
+  Some key combinations, where C is ctrl,
+  i.e. C-c C-l means:
+    press control and keep it pressed,
+    press and release c,
+    press and release l,
+    release control.
+  C-c C-l   load file, replace ? by hole
+  C-c C-,   show goal
+  C-c C-.   show goal and input type
+  C-c C-n   normalise expression
+  C-c C-space   give current hole input to Agda
+  see links above for more
+
+  I recommend using a monospace font.
+-}</a>
+
+<a id="962" class="Keyword">module</a> <a id="969" href="lec3FOP.html" class="Module">lec3FOP</a> <a id="977" class="Keyword">where</a>
+
+  <a id="986" class="Keyword">data</a> <a id="991" href="lec3FOP.html#991" class="Datatype">ℕ</a> <a id="993" class="Symbol">:</a> <a id="995" class="PrimitiveType">Set</a> <a id="999" class="Keyword">where</a>     <a id="1009" class="Comment">-- type: \bN</a>
+    <a id="1026" href="lec3FOP.html#1026" class="InductiveConstructor">zero</a> <a id="1031" class="Symbol">:</a> <a id="1033" href="lec3FOP.html#991" class="Datatype">ℕ</a>
+    <a id="1039" href="lec3FOP.html#1039" class="InductiveConstructor">suc</a> <a id="1043" class="Symbol">:</a> <a id="1045" href="lec3FOP.html#991" class="Datatype">ℕ</a> <a id="1047" class="Symbol">→</a> <a id="1049" href="lec3FOP.html#991" class="Datatype">ℕ</a>          <a id="1060" class="Comment">-- type: \to or \-&gt;</a>
+                         <a id="1105" class="Comment">-- (or just use -&gt;) </a>
+
+  <a id="1129" class="Keyword">infix</a> <a id="1135" class="Number">6</a> <a id="1137" href="lec3FOP.html#1143" class="Function Operator">_+_</a>
+  <a id="1143" href="lec3FOP.html#1143" class="Function Operator">_+_</a> <a id="1147" class="Symbol">:</a> <a id="1149" href="lec3FOP.html#991" class="Datatype">ℕ</a> <a id="1151" class="Symbol">→</a> <a id="1153" href="lec3FOP.html#991" class="Datatype">ℕ</a> <a id="1155" class="Symbol">→</a> <a id="1157" href="lec3FOP.html#991" class="Datatype">ℕ</a>        <a id="1166" class="Comment">-- the arguments go where _ is</a>
+  <a id="1199" href="lec3FOP.html#1026" class="InductiveConstructor">zero</a> <a id="1204" href="lec3FOP.html#1143" class="Function Operator">+</a> <a id="1206" href="lec3FOP.html#1206" class="Bound">n</a> <a id="1208" class="Symbol">=</a> <a id="1210" href="lec3FOP.html#1206" class="Bound">n</a>
+  <a id="1214" class="Symbol">(</a><a id="1215" href="lec3FOP.html#1039" class="InductiveConstructor">suc</a> <a id="1219" href="lec3FOP.html#1219" class="Bound">m</a><a id="1220" class="Symbol">)</a> <a id="1222" href="lec3FOP.html#1143" class="Function Operator">+</a> <a id="1224" href="lec3FOP.html#1224" class="Bound">n</a> <a id="1226" class="Symbol">=</a> <a id="1228" href="lec3FOP.html#1039" class="InductiveConstructor">suc</a> <a id="1232" class="Symbol">(</a><a id="1233" href="lec3FOP.html#1219" class="Bound">m</a> <a id="1235" href="lec3FOP.html#1143" class="Function Operator">+</a> <a id="1237" href="lec3FOP.html#1224" class="Bound">n</a><a id="1238" class="Symbol">)</a>  
+
+  <a id="1245" class="Comment">{- type of equalities on natural numbers *which
+     we need to prove*. Some equalities can be hard
+     to prove, so we cannot assume that Agda would
+     find them automatically! -}</a>
+  <a id="1431" class="Keyword">infix</a> <a id="1437" class="Number">3</a> <a id="1439" href="lec3FOP.html#1451" class="Datatype Operator">_==_</a>
+  <a id="1446" class="Keyword">data</a> <a id="1451" href="lec3FOP.html#1451" class="Datatype Operator">_==_</a> <a id="1456" class="Symbol">:</a> <a id="1458" class="Symbol">(</a><a id="1459" href="lec3FOP.html#1459" class="Bound">m</a> <a id="1461" href="lec3FOP.html#1461" class="Bound">n</a> <a id="1463" class="Symbol">:</a> <a id="1465" href="lec3FOP.html#991" class="Datatype">ℕ</a><a id="1466" class="Symbol">)</a> <a id="1468" class="Symbol">→</a> <a id="1470" class="PrimitiveType">Set</a> <a id="1474" class="Keyword">where</a>
+    <a id="1484" href="lec3FOP.html#1484" class="InductiveConstructor">refl</a> <a id="1489" class="Symbol">:</a> <a id="1491" class="Symbol">{</a><a id="1492" href="lec3FOP.html#1492" class="Bound">m</a> <a id="1494" class="Symbol">:</a> <a id="1496" href="lec3FOP.html#991" class="Datatype">ℕ</a><a id="1497" class="Symbol">}</a> <a id="1499" class="Symbol">→</a> <a id="1501" href="lec3FOP.html#1492" class="Bound">m</a> <a id="1503" href="lec3FOP.html#1451" class="Datatype Operator">==</a> <a id="1506" href="lec3FOP.html#1492" class="Bound">m</a>
+
+  <a id="1511" href="lec3FOP.html#1511" class="Function">suc-lem</a> <a id="1519" class="Symbol">:</a> <a id="1521" class="Symbol">{</a><a id="1522" href="lec3FOP.html#1522" class="Bound">m</a> <a id="1524" href="lec3FOP.html#1524" class="Bound">n</a> <a id="1526" class="Symbol">:</a> <a id="1528" href="lec3FOP.html#991" class="Datatype">ℕ</a><a id="1529" class="Symbol">}</a> <a id="1531" class="Symbol">→</a> <a id="1533" href="lec3FOP.html#1522" class="Bound">m</a> <a id="1535" href="lec3FOP.html#1451" class="Datatype Operator">==</a> <a id="1538" href="lec3FOP.html#1524" class="Bound">n</a> <a id="1540" class="Symbol">→</a> <a id="1542" href="lec3FOP.html#1039" class="InductiveConstructor">suc</a> <a id="1546" href="lec3FOP.html#1522" class="Bound">m</a> <a id="1548" href="lec3FOP.html#1451" class="Datatype Operator">==</a> <a id="1551" href="lec3FOP.html#1039" class="InductiveConstructor">suc</a> <a id="1555" href="lec3FOP.html#1524" class="Bound">n</a>
+  <a id="1559" href="lec3FOP.html#1511" class="Function">suc-lem</a> <a id="1567" href="lec3FOP.html#1484" class="InductiveConstructor">refl</a> <a id="1572" class="Symbol">=</a> <a id="1574" href="lec3FOP.html#1484" class="InductiveConstructor">refl</a>
+
+  <a id="1582" href="lec3FOP.html#1582" class="Function">+-is-associative</a> <a id="1599" class="Symbol">:</a> <a id="1601" class="Symbol">(</a><a id="1602" href="lec3FOP.html#1602" class="Bound">k</a> <a id="1604" href="lec3FOP.html#1604" class="Bound">m</a> <a id="1606" href="lec3FOP.html#1606" class="Bound">n</a> <a id="1608" class="Symbol">:</a> <a id="1610" href="lec3FOP.html#991" class="Datatype">ℕ</a><a id="1611" class="Symbol">)</a>
+      <a id="1619" class="Symbol">→</a> <a id="1621" href="lec3FOP.html#1602" class="Bound">k</a> <a id="1623" href="lec3FOP.html#1143" class="Function Operator">+</a> <a id="1625" class="Symbol">(</a><a id="1626" href="lec3FOP.html#1604" class="Bound">m</a> <a id="1628" href="lec3FOP.html#1143" class="Function Operator">+</a> <a id="1630" href="lec3FOP.html#1606" class="Bound">n</a><a id="1631" class="Symbol">)</a> <a id="1633" href="lec3FOP.html#1451" class="Datatype Operator">==</a> <a id="1636" class="Symbol">(</a><a id="1637" href="lec3FOP.html#1602" class="Bound">k</a> <a id="1639" href="lec3FOP.html#1143" class="Function Operator">+</a> <a id="1641" href="lec3FOP.html#1604" class="Bound">m</a><a id="1642" class="Symbol">)</a> <a id="1644" href="lec3FOP.html#1143" class="Function Operator">+</a> <a id="1646" href="lec3FOP.html#1606" class="Bound">n</a>
+  <a id="1650" href="lec3FOP.html#1582" class="Function">+-is-associative</a> <a id="1667" href="lec3FOP.html#1026" class="InductiveConstructor">zero</a> <a id="1672" href="lec3FOP.html#1672" class="Bound">m</a> <a id="1674" href="lec3FOP.html#1674" class="Bound">n</a> <a id="1676" class="Symbol">=</a> <a id="1678" href="lec3FOP.html#1484" class="InductiveConstructor">refl</a>
+  <a id="1685" href="lec3FOP.html#1582" class="Function">+-is-associative</a> <a id="1702" class="Symbol">(</a><a id="1703" href="lec3FOP.html#1039" class="InductiveConstructor">suc</a> <a id="1707" href="lec3FOP.html#1707" class="Bound">k</a><a id="1708" class="Symbol">)</a> <a id="1710" href="lec3FOP.html#1710" class="Bound">m</a> <a id="1712" href="lec3FOP.html#1712" class="Bound">n</a> <a id="1714" class="Symbol">=</a>
+      <a id="1722" href="lec3FOP.html#1511" class="Function">suc-lem</a> <a id="1730" class="Symbol">(</a><a id="1731" href="lec3FOP.html#1582" class="Function">+-is-associative</a> <a id="1748" href="lec3FOP.html#1707" class="Bound">k</a> <a id="1750" href="lec3FOP.html#1710" class="Bound">m</a> <a id="1752" href="lec3FOP.html#1712" class="Bound">n</a><a id="1753" class="Symbol">)</a>
+
+  <a id="1758" class="Comment">{- Next: implement the language of expressions
+     from the lecture
+     This language was given by a BNF:
+     E:= t | f | z | s E | p E | iz E | if E then E else E
+  -}</a>
+
+  <a id="1933" class="Keyword">data</a> <a id="1938" href="lec3FOP.html#1938" class="Datatype">Expr</a> <a id="1943" class="Symbol">:</a> <a id="1945" class="PrimitiveType">Set</a> <a id="1949" class="Keyword">where</a>
+    <a id="1959" href="lec3FOP.html#1959" class="InductiveConstructor">t</a> <a id="1961" class="Symbol">:</a> <a id="1963" href="lec3FOP.html#1938" class="Datatype">Expr</a>
+    <a id="1972" href="lec3FOP.html#1972" class="InductiveConstructor">f</a> <a id="1974" class="Symbol">:</a> <a id="1976" href="lec3FOP.html#1938" class="Datatype">Expr</a>
+    <a id="1985" href="lec3FOP.html#1985" class="InductiveConstructor">z</a> <a id="1987" class="Symbol">:</a> <a id="1989" href="lec3FOP.html#1938" class="Datatype">Expr</a>
+    <a id="1998" href="lec3FOP.html#1998" class="InductiveConstructor">s</a> <a id="2000" class="Symbol">:</a> <a id="2002" href="lec3FOP.html#1938" class="Datatype">Expr</a> <a id="2007" class="Symbol">→</a> <a id="2009" href="lec3FOP.html#1938" class="Datatype">Expr</a>
+    <a id="2018" href="lec3FOP.html#2018" class="InductiveConstructor">p</a> <a id="2020" class="Symbol">:</a> <a id="2022" href="lec3FOP.html#1938" class="Datatype">Expr</a> <a id="2027" class="Symbol">→</a> <a id="2029" href="lec3FOP.html#1938" class="Datatype">Expr</a>
+    <a id="2038" href="lec3FOP.html#2038" class="InductiveConstructor">iz</a> <a id="2041" class="Symbol">:</a> <a id="2043" href="lec3FOP.html#1938" class="Datatype">Expr</a> <a id="2048" class="Symbol">→</a> <a id="2050" href="lec3FOP.html#1938" class="Datatype">Expr</a>
+    <a id="2059" href="lec3FOP.html#2059" class="InductiveConstructor Operator">if_then_else_</a> <a id="2073" class="Symbol">:</a> <a id="2075" href="lec3FOP.html#1938" class="Datatype">Expr</a> <a id="2080" class="Symbol">→</a> <a id="2082" href="lec3FOP.html#1938" class="Datatype">Expr</a> <a id="2087" class="Symbol">→</a> <a id="2089" href="lec3FOP.html#1938" class="Datatype">Expr</a> <a id="2094" class="Symbol">→</a> <a id="2096" href="lec3FOP.html#1938" class="Datatype">Expr</a>
+
+  <a id="2104" class="Comment">-- denotational semantics from last week:</a>
+  <a id="2148" class="Comment">-- ⟦_⟧ : Expr → S       type: \[[_\]]</a>
+  <a id="2188" class="Comment">-- S was {True, False, 0, 1, 2, ..., ⊥}</a>
+
+  <a id="2231" class="Keyword">data</a> <a id="2236" href="lec3FOP.html#2236" class="Datatype">Bool</a> <a id="2241" class="Symbol">:</a> <a id="2243" class="PrimitiveType">Set</a> <a id="2247" class="Keyword">where</a>
+    <a id="2257" href="lec3FOP.html#2257" class="InductiveConstructor">True</a> <a id="2262" class="Symbol">:</a> <a id="2264" href="lec3FOP.html#2236" class="Datatype">Bool</a>
+    <a id="2273" href="lec3FOP.html#2273" class="InductiveConstructor">False</a> <a id="2279" class="Symbol">:</a> <a id="2281" href="lec3FOP.html#2236" class="Datatype">Bool</a>
+
+  <a id="2289" class="Keyword">data</a> <a id="2294" href="lec3FOP.html#2294" class="Datatype">S</a> <a id="2296" class="Symbol">:</a> <a id="2298" class="PrimitiveType">Set</a> <a id="2302" class="Keyword">where</a>
+    <a id="2312" href="lec3FOP.html#2312" class="InductiveConstructor">bool</a> <a id="2317" class="Symbol">:</a> <a id="2319" href="lec3FOP.html#2236" class="Datatype">Bool</a> <a id="2324" class="Symbol">→</a> <a id="2326" href="lec3FOP.html#2294" class="Datatype">S</a>
+    <a id="2332" href="lec3FOP.html#2332" class="InductiveConstructor">number</a> <a id="2339" class="Symbol">:</a> <a id="2341" href="lec3FOP.html#991" class="Datatype">ℕ</a> <a id="2343" class="Symbol">→</a> <a id="2345" href="lec3FOP.html#2294" class="Datatype">S</a>
+    <a id="2351" href="lec3FOP.html#2351" class="InductiveConstructor">⊥</a> <a id="2353" class="Symbol">:</a> <a id="2355" href="lec3FOP.html#2294" class="Datatype">S</a>
+
+  <a id="2360" class="Comment">-- Here we go:</a>
+  <a id="2377" href="lec3FOP.html#2377" class="Function Operator">⟦_⟧</a> <a id="2381" class="Symbol">:</a> <a id="2383" href="lec3FOP.html#1938" class="Datatype">Expr</a> <a id="2388" class="Symbol">→</a> <a id="2390" href="lec3FOP.html#2294" class="Datatype">S</a>
+  <a id="2394" href="lec3FOP.html#2377" class="Function Operator">⟦</a> <a id="2396" href="lec3FOP.html#1959" class="InductiveConstructor">t</a> <a id="2398" href="lec3FOP.html#2377" class="Function Operator">⟧</a> <a id="2400" class="Symbol">=</a> <a id="2402" href="lec3FOP.html#2312" class="InductiveConstructor">bool</a> <a id="2407" href="lec3FOP.html#2257" class="InductiveConstructor">True</a>
+  <a id="2414" href="lec3FOP.html#2377" class="Function Operator">⟦</a> <a id="2416" href="lec3FOP.html#1972" class="InductiveConstructor">f</a> <a id="2418" href="lec3FOP.html#2377" class="Function Operator">⟧</a> <a id="2420" class="Symbol">=</a> <a id="2422" href="lec3FOP.html#2312" class="InductiveConstructor">bool</a> <a id="2427" href="lec3FOP.html#2273" class="InductiveConstructor">False</a>
+  <a id="2435" href="lec3FOP.html#2377" class="Function Operator">⟦</a> <a id="2437" href="lec3FOP.html#1985" class="InductiveConstructor">z</a> <a id="2439" href="lec3FOP.html#2377" class="Function Operator">⟧</a> <a id="2441" class="Symbol">=</a> <a id="2443" href="lec3FOP.html#2332" class="InductiveConstructor">number</a> <a id="2450" href="lec3FOP.html#1026" class="InductiveConstructor">zero</a>
+  <a id="2457" href="lec3FOP.html#2377" class="Function Operator">⟦</a> <a id="2459" href="lec3FOP.html#1998" class="InductiveConstructor">s</a> <a id="2461" href="lec3FOP.html#2461" class="Bound">e</a> <a id="2463" href="lec3FOP.html#2377" class="Function Operator">⟧</a> <a id="2465" class="Keyword">with</a> <a id="2470" href="lec3FOP.html#2377" class="Function Operator">⟦</a> <a id="2472" href="lec3FOP.html#2461" class="Bound">e</a> <a id="2474" href="lec3FOP.html#2377" class="Function Operator">⟧</a>
+  <a id="2478" href="lec3FOP.html#2377" class="Function Operator">⟦</a> <a id="2480" href="lec3FOP.html#1998" class="InductiveConstructor">s</a> <a id="2482" href="lec3FOP.html#2482" class="Bound">e</a> <a id="2484" href="lec3FOP.html#2377" class="Function Operator">⟧</a> <a id="2486" class="Symbol">|</a> <a id="2488" href="lec3FOP.html#2332" class="InductiveConstructor">number</a> <a id="2495" href="lec3FOP.html#2495" class="Bound">n</a> <a id="2497" class="Symbol">=</a> <a id="2499" href="lec3FOP.html#2332" class="InductiveConstructor">number</a> <a id="2506" class="Symbol">(</a><a id="2507" href="lec3FOP.html#1039" class="InductiveConstructor">suc</a> <a id="2511" href="lec3FOP.html#2495" class="Bound">n</a><a id="2512" class="Symbol">)</a>
+  <a id="2516" href="lec3FOP.html#2377" class="CatchallClause Function Operator">⟦</a><a id="2517" class="CatchallClause"> </a><a id="2518" href="lec3FOP.html#1998" class="CatchallClause InductiveConstructor">s</a><a id="2519" class="CatchallClause"> </a><a id="2520" href="lec3FOP.html#2520" class="CatchallClause Bound">e</a><a id="2521" class="CatchallClause"> </a><a id="2522" href="lec3FOP.html#2377" class="CatchallClause Function Operator">⟧</a><a id="2523" class="CatchallClause"> </a><a id="2524" class="CatchallClause Symbol">|</a><a id="2525" class="CatchallClause"> </a><a id="2526" class="CatchallClause Symbol">_</a> <a id="2528" class="Symbol">=</a> <a id="2530" href="lec3FOP.html#2351" class="InductiveConstructor">⊥</a>
+  <a id="2534" href="lec3FOP.html#2377" class="CatchallClause Function Operator">⟦</a><a id="2535" class="CatchallClause"> </a><a id="2536" class="CatchallClause Symbol">_</a><a id="2537" class="CatchallClause"> </a><a id="2538" href="lec3FOP.html#2377" class="CatchallClause Function Operator">⟧</a> <a id="2540" class="Symbol">=</a> <a id="2542" href="lec3FOP.html#2351" class="InductiveConstructor">⊥</a>  <a id="2545" class="Comment">-- not what we want, but</a>
+             <a id="2583" class="Comment">-- at least Agda accepts it.</a>
+             <a id="2625" class="Comment">-- Exercise: complete this definition.</a>
+
+
+
+
+
+
+
+
+
+
+
+</pre></body></html>
