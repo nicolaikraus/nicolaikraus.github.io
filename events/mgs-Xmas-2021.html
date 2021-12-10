@@ -150,9 +150,15 @@ Until recently, only an extremely small percentage of mathematicians had heard o
 
 Session types are types for specifying protocols that processes must follow when communicating with each other. The special case of binary session types, i.e. type annotations of protocols between two parties, is known to be in a propositions-as-types correspondence with linear logic. 
 
+<br/>
+
 Previous work has shown that multiparty session types, generalisation of session types to protocols of three or more parties, can be modelled as a proof of coherence, a generalisation of linear logic duality. Moreover, protocols expressed as coherence can be simulated by arbiters, processes that act as a middleware by forwarding messages according to the given protocol. 
 
+<br/>
+
 In this talk we take two steps to extend this approach. First, we generalise the concept of arbiter to that of synchronous forwarder, that is a process that implements the behaviour of an arbiter in several different ways. It provides a logical characterisation of coherence, i.e., coherence proofs can be transformed into synchronous forwarders and, viceversa, every synchronous forwarder corresponds to a coherence proofs. 
+
+<br/>
 
 Then, we generalise arbiters further to forwarders that can also display asynchronous behaviours and buffer arbitrary many messages. We show that forwarders properly extend coherence and correspond to multiparty compatibility, a property of concurrent systems guaranteeing that all sent messages are eventually received and no deadlock ever occurs.
 
@@ -171,6 +177,8 @@ embedding, and we use dependent types to guarantee correctness
 properties of interest within the embedding.  Thirdly, we extract a
 program written in the original language, so it can be used with
 existing compilers and tools.
+
+<br/>
 
 The main insight is that it is possible to express all three steps in
 a single language that supports both dependent types and reflection.
