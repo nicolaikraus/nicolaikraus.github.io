@@ -145,6 +145,7 @@ ol.nonumber {
 
 <h3 id="schedule">Schedule</h3>
 
+All times are BST (British Summer Time, UTC+1).
 
 <table class="tg">
 <thead>
@@ -174,11 +175,10 @@ ol.nonumber {
   </tr>
 
 
-
   <tr>
     <td class="tg-0pky">10:10</td>
-    <td class="tg-0pky">Peter Hancock</td>
-    <td class="tg-0pky"><a href="#peterhancock">Freebasing Logarythms</a></td>
+    <td class="tg-0pky">Jeremy Gibbons</td>
+    <td class="tg-0pky"><a href="#jeremy">When is a Function a Fold or an Unfold?</a></td>
   </tr>
   <tr>
     <td class="tg-w86i">10:30</td>
@@ -255,23 +255,19 @@ ol.nonumber {
 
   <tr>
     <td class="tg-0pky">15:40</td>
-    <td class="tg-0pky">Jeremy Gibbons</td>
-    <td class="tg-0pky"><a href="#jeremy">When is a Function a Fold or an Unfold?</a></td>
-  </tr>
-
-
-
-  <tr>
-    <td class="tg-0pky">16:00</td>
     <td class="tg-0pky">Nicola Gambino</td>
     <td class="tg-0pky"><a href="#nicola">How Constructive is the Simplicial Model of Univalent Foundations?</a></td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">16:00</td>
+    <td class="tg-0pky">Steve Awodey (online)</td>
+    <td class="tg-0pky"><a href="#steve">Containing type theory</a></td>
   </tr>
   <tr>
     <td class="tg-0pky">16:20</td>
     <td class="tg-0pky">Tarmo Uustalu</td>
     <td class="tg-0pky"><a href="#tarmo">Skewness Everywhere</a></td>
-  </tr>
-  <tr>
+  </tr>  <tr>
     <td class="tg-w86i">16:40</td>
     <td class="tg-w86i">Free time and pub</td>
     <td class="tg-w86i">Location TBA</td>
@@ -302,23 +298,20 @@ ol.nonumber {
 
 <p id="wouter"><strong>Wouter Swierstra:</strong> <em>Correct by Construction Conversion to Combinators</em></p>
 
-<p>Abstract TBA</p>
+<p>I will present a translation in Agda, mapping well typed lambda terms to
+combinatory logic. By construction, this translation guarantees the
+types and semantics of each lambda term is preserved.</p>
 
 
 
 
 
-<p id="peterhancock"><strong>Peter Hancock:</strong> <em>Freebasing Logarythms</em></p>
+<p id="jeremy"><strong>Jeremy Gibbons:</strong> <em>When is a Function a Fold or an Unfold?
+</em></p>
 
-<p>From Archimedes and Napier we have logarythms, an excellent way to
-fit immensely large quantities into the human head.
-But what should be the base?? Let it be free!!
-A few elementary (if weird) calculations yields an entertainingly
-arithmetical perspective on the entire (type-free) lambda-calculus.
-As for type-theory enthusiasts, they will need to
-haud their wheesht till they have bought me a drink.</p>
-
-
+<p>
+This is a story about a time when Thorsten clarified a problem Graham Hutton and I were working on, leading us to a clearer picture, a neater result, and a better paper. The problem is my talk title: when is a function a fold (or dually, an unfold)? A sufficient condition is for the function to be invertible. But that's clearly not a necessary condition - consider sum - so what is necessary? Come along and find out!
+</p>
 
 
 
@@ -355,7 +348,8 @@ coinductive construction of ordinals suggested by Thorsten.</p>
 
 <p id="ambrus"><strong>Ambrus Kaposi</strong> (online): <em>Type Theory in Type Theory using Quotient-Inductive-Inductive-Recursive Types</em></p>
 
-<p>Abstract TBA</p>
+<p>In 2006, Nils Anders Danielsson formalised type theory in Agda using inductive-inductive-recursive types (IIRTs) before those types were understood. In 2009, James Chapman formalised type theory in Agda using inductive-inductive types (IITs) before the term "induction-induction" was coined. In 2016, Thorsten and I formalised type theory in Agda using quotient inductive-inductive types (QIITs) before a formal definition of QIITs was given. Cubical Agda now supports quotient inductive-inductive-recursive types (QIIRTs). We don't yet understand QIIRTs, so it is time to formalise the syntax of type theory using them! This is work in progress.
+</p>
 
 
 
@@ -371,17 +365,20 @@ coinductive construction of ordinals suggested by Thorsten.</p>
 <p>Abstract TBA</p>
 
 
-<p id="jeremy"><strong>Jeremy Gibbons:</strong> <em>When is a Function a Fold or an Unfold?
-</em></p>
-
-<p>
-This is a story about a time when Thorsten clarified a problem Graham Hutton and I were working on, leading us to a clearer picture, a neater result, and a better paper. The problem is my talk title: when is a function a fold (or dually, an unfold)? A sufficient condition is for the function to be invertible. But that's clearly not a necessary condition - consider sum - so what is necessary? Come along and find out!
-</p>
-
 
 <p id="nicola"><strong>Nicola Gambino:</strong> <em>How Constructive is the Simplicial Model of Univalent Foundations?</em></p>
 
 <p>I will review the current status of the attempts to obtain a constructive version of the simplicial model of Univalent Foundations, and indicate some directions for future work. This will be based on joint papers with S. Henry, C. Sattler and K. Szumilo.</p>
+
+
+<p id="steve"><strong>Steve Awodey:</strong> <em>Containing type theory</em></p>
+
+<p>We have recently proposed an algebraic approach to the syntax
+of (dependent) type theory based on polynomial functors, aka
+containers. One question that arises - namely whether the monad laws
+must hold - is answered in a univalent setting.
+</p>
+
 
 
 <p id="tarmo"><strong>Tarmo Uustalu:</strong> <em>Skewness Everywhere</em></p>
