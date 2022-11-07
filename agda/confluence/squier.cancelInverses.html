@@ -1,0 +1,79 @@
+<!DOCTYPE HTML>
+<html><head><meta charset="utf-8"><title>squier.cancelInverses</title><link rel="stylesheet" href="Agda.css"></head><body><pre class="Agda"><a id="1" class="Comment">{-
+CANCELLING INVERSES
+
+Some simple but useful auxiliary definitions.
+The development could be significantly extended, but the existing
+code is sufficient for the current project.
+-}</a>
+
+
+<a id="186" class="Symbol">{-#</a> <a id="190" class="Keyword">OPTIONS</a> <a id="198" class="Pragma">--safe</a> <a id="205" class="Pragma">--cubical</a> <a id="215" class="Symbol">#-}</a>
+
+<a id="220" class="Keyword">open</a> <a id="225" class="Keyword">import</a> <a id="232" href="Cubical.Foundations.Prelude.html" class="Module">Cubical.Foundations.Prelude</a>
+
+<a id="261" class="Keyword">open</a> <a id="266" class="Keyword">import</a> <a id="273" href="squier.graphclosures.html" class="Module">squier.graphclosures</a>
+<a id="294" class="Keyword">open</a> <a id="299" class="Keyword">import</a> <a id="306" href="squier.polygraphs.html" class="Module">squier.polygraphs</a>
+
+<a id="325" class="Comment">-- Here: Level variables are fixed for the whole module.</a>
+<a id="382" class="Comment">-- (Note: Would be better to turn them into actual variables.)</a>
+<a id="445" class="Keyword">module</a> <a id="452" href="squier.cancelInverses.html" class="Module">squier.cancelInverses</a> <a id="474" class="Symbol">{</a><a id="475" href="squier.cancelInverses.html#475" class="Bound">ℓ₀</a> <a id="478" href="squier.cancelInverses.html#478" class="Bound">ℓ₁</a> <a id="481" href="squier.cancelInverses.html#481" class="Bound">ℓ₂</a> <a id="484" class="Symbol">:</a> <a id="486" href="Agda.Primitive.html#597" class="Postulate">Level</a><a id="491" class="Symbol">}</a>
+                             <a id="522" class="Symbol">(</a><a id="523" href="squier.cancelInverses.html#523" class="Bound">p</a> <a id="525" class="Symbol">:</a> <a id="527" href="squier.polygraphs.html#849" class="Record">2-polygraph</a> <a id="539" class="Symbol">{</a><a id="540" href="squier.cancelInverses.html#475" class="Bound">ℓ₀</a><a id="542" class="Symbol">}</a> <a id="544" class="Symbol">{</a><a id="545" href="squier.cancelInverses.html#478" class="Bound">ℓ₁</a><a id="547" class="Symbol">}</a> <a id="549" class="Symbol">{</a><a id="550" href="squier.cancelInverses.html#481" class="Bound">ℓ₂</a><a id="552" class="Symbol">})</a> <a id="555" class="Keyword">where</a>
+
+<a id="562" class="Keyword">open</a> <a id="567" href="squier.polygraphs.html#1026" class="Module">polygraph-properties</a> <a id="588" href="squier.cancelInverses.html#523" class="Bound">p</a>
+
+<a id="591" class="Comment">-- ### Cancelling inverses: Simple but useful properties</a>
+
+<a id="cancelsRInv"></a><a id="649" href="squier.cancelInverses.html#649" class="Function">cancelsRInv</a> <a id="661" class="Symbol">=</a> <a id="663" class="Symbol">∀</a> <a id="665" class="Symbol">{</a><a id="666" href="squier.cancelInverses.html#666" class="Bound">x</a> <a id="668" href="squier.cancelInverses.html#668" class="Bound">y</a><a id="669" class="Symbol">}</a> <a id="671" class="Symbol">(</a><a id="672" href="squier.cancelInverses.html#672" class="Bound">u</a> <a id="674" class="Symbol">:</a> <a id="676" href="squier.cancelInverses.html#666" class="Bound">x</a> <a id="678" href="squier.polygraphs.html#1114" class="Function Operator">↝</a> <a id="680" href="squier.cancelInverses.html#668" class="Bound">y</a><a id="681" class="Symbol">)</a> <a id="683" class="Symbol">→</a> <a id="685" class="Symbol">(</a><a id="686" href="squier.graphclosures.html#1334" class="InductiveConstructor">inj</a> <a id="690" href="squier.cancelInverses.html#672" class="Bound">u</a> <a id="692" href="squier.graphclosures.html#1713" class="InductiveConstructor Operator">∷ᵗ</a> <a id="695" href="squier.graphclosures.html#1382" class="InductiveConstructor">rev</a> <a id="699" href="squier.cancelInverses.html#672" class="Bound">u</a> <a id="701" href="squier.graphclosures.html#1713" class="InductiveConstructor Operator">∷ᵗ</a> <a id="704" href="squier.graphclosures.html#1672" class="InductiveConstructor">[]ᵗ</a><a id="707" class="Symbol">)</a> <a id="709" href="squier.polygraphs.html#2153" class="Function Operator">⇒*</a> <a id="712" href="squier.graphclosures.html#1672" class="InductiveConstructor">[]ᵗ</a>
+<a id="cancelsLInv"></a><a id="716" href="squier.cancelInverses.html#716" class="Function">cancelsLInv</a> <a id="728" class="Symbol">=</a> <a id="730" class="Symbol">∀</a> <a id="732" class="Symbol">{</a><a id="733" href="squier.cancelInverses.html#733" class="Bound">x</a> <a id="735" href="squier.cancelInverses.html#735" class="Bound">y</a><a id="736" class="Symbol">}</a> <a id="738" class="Symbol">(</a><a id="739" href="squier.cancelInverses.html#739" class="Bound">u</a> <a id="741" class="Symbol">:</a> <a id="743" href="squier.cancelInverses.html#733" class="Bound">x</a> <a id="745" href="squier.polygraphs.html#1114" class="Function Operator">↝</a> <a id="747" href="squier.cancelInverses.html#735" class="Bound">y</a><a id="748" class="Symbol">)</a> <a id="750" class="Symbol">→</a> <a id="752" class="Symbol">(</a><a id="753" href="squier.graphclosures.html#1382" class="InductiveConstructor">rev</a> <a id="757" href="squier.cancelInverses.html#739" class="Bound">u</a> <a id="759" href="squier.graphclosures.html#1713" class="InductiveConstructor Operator">∷ᵗ</a> <a id="762" href="squier.graphclosures.html#1334" class="InductiveConstructor">inj</a> <a id="766" href="squier.cancelInverses.html#739" class="Bound">u</a> <a id="768" href="squier.graphclosures.html#1713" class="InductiveConstructor Operator">∷ᵗ</a> <a id="771" href="squier.graphclosures.html#1672" class="InductiveConstructor">[]ᵗ</a><a id="774" class="Symbol">)</a> <a id="776" href="squier.polygraphs.html#2153" class="Function Operator">⇒*</a> <a id="779" href="squier.graphclosures.html#1672" class="InductiveConstructor">[]ᵗ</a>
+
+<a id="784" class="Comment">-- cancels*RInv is the one we ultimately need</a>
+<a id="cancels*RInv"></a><a id="830" href="squier.cancelInverses.html#830" class="Function">cancels*RInv</a> <a id="843" class="Symbol">=</a> <a id="845" class="Symbol">∀</a> <a id="847" class="Symbol">{</a><a id="848" href="squier.cancelInverses.html#848" class="Bound">x</a> <a id="850" href="squier.cancelInverses.html#850" class="Bound">y</a><a id="851" class="Symbol">}</a> <a id="853" class="Symbol">(</a><a id="854" href="squier.cancelInverses.html#854" class="Bound">u</a> <a id="856" class="Symbol">:</a> <a id="858" href="squier.cancelInverses.html#848" class="Bound">x</a> <a id="860" href="squier.polygraphs.html#1220" class="Function Operator">↭*</a> <a id="863" href="squier.cancelInverses.html#850" class="Bound">y</a><a id="864" class="Symbol">)</a> <a id="866" class="Symbol">→</a> <a id="868" class="Symbol">(</a><a id="869" href="squier.cancelInverses.html#854" class="Bound">u</a> <a id="871" href="squier.graphclosures.html#2521" class="Function Operator">++ᵗ</a> <a id="875" href="squier.graphclosures.html#7922" class="Function">reverse</a> <a id="883" href="squier.cancelInverses.html#854" class="Bound">u</a><a id="884" class="Symbol">)</a> <a id="886" href="squier.polygraphs.html#2287" class="Function Operator">⇔*</a> <a id="889" href="squier.graphclosures.html#1672" class="InductiveConstructor">[]ᵗ</a>
+
+<a id="894" class="Comment">-- cancels*LInv can be derived</a>
+<a id="cancels*LInv"></a><a id="925" href="squier.cancelInverses.html#925" class="Function">cancels*LInv</a> <a id="938" class="Symbol">=</a> <a id="940" class="Symbol">∀</a> <a id="942" class="Symbol">{</a><a id="943" href="squier.cancelInverses.html#943" class="Bound">x</a> <a id="945" href="squier.cancelInverses.html#945" class="Bound">y</a><a id="946" class="Symbol">}</a> <a id="948" class="Symbol">(</a><a id="949" href="squier.cancelInverses.html#949" class="Bound">u</a> <a id="951" class="Symbol">:</a> <a id="953" href="squier.cancelInverses.html#943" class="Bound">x</a> <a id="955" href="squier.polygraphs.html#1220" class="Function Operator">↭*</a> <a id="958" href="squier.cancelInverses.html#945" class="Bound">y</a><a id="959" class="Symbol">)</a> <a id="961" class="Symbol">→</a> <a id="963" class="Symbol">(</a><a id="964" href="squier.graphclosures.html#7922" class="Function">reverse</a> <a id="972" href="squier.cancelInverses.html#949" class="Bound">u</a> <a id="974" href="squier.graphclosures.html#2521" class="Function Operator">++ᵗ</a> <a id="978" href="squier.cancelInverses.html#949" class="Bound">u</a><a id="979" class="Symbol">)</a> <a id="981" href="squier.polygraphs.html#2287" class="Function Operator">⇔*</a> <a id="984" href="squier.graphclosures.html#1672" class="InductiveConstructor">[]ᵗ</a>
+
+<a id="cancelsR2L"></a><a id="989" href="squier.cancelInverses.html#989" class="Function">cancelsR2L</a> <a id="1000" class="Symbol">:</a> <a id="1002" href="squier.cancelInverses.html#830" class="Function">cancels*RInv</a> <a id="1015" class="Symbol">→</a> <a id="1017" href="squier.cancelInverses.html#925" class="Function">cancels*LInv</a>
+<a id="1030" href="squier.cancelInverses.html#989" class="Function">cancelsR2L</a> <a id="1041" href="squier.cancelInverses.html#1041" class="Bound">cri</a> <a id="1045" class="Symbol">{</a><a id="1046" href="squier.cancelInverses.html#1046" class="Bound">x</a><a id="1047" class="Symbol">}</a> <a id="1049" class="Symbol">{</a><a id="1050" href="squier.cancelInverses.html#1050" class="Bound">y</a><a id="1051" class="Symbol">}</a> <a id="1053" href="squier.cancelInverses.html#1053" class="Bound">u</a> <a id="1055" class="Symbol">=</a>
+    <a id="1061" href="squier.graphclosures.html#7922" class="Function">reverse</a> <a id="1069" href="squier.cancelInverses.html#1053" class="Bound">u</a> <a id="1071" href="squier.graphclosures.html#2521" class="Function Operator">++ᵗ</a> <a id="1075" href="squier.cancelInverses.html#1053" class="Bound">u</a>
+      <a id="1083" href="squier.polygraphs.html#2673" class="Function Operator">⇔*⟨</a> <a id="1087" href="squier.polygraphs.html#2977" class="Function">≡2⇔*</a> <a id="1092" class="Symbol">(</a><a id="1093" href="Cubical.Foundations.Prelude.html#1430" class="Function">cong</a> <a id="1098" class="Symbol">(λ</a> <a id="1101" href="squier.cancelInverses.html#1101" class="Bound">u&#39;</a> <a id="1104" class="Symbol">→</a> <a id="1106" href="squier.graphclosures.html#7922" class="Function">reverse</a> <a id="1114" href="squier.cancelInverses.html#1053" class="Bound">u</a> <a id="1116" href="squier.graphclosures.html#2521" class="Function Operator">++ᵗ</a> <a id="1120" href="squier.cancelInverses.html#1101" class="Bound">u&#39;</a><a id="1122" class="Symbol">)</a> <a id="1124" class="Symbol">(</a><a id="1125" href="Cubical.Foundations.Prelude.html#968" class="Function">sym</a> <a id="1129" class="Symbol">(</a><a id="1130" href="squier.graphclosures.html#8341" class="Function">reverse-reverse</a> <a id="1146" href="squier.cancelInverses.html#1053" class="Bound">u</a><a id="1147" class="Symbol">)))</a> <a id="1151" href="squier.polygraphs.html#2673" class="Function Operator">⟩</a>
+    <a id="1157" href="squier.graphclosures.html#7922" class="Function">reverse</a> <a id="1165" href="squier.cancelInverses.html#1053" class="Bound">u</a> <a id="1167" href="squier.graphclosures.html#2521" class="Function Operator">++ᵗ</a> <a id="1171" href="squier.graphclosures.html#7922" class="Function">reverse</a> <a id="1179" class="Symbol">(</a><a id="1180" href="squier.graphclosures.html#7922" class="Function">reverse</a> <a id="1188" href="squier.cancelInverses.html#1053" class="Bound">u</a><a id="1189" class="Symbol">)</a>
+      <a id="1197" href="squier.polygraphs.html#2673" class="Function Operator">⇔*⟨</a> <a id="1201" href="squier.cancelInverses.html#1041" class="Bound">cri</a> <a id="1205" class="Symbol">(</a><a id="1206" href="squier.graphclosures.html#7922" class="Function">reverse</a> <a id="1214" href="squier.cancelInverses.html#1053" class="Bound">u</a><a id="1215" class="Symbol">)</a> <a id="1217" href="squier.polygraphs.html#2673" class="Function Operator">⟩</a>
+    <a id="1223" href="squier.graphclosures.html#1672" class="InductiveConstructor">[]ᵗ</a>
+      <a id="1233" href="squier.polygraphs.html#2800" class="Function Operator">⇔*∎</a>
+
+<a id="1238" class="Comment">{- TEMPORARILY ABANDONED CODE:
+   While the below would be useful in general, it is not required for the
+   current project and currently unfinished.
+   The goal here was to develop lemmas that show that certain simple
+   conditions are sufficient.
+
+module _ (cc : ⇒*isCongrClosed) (cri : cancelsRInv) (cli : cancelsLInv) where
+
+  cancel-step : ∀ {x y} (u : x ↭ y) → (u ∷ᵗ negate u ∷ᵗ []ᵗ) ⇒* []ᵗ
+  cancel-step (inj u) = cri u
+  cancel-step (rev u) = cli u
+
+  c*ri : cancels*RInv
+  c*ri []ᵗ = []ᵗ
+  c*ri (s ∷ᵗ u) =
+    s ∷ᵗ u ++ᵗ reverse (s ∷ᵗ u)
+      ⇔*⟨ []ᵗ ⟩
+    s ∷ᵗ (u ++ᵗ reverse u ++ᵗ negate s ∷ᵗ []ᵗ)
+      ⇔*⟨ {! subst (λ x → (s ∷ᵗ x) ⇒* (s ∷ᵗ ((u ++ᵗ reverse u) ++ᵗ negate s ∷ᵗ []ᵗ)))
+                (++ᵗ-assoc u (reverse u) _)
+                []ᵗ !} ⟩
+    s ∷ᵗ ((u ++ᵗ reverse u) ++ᵗ negate s ∷ᵗ []ᵗ)
+      ⇔*⟨ {! cc (s ∷ᵗ []ᵗ) _ _ (negate s ∷ᵗ []ᵗ) ? !} ⟩ -- (c*ri u)  ⟩
+    s ∷ᵗ negate s ∷ᵗ []ᵗ
+      ⇔*⟨ {! cancel-step s !} ⟩
+    []ᵗ
+      ⇔*∎
+
+  {- Probably don&#39;t need
+  c*li : cancels*LInv
+  c*li []ᵗ = []ᵗ
+  c*li (s ∷ᵗ u) = {!!}
+  -}
+-}</a>
+</pre></body></html>

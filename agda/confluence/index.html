@@ -1,0 +1,52 @@
+<!DOCTYPE HTML>
+<html><head><meta charset="utf-8"><title>index</title><link rel="stylesheet" href="Agda.css"></head><body><pre class="Agda"><a id="1" class="Comment">{-
+=======================================================================
+A Rewriting Coherence Theorem with Applications in Homotopy Type Theory
+=======================================================================
+
+               Nicolai Kraus  and  Jakob von Raumer
+
+Given a wellfounded and (in some very weak sense) confluent relation,
+we construct a homotopy basis. This formalises Section 4 of the paper
+&quot;A Rewriting Coherence Theorem with Applications in Homotopy Type
+Theory&quot;, https://arxiv.org/abs/2107.01594.
+
+We use cubical Agda 2.6.2.2, and the current state of the development
+can be found at https://bitbucket.org/fplab/confluencecoherence/.
+-}</a>
+
+<a id="664" class="Symbol">{-#</a> <a id="668" class="Keyword">OPTIONS</a> <a id="676" class="Pragma">--safe</a> <a id="683" class="Pragma">--cubical</a> <a id="693" class="Symbol">#-}</a>
+
+<a id="698" class="Comment">-- This index file imports everything.</a>
+
+<a id="738" class="Keyword">module</a> <a id="745" href="index.html" class="Module">index</a> <a id="751" class="Keyword">where</a>
+
+<a id="758" class="Comment">-- basic constructions with the transitive and/or symmetric closure</a>
+<a id="826" class="Comment">-- of a relation, not specific to this project</a>
+<a id="873" class="Keyword">open</a> <a id="878" class="Keyword">import</a> <a id="885" href="squier.graphclosures.html" class="Module">squier.graphclosures</a>
+
+<a id="907" class="Comment">-- results about Noetherian and wellfounded relations</a>
+<a id="961" class="Keyword">open</a> <a id="966" class="Keyword">import</a> <a id="973" href="squier.accessibility.html" class="Module">squier.accessibility</a>
+
+<a id="995" class="Comment">-- definition of generalised 2-polygraphs and basic properties</a>
+<a id="1058" class="Keyword">open</a> <a id="1063" class="Keyword">import</a> <a id="1070" href="squier.polygraphs.html" class="Module">squier.polygraphs</a>
+
+<a id="1089" class="Comment">-- cancelling inverses (auxiliary lemmas)</a>
+<a id="1131" class="Keyword">open</a> <a id="1136" class="Keyword">import</a> <a id="1143" href="squier.cancelInverses.html" class="Module">squier.cancelInverses</a>
+
+<a id="1166" class="Comment">-- Important ingredient: The list extension of a wellfounded order</a>
+<a id="1233" class="Comment">-- is wellfounded</a>
+<a id="1251" class="Keyword">open</a> <a id="1256" class="Keyword">import</a> <a id="1263" href="squier.listextension.html" class="Module">squier.listextension</a>
+
+<a id="1285" class="Comment">-- generalisations of Newman&#39;s lemma</a>
+<a id="1322" class="Keyword">open</a> <a id="1327" class="Keyword">import</a> <a id="1334" href="squier.newman.html" class="Module">squier.newman</a>
+
+<a id="1349" class="Comment">-- the main construction</a>
+<a id="1374" class="Keyword">open</a> <a id="1379" class="Keyword">import</a> <a id="1386" href="squier.homotopybasis.html" class="Module">squier.homotopybasis</a>
+
+<a id="1408" class="Comment">-- a consequence in type-theory style:</a>
+<a id="1447" class="Comment">-- &quot;Noetherian induction for closed zig-zags&quot;</a>
+<a id="1493" class="Keyword">open</a> <a id="1498" class="Keyword">import</a> <a id="1505" href="squier.noethercycle.html" class="Module">squier.noethercycle</a>
+
+
+</pre></body></html>
