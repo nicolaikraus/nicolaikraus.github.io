@@ -1,0 +1,249 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"  
+  "http://www.w3.org/TR/html4/loose.dtd">  
+<html > 
+<head><title>Category Theory [.1cm] Midlands Graduate School 2023 [.5cm] Exercise 2 (3 April)
+</title> 
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"> 
+<meta name="generator" content="TeX4ht (https://tug.org/tex4ht/)"> 
+<meta name="originator" content="TeX4ht (https://tug.org/tex4ht/)"> 
+<!-- html --> 
+<meta name="src" content="mgs-2023-ct-ex2.tex"> 
+<link rel="stylesheet" type="text/css" href="mgs-2023-ct-ex2.css"> 
+</head><body 
+>  <div class="maketitle">
+  <h2 class="titleHead">
+CATEGORY THEORY<br />
+MIDLANDS GRADUATE SCHOOL 2023<br /><br />
+EXERCISE 2 (3 APRIL)
+  </h2>
+  <div class="authors"><span class="author" >
+<span 
+class="ec-lmr-8">NICOLAI KRAUS</span>
+  </span></div>
+<div class="submaketitle">
+</div>
+  </div>
+  <h3 class="sectionHead"><a 
+ id="x1-1000"></a>Reminder</h3>
+  <div class="newtheorem">
+<!--l. 62--><p class="noindent" ><span class="head">
+<a 
+ id="x1-1001r1"></a>
+<span 
+class="ec-lmbx-10">Definition 1 </span>(product diagram)<span 
+class="ec-lmbx-10">.</span>  </span><span 
+class="ec-lmri-10">For </span><span 
+class="lmmi-10">A,B </span><span 
+class="lmsy-10">&#x2208;<span 
+class="htf-calligraphy">C</span></span><sub><span 
+class="rm-lmr-7">0</span></sub><span 
+class="ec-lmri-10">, a </span>product diagram <span 
+class="ec-lmri-10">is an object </span><span 
+class="lmmi-10">P </span><span 
+class="lmsy-10">&#x2208;<span 
+class="htf-calligraphy">C</span></span><sub><span 
+class="rm-lmr-7">0</span></sub>
+<span 
+class="ec-lmri-10">together with morphisms </span><span 
+class="lmmi-10">&#x03C0;</span><sub><span 
+class="rm-lmr-7">1</span></sub> <span 
+class="lmsy-10">&#x2208;<span 
+class="htf-calligraphy">C</span></span><span 
+class="rm-lmr-10">(</span><span 
+class="lmmi-10">P,A</span><span 
+class="rm-lmr-10">) </span><span 
+class="ec-lmri-10">and </span><span 
+class="lmmi-10">&#x03C0;</span><sub><span 
+class="rm-lmr-7">2</span></sub> <span 
+class="lmsy-10">&#x2208;<span 
+class="htf-calligraphy">C</span></span><span 
+class="rm-lmr-10">(</span><span 
+class="lmmi-10">P,B</span><span 
+class="rm-lmr-10">)</span><span 
+class="ec-lmri-10">,</span>
+  <table 
+class="equation-star"><tr><td>
+  <div class="math-display" >
+<img 
+src="mgs-2023-ct-ex20x.svg" alt="PAB&#x03C0;&#x03C0;12
+" class="math-display" ></div>
+  </td></tr></table>
+<!--l. 72--><p class="nopar" >
+<span 
+class="ec-lmri-10">with the following </span>universal property<span 
+class="ec-lmri-10">: Given any other diagram of this shape,</span>
+  <table 
+class="equation-star"><tr><td>
+  <div class="math-display" >
+<img 
+src="mgs-2023-ct-ex21x.svg" alt="XABpp12
+                                                                     
+
+                                                                     
+" class="math-display" ></div>
+  </td></tr></table>
+<!--l. 83--><p class="nopar" >
+<span 
+class="ec-lmri-10">there is a unique morphism </span><span 
+class="lmmi-10">t </span><span 
+class="lmsy-10">&#x2208;<span 
+class="htf-calligraphy">C</span></span><span 
+class="rm-lmr-10">(</span><span 
+class="lmmi-10">X,P</span><span 
+class="rm-lmr-10">) </span><span 
+class="ec-lmri-10">such that </span><span 
+class="lmmi-10">p</span><sub><span 
+class="rm-lmr-7">1</span></sub> <span 
+class="rm-lmr-10">= </span><span 
+class="lmmi-10">&#x03C0;</span><sub><span 
+class="rm-lmr-7">1</span></sub> <span 
+class="lmsy-10">&#x2218; </span><span 
+class="lmmi-10">t </span><span 
+class="ec-lmri-10">and </span><span 
+class="lmmi-10">p</span><sub><span 
+class="rm-lmr-7">2</span></sub> <span 
+class="rm-lmr-10">= </span><span 
+class="lmmi-10">&#x03C0;</span><sub><span 
+class="rm-lmr-7">2</span></sub> <span 
+class="lmsy-10">&#x2218; </span><span 
+class="lmmi-10">t</span><span 
+class="ec-lmri-10">. One</span>
+<span 
+class="ec-lmri-10">expresses these equations by saying that the following two triangles commute:</span>
+  <table 
+class="equation-star"><tr><td>
+  <div class="math-display" >
+<img 
+src="mgs-2023-ct-ex22x.svg" alt="PXABpp&#x03C0;&#x03C0;t1212
+" class="math-display" ></div>
+  </td></tr></table>
+<!--l. 98--><p class="nopar" >
+  </div>
+<!--l. 99--><p class="indent" >
+  <h3 class="sectionHead"><a 
+ id="x1-2000"></a>Exercise 3: Coproducts</h3>
+<!--l. 103--><p class="noindent" >Using the definition of a product diagram given in the reminder above, re-construct the
+definition of a coproduct diagram by &#8220;reversing all arrows&#8221;. Check that, in the category
+<span 
+class="rm-lmss-10">SET</span>, your definition describes the disjoint union of two sets. What objects
+are characterised by your definition in the other categories discussed in the
+lecture?
+  <h3 class="sectionHead"><a 
+ id="x1-3000"></a>Exercise 4: Interaction of products, coproducts, initial and terminal objects</h3>
+<!--l. 111--><p class="noindent" >Assume that the category <span 
+class="lmsy-10"><span 
+class="htf-calligraphy">C</span> </span>has a terminal object, for which we write <span 
+class="rm-lmss-10">1</span>, and an initial
+object, for which we write <span 
+class="rm-lmss-10">0</span>. Moreover, assume that <span 
+class="lmsy-10"><span 
+class="htf-calligraphy">C</span> </span>has all products and
+coproducts. This means that, for every pair of objects <span 
+class="lmmi-10">A,B </span><span 
+class="lmsy-10">&#x2208;<span 
+class="htf-calligraphy">C</span></span><sub><span 
+class="rm-lmr-7">0</span></sub>, we have a product
+diagram and a coproduct diagram. We write <span 
+class="lmmi-10">A </span><span 
+class="lmsy-10">&#x00D7; </span><span 
+class="lmmi-10">B </span>for the &#8220;middle object&#8221;
+of the product diagram, and <span 
+class="lmmi-10">A </span><span 
+class="rm-lmr-10">+ </span><span 
+class="lmmi-10">B </span>for the &#8220;middle object&#8221; of the coproduct
+diagram.
+<!--l. 116--><p class="indent" >  Recall that we write <span 
+class="lmmi-10">X</span><img 
+src="mgs-2023-ct-ex23x.svg" alt="~="  class="cong" ><span 
+class="lmmi-10">Y </span>if there is an isomorphism in <span 
+class="lmsy-10"><span 
+class="htf-calligraphy">C</span></span><span 
+class="rm-lmr-10">(</span><span 
+class="lmmi-10">X,Y </span><span 
+class="rm-lmr-10">)</span>. For each of the
+following isomorphisms, either prove them in <span 
+class="lmsy-10"><span 
+class="htf-calligraphy">C</span> </span>or find a category <span 
+class="lmsy-10"><span 
+class="htf-calligraphy">C</span> </span>in which they don&#8217;t
+hold:
+                                                                     
+
+                                                                     
+<!--l. 118--><p class="noindent" ><span class="subsectionHead"><a 
+ id="x1-4000"></a><span 
+class="ec-lmbx-10">a.</span></span> <span 
+class="lmmi-10">A </span><span 
+class="lmsy-10">&#x00D7; </span><span 
+class="rm-lmss-10">1</span><img 
+src="mgs-2023-ct-ex24x.svg" alt="~="  class="cong" ><span 
+class="lmmi-10">A</span>
+<!--l. 120--><p class="noindent" ><span class="subsectionHead"><a 
+ id="x1-5000"></a><span 
+class="ec-lmbx-10">b.</span></span> <span 
+class="lmmi-10">A </span><span 
+class="lmsy-10">&#x00D7; </span><span 
+class="rm-lmss-10">0</span><img 
+src="mgs-2023-ct-ex25x.svg" alt="~="  class="cong" ><span 
+class="lmmi-10">A</span>
+<!--l. 122--><p class="noindent" ><span class="subsectionHead"><a 
+ id="x1-6000"></a><span 
+class="ec-lmbx-10">c.</span></span> <span 
+class="lmmi-10">A </span><span 
+class="lmsy-10">&#x00D7; </span><span 
+class="rm-lmss-10">0</span><img 
+src="mgs-2023-ct-ex26x.svg" alt="~="  class="cong" ><span 
+class="rm-lmss-10">0</span>
+<!--l. 124--><p class="noindent" ><span class="subsectionHead"><a 
+ id="x1-7000"></a><span 
+class="ec-lmbx-10">d.</span></span> <span 
+class="lmmi-10">A </span><span 
+class="rm-lmr-10">+ </span><span 
+class="rm-lmss-10">0</span><img 
+src="mgs-2023-ct-ex27x.svg" alt="~="  class="cong" ><span 
+class="lmmi-10">A</span>
+<!--l. 126--><p class="noindent" ><span class="subsectionHead"><a 
+ id="x1-8000"></a><span 
+class="ec-lmbx-10">e.</span></span> <span 
+class="lmmi-10">A </span><span 
+class="lmsy-10">&#x00D7; </span><span 
+class="lmmi-10">B</span><img 
+src="mgs-2023-ct-ex28x.svg" alt="~="  class="cong" ><span 
+class="lmmi-10">B </span><span 
+class="lmsy-10">&#x00D7; </span><span 
+class="lmmi-10">A</span>
+<!--l. 128--><p class="noindent" ><span class="subsectionHead"><a 
+ id="x1-9000"></a><span 
+class="ec-lmbx-10">f.</span></span> <span 
+class="lmmi-10">A </span><span 
+class="lmsy-10">&#x00D7; </span><span 
+class="rm-lmr-10">(</span><span 
+class="lmmi-10">B </span><span 
+class="rm-lmr-10">+ </span><span 
+class="lmmi-10">C</span><span 
+class="rm-lmr-10">)</span><img 
+src="mgs-2023-ct-ex29x.svg" alt="~="  class="cong" ><span 
+class="rm-lmr-10">(</span><span 
+class="lmmi-10">A </span><span 
+class="lmsy-10">&#x00D7; </span><span 
+class="lmmi-10">B</span><span 
+class="rm-lmr-10">) + (</span><span 
+class="lmmi-10">A </span><span 
+class="lmsy-10">&#x00D7; </span><span 
+class="lmmi-10">C</span><span 
+class="rm-lmr-10">)</span>
+  Can you write down an isomorphism that <span 
+class="ec-lmri-10">never </span>holds, i.e., that doesn&#8217;t hold in <span 
+class="ec-lmri-10">any</span>
+category <span 
+class="lmsy-10"><span 
+class="htf-calligraphy">C</span></span>?
+   
+</body></html> 
+
+                                                                     
+
+                                                                     
+                                                                     
+
+

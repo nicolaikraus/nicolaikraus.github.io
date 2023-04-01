@@ -1,0 +1,274 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"  
+  "http://www.w3.org/TR/html4/loose.dtd">  
+<html > 
+<head><title>Category Theory [.1cm] Midlands Graduate School 2023 [.5cm] Exercise 3&amp;4 (4 and 5
+April) </title> 
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"> 
+<meta name="generator" content="TeX4ht (https://tug.org/tex4ht/)"> 
+<meta name="originator" content="TeX4ht (https://tug.org/tex4ht/)"> 
+<!-- html --> 
+<meta name="src" content="mgs-2023-ct-ex3.tex"> 
+<link rel="stylesheet" type="text/css" href="mgs-2023-ct-ex3.css"> 
+</head><body 
+><div class="maketitle">
+  <h2 class="titleHead">
+CATEGORY THEORY<br />
+MIDLANDS GRADUATE SCHOOL 2023<br /><br />
+EXERCISE 3&amp;4 (4 AND 5 APRIL)
+  </h2>
+  <div class="authors"><span class="author" >
+<span 
+class="ec-lmr-8">NICOLAI KRAUS</span>
+  </span></div>
+<div class="submaketitle">
+</div>
+  </div>
+  <h3 class="sectionHead"><a 
+ id="x1-1000"></a>Reminder</h3>
+  <div class="newtheorem">
+<!--l. 56--><p class="noindent" ><span class="head">
+<a 
+ id="x1-1001r1"></a>
+<span 
+class="ec-lmbx-10">Definition 1 </span>(functor)<span 
+class="ec-lmbx-10">.</span>  </span><span 
+class="ec-lmri-10">Given categories </span><span 
+class="lmsy-10"><span 
+class="htf-calligraphy">C</span> </span><span 
+class="ec-lmri-10">and </span><span 
+class="lmsy-10"><span 
+class="htf-calligraphy">D</span></span><span 
+class="ec-lmri-10">, a </span>functor <span 
+class="lmmi-10">F </span><span 
+class="rm-lmr-10">: </span><span 
+class="lmsy-10"><span 
+class="htf-calligraphy">C</span> &#x2192;<span 
+class="htf-calligraphy">D</span> </span><span 
+class="ec-lmri-10">consists</span>
+<span 
+class="ec-lmri-10">of:</span>
+         <ul class="itemize1">
+       <li class="itemize">
+       <!--l. 59--><p class="indent" >   <span 
+class="ec-lmri-10">a function between the object parts, </span><span 
+class="lmmi-10">F</span><sub><span 
+class="rm-lmr-7">0</span></sub> <span 
+class="rm-lmr-10">: </span><span 
+class="lmsy-10"><span 
+class="htf-calligraphy">C</span></span><sub><span 
+class="rm-lmr-7">0</span></sub> <span 
+class="lmsy-10">&#x2192;<span 
+class="htf-calligraphy">D</span></span><sub><span 
+class="rm-lmr-7">0</span></sub><span 
+class="ec-lmri-10">; however, the index is</span>
+       <span 
+class="ec-lmri-10">often omitted and one only writes </span><span 
+class="lmmi-10">FX </span><span 
+class="ec-lmri-10">for </span><span 
+class="lmmi-10">F</span><sub><span 
+class="rm-lmr-7">0</span></sub><span 
+class="rm-lmr-10">(</span><span 
+class="lmmi-10">X</span><span 
+class="rm-lmr-10">)</span><span 
+class="ec-lmri-10">.</span>
+         </li>
+       <li class="itemize">
+       <!--l. 60--><p class="indent" >   <span 
+class="ec-lmri-10">for  any  two  objects  </span><span 
+class="lmmi-10">X,Y  </span><span 
+class="lmsy-10">&#x2208; <span 
+class="htf-calligraphy">C</span></span><sub><span 
+class="rm-lmr-7">0</span></sub><span 
+class="ec-lmri-10">,  a  function  </span><span 
+class="lmmi-10">F</span><sub><span 
+class="lmmi-7">X,Y</span> </sub>  <span 
+class="ec-lmri-10">from  </span><span 
+class="lmsy-10"><span 
+class="htf-calligraphy">C</span></span><span 
+class="rm-lmr-10">(</span><span 
+class="lmmi-10">X,Y </span><span 
+class="rm-lmr-10">)  </span><span 
+class="ec-lmri-10">to</span>
+       <span 
+class="lmsy-10"><span 
+class="htf-calligraphy">D</span></span><span 
+class="rm-lmr-10">(</span><span 
+class="lmmi-10">FX,FY </span><span 
+class="rm-lmr-10">)</span><span 
+class="ec-lmri-10">;  again,  one  usually  just  writes  </span><span 
+class="lmmi-10">Fg </span><span 
+class="ec-lmri-10">instead  of  </span><span 
+class="lmmi-10">F</span><sub><span 
+class="lmmi-7">X,Y</span> </sub><span 
+class="rm-lmr-10">(</span><span 
+class="lmmi-10">g</span><span 
+class="rm-lmr-10">)  </span><span 
+class="ec-lmri-10">for</span>
+       <span 
+class="lmmi-10">g </span><span 
+class="lmsy-10">&#x2208;<span 
+class="htf-calligraphy">C</span></span><span 
+class="rm-lmr-10">(</span><span 
+class="lmmi-10">X,Y </span><span 
+class="rm-lmr-10">)</span></li></ul>
+<!--l. 62--><p class="noindent" ><span 
+class="ec-lmri-10">such that:</span>
+         <ul class="itemize1">
+       <li class="itemize">
+       <!--l. 64--><p class="indent" >   <span 
+class="ec-lmri-10">Identities are preserves: </span><span 
+class="lmmi-10">F</span><span 
+class="rm-lmr-10">(</span><span 
+class="rm-lmss-10">id</span><sub><span 
+class="lmmi-7">X</span></sub><span 
+class="rm-lmr-10">) =</span> <span 
+class="rm-lmss-10">id</span><sub><span 
+class="lmmi-7">FX</span></sub>
+         </li>
+       <li class="itemize">
+       <!--l. 65--><p class="indent" >    <span 
+class="ec-lmri-10">Composition is preserved: </span><span 
+class="lmmi-10">F</span><span 
+class="rm-lmr-10">(</span><span 
+class="lmmi-10">g </span><span 
+class="lmsy-10">&#x2218; </span><span 
+class="lmmi-10">f</span><span 
+class="rm-lmr-10">) = </span><span 
+class="lmmi-10">Fg </span><span 
+class="lmsy-10">&#x2218; </span><span 
+class="lmmi-10">Ff</span><span 
+class="ec-lmri-10">.</span></li></ul>
+  </div>
+<!--l. 67--><p class="indent" >
+  <h3 class="sectionHead"><a 
+ id="x1-2000"></a>Exercise 5: Functors preserving structure</h3>
+<!--l. 72--><p class="noindent" >
+<!--l. 74--><p class="indent" >  By definition, a functor between categories preserves identities and compositions.
+What else does it preserve?
+
+<!--l. 76--><p class="noindent" ><span class="subsectionHead"><a 
+ id="x1-3000"></a><span 
+class="ec-lmbx-10">a.</span></span> Show that every functor preserves isomorphisms. This means that, if <span 
+class="lmmi-10">F </span><span 
+class="rm-lmr-10">: </span><span 
+class="lmsy-10"><span 
+class="htf-calligraphy">C</span> &#x2192;<span 
+class="htf-calligraphy">D</span> </span>is
+a functor and <span 
+class="lmmi-10">k </span><span 
+class="lmsy-10">&#x2208; <span 
+class="htf-calligraphy">C</span></span><span 
+class="rm-lmr-10">(</span><span 
+class="lmmi-10">X,Y </span><span 
+class="rm-lmr-10">) </span>is an isomorphism, then <span 
+class="lmmi-10">Fk </span><span 
+class="lmsy-10">&#x2208; <span 
+class="htf-calligraphy">D</span></span><span 
+class="rm-lmr-10">(</span><span 
+class="lmmi-10">FX,FY </span><span 
+class="rm-lmr-10">) </span>is an
+isomorphism.
+<!--l. 79--><p class="noindent" ><span class="subsectionHead"><a 
+ id="x1-4000"></a><span 
+class="ec-lmbx-10">b.</span></span> Assume we have a functor <span 
+class="lmmi-10">F </span><span 
+class="rm-lmr-10">: </span><span 
+class="lmsy-10"><span 
+class="htf-calligraphy">C</span> &#x2192; </span><span 
+class="lmmi-10">C </span>and an object <span 
+class="lmmi-10">A </span><span 
+class="lmsy-10">&#x2208; <span 
+class="htf-calligraphy">C</span></span><sub><span 
+class="rm-lmr-7">0</span></sub> such that, for
+every <span 
+class="lmmi-10">X </span><span 
+class="lmsy-10">&#x2208; <span 
+class="htf-calligraphy">C</span></span><sub><span 
+class="rm-lmr-7">0</span></sub>, the object <span 
+class="lmmi-10">FX </span>is a product of <span 
+class="lmmi-10">A </span>and <span 
+class="lmmi-10">X</span>. We can write <span 
+class="rm-lmr-10">(</span><span 
+class="lmmi-10">A </span><span 
+class="lmsy-10">&#x00D7;</span>_<span 
+class="rm-lmr-10">) </span>as
+a more suggestive name for this functor <span 
+class="lmmi-10">F</span>. Show that this functor preserves
+coproducts.
+<!--l. 83--><p class="noindent" ><span class="subsectionHead"><a 
+ id="x1-5000"></a><span 
+class="ec-lmbx-10">c.</span></span> Find an example of a functor that preserves neither products nor coproducts.
+  <h3 class="sectionHead"><a 
+ id="x1-6000"></a>Exercise 6 (continues Exercise 1 from Sunday):<br 
+class="newline" />functors out of the free category on a directed multigraph</h3>
+<!--l. 88--><p class="noindent" >For the definitions, please see yesterday&#8217;s exercise sheet.
+<!--l. 91--><p class="indent" >  Let <span 
+class="lmmi-10">G </span><span 
+class="rm-lmr-10">= (</span><span 
+class="lmmi-10">V,E</span><span 
+class="rm-lmr-10">) </span>be a directed multigraph and <span 
+class="lmsy-10"><span 
+class="htf-calligraphy">D</span> </span>be a category. Show that the
+collection of functors <span 
+class="lmsy-10"><span 
+class="htf-calligraphy">F</span></span><sub><span 
+class="lmmi-7">G</span></sub> <span 
+class="lmsy-10">&#x2192;<span 
+class="htf-calligraphy">D</span> </span>is in bijection with the collection of pairs <span 
+class="rm-lmr-10">(</span><span 
+class="lmmi-10">s,t</span><span 
+class="rm-lmr-10">)</span>, where
+<span 
+class="lmmi-10">s </span><span 
+class="rm-lmr-10">: </span><span 
+class="lmmi-10">V </span><span 
+class="lmsy-10">&#x2192;<span 
+class="htf-calligraphy">D</span></span><sub><span 
+class="rm-lmr-7">0</span></sub> is a function and <span 
+class="lmmi-10">t </span>chooses, for each pair <span 
+class="lmmi-10">a,b </span><span 
+class="lmsy-10">&#x2208; </span><span 
+class="lmmi-10">V </span>and each edge <span 
+class="lmmi-10">e </span><span 
+class="lmsy-10">&#x2208; </span><span 
+class="lmmi-10">E</span><span 
+class="rm-lmr-10">(</span><span 
+class="lmmi-10">a,b</span><span 
+class="rm-lmr-10">)</span>, a
+morphism in <span 
+class="lmsy-10"><span 
+class="htf-calligraphy">D</span></span><span 
+class="rm-lmr-10">(</span><span 
+class="lmmi-10">s</span><span 
+class="rm-lmr-10">(</span><span 
+class="lmmi-10">a</span><span 
+class="rm-lmr-10">)</span><span 
+class="lmmi-10">,s</span><span 
+class="rm-lmr-10">(</span><span 
+class="lmmi-10">b</span><span 
+class="rm-lmr-10">))</span>.
+  <h3 class="sectionHead"><a 
+ id="x1-7000"></a>Exercise 7: The category <span 
+class="rm-lmss-10">CAT</span></h3>
+<!--l. 95--><p class="noindent" >The goal of this exercise is to construct <span 
+class="rm-lmss-10">CAT</span>, the &#8220;category of all categories&#8221;. The objects of <span 
+class="rm-lmss-10">CAT</span>
+are categories.<span class="footnote-mark"><a 
+href="mgs-2023-ct-ex32.html#fn1x0">1</a></span><a 
+ id="x1-7001f1"></a> 
+The morphisms between <span 
+class="lmsy-10"><span 
+class="htf-calligraphy">C</span> </span>and <span 
+class="lmsy-10"><span 
+class="htf-calligraphy">D</span> </span>are simply the functors from <span 
+class="lmsy-10"><span 
+class="htf-calligraphy">C</span> </span>to <span 
+class="lmsy-10"><span 
+class="htf-calligraphy">D</span></span>. Construct the
+remaining structure and prove the laws required to make <span 
+class="rm-lmss-10">CAT</span> a category.
+   
+</body></html> 
+
+
+
