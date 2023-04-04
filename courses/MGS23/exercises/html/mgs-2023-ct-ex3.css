@@ -14,6 +14,7 @@
 .rm-lmr-7{font-size:70%;}
 .lmmi-7{font-size:70%;}
 .rm-lmss-10{ font-family: sans-serif;}
+.rm-lmbx-10{ font-weight: bold;}
 .ec-lmr-7{font-size:70%;}
 .rm-lmss-8{font-size:80%; font-family: sans-serif;}
 .htf-calligraphy {font-family:cursive}
@@ -139,6 +140,7 @@ table.multline, table.multline-star {width:100%;}
 td.gather {text-align:center; }
 table.gather {width:100%;}
 div.gather-star {text-align:center;}
+.rotatebox{display: inline-block;}
 dt.enumerate-enumitem{float:left; clear:left; margin-left:1em; margin-right:1em;}
 /* end css.sty */
 
