@@ -1,0 +1,42 @@
+talk in Aberdeen on 5 June 2023
+
+
+Programs as Proofs
+(and why some computer scientists nowadays do homotopy theory)
+
+
+The insight that programs can serve as proofs is more than half a
+century old. It is known under many names, such as
+"propositions-as-types", "BHK-interpretation", or "Curry-Howard
+correspondance".  An example that demonstrates the idea is a program
+that calculates arbitrarily large prime numbers: within the correct
+framework, such a program can be understood as a proof that there are
+infinitely many prime numbers.
+
+Nowadays, the idea is mainly exploited through Martin-Löf's type
+theory and Coquand's Calculus of Constructions. They serve as
+foundations for computer proof assistants such as Agda, Coq, or
+Lean. Huge libraries of computer-verified formal mathematics are being
+developed. Formalisations include modern mathematics such as a recent
+result by Clausen and Scholze.
+
+Around 15 years ago, Fields medallist Voevodsky (and, independently,
+Awodey and Warren) observed that the intuition of abstract homotopy
+theory applies to type theory. This gave rise to a field known as
+homotopy type theory, often referred to as HoTT. HoTT can be used as a
+setting for synthetic homotopy theory: rather than defining what a
+topological space (or an infinity-groupoid) is, the rules of the
+system ensure that everything automatically behaves like a
+space. Familiar theorems (e.g. the Seifert-van Kampen or the
+Blakers-Massey theorem) can be formulated and proved within HoTT,
+often leading to elegant and short proofs.
+
+In this talk, I want to introduce and explain some central ideas of a
+field that connects mathematics to computer science. I will not assume
+familiarity with computer science, logic, or higher-dimensional
+category theory.
+
+
+
+
+
