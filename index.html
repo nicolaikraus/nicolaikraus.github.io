@@ -78,6 +78,32 @@ ol.nonumber {
     list-style-type: square;
 }
 
+:root{--img-height:80px;--img-height-mobile:60px}
+html,body{height:100%;font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;background:#f7f7f7;color:#111}
+
+
+
+
+.wrap{max-width:1100px;margin:40px auto;padding:16px}
+
+
+/* flex row; if images don't fit the viewport the row becomes horizontally scrollable */
+.gallery{display:flex;gap:16px;align-items:flex-start;overflow-x:auto;padding-bottom:8px}
+
+
+.item{flex:0 0 auto;padding:8px;border-radius:12px;background:#fff;box-shadow:0 6px 18px rgba(0,0,0,0.06);display:flex;flex-direction:column;align-items:center}
+.item p{margin:0 0 8px;font-size:0.95rem}
+
+
+/* IMPORTANT: images keep their full content (no cropping). They are scaled to the same height and width adjusts automatically. */
+.gallery img{height:var(--img-height);width:auto;max-width:none;display:block;border-radius:8px}
+
+
+/* mobile: stack and use a smaller height */
+@media (max-width:720px){
+.gallery{flex-direction:column;align-items:center;overflow-x:visible}
+.gallery img{height:var(--img-height-mobile)}
+}
 </style>
 
 <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
@@ -1574,16 +1600,37 @@ The below list is from my days as a PhD student. Not updated since 2014.
 
 <h3 id="funding">Funding Acknowledgement</h3>
 
-<p>I am generously supported by </p>
+<p>I acknowledge generous offers from and support by:</p>
 
-<a href="https://royalsociety.org/"><img src="pictures/rs-logo-2.png" title="The Royal Society" alt="The Royal Society"></a>
+<div class="wrap">
+<div class="gallery" role="list">
+
+
+<figure role="listitem">
+<img src="pictures/rs-logo-2.png" title="The Royal Society" alt="The Royal Society" loading="lazy">
+</figure>
+
+
+<figure role="listitem">
+<img src="pictures/erc.png" title="ERC" alt="ERC" loading="lazy">
+</figure>
+
+<figure role="listitem">
+<img src="pictures/ukri.png" title="UKRI" alt="UKRI" loading="lazy">
+</figure>
+
+
+</div>
+</div>
+
+
 
 <br>
 <br>
 
 <hr>
 
-Last updated: August 2024.
+Last updated: September 2025.
 
 </BODY>
 </html>
