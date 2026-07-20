@@ -1,0 +1,5 @@
+In the setting of constructive mathematics (specifically, type theory), we present a framework for decidability of properties which allows for finer distinctions than just "decidable, semidecidable, or undecidable", as follows:
+
+We define a set of Brouwer tree ordinals. These ordinals have the property that they start being decidable (discrete) but become more and more "undecidable" the larger one goes. Intuitively, one can check within x "steps" whether a given ordinal is at least x. For finite x, this property is decidable; for small infinite x (between ω and ω*2), this property is semidecidable; and for larger x, it is less than semidecidable. Using this principle, for an ordinal number α, we define "the property P is α-decidable" to mean that there exists x such that (P iff x≥α).
+
+This talk is based on joint work with Tom de Jong, Aref Mohammadzadeh, and Fredrik Nordvall Forsberg (arXiv:2602.10844 / lics'26).
