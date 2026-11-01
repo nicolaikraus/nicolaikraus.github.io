@@ -1,0 +1,9 @@
+talk on 9 September:
+
+title: 
+Quasi-unitality, global and local
+
+abstract: 
+A non-unital category object in a given ∞-category C with pullbacks is a semisimplicial object satisfying the Segal condition. Lurie, Harpaz and Haugseng proved, in three different but related settings, that "having identities" is a property rather than extra structure. If C is a higher topos (e.g. the topos of spaces), one can compare global and local formulations of quasi-unitality. Harpaz's formulation is local, but the comparison with Segal spaces requires completeness; Haugseng's formulation is global, and he expects that the local condition (without completeness) is strictly weaker due to missing continuity. In this talk, I will show that this is not the case provided that C is a higher topos, as continuity can be recovered. In particular, Segal spaces are equivalent to non-unital Segal spaces in which every object merely has a quasi-identity and maps preserve them. The tool that makes this work is the notion of idempotent equivalences, which I have used earlier in a type-theoretic framework and which Joachim Kock traced back to Saavedra's 1972 work.
+
+
